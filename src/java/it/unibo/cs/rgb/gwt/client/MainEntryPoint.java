@@ -53,7 +53,7 @@ public class MainEntryPoint implements EntryPoint {
         mainPanel.setCellWidth(west, "150px");
 
         Widget content = createContentWidget();
-        mainPanel.add(content, DockPanel.EAST);
+        mainPanel.add(content, DockPanel.CENTER);
         RootPanel.get().add(mainPanel);
     }
 
@@ -85,19 +85,11 @@ public class MainEntryPoint implements EntryPoint {
         
         FlowPanel flowpanel;
 
-        flowpanel = new FlowPanel();
+        /*flowpanel = new FlowPanel();
         flowpanel.add(new Label(text1));
         docviewPanel.add(flowpanel, "One");
 
-        flowpanel = new FlowPanel();
-        flowpanel.add(new Label(text2));
-        docviewPanel.add(flowpanel, "Two");
-
-        flowpanel = new FlowPanel();
-        flowpanel.add(new Label(text3));
-        docviewPanel.add(flowpanel, "Three");
-
-        docviewPanel.selectTab(0);
+        docviewPanel.selectTab(0);*/
 
         docviewPanel.setSize("100%", "250px");
         docviewPanel.addStyleName("table-center");
@@ -174,11 +166,31 @@ public class MainEntryPoint implements EntryPoint {
 
                 // tab non esiste
                 if (index < 0) {
-                    FlowPanel flowpanel = new FlowPanel();
+
+                    // contenuto del tab
+                    final FlowPanel flowpanel = new FlowPanel();
                     flowpanel.setTitle(item.getText());
                     flowpanel.add(new Label("Sò che sono il " + item.getText()));
 
-                    docviewPanel.add(flowpanel, "Tab " + item.getText());
+                    // tabText
+                    HorizontalPanel tabText = new HorizontalPanel();
+
+                    //TODO: visualizzare un tabText "carino"
+                    Label tabTitle = new Label("Tab " + item.getText());
+                    tabText.add(new Label("Tab " + item.getText()));
+
+                    // X che chiude il tab
+                    ClickHandler xclose = new ClickHandler() {
+
+                        public void onClick(ClickEvent event) {
+                            docviewPanel.remove(flowpanel);
+                        }
+                    };
+                    Label x = new Label("X");
+                    x.addClickHandler(xclose);
+                    tabText.add(x);
+
+                    docviewPanel.add(flowpanel, tabText);
                     docviewPanel.selectTab(docviewPanel.getWidgetCount()-1);
                 }
             }
@@ -188,7 +200,7 @@ public class MainEntryPoint implements EntryPoint {
             }
         }
 
-
         return new DoclistTree();
     }
+
 }
