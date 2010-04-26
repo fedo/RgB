@@ -78,14 +78,14 @@ public class MainEntryPoint implements EntryPoint {
     }
 
     protected Widget createContentWidget() {
-        String text1 = "Lorem ipsum dolor sit amet...";
+        /*String text1 = "Lorem ipsum dolor sit amet...";
         String text2 = "Sed egestas, arcu nec accumsan...";
         String text3 = "Proin tristique, elit at blandit...";
 
         
         FlowPanel flowpanel;
 
-        /*flowpanel = new FlowPanel();
+        flowpanel = new FlowPanel();
         flowpanel.add(new Label(text1));
         docviewPanel.add(flowpanel, "One");
 
@@ -168,29 +168,27 @@ public class MainEntryPoint implements EntryPoint {
                 if (index < 0) {
 
                     // contenuto del tab
-                    final FlowPanel flowpanel = new FlowPanel();
-                    flowpanel.setTitle(item.getText());
-                    flowpanel.add(new Label("Sò che sono il " + item.getText()));
+                    final Widget tabPanel = createDocviewTab(item.getText());
 
                     // tabText
                     HorizontalPanel tabText = new HorizontalPanel();
 
                     //TODO: visualizzare un tabText "carino"
                     Label tabTitle = new Label("Tab " + item.getText());
-                    tabText.add(new Label("Tab " + item.getText()));
+                    tabText.add(tabTitle);
 
                     // X che chiude il tab
                     ClickHandler xclose = new ClickHandler() {
 
                         public void onClick(ClickEvent event) {
-                            docviewPanel.remove(flowpanel);
+                            docviewPanel.remove(tabPanel);
                         }
                     };
                     Label x = new Label("X");
                     x.addClickHandler(xclose);
                     tabText.add(x);
 
-                    docviewPanel.add(flowpanel, tabText);
+                    docviewPanel.add(tabPanel, tabText);
                     docviewPanel.selectTab(docviewPanel.getWidgetCount()-1);
                 }
             }
@@ -201,6 +199,43 @@ public class MainEntryPoint implements EntryPoint {
         }
 
         return new DoclistTree();
+    }
+
+    public Widget createDocviewTab(String teiapath) {
+        VerticalPanel panel = new VerticalPanel();
+
+        panel.setTitle(teiapath); //necessario per venire selezionato e chiuso
+        panel.add(new Label("Sò che sono il " + teiapath));
+        
+        // TODO: rpc che ottiene i dati "lunghi" del file aperto
+        final DisclosurePanel info = new DisclosurePanel(teiapath);
+        info.add(new Label("dati lunghi lunghi lunghi"));
+        panel.add(info);
+
+        // visualization And Witnesses Bar
+        HorizontalPanel visualizationAndWitnesses = new HorizontalPanel();
+
+        // TODO: abilitazione dinamica in base al documento (alcuni testi non supportano certe visualizzazioni
+        // TODO: aggiungere listeners che ricaricano i wit aperti in accordo con la vis. scelta
+        ListBox visualization = new ListBox();
+        visualization.addItem("diplomatica");
+        visualization.addItem("Semi-diplomatica");
+        visualization.addItem("critica");
+        visualizationAndWitnesses.add(new Label("Scegli il tipo di trascrizione: "));
+        visualizationAndWitnesses.add(visualization);
+
+        // TODO: lista dei wit dinamica relativa al documento
+        // TODO: listeners per le checkbox dei wit
+        visualizationAndWitnesses.add(new Label("Scegli i witness da visualizzare: "));
+        visualizationAndWitnesses.add(new CheckBox("wit1"));
+        visualizationAndWitnesses.add(new CheckBox("wit2"));
+        visualizationAndWitnesses.add(new CheckBox("wit3"));
+
+        panel.add(visualizationAndWitnesses);
+
+
+
+        return panel;
     }
 
 }
