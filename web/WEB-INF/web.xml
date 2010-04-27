@@ -17,9 +17,17 @@
         </init-param>
         <load-on-startup>2</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>GWTServiceTei</servlet-name>
+        <servlet-class>it.unibo.cs.rgb.gwt.server.GWTServiceTeiImpl</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>action</servlet-name>
         <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GWTServiceTei</servlet-name>
+        <url-pattern>/it.unibo.cs.rgb.gwt.Main/gwtservicetei</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

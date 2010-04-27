@@ -5,6 +5,7 @@
 package it.unibo.cs.rgb.gwt.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -12,9 +13,11 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HasAlignment;
 import com.google.gwt.user.client.ui.Widget;
+import java.util.ArrayList;
 
 /**
  * Main entry point.
@@ -24,6 +27,8 @@ import com.google.gwt.user.client.ui.Widget;
 public class MainEntryPoint implements EntryPoint {
 
     TabPanel docviewPanel = new TabPanel();
+    final ArrayList<String> doclist = new ArrayList<String>();
+    HorizontalPanel debug = new HorizontalPanel();
     
     /**
      * Creates a new instance of MainEntryPoint
@@ -61,11 +66,30 @@ public class MainEntryPoint implements EntryPoint {
 
     protected Widget createHeaderWidget() {
 
+        /*final Label fromrpc = new Label();
+        AsyncCallback callback = new AsyncCallback() {
+
+            public void onFailure(Throwable arg0) {
+                //display error text if we can't get the quote:
+                Window.alert("Failed RPCServiceTei");
+            }
+
+            public void onSuccess(Object result) {
+                //display the retrieved quote in the label:
+                String stringa = ((ArrayList<String>) result).get(0);
+                fromrpc.setText(stringa);
+            }
+        };
+        getService().getTeiInfo(callback);
+
+        return fromrpc;*/
         return new Label("Header [Branding]: logo + [Servizi stabili]: link help, link contatti");
     }
 
     protected Widget createFooterWidget() {
-        return new Label("Footer [?]");
+        //return new Label("Footer [?]");
+        debug.add(new Label("Debug:"));
+        return debug;
     }
 
     protected Widget createWestWidget() {
@@ -75,6 +99,7 @@ public class MainEntryPoint implements EntryPoint {
 
         west.add(title);
         west.add(createDoclistWidget());
+        west.add(createDoclistWidgetRPC());
 
         return west;
     }
@@ -255,4 +280,50 @@ public class MainEntryPoint implements EntryPoint {
         return panel;
     }
 
+    protected Widget createDoclistWidgetRPC() {
+        VerticalPanel doclistPanel = new VerticalPanel();
+        doclistPanel.add(new Label("*doclist*"));
+
+        refreshDoclist(); //ottiene info dall'rpc
+
+        doclist.add("sono un elemento di prova, non illuderti");
+        // aggiunge una label per ogni file trovato
+        for (int i = 0; i < doclist.size(); i++) {
+            doclistPanel.add(new Label(doclist.get(i)));
+        }
+
+        return doclistPanel;
+    }
+
+    public static GWTServiceTeiAsync getService() {
+        // Create the client proxy. Note that although you are creating the
+        // service interface proper, you cast the result to the asynchronous
+        // version of the interface. The cast is always safe because the
+        // generated proxy implements the asynchronous interface automatically.
+
+        return GWT.create(GWTServiceTei.class);
+    }
+
+    protected void refreshDoclist() {
+        doclist.clear(); //non fa differenza
+        doclist.add("sono un elemento di prova"); // qua va
+
+        AsyncCallback callback = new AsyncCallback() {
+
+            public void onFailure(Throwable arg0) {
+                Window.alert("Failed RPCServiceTei");
+            }
+
+            public void onSuccess(Object result) {
+                ArrayList<String> resultal = (ArrayList<String>) result;
+                for (int i = 0; i < resultal.size(); i++) {
+                    String str = resultal.get(i);
+                    doclist.add(str); // TODO: capire perchè non va.. se vuoi stampa, e fuori da questo blocco doclist può essere modificata
+                    debug.add(new Label(str)); // qua va
+
+                }
+            }
+        };
+        getService().getTeiInfo(callback);
+    }
 }
