@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HasAlignment;
 import com.google.gwt.user.client.ui.Widget;
@@ -23,6 +24,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class MainEntryPoint implements EntryPoint {
 
     TabPanel docviewPanel = new TabPanel();
+    
     /**
      * Creates a new instance of MainEntryPoint
      */
@@ -37,8 +39,8 @@ public class MainEntryPoint implements EntryPoint {
         DockPanel mainPanel = new DockPanel();
         mainPanel.setBorderWidth(5);
         mainPanel.setSize("100%", "100%");
-        mainPanel.setVerticalAlignment(HasAlignment.ALIGN_MIDDLE);
-        mainPanel.setHorizontalAlignment(HasAlignment.ALIGN_CENTER);
+        mainPanel.setVerticalAlignment(HasAlignment.ALIGN_TOP);
+        mainPanel.setHorizontalAlignment(HasAlignment.ALIGN_LEFT);
 
         Widget header = createHeaderWidget();
         mainPanel.add(header, DockPanel.NORTH);
@@ -59,11 +61,11 @@ public class MainEntryPoint implements EntryPoint {
 
     protected Widget createHeaderWidget() {
 
-        return new Label("Header");
+        return new Label("Header [Branding]: logo + [Servizi stabili]: link help, link contatti");
     }
 
     protected Widget createFooterWidget() {
-        return new Label("Footer");
+        return new Label("Footer [?]");
     }
 
     protected Widget createWestWidget() {
@@ -110,7 +112,7 @@ public class MainEntryPoint implements EntryPoint {
                 VerticalPanel vp = new VerticalPanel();
                 vp.addStyleName("demo-table");
                 vp.addStyleName("table-center");
-                vp.setWidth("300px");
+                vp.setWidth("150px");
 
                 TreeItem outerRoot = new TreeItem("Item 1");
                 outerRoot.addItem("Item 1-1");
@@ -201,19 +203,20 @@ public class MainEntryPoint implements EntryPoint {
         return new DoclistTree();
     }
 
-    public Widget createDocviewTab(String teiapath) {
+    protected Widget createDocviewTab(String teiapath) {
         VerticalPanel panel = new VerticalPanel();
 
         panel.setTitle(teiapath); //necessario per venire selezionato e chiuso
         panel.add(new Label("Sò che sono il " + teiapath));
         
         // TODO: rpc che ottiene i dati "lunghi" del file aperto
-        final DisclosurePanel info = new DisclosurePanel(teiapath);
+        final DisclosurePanel info = new DisclosurePanel("Clicca qui per visualizzare le informazioni complete");
         info.add(new Label("dati lunghi lunghi lunghi"));
         panel.add(info);
 
         // visualization And Witnesses Bar
         HorizontalPanel visualizationAndWitnesses = new HorizontalPanel();
+        final HorizontalPanel witnesses = new HorizontalPanel();
 
         // TODO: abilitazione dinamica in base al documento (alcuni testi non supportano certe visualizzazioni
         // TODO: aggiungere listeners che ricaricano i wit aperti in accordo con la vis. scelta
@@ -227,13 +230,27 @@ public class MainEntryPoint implements EntryPoint {
         // TODO: lista dei wit dinamica relativa al documento
         // TODO: listeners per le checkbox dei wit
         visualizationAndWitnesses.add(new Label("Scegli i witness da visualizzare: "));
+
+        CheckBox cb = new CheckBox("testwit");
+        
+        // clickhandler per le checkbox
+        cb.addClickHandler(new ClickHandler() {
+
+            public void onClick(ClickEvent event) {
+                boolean checked = ((CheckBox) event.getSource()).getValue();
+                witnesses.add(new Label("testwit"));
+            }
+        });
+
+        visualizationAndWitnesses.add(cb);
         visualizationAndWitnesses.add(new CheckBox("wit1"));
         visualizationAndWitnesses.add(new CheckBox("wit2"));
         visualizationAndWitnesses.add(new CheckBox("wit3"));
 
         panel.add(visualizationAndWitnesses);
 
-
+        // visualizzazione dei witnesses selezionati
+        panel.add(witnesses);
 
         return panel;
     }
