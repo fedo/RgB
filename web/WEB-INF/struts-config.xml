@@ -19,6 +19,7 @@
     </global-forwards>
 
     <action-mappings>
+        <action path="/doclist" type="struts.DoclistStrutsAction"/>
         <action path="/Welcome" forward="/welcomeStruts.jsp"/>
     </action-mappings>
     
