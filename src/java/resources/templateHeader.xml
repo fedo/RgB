@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TEI SYSTEM "fraTei.dtd">
+
+
+<teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title>Edizione elettronica di []</title>
+                <respStmt>
+                    <resp>Compilata da</resp>
+                    <name>[nome]</name>
+                </respStmt>
+            </titleStmt>
+            <editionStmt>
+                <edition>Edizione elettronica realizzata per []</edition>
+                <respStmt>
+                    <resp>[Responsabile del progetto editoriale]</resp>
+                    <name>[nome]</name>
+                </respStmt>
+            </editionStmt>
+            <publicationStmt>
+                <publisher>[Nome dell'editore elettronico]</publisher>
+	   <pubPlace>[luogo]</pubPlace>
+                <date>[data]</date>
+            </publicationStmt>
+
+ <!-- sezione di metadati in caso di testi a stampa-->    
+<sourceDesc>
+	<bibl>
+<!-- qui va il titolo ed eventuali sottotitoli del testo fonte come appaiono nel frontespizio -->
+	<title>[titolo del testo]</title>
+	<author>[nome autore]</author>
+	<!-- qui vanno i nomi degli eventuali curatori del testo fonte -->
+	<editor>[nome del curatore]</editor>
+	<publisher>[editore del testo fonte]</publisher>
+	<pubPlace>[luogo di edizione del testo fonte]</pubPlace>
+	<date>[data di edizione del testo fonte]</date>
+	</bibl>
+</sourceDesc>
+
+ <!-- sezione di metadati in caso di descrizione di manoscritti -->    
+           <sourceDesc>
+                <msDesc>
+                    <msIdentifier>
+                        <country>[paese]</country>
+                        <region>[regione]</region>
+                        <settlement>[luogo]</settlement>
+                        <repository>[istituto di conservazione]</repository>
+                        <idno>[codice identificativo - segnatura]</idno>
+                    </msIdentifier>
+                    <msContents>
+                        <msItemStruct>
+                            <locus>[carte del manoscritto]</locus>
+                            <author>[autore]</author>
+                            <title>[titolo]</title>
+                            <rubric>[eventuale rubricatura-didascalia-sottotitolo]</rubric>
+                            <incipit>[inizio del testo]</incipit>
+                            <textLang>[lingua]</textLang>
+                        </msItemStruct>
+                    </msContents>
+                    <physDesc>
+                        <objectDesc form="codex">
+                            
+<!-- descrizione del supporto. esempio -->
+
+	<supportDesc>
+                                <support>Cartaceo con <watermark>filigrana ciseaux</watermark> simile al <bibl>Briquet 3675</bibl>. Carte di guardia pergamenacee, <date>XVII secolo</date>.</support>
+                                <extent>[numero di carte]
+                                    <dimensions unit="mm">
+                                        <height>[altezza]</height>
+                                        <width>[largezza]</width>
+                                    </dimensions>
+                                </extent>
+                            </supportDesc>
+                        </objectDesc>
+                        <handDesc hands="[numero di mani]">
+                            <p>[descrizione]</p>
+                        </handDesc>
+                    </physDesc>
+   <!-- descrizione della storia di un manoscritto. esempio -->
+                 <history>
+                        <p><origDate notBefore="1440" notAfter="1460">Metà XIV secolo</origDate>, <origPlace>Italia</origPlace>.</p>
+                        <p>Appartenuto a <persName from="1792" to="1872">Sir Thomas Phillipps </persName> (1792-1872), acquistato da Sotheby's il <date when="29-11-1966">29 Novembre 1966</date>.</p>
+                    </history>
+                </msDesc>
+            </sourceDesc>
+        </fileDesc>
+<!-- descrizione della procedure di codifica. esempio -->
+
+ <encodingDesc>
+            <p>Siamo partiti dall'immagine della carta 24 recto del ms.  disponibile sul
+                sito di <ref
+                    target="http://www.scriptorium.columbia.edu"
+                    >Digital Scriptorium</ref>. Abbiamo deciso di fornire tre trascrizioni diverse: la
+                prima, diplomatica, è il più possibile vicina all'originale: segue le
+                raccomandazioni della <ref target="http://www.mufi.info">MUFI</ref> per la
+                resa dei glifi e tiene conto di tutti i fenomeni del manoscritto. Nella trascrizione interpretativa abbiamo scelto di
+                sciogliere le abbreviazioni tra parentesi tonde, segnalare la normalizzazione dei
+                segni glifici e separare le parole in scriptio
+                continua. La messa in pagina originale è mantenuta. Nella trascrizione critica, infine,
+                è stata introdotta la punteggiatura e modificata la disposizione del testo.</p>
+            <refsDecl><p>La mano delle note marginali è codificata come <name xml:id="AM">AM</name>.</p></refsDecl>
+
+
+  <!-- classificazione -->
+            <classDecl>
+                <taxonomy xml:id="CDD">
+                    <bibl>Classificazione decimale Dewey</bibl>
+                </taxonomy>
+            </classDecl>
+        </encodingDesc>
+        <profileDesc>
+            <textClass>
+                <keywords scheme="CDD">
+                    <term>D 878.04 MISCELLANEA LATINA. 1350-</term>
+                </keywords>
+            </textClass>
+        </profileDesc>
+
+
+<profileDesc>
+	<!-- qui vanno specificate le lingue presenti nel testo -->
+	<langUsage>
+	<language id='codice'>[lingua]</language>
+	</langUsage>
+</profileDesc>
+<!-- qui vanno documentati gli interventi effettuati sul documento elettronico -->
+	<revisionDesc>
+	<change>
+	<date>[data]</date>
+	<respStmt>
+	<name>[nome codificatore]</name>
+	</respStmt>
+	<item>[operazione]</item>
+	</change>
+</revisionDesc>
+
+    </teiHeader>

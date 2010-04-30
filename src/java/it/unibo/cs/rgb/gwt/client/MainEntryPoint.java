@@ -29,6 +29,7 @@ public class MainEntryPoint implements EntryPoint {
     TabPanel docviewPanel = new TabPanel();
     final ArrayList<String> doclist = new ArrayList<String>();
     HorizontalPanel debug = new HorizontalPanel();
+    String strglobal = "sono una stringa global";
     
     /**
      * Creates a new instance of MainEntryPoint
@@ -306,8 +307,8 @@ public class MainEntryPoint implements EntryPoint {
 
     protected void refreshDoclist() {
         doclist.clear(); //non fa differenza
-        doclist.add("sono un elemento di prova"); // qua va
-        
+        //doclist.add("sono un elemento di prova"); // qua va
+        doclist.add(strglobal);
         AsyncCallback callback = new AsyncCallback() {
 
             public void onFailure(Throwable arg0) {
@@ -317,9 +318,11 @@ public class MainEntryPoint implements EntryPoint {
             public void onSuccess(Object result) {
                 ArrayList<String> resultal = (ArrayList<String>) result;
                 for (int i = 0; i < resultal.size(); i++) {
+                    
                     String str = resultal.get(i);
                     doclist.add(str); // TODO: capire perchè non va.. se vuoi stampa, e fuori da questo blocco doclist può essere modificata
                     debug.add(new Label(str)); // qua va
+                    
 
                 }
             }
