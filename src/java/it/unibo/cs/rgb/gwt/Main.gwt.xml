@@ -15,6 +15,7 @@
     <!-- gwt log -->
     <inherits name="com.allen_sauer.gwt.log.gwt-log" />
     <extend-property name="log_level" values="DEBUG"/>
+    <set-property name="log_level" value="DEBUG"/>
 
     <entry-point class="it.unibo.cs.rgb.gwt.client.MainEntryPoint"/>
 

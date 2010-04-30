@@ -4,6 +4,7 @@
  */
 package it.unibo.cs.rgb.gwt.client;
 
+import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.*;
@@ -42,6 +43,9 @@ public class MainEntryPoint implements EntryPoint {
      * that declares an implementing class as an entry-point
      */
     public void onModuleLoad() {
+        Log.setCurrentLogLevel(Log.getLowestLogLevel());
+        Log.setUncaughtExceptionHandler();
+        Log.info("msg");
         DockPanel mainPanel = new DockPanel();
         mainPanel.setBorderWidth(5);
         mainPanel.setSize("100%", "100%");
