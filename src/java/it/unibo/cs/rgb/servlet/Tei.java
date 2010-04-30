@@ -6,14 +6,17 @@
 package it.unibo.cs.rgb.servlet;
 
 import it.unibo.cs.rgb.gwt.tei.TeiCollection;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  *
@@ -30,7 +33,38 @@ public class Tei extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+
+        response.setContentType("application/json;charset=UTF-8"); //corretto
+        response.setHeader("Cache-Control", "no-cache");
+
+        JSONObject json = new JSONObject();
+        try {
+            JSONObject file = new JSONObject();
+            
+            /*// esempio
+            file.accumulate("aboslutePath", "/uon/due/tre");
+            file.accumulate("filename", "testo.xml");
+            json.put("primo",file);*/
+
+            // creazione json dai files tei
+            TeiCollection collection = new TeiCollection();
+            collection.init("/Users/fedo/data/programming/netbeans/RgB/src/java/resources/collection1");
+
+            for (int i = 0; i < collection.getNumberOfDocument(); i++) {
+                file = new JSONObject();
+                file.accumulate("aboslutePath", collection.getTeiDocument(i).getAbsolutePath());
+                file.accumulate("author", collection.getTeiDocument(i).getAuthor());
+                json.put(""+i, file);
+            }
+
+        } catch (JSONException ex) {
+            Logger.getLogger(Tei.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        PrintWriter out = response.getWriter();
+        out.print(json.toString());
+
+        /*response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
             //TODO output your page here
@@ -43,32 +77,23 @@ public class Tei extends HttpServlet {
 
             out.println("<p>Absolutepath"+request.getRealPath("")+"</p>");
 
-            /*File folder = new File("/Users/fedo/data/programming/netbeans/RgB/src/java/resources/collection1");
-            File[] list = folder.listFiles();
-            for(int i = 0; i < list.length; i++){
-                out.println("<p>"+list[i].getName()+"</p>");
-            }*/
+            TeiCollection collection = new TeiCollection();
+            collection.init("/Users/fedo/data/programming/netbeans/RgB/src/java/resources/collection1");
+            ArrayList<String> alstr = new ArrayList<String>();
 
-
-
-
-                    TeiCollection collection = new TeiCollection();
-        collection.init("/Users/fedo/data/programming/netbeans/RgB/src/java/resources/collection1");
-        ArrayList<String> alstr = new ArrayList<String>();
-
-        for(int i = 0; i < collection.getNumberOfDocument(); i++){
-            alstr.add(collection.getTeiDocument(i).getAbsolutePath());
-            out.println("<p>"+alstr.get(i)+"</p>");
-            out.println("<p>"+collection.getTeiDocument(i).getAuthor()+"</p>");
-        }
+            for (int i = 0; i < collection.getNumberOfDocument(); i++) {
+                alstr.add(collection.getTeiDocument(i).getAbsolutePath());
+                out.println("<p>" + alstr.get(i) + "</p>");
+                out.println("<p>" + collection.getTeiDocument(i).getAuthor() + "</p>");
+            }
             out.println("<h1>Servlet end</h1>");
             out.println("</body>");
             out.println("</html>");
 
         } finally {
             out.close();
-        }
-    } 
+        }*/
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
