@@ -307,7 +307,7 @@ public class MainEntryPoint implements EntryPoint {
     protected void refreshDoclist() {
         doclist.clear(); //non fa differenza
         doclist.add("sono un elemento di prova"); // qua va
-
+        
         AsyncCallback callback = new AsyncCallback() {
 
             public void onFailure(Throwable arg0) {
