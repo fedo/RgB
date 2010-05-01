@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE TEI.2 SYSTEM "teixtstc.dtd" [
-  <!ENTITY p1891 SYSTEM "images/p1891.jpg" NDATA JPEG>
-  <!ENTITY ll227 SYSTEM "images/ll227.jpg" NDATA JPEG>
-  <!ENTITY cp32 SYSTEM "images/cp32.jpg" NDATA JPEG>
+  <!ENTITY p1891 SYSTEM "images/p1891.jpg" NDATA jpg>
+  <!ENTITY ll227 SYSTEM "images/ll227.jpg" NDATA jpg>
+  <!ENTITY cp32 SYSTEM "images/cp32.jpg" NDATA jpg>
   ]>
 <TEI.2> 
   <teiHeader> 
