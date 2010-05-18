@@ -1,0 +1,216 @@
+<?xml version="1.0"?>
+<!DOCTYPE TEI.2 PUBLIC '-//BIBIT//DTD BibIt L1 TEI Document Type//EN' 'bibit-l1.dtd'>
+<?xml-stylesheet type="text/xsl" href="bozze.xsl"?>
+
+<TEI.2>
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+
+                <title>Urbino vista dal basso</title>
+
+                <author>Vincenzo Cerami</author>
+                <respStmt>
+                    <resp>Codifica</resp>
+                    <name>Lorenzo Geri</name>
+                    <name>Simone Onofri</name>
+                    <name>Sara Santorsa</name>
+                    <name>Daniele Silvi</name>
+                    <name>Marcello Vicidomini</name>
+                </respStmt>
+            </titleStmt>
+            <publicationStmt>
+                <publisher>Facoltà di Lettere e Filosofia, Università di Roma Tre. </publisher>
+                <pubPlace>Roma</pubPlace>
+                <date>2006</date>
+            </publicationStmt>
+            <seriesStmt>
+                <title>Digital Variants</title>
+            </seriesStmt>
+
+            <sourceDesc>
+                <bibl>
+
+                    <title>Urbino vista dal basso</title>
+                    <author>Vincenzo Cerami</author>
+
+                    <editor/>
+                    <publisher/>
+                    <pubPlace/>
+                    <date/>
+                </bibl>
+            </sourceDesc>
+        </fileDesc>
+        <profileDesc>
+
+            <langUsage>
+                <language id="codice">italiano</language>
+
+            </langUsage>
+        </profileDesc>
+
+        <revisionDesc>
+            <change>
+                <date>27-04-2006</date>
+                <respStmt>
+                    <name>Marcello Vicidomini</name>
+                </respStmt>
+                <item>Codifica delle correzioni sulle bozze di stampa</item>
+            </change>
+        </revisionDesc>
+    </teiHeader>
+
+    <text>
+        <body>
+            <div1>
+                <head>Una donna alta</head>
+                <p>Da qualche parte deve essere scritto - forse in ebraico antico o in sanscrito -
+                    che i cani non ragliano e le galline non miagolano, così come gli zoppi non
+                    saltano e gli orbi non guidano l'aeroplano. Se sei nato tondo, insomma, neanche
+                    un miracolo ti farà morire quadrato. Fin qui può anche andar bene: tutto sommato
+                    il cane è contento di abbiare e l'asino di ragliare.</p>
+                <p>La vera complicazione nasce quando la vita, per chi sa quali assurde circostanze,
+                    ti offre, per una volta, e su un piatto d'argento, la possibilità di essere ciò
+                    che vorresti veramente essere... e tu, incredulo, forse per paura, o forse
+                    perché schiavo della sorte, fai del tutto perché il miracolo non si compia. In
+                    questo caso si diventa vittime di se stessi: prigionieri del nostro destino, in
+                    una furia masochistica, ci precipitiamo a richiudere la porta improvvisamente
+                    aperta <del n="cerami_bozze_sospa">sull</del>
+                    <add place="right" n="cerami_bozze_sospa">all</add>'aria frizzantina della
+                    libertà. Ed è la complcità attiva, la colpevole combutta con il proprio destino
+                    a nere malinconica e grigia ogni infelicità.</p>
+                <p>Ho deiciso di <del n="cerami_bozze_sospa">nere pubblico</del>
+                    <add place="right" n="cerami_bozze_sospa">dare pubblicità a</add> un episodio
+                    della mia vita affinché possa servire da insegnamento per tutti e non solo per
+                    chi, come me, è stato punito dalla natura a non rientrare nell'altezza standard
+                    della razza umana. Sono convinto che la mia vicenda è così zeppa di filosofia e
+                    di metafore universali, da coinvolgere uomini e donne di ogni statura.</p>
+                <p>L'avventura ebbe come teatro l'incantevole città di Urbino, durante un convegno
+                    di studi. Ero stato invitato a parlare dei terreni vulcanici. Avevo preparato un
+                    intervento sul metasilicato di alluminio e potassio presente in molte zone del
+                    Lazio e della Toscana. Stavo seduto al bar con i miei fogli in mano quando,
+                    girando pagina, bloccai lo sguardo su due stupende ginocchia - femminili
+                    naturalmente - che si erano fermate proprio accanto a me. Mi alzai in piedi
+                    quasi per dovere, e il naso mi si arrestò a due palmi da un seno che premeva
+                    forsennatamente contro la camicietta bianca. Dovetti sollevare il meno per
+                    guardare in faccia quel monumento di ragazza. Non credevo ai miei occhi. Dietro
+                    di lei s'era formato un semicerchio di congressisti con gli occhiali in mano,
+                    talmente incantati nell'ammirare quella dea dell'Olimpo da non accorgersi della
+                    comicità del quadro: io e lei vicini sembravamo l'articolo «il», ma con la elle
+                    maiuscola, così: iL.</p>
+                <p>Appena lei, spedito già per il lunghissimo esofago un bicchiere d'acqua, si
+                    mosse, tutti quei professori, presi dallo spavento, scapparono come scarafggi
+                    per andare a rintanarsi nelle loro stanzette. In effetti Rossella sembrava la
+                    statua della Libertà: bella, araldica e minacciosa. In più indossava una gonna
+                    stretta e corta cosicché le due gambe si potevano ammirare in tutta la loro
+                    scultorea perfezione. La scellerata, oltre tutto, quasi per dispetto, calzava
+                    due scarpe dai tacchi alti e sottili. E anche il suo seno, che per una ragazza
+                    di statura normale avrebbe rappresentato un pesante fardello da portare avanti,
+                    piazzato lassù, appariva perfino troppo discreto. La vidi uscire dal bar e dopo
+                    un po' vidi scomparire anche la sua ombra.</p>
+                <p>Il giorno dopo seppi - e quasi svenni dall'emozione - che Rossella era entrata a
+                    bere un bicchiere d'acqua proprio per farsi notare da me. Me lo disse lei stessa
+                    fermandomi subito fuori dalla sala dei congressi. - Professore! -: è così che mi
+                    gelò. Voltai la testa, era lei. Da quanto tempo voleva conoscermi! Aveva letto
+                    con sommo interesse i miei studi sulla leucite e sul caolino. Ma l'aveva
+                    soprattutto colpita il mio stile di scrittura, «così essenziale e così
+                    palpitante, ricco di citazioni colte, cercate fuori dalla mineralogia: nella
+                    poesia, nella filosofia, nell'arte». Lì per lì feci fatica a credere che stava
+                    parlando di me. La fissavo da sotto i sopraccigli. Volle fare due passi su per
+                    le salite dell'antica cittadina. Io, da uomo di piccola statura che conosce
+                    queste cose, immerso con lei nelle sublimi bellezze di Urbino, mi sperticavo in
+                    lodi per la statura artistica e spirituale dei grandi uomini del passato. Si
+                    finì per parlare di altezza e bassezza umana, ma sempre rifenoci all'animo e
+                    all'indole delle persone.</p>
+                <p>Avevo l'impressione che quei discorsi liberassero Rossella da chi sa quali pesi,
+                    perché lei mostrava di apprezzarli più del dovuto. La giovane collega s'era
+                    presentata al Convegno con un intervento sulle ultime tecniche di estrazione
+                    industriale dell'alluminio dalla bauxite. E ora, tanto dire e fantasticare di
+                    cose effimere, stravaganti, così lontane dalla chimica inorganica, di artisti
+                    sfaccendati e pazzi, di nobili urbinati decadenti e megalomani, le smuoveva
+                    l'immaginazione e la esaltava. E in quell'aria appena sognante che s'era creata
+                    fra di noi, le sbocciavano tra le labbra sorrisi di raro candore. In poche
+                    parole, per una volta mi sono lasciato andare: approfittando della magia
+                    dell'incontro, provai ad innamorarmi un poco di Rossella.</p>
+                <p>Qualcuno nel vederci vicini rideva, me ne accorgevo. Ma mi ero intestardito con
+                    me stesso e chiudevo gli occhi. D'altra parte, pensavo, Rossella era talmente
+                    alta che tutti gli uomini le dovevano apparire bassi. Io per lei non ero tanto
+                    più basso degli altri. E poi, devo dire la verità, Rossella sembrava proprio
+                    presa da me, mi veniva dietro ovunque andassi.</p>
+                <p>Lei stava in un altro albergo, ma era sempre la prima a muoversi. Suonava il
+                    telefono della mia camera e il portiere, con tono ammiccante, mi annunciava che
+                    la dottoressa era là ad aspettarmi. A pranzo, a cena, la mattina, il pomeriggio,
+                    sempre <del n="cerami_bozze_sospa">assieme</del>
+                    <add place="right" n="cerami_bozze_sospa">vicini</add>. Tanto è vero che i
+                    colleghi cominciarono a guardarmi con occhi <del n="cerami_bozze_elpa"
+                    >molto</del> diversi da prima. Non riuscivano ad accettare l'idea che quel bel
+                    quintale di ragazza si fosse invaghito di me. A turno ci seguivano per
+                    controllare se andavamo o no a letto insieme. Non l'avrebbero sopportato.</p>
+                <p>Ci ritrovammo nella camera di lei quasi per caso. Tutto accadde con disarmante
+                    naturalezza. Anche perché le ore passate di bar in bar o su per le salitelle di
+                    Urbino, avevano cominciato presto a riempirsi di frettolosi bacini e di qualche
+                    furtiva carezza. Fino a quanto, giunti davanti all'albergo di Rossella, non
+                    avevamo più occhi che per noi stessi. Lei si fece consegnare la chiave e questa
+                    volta, invece di allungarmi la mano per salutarmi, si diresse un po' tremante
+                    verso l'ascensore. Entrò e m'aspettò lì.</p>
+                <p>Era una camera doppia, oro e avana, con un letto pieno di cuscini. Ma appena la
+                    porta si richiuse alle nostre spalle fui investito da problemi nuovi, a cui non
+                    avevo pensato. Diciamo da pensieri di carattere tecnico. Niente avrebbe potuto
+                    evitare che io fossi costretto continuamente e alternativamente a scegliere tra
+                    i baci e il sesso propriamente detto. Una cosa escludeva necessariamente
+                    l'altra. I primi baci vennero naturali perché, sdraiati com'eravamo sul letto,
+                    la mia bocca e la sua stavano alla stessa altezza. Anche se i miei piedi
+                    navigavano tra le sue ginocchia. Ma poi, quando la passione, come sempre fa e
+                    come è giusto che faccia, chiese di più, ritardai ogni iniziativa avventurosa
+                    per non rompere l'incantesimo con qualche errore grossolano. così per un tempo
+                    che <del n="cerami_bozze_sospa">a</del>
+                    <add place="right" n="cerami_bozze_sospa">ad</add>
+                    <del n="cerami_bozze_sospa">persone</del>
+                    <add place="right" n="cerami_bozze_sospa">amanti</add> di statura più o meno
+                    uguale sembrerebbe spropositato, Rossella e io ci perdemmo nei baci. E mentre
+                    ero lì che mi beavo tra quelle lunghe braccia succhiando nettare dalle sue
+                    labbra, con un soffio, quasi un sospiro, squillò il telefono. Era il marito di
+                    Rossella, chiamava dall'automobile: poche ore e sarebbe giunto in albergo. Una
+                    sorpresa.</p>
+                <p>Di quell'uomo Rossella non mi aveva mai fatto cenno. E ora, riabbassando <del
+                        n="cerami_bozze_sospa">il telefono</del>
+                    <add place="right" n="cerami_bozze_sospa">la cornetta</add>, non sembrava voler
+                    cambiare atteggiamento: si trovava tra le mie braccia e non voleva pensare ad
+                    altro. Io provai a chiedere entro quanto tempo sarebbe arrivato il marito. - Non
+                    lo so, - fece lei restando a occhi chiusi, - due, tre ore. Ma adesso non ci
+                    pensare, stringimi forte!</p>
+                <p>L'incantesimo non doveva rompersi. Sarebbe st<del n="cerami_bozze_sle">ato</del>
+                    <add place="right" n="cerami_bozze_sle">ata</add>
+                    <del n="cerami_bozze_elpa">la fine di tutto</del> un epilogo triste e
+                    imbarazzante. Io, quasi piangendo dalla frustrazione, continuavo a coprirla di
+                    baci, e con più trasporto di prima. Per qualche ragione oscura volevo pnerla a
+                    schiaffi e insultarla. Tuttavia sentivo dentro di me, nella parte più nascosta,
+                    più segreta, un sapore di buono. Non capivo cosa fosse, ma ero certo che
+                    qualcosa di positivo, di bello si stava muovendo nel mio spirito. Malgrado la
+                    sgradevolezza e la violenza della situazione, ero sempre più felice. Di colpo
+                    capii di che si trattava: all'origine di quel piccolo dramma il mio metro e
+                    sessantadue non c'entrava per niente. Per la prima volta nella vita mi trovavo
+                    nel cuore di un problema intimo in cui la mia statura non <del
+                        n="cerami_bozze_sospa">entrava per nulla</del>
+                    <add place="right" n="cerami_bozze_sospa">era</add> in gioco. Insomma, in quel
+                    momento, avvinghiato a quel corpo di miele, ero oggettivamente uguale a un uomo
+                    alto due metri <del n="cerami_bozze_sospa">e</del>
+                    <add place="right" n="cerami_bozze_sospa">o</add> anche più, magnificamente
+                    gettato dentro la più ovvia e quotidiana questione di corna.</p>
+                <p>Non vedevo l'ora che arrivasse il marito per scappare come un ladro. la felicità
+                    che stavo scopno dentro di me mi dette la forza di inorgoglirmi e di mostrarmi
+                    offeso. Profondamente offeso. Ripresi i miei abiti, dissi a Rossella di
+                    aspettare da sola suo marito e me ne andai a testa alta, sbattendo la porta.</p>
+                <p>Più tardi, quando rimasi solo, mi posi questa domanda: «Ma se fossi stato alto
+                    due metri, me ne sarei andato così? Avrei così facilmente rinunciato a una
+                    ghiottoneria tanto rara e forse anche a una grande storia d'amore che poteva
+                    nascere?»</p>
+                <p>Amaramente dovetti confessare a me stesso di non essermi comportato da persona
+                    alta: l'occasione di sentirmi finalmente l'uomo che ho sempre sognato di esere
+                    m'era stata offerta. A Urbino. E io, timorato servo del mio destino, l'avevo
+                    rifiutata. Con eleganza, ma l'avevo rifiutata.</p>
+            </div1>
+        </body>
+    </text>
+
+</TEI.2>

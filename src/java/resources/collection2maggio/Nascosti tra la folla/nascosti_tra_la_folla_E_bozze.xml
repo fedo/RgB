@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!--<!DOCTYPE TEI.2 PUBLIC '-//BIBIT//DTD BibIt L1 TEI Document Type//EN' 'bibit-l1.dtd'>-->
+<?xml-stylesheet type="text/xsl" href="dattiloscritti.xsl"?>
+
+<TEI.2>
+<teiHeader>
+<fileDesc>
+<titleStmt>
+	
+	<title>Nascostri tra la folla</title>
+	
+	<author>Vincenzo Cerami</author>
+	<respStmt>
+	<resp>Codifica</resp>
+	<name>Lorenzo Geri</name>
+	<name>Simone Onofri</name>
+	<name>Sara Santorsa</name>
+	<name>Daniele Silvi</name>
+	<name>Marcello Vicidomini</name>
+	</respStmt>
+</titleStmt>
+<publicationStmt>
+	<publisher>Facoltà di Lettere e Filosofia, Università di Roma Tre. 
+</publisher>
+	<pubPlace>Roma</pubPlace>
+	<date>2006</date>
+</publicationStmt>
+<seriesStmt>
+	<title>Digital Variants</title>
+</seriesStmt>
+
+<sourceDesc>
+	<bibl>
+
+	<title>Nascosti tra la folla</title>
+	<author>Vincenzo Cerami</author>
+	
+	<editor></editor>
+	<publisher></publisher>
+	<pubPlace></pubPlace>
+	<date></date>
+	</bibl>
+</sourceDesc>
+</fileDesc>
+<profileDesc>
+	
+	<langUsage>
+	<language id='codice'>italiano</language>
+	
+	</langUsage>
+</profileDesc>
+
+	<revisionDesc>
+	<change>
+	<date>12-02-2006</date>
+	<respStmt>
+	<name>Marcello Vicidomini</name>
+	</respStmt>
+	<item>Codifica delle correzioni sulle bozze di stampa Einaudi</item>
+	</change>
+</revisionDesc>
+</teiHeader>
+
+<html>
+    <body>
+        <div1>
+            <head>Nascosti tra la folla</head>
+            <p>Ho conosciuto Patrizio da ragazzo. Abbiamo frequentato assieme i cinque anni del Liceo Scientifico Plinio Seniore. Quello che gli è successo non mi ha fatto dormire per molte notti perché sentivo che in qualche modo anch’io, come tanti nostri comuni amici, come forse mezza Italia, non siamo estranei al suo destino. Quando seppi che <del hand="cerami_bozze_elpa">Patrizio</del><del hand="cerami_bozze_elle">,</del> da un giorno all’altro<del hand="cerami_bozze_elle">,</del> aveva cominciato a essere <del hand="cerami_bozze_elpa">così</del> platealmente scostumato, non volli crederci: io lo conoscevo come un ragazzo assennato, felice della sua tranquilla agiatezza e soprattutto così appartato che per non farsi notare si metteva la cravatta tra persone incravattate e se ne stava beatamente in camiciola fra persone che non davano troppa importanza alle formalità. Anche nei normali fervori giovanili, quando gli amici scendevano volentieri in piazza per difendere i grandi valori della giustizia e i diritti della persona umana, per gridare il loro sdegno contro i razzismi e le ingiustizie dei potenti, Patrizio si mostrava sempre pacato e misurato. Chissà perché, d’improvviso, saltarono fuori episodi inquietanti e perfino incredibili che lo riguardavano.</p>
+            <p>Volli saperne di più perché se i pettegolezzi si fossero rivelati fondati, significava che il mio amico stava passando un momento difficile, che aveva bisogno di aiuto. D’altra parte, proprio grazie alla sua quieta saggezza, Patrizio più di una volta m’era stato vicino in momenti difficili in modo discreto e adulto. Non potevo sottrarmi al dovere di ricambiare vecchi favori.</p>
+            <p>Mi raccontavano che era diventato sordido, che spesso e volentieri palpava il sedere delle signore, sia per strada che in casa di amici. Mi dicevano che non si faceva scrupoli, nel pieno delle conversazioni, in un salotto o in un ristorante, con la massima naturalezza, a lasciare che le sue arie intestinali fuoriuscissero con tutto il loro fragore senza che sentisse nemmeno il bisogni di scusarsi. E questo non era ancora niente. Si era perfino sparsa la voce che la notte uscisse di casa apposta per andare a rompere i telefoni delle cabine pubbliche. E che si riempisse la pancia d’acqua per poter disporre di una maggiore quantità di urina da schizzare contro i portoni e le vetrine chiuse dei negozi.</p>
+            <p>Mi sembrava impossibile che Patrizio potesse fare tutte quelle porcherie. Ma subito mi tornò in mente che un nostro vecchio compagno di scuola, Andrea Fazio, qualche anno prima, era stato ricoverato per una settimana perché gli aveva preso una fissa bizzarra: raccoglieva le immondizie dalla strada e le riponeva sotto il proprio letto. Poi Andrea guarì e non se ne parlò più. Pensando però ad Andrea mi ricordai di un ragazzo che abitava sotto di me, tale Agazio. Un giorno egli sentì il bisogno di confessarmi una sua segretissima passione. Io mi stavo lamentando con lui dei mille piccioni che infestano il nostro quartiere. Allora subito Agazio, accendendo gli occhi, mi disse che passava ore e ore a organizzare le trappole più sofisticate per quelle bestiacce. Non dormiva la notte per ordire le sue micidiali trame. Una di queste trappole era così concepita. Siccome il quartiere, oltre a essere invaso dai piccioni è anche tormentato da gatti affamati e truculenti che si rintanano sotto le automobili parcheggiate, cosa faceva Agazio? Si procurava una piccola quantità di pesce marcio, spargeva questa nauseabonda pietanza tra le ruote delle macchine richiamando così l’attenzione dei gatti. Poi spargeva una busta di granaglie miste a granturco, molliche di pane, miglio, lungo tutto il marciapiede. Quindi si appostava poco lontano e aspettava che succedesse qualcosa. Infatti, spesso, di lì a poco alcuni piccioni venivano giù in picchiata dai cornicioni per pizzicare quelle saporite leccornie. I gatti, nascosti sotto le auto, l’acquolina ancora in bocca per quel pesce di cui avevano appena sentito l’odore, a passettini felpati e silenziosi puntavano sui piccioni. Uno balzava prima degli altri, i piccioni si involavano mentre il più debole <del hand="cerami_bozze_sospa">restava</del> <add place="right" hand="cerami_bozze_sospa">finiva</add> quasi sempre sotto le unghie del gattaccio<del hand="cerami_bozze_elle">,</del> che con una zampa lo costringeva all’immobilità e con i denti gli forava il cervello. Quando poi il piccione smetteva di agitare inutilmente le ali, il suo cadavere veniva trascinato sotto l’automobile e le sue carni strappate dai piccoli e ghignanti felini.</p>
+            <p>Insomma, in meno di un attimo, pensando al mio amico Patrizio, mi ero ricordato di altre due persone stravaganti. Preso da questa logica, non potevo fare a meno di interpretare come una eccentricità anche i più innocenti comportamenti, o almeno quelli che fino a quel momento avevo considerato innocenti. Volli velocemente analizzare mia moglie, così, quasi a cercarmi un esempio estremo, e di colpo rammentai quella volta in cui, in cucina, mentre tagliava il pane mi disse: - Scommetti che anche oggi riesco a tagliarmi un dito? - Non finì di parlare che lanciò un urlo. Il sangue usciva come da un rubinetto aperto, tanto che dovetti accompagnarla al pronto soccorso. Quell’episodio che avevo dimenticato, ora, mi tornava in testa sotto una luce diversa. Mi fermai qui, non volli cercare più nulla nella memoria, come se ne avessi paura, e mi recai a trovare Patrizio.</p>
+            <p>Ci parlai per un intero pomeriggio. Mi disse, con il tono normale di sempre, che quanto si malignava in giro era tutto vero. E quando volli sapere il perché di questo agire assurdo, vergognoso, mi rispose placidamente che quello era l’unico modo per lui di guarire da una insopportabile e inguaribile gastrite. Infatti, da quando aveva cominciato a lasciare liberamente agire tutti i suoi impulsi, sia buoni che cattivi, il mal di stomaco gli era completamente passato. E se prima si piegava dal dolore giorno e notte e non poteva mettere in bocca nulla, adesso godeva di sonni meravigliosi e digeriva anche i sassi. Quelle infamie, insomma, erano per Patrizio il male minore. Io <del hand="cerami_bozze_sospa">non seppi cosa replicare</del> a questo dato di fatto <add place="right" hand="cerami_bozze_sospa">non seppi cosa replicare</add>.</p>
+            <p>Quando rimasi solo provai a chiedermi se al suo posto avrei <del hand="cerami_bozze_sospa">fatto lo stesso</del> <add place="bottom" hand="cerami_bozze_sospa">agito nello stesso modo</add>. Non trovai una risposta. Ma mi convinsi che tutti i miei amici, i miei conoscenti, la maggioranza di quelli che conosco, hanno le loro innocenti nevrastenie. Più o meno come Patrizio. Tutti insieme formano forse un esercito rivoltoso, nascosto nella folla: una specie di grande e silente partito d’opposizione. Idea ben strana anche questa, che poteva essere partorita solo da un nevrotico che non smette di sognare la rivoluzione.</p>
+        </div1>
+    </body>
+</html>
+
+</TEI.2>

@@ -17,7 +17,7 @@ public class TeiTest {
     public static void main(String[] args) {
         
         TeiCollection collection = new TeiCollection();
-        collection.init("src/java/resources/collection1");
+        collection.init("src/java/resources/collection3maggioepuntotre");
         ArrayList<String> alstr = new ArrayList<String>();
         
         for(int i = 0; i < collection.getNumberOfDocument(); i++){

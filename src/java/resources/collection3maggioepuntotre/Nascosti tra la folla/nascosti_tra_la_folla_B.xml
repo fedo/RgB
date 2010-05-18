@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!--<!DOCTYPE TEI.2 PUBLIC '-//BIBIT//DTD BibIt L1 TEI Document Type//EN' 'bibit-l1.dtd'> -->
+<?xml-stylesheet type="text/xsl" href="dattiloscritti.xsl"?>
+
+<TEI.2>
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title>Nascostri tra la folla</title>
+                <author>Vincenzo Cerami</author>
+                <respStmt>
+                <resp>Codifica</resp>
+                <name>Lorenzo Geri</name>
+                <name>Simone Onofri</name>
+                <name>Sara Santorsa</name>
+                <name>Daniele Silvi</name>
+                <name>Marcello Vicidomini</name>
+                </respStmt>
+            </titleStmt>
+            <publicationStmt>
+                <publisher>Facoltà di Lettere e Filosofia, Università di Roma Tre.</publisher>
+                <pubPlace>Roma</pubPlace>
+                <date>2006</date>
+            </publicationStmt>
+            <seriesStmt>
+                <title>Digital Variants</title>
+            </seriesStmt>
+
+            <sourceDesc>
+                <bibl>
+                    <title>Nascosti tra la folla</title>
+                    <author>Vincenzo Cerami</author>
+                    <editor></editor>
+                    <publisher></publisher>
+                    <pubPlace></pubPlace>
+                    <date></date>
+                </bibl>
+            </sourceDesc>
+        </fileDesc>
+        <profileDesc>
+            <langUsage>
+                <language id='codice'>italiano</language>
+            </langUsage>
+        </profileDesc>
+        <revisionDesc>
+            <change>
+                <date>6-03-2006</date>
+                <respStmt>
+                    <name>Marcello Vicidomini</name>
+                </respStmt>
+                <item>Codifica delle correzioni d'autore sul dattiloscritto (I versione)</item>
+            </change>
+        </revisionDesc>
+    </teiHeader>
+
+    <html>
+        <body>
+            <div>
+                <head>L'ESERCITO DEI TIPI STRANI DNB/di .MDNN/ .MDNB/VINCENZO CERAMI</head>
+                <p><add place="left">Ho conosciuto</add> <del rend="tratto a matita">Conobbi</del> Patrizio da ragazzo. Abbiamo frequentato assieme i cinque anni del Liceo Scientifico Plinio Seniore. Quello che gli è successo non mi ha fatto dormire per molte notti perché sentivo che in qualche modo anch’io, come tanti nostri comuni amici, come forse mezza Italia, non siamo estranei al suo destino. Quando seppi che Patrizio, da un giorno all'altro, aveva cominciato ad essere così platealmente scostumanto, non volli crederci: io lo conoscevo come un raazzo estremamente assennato, felice della sua tranquilla agiatezza e soprattutto così appartato che per non farsi notare si metteva la cravatta tra persone incravattate e se ne stava beatamente in camiciola fra persone che non davano troppa importanza alle formalità. Anche nei normali fervori giovanili, quando gli amici scendevano volentieri in piazza per difendere valori e diritti della persona umana, per gridare il loro sdegno contro i razzismi e le ingiustizie dei potenti, Patrizio si mostrava sempre pacato e misurato. <del rend="tratto a matita">Chi sa</del> <add place="left">Chissà</add> invece perché, d'improvviso, <del rend="tratto a matita">avevano preso a raccontarmi di lui</del> <add place="right">saltarono fuori</add> episodi inquietanti<del rend="lettera aggiunta a matita">,</del> <add place="inline">e</add> perfino incredibili <add place="right">che lo riguardavano</add>. Volli saperne di più perché se i pettegolezzio si fossero rivelati fondati, significava che il mio amico stava passando un momento difficile, che aveva bisogno di aiuto. D'altra parte, proprio grazie alla sua quieta saggezza, Patrizio più di una volta m'era stato vicino nei miei momenti difficili <del rend="tratto a matita">nel</del> <add place="superlinear">in</add> modo <del rend="croce a matita">più</del> discreto e adulto. Non potevo sottrarmi al dovere di ricambiare quei vecchi favori.</p>
+                <p>Mi raccontavano che era diventato sordido, che spesso e volentieri palpava il sedere delle signore, sia per strada che in casa di amici. Mi dicevano che non si faceva scrupoli <del rend="croce a matita">e</del> nel pieno delle conversazioni, in un salotto o in un ristorante, con la massima naturalezza <add place="superlinear">di</add> lascia<del rend="lettere aggiunte a matita">va</del><add place="inline">re</add> che le sue arie intestinali fuor<del rend="croce a matita">i</del>uscissero con tutto il loro fragore senza che <del rend="croce a matita">lui</del> sentisse nemmeno il bisogno di scusarsi. E questo non era ancora niente. Si era perfino sparsa la voce che la notte uscisse di casa apposta per andare a rompere i telefoni delle cabine pubbliche. E che si riempisse la pancia d'acqua per poter disporre di una maggiore quantità di <del rend="tratto a matita">pipì</del> <add place="right">urina</add> da spargere contro i portoni e le vetrine chiuse dei negozi.</p>
+                <p>Mi sembrava impossibile che Patrizio potesse fare tutte quelle porcherie. Ma subito mi tornò in mente che un nostro vecchio compagno di scuola, Andrea Fazio, qualche anno prima, <del rend="tratto a matita">fu</del> <add place="superlinear">era stato</add> ricoverato per qualche settimana perché <del rend="tratto a matita">preda di</del> <add place="right">gli aveva preso</add> una fissa bizzarra: raccoglieva le immondizie dalla strada e le riponeva sotto il proprio letto. Poi Andrea guarì e non se ne parlò più. Pensando però ad Andrea mi ricordai di un ragazzo che abitava sotto di me, tale Agazio. Un giorno egli sentì il bisogno di confessarmi una sua segretissima passione. Io mi stavo lamentando con lui dei mille piccioni che infestano il nostro quartiere. Allora subito Agazio, accendendo gli occhi, mi disse che passava ore e ore a organizzare le trappole più sofisticate per quelle bestiacce. Non dormiva la notte per ordire le sua micidiali trame. Una di queste trappole era così concepita. Siccome il quartiere, oltre ad essere invaso dai piccioni è anche tormentato da gatti affamati e truculenti che si rintanano sotto le automobili parcheggiate, cosa faceva Agazio? Si procurava una piccola quantità di pesce marcio, spargeva questa nauseabonda pietanza tra le ruote delle macchine richiamando così l'attenzione dei gatti. Poi spargeva una busta di granaglie <del rend="tratto a matita">fatta</del> <add place="right">mista</add> di granturco, molliche di pane, miglio, lungo tutto il marciapiede. Quindi si appostava poco lontano e aspettava che succedesse qualcosa. Infatti, spesso, di lì a poco alcuni piccioni venivano giù in picchiata dai cornicioni per <del rend="tratto a matita">venire a</del> pizzicare quelle saporite leccornie. I gatti, nascosti sotto le auto, l'acquolina ancora in bocca per quel <del rend="tratto a matita">poco</del> pesce di cui avevano appena sentito l'odore, a passettini felpati e silenziosi puntavano sui piccioni. Uno balzava prima degli altri, i piccioni si involavano mentre il più debole restava quasi sempre sotto le unghie del gattaccio, <del rend="tratto a matita">il quale</del> <add place="right">che</add> con una zampa lo costringeva all'immobilità e con i denti gli forava il cervello. Quando poi il piccione smetteva di agitare inutilmente le ali, il suo cadavere veniva trascinato sotto l'automobile e le sue carni strappate dai piccoli e ghignanti felini.</p>
+                <p>Insomma, in meno di un attimo, pensando al mio amico Patrizio, mi erano tornate alla mente altre due persone stravaganti. Preso da questa logica, non potevo fare a meno di interpretare come una stravaganza anche i più innocenti  comportamenti, o almeno quelli che fino a quel momento <del rend="tratto a matita">consideravo</del> <add place="right">avevo considerato</add> innocenti. Volli velocemente analizzare mia moglie, così, quasi a cercarmi un esempio estremo, e di colpo mi ricordai di quella volta in cui, in cucina, mentre tagliva il pane mi disse: "Scommetti che anche oggi riesco a tagliarmi un dito?" Non finì di parlare che lanciò un urlo. Il sangue usciva come da un rubinetto aperto, tanto che dovetti accompagnarla al pronto soccorso. <del rend="tratto a matita">Fu un caso, per carità, tuttavia</del> quell'episodio che avevo dimenticato da tempo, ora, mi tornava in testa sotto una luce diversa. Mi fermai qui, non volli cercare più nulla nella memoria, come <add place="inline">se</add> ne avessi parua, e mi recai a trovare Patrizio.</p>
+                <p>Ci parla per un intero pomeriggio. Mi disse, con il tono normale di sempre, che quanto si malignava in firo era tutto vero. E quando volli sapere il perché di questo suo comportamento assurdo, vergognoso, mi rispose placidamente che quello era l'unico modo per lui di guarire da una insopportabile e inguaribile gastrite. Infatti, da quando aveva cominciato a lasciare liberamente agire tutti i suoi impulsi, sia i buoni che i cattivi, il mal di stomaco gli era completamente passato. E se prima si piegava dal dolore giorno e notte e non poteva mettere in bocca nulla, adesso godeva di sonni meravigliosi e digeriva anche i sassi. Quelle infamie, insomma, erano per Patrizio il male minore. Io non seppi cosa replicare a questo dato di fatto. Me ne andai augurandogli di non intontrare troppi guai nella vita <del rend="tratto a matita">per questo suo modo disgustoso di fare</del>.</p>
+                <p>Quando rimasi solo provai a chiedermi se al suo posto avrei fatto lo stesso. Non trovai una risposta. E forse, pensai, non c'era nessuna risposta neanche per i comportamenti delle persone strane che mi erano tornate alla mente. In quel momento mi convinsi <del rend="tratto a matita">perfino</del> che tutti i miei amici, i miei conoscenti, io stesso, abbiamo le nostre <del rend="tratto a matita">piccole</del> depravazioni. Visti tutti insieme, legati uno all'altro come le salsicce, tanti tic, tante manie, tanti vandalismi e autolesionismi, altro non sono che le nostre piccole e involontarie rivolte contro un mondo nel quale il male non esiste più. Mi convinsi che queste mille malformazioni nascoste nella gente <del rend="tratto a matita">normale</del>, nella <del rend="tratto a matita">loro</del> normale vita di tutti i giorni, presenti in ogni appartamento, in ogni palazzo, in ogni condominio, formavano un grande e muto partito d'opposizione. Idea ben strana anche questa, che poteva essere partorita solo da chi sogna di mettere una bomba davanti all'ambasciata americana quando si accorge che sua moglie gli mette le corna...</p>
+            </div>
+        </body>
+    </html>
+
+</TEI.2>

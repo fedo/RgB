@@ -18,6 +18,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HasAlignment;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.http.client.*;
 import java.util.ArrayList;
 
 /**
@@ -43,9 +44,9 @@ public class MainEntryPoint implements EntryPoint {
      * that declares an implementing class as an entry-point
      */
     public void onModuleLoad() {
-        Log.setCurrentLogLevel(Log.getLowestLogLevel());
-        Log.setUncaughtExceptionHandler();
-        Log.info("msg");
+        //Log.setCurrentLogLevel(Log.getLowestLogLevel());
+        //Log.setUncaughtExceptionHandler();
+        //Log.info("msg");
         DockPanel mainPanel = new DockPanel();
         mainPanel.setBorderWidth(5);
         mainPanel.setSize("100%", "100%");
@@ -99,12 +100,35 @@ public class MainEntryPoint implements EntryPoint {
 
     protected Widget createWestWidget() {
 
-        VerticalPanel west = new VerticalPanel();
+        final VerticalPanel west = new VerticalPanel();
         Label title = new Label("West");
 
         west.add(title);
-        west.add(createDoclistWidget());
-        west.add(createDoclistWidgetRPC());
+        //west.add(createDoclistWidget());
+        //west.add(createDoclistWidgetRPC());
+
+        String url = "http://localhost:8080/RgB/Tei";
+        RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(url));
+
+        try {
+            Request request = builder.sendRequest(null, new RequestCallback() {
+
+                public void onError(Request request, Throwable exception) {
+                    // Couldn't connect to server (could be timeout, SOP violation, etc.)
+                }
+
+                public void onResponseReceived(Request request, Response response) {
+                    if (200 == response.getStatusCode()) {
+                        west.add(new HTML(response.getText()));
+                    } else {
+                        // Handle the error.  Can get the status text from response.getStatusText()
+                    }
+                }
+            });
+        } catch (RequestException e) {
+            // Couldn't connect to server
+        }
+
 
         return west;
     }

@@ -5,10 +5,10 @@
 
 package it.unibo.cs.rgb.gwt.server;
 
+import com.google.gwt.http.client.*;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import it.unibo.cs.rgb.gwt.client.GWTServiceTei;
-import it.unibo.cs.rgb.gwt.tei.TeiCollection;
 
 import java.util.ArrayList;
 
@@ -27,13 +27,11 @@ public class GWTServiceTeiImpl extends RemoteServiceServlet implements GWTServic
     }
 
     public ArrayList getTeiInfo() {
-        ArrayList<String> teiDocuments = new ArrayList<String>();
+        final ArrayList<String> teiDocuments = new ArrayList<String>();
         teiDocuments.add("Info primo documento tei");
         teiDocuments.add("Info secondo documento tei");
         teiDocuments.add("Info terzo documento tei");
-        
-        TeiCollection collection = new TeiCollection();
-        collection.init("src/java/resources/collection1");
+
         /*
         ArrayList<String> alstr = new ArrayList<String>();
 

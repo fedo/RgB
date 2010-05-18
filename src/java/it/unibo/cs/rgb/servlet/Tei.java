@@ -9,14 +9,10 @@ import it.unibo.cs.rgb.gwt.tei.TeiCollection;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  *
@@ -34,17 +30,36 @@ public class Tei extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
 
-        response.setContentType("application/json;charset=UTF-8"); //corretto
+        response.setContentType("application/xhtml;charset=UTF-8");
         response.setHeader("Cache-Control", "no-cache");
+        response.setStatus(200);
 
-        JSONObject json = new JSONObject();
+        PrintWriter out = response.getWriter();
+
+                    // creazione json dai files tei
+            TeiCollection collection = new TeiCollection();
+            collection.init("/Users/fedo/data/programming/netbeans/RgB/src/java/resources/collection3maggioepuntotre");
+
+            out.println("<ul>");
+            for (int i = 0; i < collection.getNumberOfDocument(); i++) {
+                out.println("<li>"+collection.getTeiDocument(i).getTeiName()+"</li>");
+                /*file = new JSONObject();
+                file.accumulate("aboslutePath", collection.getTeiDocument(i).getAbsolutePath());
+                file.accumulate("author", collection.getTeiDocument(i).getAuthor());
+                json.put(""+i, file);*/
+            }
+            out.println("</ul>");
+        
+
+
+        /*JSONObject json = new JSONObject();
         try {
             JSONObject file = new JSONObject();
             
-            /*// esempio
+            // esempio
             file.accumulate("aboslutePath", "/uon/due/tre");
             file.accumulate("filename", "testo.xml");
-            json.put("primo",file);*/
+            json.put("primo",file);
 
             // creazione json dai files tei
             TeiCollection collection = new TeiCollection();
@@ -62,7 +77,7 @@ public class Tei extends HttpServlet {
         }
         
         PrintWriter out = response.getWriter();
-        out.print(json.toString());
+        out.print(json.toString());*/
 
         /*response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();

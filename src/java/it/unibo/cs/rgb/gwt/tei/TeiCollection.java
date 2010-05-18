@@ -51,6 +51,24 @@ public class TeiCollection {
 
         for (int i = 0; i < listOfFiles.length; i++) {
             String filename = listOfFiles[i].getName();
+            if (listOfFiles[i].isFile()) {
+                //file xml
+                if (filename.endsWith(".xml")) {
+                    listOfTei.add(new TeiDocument(path + "/" + filename, "file"));
+                }
+            } else if (listOfFiles[i].isDirectory()) {
+                //cartella con documenti xml
+                    listOfTei.add(new TeiDocument(path + "/" + filename, "directory"));
+            }
+        }
+
+
+
+
+
+
+        /*for (int i = 0; i < listOfFiles.length; i++) {
+            String filename = listOfFiles[i].getName();
             //System.out.println("DEBUG TeiCollection: processing "+path+"/"+filename);
             if (listOfFiles[i].isFile()) {
                 if (filename.endsWith(".xml")) {
@@ -62,7 +80,7 @@ public class TeiCollection {
                 fillList(path + "/" + filename, deep + 1);
             }
             
-        }
+        }*/
 
     }
 
