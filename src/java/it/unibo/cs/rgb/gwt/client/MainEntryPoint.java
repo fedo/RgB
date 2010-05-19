@@ -20,9 +20,6 @@ import com.google.gwt.user.client.ui.HasAlignment;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.http.client.*;
 import com.google.gwt.xml.client.Document;
-import com.google.gwt.xml.client.Element;
-import com.google.gwt.xml.client.Node;
-import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -131,27 +128,72 @@ public class MainEntryPoint implements EntryPoint {
                         Document responseXml = XMLParser.parse(response.getText().toString());
 
                         int lenght = new Integer(responseXml.getElementById("numberOfDocuments").getFirstChild().toString());
-                        west.add(new Label("numero documenti: "+lenght));
-                        //west.add(new Label(list.item(0).getChildNodes().toString()));
+                        //west.add(new Label("numero documenti: "+lenght));
 
-                        //per ogni documento tei nella lista
-                        //west.add(new Label(responseXml.getElementsByTagName("ul").toString()));
-                        //west.add(new Label(responseXml.getElementsByTagName("ul").item(0).toString()));
-                        //NodeList list = responseXml.get;
-                        for(int i=0; i<lenght;i++){
-                           String current = responseXml.getElementsByTagName("li").item(i).toString();
-                           //west.add(new Label(current));
-                           Document currentXml = XMLParser.parse(current);
-                           west.add(new Label(currentXml.getElementById("teiname").getFirstChild().toString()));
+                        for (int i = 0; i < lenght; i++) {
+                            HashMap documentInfo = new HashMap();
+                            String current = responseXml.getElementsByTagName("li").item(i).toString();
+                            Document currentXml = XMLParser.parse(current);
+                            Label currentWidget;
+
+                            documentInfo.put("teiname", new HTML(currentXml.getElementById("teiname").getFirstChild().toString()).getHTML());
+
+                            final String teiname = (String) documentInfo.get("teiname");
+                            currentWidget = new Label(teiname);
+                            currentWidget.addClickHandler(new ClickHandler() {
+
+                                public void onClick(ClickEvent event) {
+                                    int index = docviewPanel.getWidgetCount() - 1;
+
+                                    // cerco il tab
+                                    while (index >= 0) {
+                                        if (docviewPanel.getWidget(index).getTitle().equalsIgnoreCase(teiname)) {
+                                            docviewPanel.selectTab(index);
+                                            break;
+                                        }
+                                        index--;
+
+                                    }
+
+                                    // tab non esiste
+                                    if (index < 0) {
+
+                                        // contenuto del tab
+                                        final Widget tabPanel = createDocviewTab(teiname);
+
+                                        // tabText
+                                        HorizontalPanel tabText = new HorizontalPanel();
+
+                                        //TODO: visualizzare un tabText "carino"
+                                        Label tabTitle = new Label("Tab " + teiname);
+                                        tabText.add(tabTitle);
+
+                                        // X che chiude il tab
+                                        ClickHandler xclose = new ClickHandler() {
+
+                                            public void onClick(ClickEvent event) {
+                                                docviewPanel.remove(tabPanel);
+                                            }
+                                        };
+                                        Label x = new Label("X");
+                                        x.addClickHandler(xclose);
+                                        tabText.add(x);
+
+                                        docviewPanel.add(tabPanel, tabText);
+                                        docviewPanel.selectTab(docviewPanel.getWidgetCount() - 1);
+                                    }
+                                }
+                            });
+
+
+                            west.add(currentWidget);
+
                         }
-                        
-                        //west.add(new Label("XXX "+responseXml.getElementsByTagName("li").item(0).toString()));
-                        //west.add(new Label("XXX "+responseXml.getElementsByTagName("li").item(0)));
-                        //west.add(new Label("X "+DOM.get(null)));
 
-                        HashMap documentInfo = new HashMap();
-                        //documentInfo.put("teiname", debug);
-                        //documentInfo.put("absolutepath", )
+
+
+
+
                     } else {
                         // Handle the error.  Can get the status text from response.getStatusText()
                     }
@@ -167,7 +209,7 @@ public class MainEntryPoint implements EntryPoint {
         //Document doc = XMLParser.parse(tmpresponse);
         //Document tmpparsato = XMLParser.parse(tmpresponse);
 
-       // west.add(new Label("figli "+tmpparsato.getFirstChild().getNodeValue().toString()));
+        // west.add(new Label("figli "+tmpparsato.getFirstChild().getNodeValue().toString()));
 
 
 
