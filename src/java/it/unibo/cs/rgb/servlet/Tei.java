@@ -30,7 +30,7 @@ public class Tei extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
 
-        response.setContentType("application/xhtml;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         response.setHeader("Cache-Control", "no-cache");
         response.setStatus(200);
 
@@ -40,15 +40,21 @@ public class Tei extends HttpServlet {
             TeiCollection collection = new TeiCollection();
             collection.init("/Users/fedo/data/programming/netbeans/RgB/src/java/resources/collection3maggioepuntotre");
 
-            out.println("<ul>");
+            out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+            //out.println("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">");
+            out.println("<html xmlns=\"http://www.w3.org/1999/xhtml\" version=\"1.0\">");
+
+            out.println("<p>numero documenti tei: <span id=\"numberOfDocuments\">"+collection.getNumberOfDocument()+"</span></p>");
+
+            out.println("\t<ul>");
             for (int i = 0; i < collection.getNumberOfDocument(); i++) {
-                out.println("<li>"+collection.getTeiDocument(i).getTeiName()+"</li>");
-                /*file = new JSONObject();
-                file.accumulate("aboslutePath", collection.getTeiDocument(i).getAbsolutePath());
-                file.accumulate("author", collection.getTeiDocument(i).getAuthor());
-                json.put(""+i, file);*/
+                out.println("<li id=\"document\">");
+                out.println("<span id=\"teiname\">"+collection.getTeiDocument(i).getTeiName()+"</span>: ");
+                out.println("<span id=\"absolutepath\">"+collection.getTeiDocument(i).getAbsolutePath()+"</span>,");
+                out.println("</li>");
             }
             out.println("</ul>");
+            out.println("</html>");
         
 
 

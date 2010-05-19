@@ -19,7 +19,13 @@ import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HasAlignment;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.http.client.*;
+import com.google.gwt.xml.client.Document;
+import com.google.gwt.xml.client.Element;
+import com.google.gwt.xml.client.Node;
+import com.google.gwt.xml.client.NodeList;
+import com.google.gwt.xml.client.XMLParser;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Main entry point.
@@ -29,7 +35,7 @@ import java.util.ArrayList;
 public class MainEntryPoint implements EntryPoint {
 
     TabPanel docviewPanel = new TabPanel();
-    final ArrayList<String> doclist = new ArrayList<String>();
+    final ArrayList<HashMap> doclist = new ArrayList<HashMap>();
     HorizontalPanel debug = new HorizontalPanel();
     String strglobal = "sono una stringa global";
     
@@ -109,6 +115,8 @@ public class MainEntryPoint implements EntryPoint {
 
         String url = "http://localhost:8080/RgB/Tei";
         RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(url));
+        final HTML tmp = new HTML();
+        final String tmpresponse = "";
 
         try {
             Request request = builder.sendRequest(null, new RequestCallback() {
@@ -119,7 +127,31 @@ public class MainEntryPoint implements EntryPoint {
 
                 public void onResponseReceived(Request request, Response response) {
                     if (200 == response.getStatusCode()) {
-                        west.add(new HTML(response.getText()));
+                        //xhtml parsing
+                        Document responseXml = XMLParser.parse(response.getText().toString());
+
+                        int lenght = new Integer(responseXml.getElementById("numberOfDocuments").getFirstChild().toString());
+                        west.add(new Label("numero documenti: "+lenght));
+                        //west.add(new Label(list.item(0).getChildNodes().toString()));
+
+                        //per ogni documento tei nella lista
+                        //west.add(new Label(responseXml.getElementsByTagName("ul").toString()));
+                        //west.add(new Label(responseXml.getElementsByTagName("ul").item(0).toString()));
+                        //NodeList list = responseXml.get;
+                        for(int i=0; i<lenght;i++){
+                           String current = responseXml.getElementsByTagName("li").item(i).toString();
+                           //west.add(new Label(current));
+                           Document currentXml = XMLParser.parse(current);
+                           west.add(new Label(currentXml.getElementById("teiname").getFirstChild().toString()));
+                        }
+                        
+                        //west.add(new Label("XXX "+responseXml.getElementsByTagName("li").item(0).toString()));
+                        //west.add(new Label("XXX "+responseXml.getElementsByTagName("li").item(0)));
+                        //west.add(new Label("X "+DOM.get(null)));
+
+                        HashMap documentInfo = new HashMap();
+                        //documentInfo.put("teiname", debug);
+                        //documentInfo.put("absolutepath", )
                     } else {
                         // Handle the error.  Can get the status text from response.getStatusText()
                     }
@@ -128,6 +160,16 @@ public class MainEntryPoint implements EntryPoint {
         } catch (RequestException e) {
             // Couldn't connect to server
         }
+
+        //crezione menu
+
+        //String xml = "<element att=\"some attribute\">some text</element>";
+        //Document doc = XMLParser.parse(tmpresponse);
+        //Document tmpparsato = XMLParser.parse(tmpresponse);
+
+       // west.add(new Label("figli "+tmpparsato.getFirstChild().getNodeValue().toString()));
+
+
 
 
         return west;
@@ -309,52 +351,4 @@ public class MainEntryPoint implements EntryPoint {
         return panel;
     }
 
-    protected Widget createDoclistWidgetRPC() {
-        VerticalPanel doclistPanel = new VerticalPanel();
-        doclistPanel.add(new Label("*doclist*"));
-
-        refreshDoclist(); //ottiene info dall'rpc
-
-        doclist.add("sono un elemento di prova, non illuderti");
-        // aggiunge una label per ogni file trovato
-        for (int i = 0; i < doclist.size(); i++) {
-            doclistPanel.add(new Label(doclist.get(i)));
-        }
-
-        return doclistPanel;
-    }
-
-    public static GWTServiceTeiAsync getService() {
-        // Create the client proxy. Note that although you are creating the
-        // service interface proper, you cast the result to the asynchronous
-        // version of the interface. The cast is always safe because the
-        // generated proxy implements the asynchronous interface automatically.
-
-        return GWT.create(GWTServiceTei.class);
-    }
-
-    protected void refreshDoclist() {
-        doclist.clear(); //non fa differenza
-        //doclist.add("sono un elemento di prova"); // qua va
-        doclist.add(strglobal);
-        AsyncCallback callback = new AsyncCallback() {
-
-            public void onFailure(Throwable arg0) {
-                Window.alert("Failed RPCServiceTei");
-            }
-
-            public void onSuccess(Object result) {
-                ArrayList<String> resultal = (ArrayList<String>) result;
-                for (int i = 0; i < resultal.size(); i++) {
-                    
-                    String str = resultal.get(i);
-                    doclist.add(str); // TODO: capire perchè non va.. se vuoi stampa, e fuori da questo blocco doclist può essere modificata
-                    debug.add(new Label(str)); // qua va
-                    
-
-                }
-            }
-        };
-        getService().getTeiInfo(callback);
-    }
 }

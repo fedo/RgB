@@ -16,7 +16,7 @@ import org.xml.sax.SAXException;
 public class TeiCollection {
 
     private static String folderPath;
-    private static ArrayList<TeiDocument> listOfTei = new ArrayList<TeiDocument>();
+    private static ArrayList<TeiDocument> listOfTei;
 
     public TeiCollection() {
         folderPath = "toInitialize";
@@ -24,6 +24,7 @@ public class TeiCollection {
 
     public void init(String folderPath){
                 this.folderPath = folderPath;
+                listOfTei = new ArrayList<TeiDocument>();
 
             fillList(this.folderPath, 0);
 
@@ -47,6 +48,7 @@ public class TeiCollection {
 
         File folder = new File(path);
         File[] listOfFiles = folder.listFiles();
+        ArrayList<TeiDocument> tmp = new ArrayList<TeiDocument>();
 
 
         for (int i = 0; i < listOfFiles.length; i++) {
@@ -54,13 +56,15 @@ public class TeiCollection {
             if (listOfFiles[i].isFile()) {
                 //file xml
                 if (filename.endsWith(".xml")) {
-                    listOfTei.add(new TeiDocument(path + "/" + filename, "file"));
+                    tmp.add(new TeiDocument(path + "/" + filename, "file"));
                 }
             } else if (listOfFiles[i].isDirectory()) {
                 //cartella con documenti xml
-                    listOfTei.add(new TeiDocument(path + "/" + filename, "directory"));
+                    tmp.add(new TeiDocument(path + "/" + filename, "directory"));
             }
+
         }
+        listOfTei = tmp;
 
 
 

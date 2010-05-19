@@ -16,7 +16,7 @@ import org.xml.sax.SAXException;
  */
 public class TeiDocument {
 
-    private String type;
+    private String type; //{"file", "directory"}
     private String absolutePath;
     private String teiName;
 
