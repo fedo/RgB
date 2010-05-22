@@ -4,17 +4,13 @@
  */
 package it.unibo.cs.rgb.gwt.client;
 
-import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HasAlignment;
 import com.google.gwt.user.client.ui.Widget;
@@ -31,11 +27,13 @@ import java.util.HashMap;
  */
 public class MainEntryPoint implements EntryPoint {
 
-    TabPanel docviewPanel = new TabPanel();
-    final ArrayList<HashMap> doclist = new ArrayList<HashMap>();
+    //elementi grafici
+    TabPanel documentViewPanel = new TabPanel();
+    final VerticalPanel west = new VerticalPanel();
     HorizontalPanel debug = new HorizontalPanel();
-    String strglobal = "sono una stringa global";
-    
+    //variabili
+    final ArrayList<HashMap> doclist = new ArrayList<HashMap>();
+
     /**
      * Creates a new instance of MainEntryPoint
      */
@@ -47,10 +45,12 @@ public class MainEntryPoint implements EntryPoint {
      * that declares an implementing class as an entry-point
      */
     public void onModuleLoad() {
+
         //Log.setCurrentLogLevel(Log.getLowestLogLevel());
         //Log.setUncaughtExceptionHandler();
         //Log.info("msg");
         DockPanel mainPanel = new DockPanel();
+
         mainPanel.setBorderWidth(5);
         mainPanel.setSize("100%", "100%");
         mainPanel.setVerticalAlignment(HasAlignment.ALIGN_TOP);
@@ -75,51 +75,38 @@ public class MainEntryPoint implements EntryPoint {
 
     protected Widget createHeaderWidget() {
 
-        /*final Label fromrpc = new Label();
-        AsyncCallback callback = new AsyncCallback() {
+        Widget header = new Label("Header [Branding]: logo + [Servizi stabili]: link help, link contatti");
 
-            public void onFailure(Throwable arg0) {
-                //display error text if we can't get the quote:
-                Window.alert("Failed RPCServiceTei");
-            }
+        header.setHeight("100px");
 
-            public void onSuccess(Object result) {
-                //display the retrieved quote in the label:
-                String stringa = ((ArrayList<String>) result).get(0);
-                fromrpc.setText(stringa);
-            }
-        };
-        getService().getTeiInfo(callback);
-
-        return fromrpc;*/
-        return new Label("Header [Branding]: logo + [Servizi stabili]: link help, link contatti");
+        return header;
     }
 
     protected Widget createFooterWidget() {
-        //return new Label("Footer [?]");
+
+        Label footer = new Label();
+
         debug.add(new Label("Debug:"));
+
         return debug;
     }
 
     protected Widget createWestWidget() {
 
-        final VerticalPanel west = new VerticalPanel();
+
         Label title = new Label("West");
 
         west.add(title);
-        //west.add(createDoclistWidget());
-        //west.add(createDoclistWidgetRPC());
 
-        String url = "http://localhost:8080/RgB/Tei";
+        //DocumentList
+        String url = "http://localhost:8080/RgB/DocumentsList";
         RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(url));
-        final HTML tmp = new HTML();
-        final String tmpresponse = "";
 
         try {
             Request request = builder.sendRequest(null, new RequestCallback() {
 
                 public void onError(Request request, Throwable exception) {
-                    // Couldn't connect to server (could be timeout, SOP violation, etc.)
+                    Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
                 }
 
                 public void onResponseReceived(Request request, Response response) {
@@ -143,12 +130,12 @@ public class MainEntryPoint implements EntryPoint {
                             currentWidget.addClickHandler(new ClickHandler() {
 
                                 public void onClick(ClickEvent event) {
-                                    int index = docviewPanel.getWidgetCount() - 1;
+                                    int index = documentViewPanel.getWidgetCount() - 1;
 
                                     // cerco il tab
                                     while (index >= 0) {
-                                        if (docviewPanel.getWidget(index).getTitle().equalsIgnoreCase(teiname)) {
-                                            docviewPanel.selectTab(index);
+                                        if (documentViewPanel.getWidget(index).getTitle().equalsIgnoreCase(teiname)) {
+                                            documentViewPanel.selectTab(index);
                                             break;
                                         }
                                         index--;
@@ -160,6 +147,7 @@ public class MainEntryPoint implements EntryPoint {
 
                                         // contenuto del tab
                                         final Widget tabPanel = createDocviewTab(teiname);
+                                        tabPanel.setHeight("15px");
 
                                         // tabText
                                         HorizontalPanel tabText = new HorizontalPanel();
@@ -172,78 +160,78 @@ public class MainEntryPoint implements EntryPoint {
                                         ClickHandler xclose = new ClickHandler() {
 
                                             public void onClick(ClickEvent event) {
-                                                docviewPanel.remove(tabPanel);
+                                                documentViewPanel.remove(tabPanel);
                                             }
                                         };
                                         Label x = new Label("X");
                                         x.addClickHandler(xclose);
                                         tabText.add(x);
 
-                                        docviewPanel.add(tabPanel, tabText);
-                                        docviewPanel.selectTab(docviewPanel.getWidgetCount() - 1);
+                                        documentViewPanel.add(tabPanel, tabText);
+                                        documentViewPanel.selectTab(documentViewPanel.getWidgetCount() - 1);
                                     }
                                 }
                             });
 
-
                             west.add(currentWidget);
-
                         }
-
-
-
-
-
                     } else {
-                        // Handle the error.  Can get the status text from response.getStatusText()
+                        Window.alert("ERRORE: la risposta del servizio DocumentList non è quella aspettata");
                     }
                 }
             });
         } catch (RequestException e) {
-            // Couldn't connect to server
+            Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
         }
-
-        //crezione menu
-
-        //String xml = "<element att=\"some attribute\">some text</element>";
-        //Document doc = XMLParser.parse(tmpresponse);
-        //Document tmpparsato = XMLParser.parse(tmpresponse);
-
-        // west.add(new Label("figli "+tmpparsato.getFirstChild().getNodeValue().toString()));
-
-
-
-
         return west;
     }
 
     protected Widget createContentWidget() {
-        /*String text1 = "Lorem ipsum dolor sit amet...";
-        String text2 = "Sed egestas, arcu nec accumsan...";
-        String text3 = "Proin tristique, elit at blandit...";
 
-        
-        FlowPanel flowpanel;
+        documentViewPanel.setSize("100%", "250px");
+        documentViewPanel.addStyleName("table-center");
 
-        flowpanel = new FlowPanel();
-        flowpanel.add(new Label(text1));
-        docviewPanel.add(flowpanel, "One");
-
-        docviewPanel.selectTab(0);*/
-
-        docviewPanel.setSize("100%", "250px");
-        docviewPanel.addStyleName("table-center");
-
-        return docviewPanel;
-        //return new Label("Content");
+        return documentViewPanel;
     }
 
     protected Widget createDocviewTab(String teiapath) {
+
+        VerticalPanel panel = new VerticalPanel();
+        return panel;
+
+        //Contesto: nome breve del documento + elenco delle sigle delle lezioni varianti disponibili + barra di comandi
+
+        //nome breve
+        //lezioni varianti disponibili
+        //comandi
+        //
+
+        /*String url = "http://localhost:8080/RgB/Tei";
+        RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(url));
+
+        try {
+            Request request = builder.sendRequest(null, new RequestCallback() {
+
+                public void onResponseReceived(Request request, Response response) {
+                    throw new UnsupportedOperationException("Not supported yet.");
+                }
+
+                public void onError(Request request, Throwable exception) {
+                    throw new UnsupportedOperationException("Not supported yet.");
+                }
+            });
+        } catch (RequestException ex) {
+            Logger.getLogger(MainEntryPoint.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return panel;*/
+
+        /*
         VerticalPanel panel = new VerticalPanel();
 
         panel.setTitle(teiapath); //necessario per venire selezionato e chiuso
         panel.add(new Label("Sò che sono il " + teiapath));
-        
+
         // TODO: rpc che ottiene i dati "lunghi" del file aperto
         final DisclosurePanel info = new DisclosurePanel("Clicca qui per visualizzare le informazioni complete");
         info.add(new Label("dati lunghi lunghi lunghi"));
@@ -267,7 +255,7 @@ public class MainEntryPoint implements EntryPoint {
         visualizationAndWitnesses.add(new Label("Scegli i witness da visualizzare: "));
 
         CheckBox cb = new CheckBox("testwit");
-        
+
         // clickhandler per le checkbox
         cb.addClickHandler(new ClickHandler() {
 
@@ -288,5 +276,9 @@ public class MainEntryPoint implements EntryPoint {
         panel.add(witnesses);
 
         return panel;
+
+         */
     }
+
+    
 }

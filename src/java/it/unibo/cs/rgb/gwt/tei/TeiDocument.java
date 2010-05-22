@@ -46,6 +46,8 @@ public class TeiDocument {
         } else if (type.equals("directory")) {
             File folder = new File(absolutePath);;
             File[] listOfXml = folder.listFiles();
+            for(int i = 0; i< listOfXml.length; i++)
+                xmlList.add(absolutePath+"/"+listOfXml[i]);
         }
     }
 
@@ -70,11 +72,34 @@ public class TeiDocument {
         return str;
     }
 
+    public String xpathQuery(Document doc, String expression){
+        String retval = "error";
+        try {
+            retval = (String) xpath.evaluate(expression, doc, XPathConstants.STRING);
+        } catch (XPathExpressionException ex) {
+            Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return retval;
+    }
+
     public String getTitle() {
         String retval = "error";
 
         if(type.equals("file"))
             retval = xpathQuery("//title/text()");
+        else{
+            try {
+                try {
+                    Document tmp = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new File(xmlList.get(0)));
+                } catch (ParserConfigurationException ex) {
+                    Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } catch (SAXException ex) {
+                Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         return retval;
     }
 
@@ -83,6 +108,17 @@ public class TeiDocument {
         
         if(type.equals("file"))
             retval = xpathQuery("//author/text()");
+        return retval;
+    }
+
+    public String getType() {
+           return type;
+    }
+
+    public String getShortName() {
+
+        String retval = "Nome breve";
+        
         return retval;
     }
 }
