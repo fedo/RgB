@@ -1,13 +1,7 @@
 package it.unibo.cs.rgb.gwt.tei;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPathExpressionException;
-import org.xml.sax.SAXException;
 
 /**
  *
@@ -56,11 +50,11 @@ public class TeiCollection {
             if (listOfFiles[i].isFile()) {
                 //file xml
                 if (filename.endsWith(".xml")) {
-                    tmp.add(new TeiDocument(path + "/" + filename, "file"));
+                    tmp.add(new TeiDocument(path + "/" + filename));
                 }
             } else if (listOfFiles[i].isDirectory()) {
                 //cartella con documenti xml
-                    tmp.add(new TeiDocument(path + "/" + filename, "directory"));
+                    tmp.add(new TeiDocument(path + "/" + filename));
             }
 
         }

@@ -29,7 +29,10 @@ public class MainEntryPoint implements EntryPoint {
 
     //elementi grafici
     TabPanel documentViewPanel = new TabPanel();
-    final VerticalPanel west = new VerticalPanel();
+    Widget header;
+    Widget footer;
+    VerticalPanel west = new VerticalPanel();
+
     HorizontalPanel debug = new HorizontalPanel();
     //variabili
     final ArrayList<HashMap> doclist = new ArrayList<HashMap>();
@@ -45,10 +48,7 @@ public class MainEntryPoint implements EntryPoint {
      * that declares an implementing class as an entry-point
      */
     public void onModuleLoad() {
-
-        //Log.setCurrentLogLevel(Log.getLowestLogLevel());
-        //Log.setUncaughtExceptionHandler();
-        //Log.info("msg");
+        
         DockPanel mainPanel = new DockPanel();
 
         mainPanel.setBorderWidth(5);
@@ -56,15 +56,15 @@ public class MainEntryPoint implements EntryPoint {
         mainPanel.setVerticalAlignment(HasAlignment.ALIGN_TOP);
         mainPanel.setHorizontalAlignment(HasAlignment.ALIGN_LEFT);
 
-        Widget header = createHeaderWidget();
+        header = createHeaderWidget();
         mainPanel.add(header, DockPanel.NORTH);
-        mainPanel.setCellHeight(header, "30px");
+        mainPanel.setCellHeight(header, "100px");
 
-        Widget footer = createFooterWidget();
+        footer = createFooterWidget();
         mainPanel.add(footer, DockPanel.SOUTH);
         mainPanel.setCellHeight(footer, "25px");
 
-        Widget west = createWestWidget();
+        west = createWestWidget();
         mainPanel.add(west, DockPanel.WEST);
         mainPanel.setCellWidth(west, "150px");
 
@@ -73,15 +73,21 @@ public class MainEntryPoint implements EntryPoint {
         RootPanel.get().add(mainPanel);
     }
 
+    /**
+     *
+     * @return
+     */
     protected Widget createHeaderWidget() {
 
-        Widget header = new Label("Header [Branding]: logo + [Servizi stabili]: link help, link contatti");
-
-        header.setHeight("100px");
+        Label header = new Label("Header [Branding]: logo + [Servizi stabili]: link help, link contatti");
 
         return header;
     }
 
+    /**
+     *
+     * @return
+     */
     protected Widget createFooterWidget() {
 
         Label footer = new Label();
@@ -91,101 +97,10 @@ public class MainEntryPoint implements EntryPoint {
         return debug;
     }
 
-    protected Widget createWestWidget() {
-
-
-        Label title = new Label("West");
-
-        west.add(title);
-
-        //DocumentList
-        String url = "http://localhost:8080/RgB/DocumentsList";
-        RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(url));
-
-        try {
-            Request request = builder.sendRequest(null, new RequestCallback() {
-
-                public void onError(Request request, Throwable exception) {
-                    Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
-                }
-
-                public void onResponseReceived(Request request, Response response) {
-                    if (200 == response.getStatusCode()) {
-                        //xhtml parsing
-                        Document responseXml = XMLParser.parse(response.getText().toString());
-
-                        int lenght = new Integer(responseXml.getElementById("numberOfDocuments").getFirstChild().toString());
-                        //west.add(new Label("numero documenti: "+lenght));
-
-                        for (int i = 0; i < lenght; i++) {
-                            HashMap documentInfo = new HashMap();
-                            String current = responseXml.getElementsByTagName("li").item(i).toString();
-                            Document currentXml = XMLParser.parse(current);
-                            Label currentWidget;
-
-                            documentInfo.put("teiname", new HTML(currentXml.getElementById("teiname").getFirstChild().toString()).getHTML());
-
-                            final String teiname = (String) documentInfo.get("teiname");
-                            currentWidget = new Label(teiname);
-                            currentWidget.addClickHandler(new ClickHandler() {
-
-                                public void onClick(ClickEvent event) {
-                                    int index = documentViewPanel.getWidgetCount() - 1;
-
-                                    // cerco il tab
-                                    while (index >= 0) {
-                                        if (documentViewPanel.getWidget(index).getTitle().equalsIgnoreCase(teiname)) {
-                                            documentViewPanel.selectTab(index);
-                                            break;
-                                        }
-                                        index--;
-
-                                    }
-
-                                    // tab non esiste
-                                    if (index < 0) {
-
-                                        // contenuto del tab
-                                        final Widget tabPanel = createDocviewTab(teiname);
-                                        tabPanel.setHeight("15px");
-
-                                        // tabText
-                                        HorizontalPanel tabText = new HorizontalPanel();
-
-                                        //TODO: visualizzare un tabText "carino"
-                                        Label tabTitle = new Label("Tab " + teiname);
-                                        tabText.add(tabTitle);
-
-                                        // X che chiude il tab
-                                        ClickHandler xclose = new ClickHandler() {
-
-                                            public void onClick(ClickEvent event) {
-                                                documentViewPanel.remove(tabPanel);
-                                            }
-                                        };
-                                        Label x = new Label("X");
-                                        x.addClickHandler(xclose);
-                                        tabText.add(x);
-
-                                        documentViewPanel.add(tabPanel, tabText);
-                                        documentViewPanel.selectTab(documentViewPanel.getWidgetCount() - 1);
-                                    }
-                                }
-                            });
-
-                            west.add(currentWidget);
-                        }
-                    } else {
-                        Window.alert("ERRORE: la risposta del servizio DocumentList non è quella aspettata");
-                    }
-                }
-            });
-        } catch (RequestException e) {
-            Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
-        }
-        return west;
-    }
-
+    /**
+     *
+     * @return
+     */
     protected Widget createContentWidget() {
 
         documentViewPanel.setSize("100%", "250px");
@@ -194,10 +109,32 @@ public class MainEntryPoint implements EntryPoint {
         return documentViewPanel;
     }
 
-    protected Widget createDocviewTab(String teiapath) {
+    /**
+     *
+     * @return
+     */
+    protected VerticalPanel createWestWidget() {
+
+
+        Label title = new Label("West");
+
+        west.add(title);
+        createDocumentsList();
+        
+        return west;
+    }
+
+    /**
+     * 
+     * @param teipath
+     * @return
+     */
+    protected Widget createDocumentViewerTab(String teipath) {
 
         VerticalPanel panel = new VerticalPanel();
-        return panel;
+        panel.setTitle(teipath);
+        panel.add(new Label("risultato "+(String) getDocumentHashMap(teipath).get("teiname")));
+        
 
         //Contesto: nome breve del documento + elenco delle sigle delle lezioni varianti disponibili + barra di comandi
 
@@ -206,14 +143,21 @@ public class MainEntryPoint implements EntryPoint {
         //comandi
         //
 
-        /*String url = "http://localhost:8080/RgB/Tei";
-        RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(url));
+        //DocumentList
+        String url = "http://localhost:8080/RgB/DocumentInfo";
+        String postData = URL.encode("absolutePath")+"="+URL.encode(teipath);
 
+
+        RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, URL.encode(url));
+        builder.setHeader("Content-type", "application/x-www-form-urlencoded");
         try {
-            Request request = builder.sendRequest(null, new RequestCallback() {
+            Request request = builder.sendRequest(postData, new RequestCallback() {
 
                 public void onResponseReceived(Request request, Response response) {
-                    throw new UnsupportedOperationException("Not supported yet.");
+                    debug.clear();
+                    debug.add(new Label(response.getText()));
+                    
+                    
                 }
 
                 public void onError(Request request, Throwable exception) {
@@ -221,10 +165,8 @@ public class MainEntryPoint implements EntryPoint {
                 }
             });
         } catch (RequestException ex) {
-            Logger.getLogger(MainEntryPoint.class.getName()).log(Level.SEVERE, null, ex);
+            Window.alert("ERRORE: fallita richiesta servizio DocumentInfo (Couldn't connect to server)");
         }
-
-        return panel;*/
 
         /*
         VerticalPanel panel = new VerticalPanel();
@@ -278,7 +220,120 @@ public class MainEntryPoint implements EntryPoint {
         return panel;
 
          */
+        return panel;
     }
 
-    
+    /**
+     * Restituisce l'HashMap del documento associato all'absolutePath
+     * @param absolutePath
+     * @return
+     */
+    private HashMap getDocumentHashMap(String absolutePath){
+
+        HashMap retval = new HashMap();
+
+        for (int i = 0; i < doclist.size(); i++) {
+            if (((String) doclist.get(i).get("absolutePath")).equalsIgnoreCase(absolutePath)) {
+                retval = doclist.get(i);
+                break;
+            }
+        }
+
+        return retval;
+    }
+
+    private void createDocumentsList() {
+        //DocumentList
+        String url = "http://localhost:8080/RgB/DocumentsList";
+        RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(url));
+
+        try {
+            Request request = builder.sendRequest(null, new RequestCallback() {
+
+                public void onError(Request request, Throwable exception) {
+                    Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
+                }
+
+                public void onResponseReceived(Request request, Response response) {
+                    if (200 == response.getStatusCode()) {
+                        //xhtml parsing
+                        Document responseXml = XMLParser.parse(response.getText().toString());
+
+                        int lenght = new Integer(responseXml.getElementById("numberOfDocuments").getFirstChild().toString());
+                        //west.add(new Label("numero documenti: "+lenght));
+
+                        for (int i = 0; i < lenght; i++) {
+                            HashMap documentInfo = new HashMap();
+                            doclist.add(documentInfo);
+
+                            String current = responseXml.getElementsByTagName("li").item(i).toString();
+                            Document currentXml = XMLParser.parse(current);
+                            Label currentWidget;
+
+                            documentInfo.put("teiname", new HTML(currentXml.getElementById("teiname").getFirstChild().toString()).getHTML());
+                            documentInfo.put("absolutePath", new HTML(currentXml.getElementById("absolutePath").getFirstChild().toString()).getHTML());
+
+
+                            final String teiname = (String) documentInfo.get("teiname");
+                            final String absolutePath = (String) documentInfo.get("absolutePath");
+
+                            currentWidget = new Label(teiname);
+                            currentWidget.setTitle(absolutePath);
+                            currentWidget.addClickHandler(new ClickHandler() {
+
+                                public void onClick(ClickEvent event) {
+                                    int index = documentViewPanel.getWidgetCount() - 1;
+
+                                    // cerco il tab
+                                    while (index >= 0) {
+                                        if (documentViewPanel.getWidget(index).getTitle().equalsIgnoreCase(absolutePath)) {
+                                            documentViewPanel.selectTab(index);
+                                            break;
+                                        }
+                                        index--;
+
+                                    }
+
+                                    // tab non esiste
+                                    if (index < 0) {
+
+                                        // contenuto del tab
+                                        final Widget tabPanel = createDocumentViewerTab(absolutePath);
+                                        tabPanel.setHeight("15px");
+
+                                        // tabText
+                                        HorizontalPanel tabText = new HorizontalPanel();
+
+                                        //TODO: visualizzare un tabText "carino"
+                                        Label tabTitle = new Label("Tab " + teiname);
+                                        tabText.add(tabTitle);
+
+                                        // X che chiude il tab
+                                        ClickHandler xclose = new ClickHandler() {
+
+                                            public void onClick(ClickEvent event) {
+                                                documentViewPanel.remove(tabPanel);
+                                            }
+                                        };
+                                        Label x = new Label("X");
+                                        x.addClickHandler(xclose);
+                                        tabText.add(x);
+
+                                        documentViewPanel.add(tabPanel, tabText);
+                                        documentViewPanel.selectTab(documentViewPanel.getWidgetCount() - 1);
+                                    }
+                                }
+                            });
+
+                            west.add(currentWidget);
+                        }
+                    } else {
+                        Window.alert("ERRORE: la risposta del servizio DocumentList non è quella aspettata");
+                    }
+                }
+            });
+        } catch (RequestException e) {
+            Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
+        }
+    }
 }

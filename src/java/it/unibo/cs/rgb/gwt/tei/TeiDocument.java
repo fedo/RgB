@@ -25,8 +25,15 @@ public class TeiDocument {
 
     private ArrayList<String> xmlList = new ArrayList<String>();
 
-    public TeiDocument(String absolutePath, String type) {
-        this.type = type;
+    public TeiDocument(String absolutePath) {
+
+        File file = new File(absolutePath);
+        if(file.isFile())
+            this.type = "file";
+        else if(file.isDirectory())
+            this.type = "directory";
+
+
         this.absolutePath = absolutePath;
         this.teiName = new File(this.absolutePath).getName();
         
@@ -50,6 +57,9 @@ public class TeiDocument {
                 xmlList.add(absolutePath+"/"+listOfXml[i]);
         }
     }
+
+
+
 
     public String getTeiName() {
         return teiName;
