@@ -5,16 +5,22 @@
 package it.unibo.cs.rgb.gwt.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HasAlignment;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.http.client.*;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.ui.PopupPanel.PositionCallback;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.XMLParser;
 import java.util.ArrayList;
@@ -277,8 +283,39 @@ public class MainEntryPoint implements EntryPoint {
                             final String teiname = (String) documentInfo.get("teiname");
                             final String absolutePath = (String) documentInfo.get("absolutePath");
 
+                            final PopupPanel overWidget = new PopupPanel(true);
+                            overWidget.setVisible(false);
+                            overWidget.add(new Label("Nome lungo " + teiname));
+
+                            MouseOverHandler overHandler = new MouseOverHandler() {
+
+                                public void onMouseOver(final MouseOverEvent event) {
+                                    overWidget.setPopupPosition(event.getClientX(), event.getClientY());
+                                    overWidget.setPopupPositionAndShow(new PositionCallback() {
+
+                                        public void setPosition(int offsetWidth, int offsetHeight) {
+                                            int left = event.getClientX() + 50;
+                                            int top = event.getClientY() + 10;
+                                            overWidget.setPopupPosition(left, top);
+                                        }
+                                    });
+
+                                }
+                            };
+
+                            MouseOutHandler outHandler = new MouseOutHandler() {
+
+                                public void onMouseOut(MouseOutEvent event) {
+                                    overWidget.hide();
+                                }
+                            };
+
                             currentWidget = new Label(teiname);
                             currentWidget.setTitle(absolutePath);
+                            currentWidget.addMouseOverHandler(overHandler);
+                            currentWidget.addMouseOutHandler(outHandler);
+
+                            //handler del click: creazione/selezione tab
                             currentWidget.addClickHandler(new ClickHandler() {
 
                                 public void onClick(ClickEvent event) {
@@ -306,6 +343,7 @@ public class MainEntryPoint implements EntryPoint {
 
                                         //TODO: visualizzare un tabText "carino"
                                         Label tabTitle = new Label("Tab " + teiname);
+                                        tabTitle.setWordWrap(true);
                                         tabText.add(tabTitle);
 
                                         // X che chiude il tab
