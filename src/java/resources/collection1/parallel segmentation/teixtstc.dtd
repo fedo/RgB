@@ -6846,6 +6846,8 @@
 	lang IDREF #IMPLIED
 	rend CDATA #IMPLIED
 	sigil CDATA #REQUIRED
+        der IDREF #IMPLIED
+        missing CDATA #FIXED "true"
 	included CDATA #IMPLIED
 	TEIform CDATA "witness" >
 
