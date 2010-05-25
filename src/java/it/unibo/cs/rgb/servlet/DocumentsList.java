@@ -49,8 +49,10 @@ public class DocumentsList extends HttpServlet {
         out.println("\t<ul>");
         for (int i = 0; i < collection.getNumberOfDocument(); i++) {
             out.println("<li id=\"document\">");
-            out.println("<span id=\"teiname\">" + collection.getTeiDocument(i).getTeiName() + "</span>: ");
-            out.println("<span id=\"absolutePath\">" + collection.getTeiDocument(i).getAbsolutePath() + "</span>,");
+            out.println("<span id=\"id\">" + collection.getTeiDocument(i).getTeiName() + "</span>: ");
+            out.println("<br /><span id=\"path\">" + collection.getTeiDocument(i).getAbsolutePath() + "</span>");
+            out.println("<br /><span id=\"shortName\">C " + collection.getTeiDocument(i).getTeiName() + "</span>"); //TODO
+            out.println("<br /><span id=\"longName\">Lungo " + collection.getTeiDocument(i).getTeiName() + "</span>"); //TODO
             out.println("</li>");
         }
         out.println("</ul>");

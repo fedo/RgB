@@ -34,13 +34,14 @@ public class DocumentInfo extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
 
-            String absolutePath = request.getParameter("absolutePath");
+            String path = request.getParameter("path");
 
             out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             out.println("<html xmlns=\"http://www.w3.org/1999/xhtml\" version=\"1.0\">");
             out.println("<h1>DocumentInfo: informazioni dettagliate documento Tei</h1>");
             
-            out.println("<p>File selezionato: "+absolutePath+"</p>");
+            out.println("<p>File selezionato: "+path+"</p>");
+            out.println("<div id=\"info\"><p>info del documnto"+path+"</p></div>"); //TODO
             out.println("</html>");
 
         } finally {

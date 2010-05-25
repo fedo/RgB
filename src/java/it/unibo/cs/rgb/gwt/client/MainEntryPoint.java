@@ -38,10 +38,9 @@ public class MainEntryPoint implements EntryPoint {
     Widget header;
     Widget footer;
     VerticalPanel west = new VerticalPanel();
-
     HorizontalPanel debug = new HorizontalPanel();
     //variabili
-    final ArrayList<HashMap> doclist = new ArrayList<HashMap>();
+    final ArrayList<HashMap> documents = new ArrayList<HashMap>(); //{ String "id", String "path", String "shortName", String "longName", HTML "info", ArrayList<String> "files" }
 
     /**
      * Creates a new instance of MainEntryPoint
@@ -54,7 +53,7 @@ public class MainEntryPoint implements EntryPoint {
      * that declares an implementing class as an entry-point
      */
     public void onModuleLoad() {
-        
+
         DockPanel mainPanel = new DockPanel();
 
         mainPanel.setBorderWidth(5);
@@ -122,11 +121,11 @@ public class MainEntryPoint implements EntryPoint {
     protected VerticalPanel createWestWidget() {
 
 
-        Label title = new Label("West");
+        Label title = new Label("Lista documenti");
 
         west.add(title);
         createDocumentsList();
-        
+
         return west;
     }
 
@@ -135,14 +134,14 @@ public class MainEntryPoint implements EntryPoint {
      * @param teipath
      * @return
      */
-    protected Widget createDocumentViewerTab(String teipath) {
+    protected Widget createDocumentViewerTab(String path) {
 
         VerticalPanel panel = new VerticalPanel();
-        panel.setTitle(teipath);
-        panel.add(new Label("risultato "+(String) getDocumentHashMap(teipath).get("teiname")));
-        
+        panel.setTitle(path);
+        panel.add(new Label("risultato " + (String) getDocumentHashMap(path).get("path")));
 
-        //Contesto: nome breve del documento + elenco delle sigle delle lezioni varianti disponibili + barra di comandi
+
+        //Contesto: nome breve del documento + elenco delle sigle delle lezioni varianti disponibili + barra di comando
 
         //nome breve
         //lezioni varianti disponibili
@@ -151,7 +150,7 @@ public class MainEntryPoint implements EntryPoint {
 
         //DocumentList
         String url = "http://localhost:8080/RgB/DocumentInfo";
-        String postData = URL.encode("absolutePath")+"="+URL.encode(teipath);
+        String postData = URL.encode("path") + "=" + URL.encode(path);
 
 
         RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, URL.encode(url));
@@ -160,34 +159,48 @@ public class MainEntryPoint implements EntryPoint {
             Request request = builder.sendRequest(postData, new RequestCallback() {
 
                 public void onResponseReceived(Request request, Response response) {
+                    Document responseXml = XMLParser.parse(response.getText().toString());
+                    HTML info = new HTML(responseXml.getElementById("info").toString());
+                    //TODO inserire in documentInfo
+
                     debug.clear();
                     debug.add(new Label(response.getText()));
-                    
-                    
+
+                    //TODO riempire anche la lista dei witness
+
                 }
 
                 public void onError(Request request, Throwable exception) {
-                    throw new UnsupportedOperationException("Not supported yet.");
+                    Window.alert("ERRORE: fallita richiesta servizio DocumentInfo");
                 }
             });
         } catch (RequestException ex) {
             Window.alert("ERRORE: fallita richiesta servizio DocumentInfo (Couldn't connect to server)");
         }
 
-        /*
-        VerticalPanel panel = new VerticalPanel();
-
-        panel.setTitle(teiapath); //necessario per venire selezionato e chiuso
-        panel.add(new Label("Sò che sono il " + teiapath));
-
-        // TODO: rpc che ottiene i dati "lunghi" del file aperto
+        //nome lungo
         final DisclosurePanel info = new DisclosurePanel("Clicca qui per visualizzare le informazioni complete");
         info.add(new Label("dati lunghi lunghi lunghi"));
+        //TODO tirare fuori da documentInfo
         panel.add(info);
 
-        // visualization And Witnesses Bar
-        HorizontalPanel visualizationAndWitnesses = new HorizontalPanel();
-        final HorizontalPanel witnesses = new HorizontalPanel();
+        //witnesses
+        final ArrayList<String> witnessesList = new ArrayList<String>();
+        HashMap document = getDocumentHashMap(path);
+        document.put("witnessesList",witnessesList);
+        //fillWitnessesList(witnessesList);
+        if(witnessesList.size() == 1)
+            debug.add(new Label("un solo witness, unique")); //TODO
+        else if(witnessesList.size() > 1)
+            debug.add(new Label("più witnesses")); //TODO
+
+
+        HorizontalPanel witnessesPanel = new HorizontalPanel();
+        witnessesPanel.add(new Label("Scegli i witness da visualizzare: "));
+
+
+
+        /*
 
         // TODO: abilitazione dinamica in base al documento (alcuni testi non supportano certe visualizzazioni
         // TODO: aggiungere listeners che ricaricano i wit aperti in accordo con la vis. scelta
@@ -198,19 +211,15 @@ public class MainEntryPoint implements EntryPoint {
         visualizationAndWitnesses.add(new Label("Scegli il tipo di trascrizione: "));
         visualizationAndWitnesses.add(visualization);
 
-        // TODO: lista dei wit dinamica relativa al documento
-        // TODO: listeners per le checkbox dei wit
-        visualizationAndWitnesses.add(new Label("Scegli i witness da visualizzare: "));
-
         CheckBox cb = new CheckBox("testwit");
 
         // clickhandler per le checkbox
         cb.addClickHandler(new ClickHandler() {
 
-            public void onClick(ClickEvent event) {
-                boolean checked = ((CheckBox) event.getSource()).getValue();
-                witnesses.add(new Label("testwit"));
-            }
+        public void onClick(ClickEvent event) {
+        boolean checked = ((CheckBox) event.getSource()).getValue();
+        witnesses.add(new Label("testwit"));
+        }
         });
 
         visualizationAndWitnesses.add(cb);
@@ -231,16 +240,16 @@ public class MainEntryPoint implements EntryPoint {
 
     /**
      * Restituisce l'HashMap del documento associato all'absolutePath
-     * @param absolutePath
+     * @param path
      * @return
      */
-    private HashMap getDocumentHashMap(String absolutePath){
+    private HashMap getDocumentHashMap(String path) {
 
         HashMap retval = new HashMap();
 
-        for (int i = 0; i < doclist.size(); i++) {
-            if (((String) doclist.get(i).get("absolutePath")).equalsIgnoreCase(absolutePath)) {
-                retval = doclist.get(i);
+        for (int i = 0; i < documents.size(); i++) {
+            if (((String) documents.get(i).get("path")).equalsIgnoreCase(path)) {
+                retval = documents.get(i);
                 break;
             }
         }
@@ -265,27 +274,30 @@ public class MainEntryPoint implements EntryPoint {
                         //xhtml parsing
                         Document responseXml = XMLParser.parse(response.getText().toString());
 
-                        int lenght = new Integer(responseXml.getElementById("numberOfDocuments").getFirstChild().toString());
+                        int numberOfDocuments = new Integer(responseXml.getElementById("numberOfDocuments").getFirstChild().toString());
                         //west.add(new Label("numero documenti: "+lenght));
 
-                        for (int i = 0; i < lenght; i++) {
+                        for (int i = 0; i < numberOfDocuments; i++) {
                             HashMap documentInfo = new HashMap();
-                            doclist.add(documentInfo);
+                            documents.add(documentInfo);
 
                             String current = responseXml.getElementsByTagName("li").item(i).toString();
                             Document currentXml = XMLParser.parse(current);
                             Label currentWidget;
 
-                            documentInfo.put("teiname", new HTML(currentXml.getElementById("teiname").getFirstChild().toString()).getHTML());
-                            documentInfo.put("absolutePath", new HTML(currentXml.getElementById("absolutePath").getFirstChild().toString()).getHTML());
+                            final String id = new HTML(currentXml.getElementById("id").getFirstChild().toString()).getHTML();
+                            documentInfo.put("id", id);
+                            final String path = new HTML(currentXml.getElementById("path").getFirstChild().toString()).getHTML();
+                            documentInfo.put("path", path);
+                            final String shortName = new HTML(currentXml.getElementById("shortName").getFirstChild().toString()).getHTML();
+                            documentInfo.put("shortName", shortName);
+                            final String longName = new HTML(currentXml.getElementById("longName").getFirstChild().toString()).getHTML();
+                            documentInfo.put("shortName", longName);
 
-
-                            final String teiname = (String) documentInfo.get("teiname");
-                            final String absolutePath = (String) documentInfo.get("absolutePath");
-
+                            //finestra contenente nome lungo del documento
                             final PopupPanel overWidget = new PopupPanel(true);
                             overWidget.setVisible(false);
-                            overWidget.add(new Label("Nome lungo " + teiname));
+                            overWidget.add(new Label(longName));
 
                             MouseOverHandler overHandler = new MouseOverHandler() {
 
@@ -294,8 +306,9 @@ public class MainEntryPoint implements EntryPoint {
                                     overWidget.setPopupPositionAndShow(new PositionCallback() {
 
                                         public void setPosition(int offsetWidth, int offsetHeight) {
-                                            int left = event.getClientX() + 50;
-                                            int top = event.getClientY() + 10;
+                                            //int left = event.getClientX() + 50;
+                                            int left = 150;
+                                            int top = event.getClientY();
                                             overWidget.setPopupPosition(left, top);
                                         }
                                     });
@@ -310,10 +323,11 @@ public class MainEntryPoint implements EntryPoint {
                                 }
                             };
 
-                            currentWidget = new Label(teiname);
-                            currentWidget.setTitle(absolutePath);
+                            currentWidget = new Label(shortName);
+                            currentWidget.setTitle(id);
                             currentWidget.addMouseOverHandler(overHandler);
                             currentWidget.addMouseOutHandler(outHandler);
+                            //TODO puntatore
 
                             //handler del click: creazione/selezione tab
                             currentWidget.addClickHandler(new ClickHandler() {
@@ -323,7 +337,7 @@ public class MainEntryPoint implements EntryPoint {
 
                                     // cerco il tab
                                     while (index >= 0) {
-                                        if (documentViewPanel.getWidget(index).getTitle().equalsIgnoreCase(absolutePath)) {
+                                        if (documentViewPanel.getWidget(index).getTitle().equalsIgnoreCase(id)) {
                                             documentViewPanel.selectTab(index);
                                             break;
                                         }
@@ -335,26 +349,25 @@ public class MainEntryPoint implements EntryPoint {
                                     if (index < 0) {
 
                                         // contenuto del tab
-                                        final Widget tabPanel = createDocumentViewerTab(absolutePath);
-                                        tabPanel.setHeight("15px");
+                                        final Widget tabPanel = createDocumentViewerTab(path);
 
                                         // tabText
                                         HorizontalPanel tabText = new HorizontalPanel();
 
                                         //TODO: visualizzare un tabText "carino"
-                                        Label tabTitle = new Label("Tab " + teiname);
-                                        tabTitle.setWordWrap(true);
+                                        Label tabTitle = new Label(shortName);
+                                        tabTitle.setWidth(shortName.length()*8+"px");
                                         tabText.add(tabTitle);
 
                                         // X che chiude il tab
-                                        ClickHandler xclose = new ClickHandler() {
+                                        ClickHandler closeHandler = new ClickHandler() {
 
                                             public void onClick(ClickEvent event) {
                                                 documentViewPanel.remove(tabPanel);
                                             }
                                         };
-                                        Label x = new Label("X");
-                                        x.addClickHandler(xclose);
+                                        HTML x = new HTML("<b>x</b>");
+                                        x.addClickHandler(closeHandler);
                                         tabText.add(x);
 
                                         documentViewPanel.add(tabPanel, tabText);
