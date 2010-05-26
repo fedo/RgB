@@ -4,8 +4,8 @@
 
 <module>
     <inherits name="com.google.gwt.user.User"/>
-    <inherits name ="com.google.gwt.xml.XML"/> 
-    
+    <inherits name ="com.google.gwt.xml.XML"/>
+
 
 
     <!-- Inherit the default GWT style sheet. You can change -->
@@ -14,6 +14,8 @@
     <!-- <inherits name='com.google.gwt.user.theme.standard.Standard'/> -->
     <inherits name="com.google.gwt.user.theme.chrome.Chrome"/>
     <!-- <inherits name="com.google.gwt.user.theme.dark.Dark"/> -->
+    <!-- <stylesheet src='http://localhost:8080/RgB/rgb.css'/> -->
+    
     
     <!-- gwt log -->
     <inherits name="com.allen_sauer.gwt.log.gwt-log" />

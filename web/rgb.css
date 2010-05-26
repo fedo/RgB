@@ -1,0 +1,12 @@
+body {
+  color: red;
+}
+
+.buttonDocumentsList {
+    color: fuchsia;
+}
+
+.buttonDocumentsListOver {
+    color: yellow;
+    cursor: pointer;
+}

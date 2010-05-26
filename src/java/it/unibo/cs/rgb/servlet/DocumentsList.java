@@ -4,6 +4,7 @@
  */
 package it.unibo.cs.rgb.servlet;
 
+import it.unibo.cs.rgb.gwt.RgBConfiguration;
 import it.unibo.cs.rgb.gwt.tei.TeiCollection;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -36,20 +37,20 @@ public class DocumentsList extends HttpServlet {
 
         // creazione json dai files tei
         TeiCollection collection = new TeiCollection();
-        String path = "/Users/fedo/data/programming/netbeans/RgB/src/java/resources/collection3maggioepuntotre";
+        String path = RgBConfiguration.collectionDirectoryPath;
         collection.init(path);
 
         out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         out.println("<html xmlns=\"http://www.w3.org/1999/xhtml\" version=\"1.0\">");
         out.println("<h1>DocumentsList: lista e descrizione dei documenti Tei</h1>");
 
-        out.println("<p>Path selezionato: /Users/fedo/data/programming/netbeans/RgB/src/java/resources/collection3maggioepuntotre<br />"
+        out.println("<p>Path selezionato: "+path+"<br />"
                 + "Numero documenti Tei presenti: <span id=\"numberOfDocuments\">" + collection.getNumberOfDocument() + "</span></p>");
 
         out.println("\t<ul>");
         for (int i = 0; i < collection.getNumberOfDocument(); i++) {
             out.println("<li id=\"document\">");
-            out.println("<span id=\"id\">" + collection.getTeiDocument(i).getTeiName() + "</span>: ");
+            out.println("<span id=\"id\">" + collection.getTeiDocument(i).getTeiName() + "</span>");
             out.println("<br /><span id=\"path\">" + collection.getTeiDocument(i).getAbsolutePath() + "</span>");
             out.println("<br /><span id=\"shortName\">C " + collection.getTeiDocument(i).getTeiName() + "</span>"); //TODO
             out.println("<br /><span id=\"longName\">Lungo " + collection.getTeiDocument(i).getTeiName() + "</span>"); //TODO

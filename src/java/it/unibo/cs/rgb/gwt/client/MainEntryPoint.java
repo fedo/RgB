@@ -137,7 +137,7 @@ public class MainEntryPoint implements EntryPoint {
     protected Widget createDocumentViewerTab(String path) {
 
         VerticalPanel panel = new VerticalPanel();
-        panel.setTitle(path);
+        panel.setTitle((String) getDocumentHashMap(path).get("id"));
         panel.add(new Label("risultato " + (String) getDocumentHashMap(path).get("path")));
 
 
@@ -283,7 +283,7 @@ public class MainEntryPoint implements EntryPoint {
 
                             String current = responseXml.getElementsByTagName("li").item(i).toString();
                             Document currentXml = XMLParser.parse(current);
-                            Label currentWidget;
+                            
 
                             final String id = new HTML(currentXml.getElementById("id").getFirstChild().toString()).getHTML();
                             documentInfo.put("id", id);
@@ -294,6 +294,9 @@ public class MainEntryPoint implements EntryPoint {
                             final String longName = new HTML(currentXml.getElementById("longName").getFirstChild().toString()).getHTML();
                             documentInfo.put("shortName", longName);
 
+                            final Label currentWidget;
+                            currentWidget = new Label(shortName);
+
                             //finestra contenente nome lungo del documento
                             final PopupPanel overWidget = new PopupPanel(true);
                             overWidget.setVisible(false);
@@ -302,6 +305,7 @@ public class MainEntryPoint implements EntryPoint {
                             MouseOverHandler overHandler = new MouseOverHandler() {
 
                                 public void onMouseOver(final MouseOverEvent event) {
+                                    currentWidget.addStyleName("buttonDocumentsListOver");
                                     overWidget.setPopupPosition(event.getClientX(), event.getClientY());
                                     overWidget.setPopupPositionAndShow(new PositionCallback() {
 
@@ -319,11 +323,13 @@ public class MainEntryPoint implements EntryPoint {
                             MouseOutHandler outHandler = new MouseOutHandler() {
 
                                 public void onMouseOut(MouseOutEvent event) {
+                                    currentWidget.removeStyleName("buttonDocumentsListOver");
                                     overWidget.hide();
                                 }
                             };
 
-                            currentWidget = new Label(shortName);
+
+                            currentWidget.addStyleName("buttonDocumentsList");
                             currentWidget.setTitle(id);
                             currentWidget.addMouseOverHandler(overHandler);
                             currentWidget.addMouseOutHandler(outHandler);
