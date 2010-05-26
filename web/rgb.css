@@ -9,4 +9,5 @@ body {
 .buttonDocumentsListOver {
     color: yellow;
     cursor: pointer;
+    background: gray;
 }

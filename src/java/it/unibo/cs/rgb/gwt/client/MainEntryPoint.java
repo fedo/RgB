@@ -19,7 +19,6 @@ import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HasAlignment;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.http.client.*;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.PopupPanel.PositionCallback;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.XMLParser;
@@ -34,11 +33,16 @@ import java.util.HashMap;
 public class MainEntryPoint implements EntryPoint {
 
     //elementi grafici
-    TabPanel documentViewPanel = new TabPanel();
     Widget header;
     Widget footer;
     VerticalPanel west = new VerticalPanel();
+    VerticalPanel center;
+        Label title;
+        Widget content;
+            TabPanel documentViewerPanel = new TabPanel();
+            HTML homepage;
     HorizontalPanel debug = new HorizontalPanel();
+    
     //variabili
     final ArrayList<HashMap> documents = new ArrayList<HashMap>(); //{ String "id", String "path", String "shortName", String "longName", HTML "info", ArrayList<String> "files" }
 
@@ -56,7 +60,6 @@ public class MainEntryPoint implements EntryPoint {
 
         DockPanel mainPanel = new DockPanel();
 
-        mainPanel.setBorderWidth(5);
         mainPanel.setSize("100%", "100%");
         mainPanel.setVerticalAlignment(HasAlignment.ALIGN_TOP);
         mainPanel.setHorizontalAlignment(HasAlignment.ALIGN_LEFT);
@@ -70,11 +73,13 @@ public class MainEntryPoint implements EntryPoint {
         mainPanel.setCellHeight(footer, "25px");
 
         west = createWestWidget();
+        west.setWidth("165px");
         mainPanel.add(west, DockPanel.WEST);
-        mainPanel.setCellWidth(west, "150px");
+        mainPanel.setCellWidth(west, "165px");
 
-        Widget content = createContentWidget();
-        mainPanel.add(content, DockPanel.CENTER);
+        center = createCenterWidget();
+        mainPanel.add(center, DockPanel.CENTER);
+
         RootPanel.get().add(mainPanel);
     }
 
@@ -83,10 +88,8 @@ public class MainEntryPoint implements EntryPoint {
      * @return
      */
     protected Widget createHeaderWidget() {
-
-        Label header = new Label("Header [Branding]: logo + [Servizi stabili]: link help, link contatti");
-
-        return header;
+        
+        return new Label("Header [Branding]: logo + [Servizi stabili]: link help, link contatti");
     }
 
     /**
@@ -95,23 +98,32 @@ public class MainEntryPoint implements EntryPoint {
      */
     protected Widget createFooterWidget() {
 
-        Label footer = new Label();
-
+        //Label footer = new Label();
         debug.add(new Label("Debug:"));
 
         return debug;
     }
 
-    /**
-     *
-     * @return
-     */
-    protected Widget createContentWidget() {
+    private VerticalPanel createCenterWidget() {
 
-        documentViewPanel.setSize("100%", "250px");
-        documentViewPanel.addStyleName("table-center");
+        VerticalPanel panel = new VerticalPanel();
+        panel.setWidth("100%");
 
-        return documentViewPanel;
+        documentViewerPanel.setSize("100%", "100%");
+        documentViewerPanel.addStyleName("table-center");
+
+        content = createHomepage();
+        title = new Label("Homepage");
+
+        panel.add(title);
+        panel.add(content);
+
+        return panel;
+    }
+
+    private Widget createHomepage() {
+        homepage = new HTML("<p>Questa è l'home page, clicca su un documento per fare delle storie</p>");
+        return homepage;
     }
 
     /**
@@ -119,7 +131,6 @@ public class MainEntryPoint implements EntryPoint {
      * @return
      */
     protected VerticalPanel createWestWidget() {
-
 
         Label title = new Label("Lista documenti");
 
@@ -136,17 +147,15 @@ public class MainEntryPoint implements EntryPoint {
      */
     protected Widget createDocumentViewerTab(String path) {
 
+        final HashMap hashMap = getDocumentHashMap(path);
+        String id = (String) hashMap.get("id");
+        String longName = (String) hashMap.get("longName");
+
         VerticalPanel panel = new VerticalPanel();
-        panel.setTitle((String) getDocumentHashMap(path).get("id"));
-        panel.add(new Label("risultato " + (String) getDocumentHashMap(path).get("path")));
-
-
-        //Contesto: nome breve del documento + elenco delle sigle delle lezioni varianti disponibili + barra di comando
-
-        //nome breve
-        //lezioni varianti disponibili
-        //comandi
-        //
+        panel.setTitle(id);
+        panel.add(new Label("Parametro passato path  "+path));
+        panel.add(new Label(longName));
+        panel.add(new Label("BARRA DEI COMANDI X Y Z K"));
 
         //DocumentList
         String url = "http://localhost:8080/RgB/DocumentInfo";
@@ -161,7 +170,7 @@ public class MainEntryPoint implements EntryPoint {
                 public void onResponseReceived(Request request, Response response) {
                     Document responseXml = XMLParser.parse(response.getText().toString());
                     HTML info = new HTML(responseXml.getElementById("info").toString());
-                    //TODO inserire in documentInfo
+                    hashMap.put("info", info);
 
                     debug.clear();
                     debug.add(new Label(response.getText()));
@@ -178,10 +187,9 @@ public class MainEntryPoint implements EntryPoint {
             Window.alert("ERRORE: fallita richiesta servizio DocumentInfo (Couldn't connect to server)");
         }
 
-        //nome lungo
+        //info
         final DisclosurePanel info = new DisclosurePanel("Clicca qui per visualizzare le informazioni complete");
-        info.add(new Label("dati lunghi lunghi lunghi"));
-        //TODO tirare fuori da documentInfo
+        info.add((HTML) hashMap.get("info"));
         panel.add(info);
 
         //witnesses
@@ -250,6 +258,7 @@ public class MainEntryPoint implements EntryPoint {
         for (int i = 0; i < documents.size(); i++) {
             if (((String) documents.get(i).get("path")).equalsIgnoreCase(path)) {
                 retval = documents.get(i);
+                debug.add(new Label("hasmap numero "+i));
                 break;
             }
         }
@@ -292,7 +301,7 @@ public class MainEntryPoint implements EntryPoint {
                             final String shortName = new HTML(currentXml.getElementById("shortName").getFirstChild().toString()).getHTML();
                             documentInfo.put("shortName", shortName);
                             final String longName = new HTML(currentXml.getElementById("longName").getFirstChild().toString()).getHTML();
-                            documentInfo.put("shortName", longName);
+                            documentInfo.put("longName", longName);
 
                             final Label currentWidget;
                             currentWidget = new Label(shortName);
@@ -311,7 +320,7 @@ public class MainEntryPoint implements EntryPoint {
 
                                         public void setPosition(int offsetWidth, int offsetHeight) {
                                             //int left = event.getClientX() + 50;
-                                            int left = 150;
+                                            int left = 165;
                                             int top = event.getClientY();
                                             overWidget.setPopupPosition(left, top);
                                         }
@@ -339,17 +348,15 @@ public class MainEntryPoint implements EntryPoint {
                             currentWidget.addClickHandler(new ClickHandler() {
 
                                 public void onClick(ClickEvent event) {
-                                    int index = documentViewPanel.getWidgetCount() - 1;
 
-                                    // cerco il tab
-                                    while (index >= 0) {
-                                        if (documentViewPanel.getWidget(index).getTitle().equalsIgnoreCase(id)) {
-                                            documentViewPanel.selectTab(index);
-                                            break;
-                                        }
-                                        index--;
-
+                                    if (content != documentViewerPanel) {
+                                        center.remove(content);
+                                        content = documentViewerPanel;
+                                        center.add(content);
+                                        title.setText("Visualizzatore Documenti Tei");
                                     }
+
+                                    int index = getTabIndex(id);
 
                                     // tab non esiste
                                     if (index < 0) {
@@ -369,15 +376,33 @@ public class MainEntryPoint implements EntryPoint {
                                         ClickHandler closeHandler = new ClickHandler() {
 
                                             public void onClick(ClickEvent event) {
-                                                documentViewPanel.remove(tabPanel);
+                                                
+                                                int indexToClose = getTabIndex(id);
+                                                int indexSelectedTab = documentViewerPanel.getTabBar().getSelectedTab();
+                                                String idSelectedTab = documentViewerPanel.getWidget(indexSelectedTab).getTitle();
+
+                                                documentViewerPanel.remove(tabPanel);
+                                                
+                                                if (documentViewerPanel.getWidgetCount() == 0) { //DocumentViewer è vuoto
+                                                    center.remove(content);
+                                                    content = homepage;
+                                                    center.add(content);
+                                                    title.setText("Homepage");
+                                                } else { //DocumentViewer non è vuoto, quando premi "x" selezioni comunque
+                                                    if (indexToClose == indexSelectedTab) {
+                                                        documentViewerPanel.selectTab(Math.max(indexToClose - 1, 0));
+                                                    }else{
+                                                        documentViewerPanel.selectTab(getTabIndex(idSelectedTab));
+                                                    }
+                                                }
                                             }
                                         };
                                         HTML x = new HTML("<b>x</b>");
                                         x.addClickHandler(closeHandler);
                                         tabText.add(x);
 
-                                        documentViewPanel.add(tabPanel, tabText);
-                                        documentViewPanel.selectTab(documentViewPanel.getWidgetCount() - 1);
+                                        documentViewerPanel.add(tabPanel, tabText);
+                                        documentViewerPanel.selectTab(documentViewerPanel.getWidgetCount() - 1);
                                     }
                                 }
                             });
@@ -392,5 +417,17 @@ public class MainEntryPoint implements EntryPoint {
         } catch (RequestException e) {
             Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
         }
+    }
+
+    private int getTabIndex(String id) {
+        int index = documentViewerPanel.getWidgetCount() - 1;
+        while (index >= 0) {
+            if (documentViewerPanel.getWidget(index).getTitle().equalsIgnoreCase(id)) {
+                documentViewerPanel.selectTab(index);
+                break;
+            }
+            index--;
+        }
+        return index;
     }
 }
