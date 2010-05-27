@@ -1,4 +1,5 @@
 build/*
+src/java/it/unibo/cs/rgb/gwt/RgBConfiguration.java
 nbproject/ant-deploy.xml
 nbproject/build-gwt.xml
 nbproject/build-impl.xml
