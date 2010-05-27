@@ -153,7 +153,7 @@ public class MainEntryPoint implements EntryPoint {
         final VerticalPanel panel = new VerticalPanel();
         panel.setTitle(id);
 
-        //DocumentList
+        //DocumentInfo
         String url = "http://localhost:8080/RgB/DocumentInfo";
         String postData = URL.encode("path") + "=" + URL.encode(path);
 
@@ -423,8 +423,43 @@ public class MainEntryPoint implements EntryPoint {
     }
 
     private Widget requestDocumentView(String path, String witness) {
-        Label retval = new Label("sono " + witness);
+
+        final HTML retval = new HTML();
         retval.setTitle(witness);
+
+                //DocumentViewer
+        String url = "http://localhost:8080/RgB/DocumentViewer";
+        String postData = URL.encode("path") + "=" + URL.encode(path)+"&"+URL.encode("witness") + "=" + URL.encode(witness);
+
+        RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, URL.encode(url));
+        builder.setHeader("Content-type", "application/x-www-form-urlencoded");
+        try {
+            Request request = builder.sendRequest(postData, new RequestCallback() {
+
+                public void onError(Request request, Throwable exception) {
+                    Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
+                }
+
+                public void onResponseReceived(Request request, Response response) {
+                    if (200 == response.getStatusCode()) {
+                        //xhtml parsing
+                        Document responseXml = XMLParser.parse(response.getText().toString());
+
+
+                        retval.setHTML(responseXml.toString());
+
+
+
+                    } else {
+                        Window.alert("ERRORE: la risposta del servizio DocumentList non è quella aspettata");
+                    }
+                }
+            });
+        } catch (RequestException e) {
+            Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
+        }
+
+
         return retval;
     }
 }

@@ -28,19 +28,23 @@ public class DocumentViewer extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setStatus(200);
+
         PrintWriter out = response.getWriter();
         try {
-            /* TODO output your page here
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet DocumentViewer</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet DocumentViewer at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
+
+            String path = request.getParameter("path");
+            String witness = request.getParameter("witness");
+
+            out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+            out.println("<html xmlns=\"http://www.w3.org/1999/xhtml\" version=\"1.0\">");
+            out.println("<h1>DocumentViewer: trasformazione XSLT di un file Tei</h1>");
+            out.println("<p>File selezionato: "+path+"</p>");
+            out.println("<p>Witness selezionato: "+witness+"</p>");
             out.println("</html>");
-            */
-        } finally { 
+
+        } finally {
             out.close();
         }
     } 
