@@ -6,6 +6,7 @@ package it.unibo.cs.rgb.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +32,10 @@ public class DocumentInfo extends HttpServlet {
         response.setHeader("Cache-Control", "no-cache");
         response.setStatus(200);
 
+        ArrayList<String> witList = new ArrayList<String>(); //TODO document.getWitList();
+        witList.add("witnessuno");
+        witList.add("witnessdue");
+
         PrintWriter out = response.getWriter();
         try {
 
@@ -41,7 +46,11 @@ public class DocumentInfo extends HttpServlet {
             out.println("<h1>DocumentInfo: informazioni dettagliate documento Tei</h1>");
             
             out.println("<p>File selezionato: "+path+"</p>");
-            out.println("<div id=\"info\"><p>info del documnto"+path+"</p></div>"); //TODO
+            out.println("<div id=\"info\"><p>sono la servlet che da le info info del documnto"+path+"</p></div>"); //TODO
+            out.println("<ul id=\"witnesses\">");
+            for (int i = 0; i < witList.size(); i++)
+                   out.println("<li>"+witList.get(i)+"</li>");
+            out.println("</ul>");
             out.println("</html>");
 
         } finally {
