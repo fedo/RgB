@@ -21,6 +21,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.http.client.*;
 import com.google.gwt.user.client.ui.PopupPanel.PositionCallback;
 import com.google.gwt.xml.client.Document;
+import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,12 +38,11 @@ public class MainEntryPoint implements EntryPoint {
     Widget footer;
     VerticalPanel west = new VerticalPanel();
     VerticalPanel center;
-        Label title;
-        Widget content;
-            TabPanel documentViewerPanel = new TabPanel();
-            HTML homepage;
+    Label title;
+    Widget content;
+    TabPanel documentViewerPanel = new TabPanel();
+    HTML homepage;
     HorizontalPanel debug = new HorizontalPanel();
-    
     //variabili
     final ArrayList<HashMap> documents = new ArrayList<HashMap>(); //{ String "id", String "path", String "shortName", String "longName", HTML "info", ArrayList<String> "files" }
 
@@ -88,7 +88,7 @@ public class MainEntryPoint implements EntryPoint {
      * @return
      */
     protected Widget createHeaderWidget() {
-        
+
         return new Label("Header [Branding]: logo + [Servizi stabili]: link help, link contatti");
     }
 
@@ -100,6 +100,7 @@ public class MainEntryPoint implements EntryPoint {
 
         //Label footer = new Label();
         debug.add(new Label("Debug:"));
+        debug.setBorderWidth(1);
 
         return debug;
     }
@@ -145,22 +146,16 @@ public class MainEntryPoint implements EntryPoint {
      * @param teipath
      * @return
      */
-    protected Widget createDocumentViewerTab(String path) {
+    protected Widget createDocumentViewerTab(final String path) {
 
         final HashMap hashMap = getDocumentHashMap(path);
         String id = (String) hashMap.get("id");
-        String longName = (String) hashMap.get("longName");
-
-        VerticalPanel panel = new VerticalPanel();
+        final VerticalPanel panel = new VerticalPanel();
         panel.setTitle(id);
-        panel.add(new Label("Parametro passato path  "+path));
-        panel.add(new Label(longName));
-        panel.add(new Label("BARRA DEI COMANDI X Y Z K"));
 
         //DocumentList
         String url = "http://localhost:8080/RgB/DocumentInfo";
         String postData = URL.encode("path") + "=" + URL.encode(path);
-
 
         RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, URL.encode(url));
         builder.setHeader("Content-type", "application/x-www-form-urlencoded");
@@ -168,15 +163,56 @@ public class MainEntryPoint implements EntryPoint {
             Request request = builder.sendRequest(postData, new RequestCallback() {
 
                 public void onResponseReceived(Request request, Response response) {
+                    //NOTE gran bei cazzi con le variabili Final e con le variabili globali... vedere come fatto (per culo) per "documents" (arraylist)
+                    //NOTE gli oggetti che crei dentro alla sendrequest devono essere modificati solo dentro la request
+
                     Document responseXml = XMLParser.parse(response.getText().toString());
-                    HTML info = new HTML(responseXml.getElementById("info").toString());
-                    hashMap.put("info", info);
+                    String longName = (String) hashMap.get("longName");
+
+                    panel.add(new Label(longName));
+                    panel.add(new Label("BARRA DEI COMANDI ServizioX ServizioY ServizioZ ServizioK"));
+
+                    //info
+                    DisclosurePanel info = new DisclosurePanel("Informazioni sul documento");
+                    info.setOpen(true);
+                    info.setContent(new HTML(responseXml.getElementById("info").getFirstChild().toString()));
+                    panel.add(info);
 
                     debug.clear();
-                    debug.add(new Label(response.getText()));
+                    debug.add(new Label(response.getText().toString()));
 
-                    //TODO riempire anche la lista dei witness
+                    //witnesses
+                    HorizontalPanel witnessesPanel = new HorizontalPanel();
+                    witnessesPanel.add(new Label("Scegli i witness da visualizzare: "));
+                    panel.add(witnessesPanel);
 
+                    final HorizontalPanel witnessViewer = new HorizontalPanel();
+                    witnessViewer.setBorderWidth(1);
+                    panel.add(witnessViewer);
+
+                    NodeList witnessesList = XMLParser.parse(responseXml.getElementById("witnesses").toString()).getElementsByTagName("li");
+                    for (int i = 0; i < witnessesList.getLength(); i++) {
+                        final String witness = witnessesList.item(i).getFirstChild().toString();
+                        final CheckBox checkbox = new CheckBox(witness);
+
+                        //durante la crezione, checkbox è true e creo la prima visualizzazione
+                        if (i == 0) {
+                            checkbox.setValue(true);
+                            witnessViewer.add(requestDocumentView(path, witness));
+                        }
+
+                        checkbox.addClickHandler(new ClickHandler() {
+
+                            public void onClick(ClickEvent event) {
+                                if (checkbox.getValue()) {
+                                    witnessViewer.add(requestDocumentView(path, witness));
+                                } else {
+                                    witnessViewer.remove(getChildWidgetIndex(witnessViewer, witness));
+                                }
+                            }
+                        });
+                        witnessesPanel.add(checkbox);
+                    }
                 }
 
                 public void onError(Request request, Throwable exception) {
@@ -187,62 +223,6 @@ public class MainEntryPoint implements EntryPoint {
             Window.alert("ERRORE: fallita richiesta servizio DocumentInfo (Couldn't connect to server)");
         }
 
-        //info
-        final DisclosurePanel info = new DisclosurePanel("Clicca qui per visualizzare le informazioni complete");
-        info.add((HTML) hashMap.get("info"));
-        panel.add(info);
-
-        //witnesses
-        final ArrayList<String> witnessesList = new ArrayList<String>();
-        HashMap document = getDocumentHashMap(path);
-        document.put("witnessesList",witnessesList);
-        //fillWitnessesList(witnessesList);
-        if(witnessesList.size() == 1)
-            debug.add(new Label("un solo witness, unique")); //TODO
-        else if(witnessesList.size() > 1)
-            debug.add(new Label("più witnesses")); //TODO
-
-
-        HorizontalPanel witnessesPanel = new HorizontalPanel();
-        witnessesPanel.add(new Label("Scegli i witness da visualizzare: "));
-
-
-
-        /*
-
-        // TODO: abilitazione dinamica in base al documento (alcuni testi non supportano certe visualizzazioni
-        // TODO: aggiungere listeners che ricaricano i wit aperti in accordo con la vis. scelta
-        ListBox visualization = new ListBox();
-        visualization.addItem("diplomatica");
-        visualization.addItem("Semi-diplomatica");
-        visualization.addItem("critica");
-        visualizationAndWitnesses.add(new Label("Scegli il tipo di trascrizione: "));
-        visualizationAndWitnesses.add(visualization);
-
-        CheckBox cb = new CheckBox("testwit");
-
-        // clickhandler per le checkbox
-        cb.addClickHandler(new ClickHandler() {
-
-        public void onClick(ClickEvent event) {
-        boolean checked = ((CheckBox) event.getSource()).getValue();
-        witnesses.add(new Label("testwit"));
-        }
-        });
-
-        visualizationAndWitnesses.add(cb);
-        visualizationAndWitnesses.add(new CheckBox("wit1"));
-        visualizationAndWitnesses.add(new CheckBox("wit2"));
-        visualizationAndWitnesses.add(new CheckBox("wit3"));
-
-        panel.add(visualizationAndWitnesses);
-
-        // visualizzazione dei witnesses selezionati
-        panel.add(witnesses);
-
-        return panel;
-
-         */
         return panel;
     }
 
@@ -258,7 +238,6 @@ public class MainEntryPoint implements EntryPoint {
         for (int i = 0; i < documents.size(); i++) {
             if (((String) documents.get(i).get("path")).equalsIgnoreCase(path)) {
                 retval = documents.get(i);
-                debug.add(new Label("hasmap numero "+i));
                 break;
             }
         }
@@ -292,7 +271,7 @@ public class MainEntryPoint implements EntryPoint {
 
                             String current = responseXml.getElementsByTagName("li").item(i).toString();
                             Document currentXml = XMLParser.parse(current);
-                            
+
 
                             final String id = new HTML(currentXml.getElementById("id").getFirstChild().toString()).getHTML();
                             documentInfo.put("id", id);
@@ -369,20 +348,20 @@ public class MainEntryPoint implements EntryPoint {
 
                                         //TODO: visualizzare un tabText "carino"
                                         Label tabTitle = new Label(shortName);
-                                        tabTitle.setWidth(shortName.length()*8+"px");
+                                        tabTitle.setWidth(shortName.length() * 8 + "px");
                                         tabText.add(tabTitle);
 
                                         // X che chiude il tab
                                         ClickHandler closeHandler = new ClickHandler() {
 
                                             public void onClick(ClickEvent event) {
-                                                
+
                                                 int indexToClose = getTabIndex(id);
                                                 int indexSelectedTab = documentViewerPanel.getTabBar().getSelectedTab();
                                                 String idSelectedTab = documentViewerPanel.getWidget(indexSelectedTab).getTitle();
 
                                                 documentViewerPanel.remove(tabPanel);
-                                                
+
                                                 if (documentViewerPanel.getWidgetCount() == 0) { //DocumentViewer è vuoto
                                                     center.remove(content);
                                                     content = homepage;
@@ -391,7 +370,7 @@ public class MainEntryPoint implements EntryPoint {
                                                 } else { //DocumentViewer non è vuoto, quando premi "x" selezioni comunque
                                                     if (indexToClose == indexSelectedTab) {
                                                         documentViewerPanel.selectTab(Math.max(indexToClose - 1, 0));
-                                                    }else{
+                                                    } else {
                                                         documentViewerPanel.selectTab(getTabIndex(idSelectedTab));
                                                     }
                                                 }
@@ -419,6 +398,18 @@ public class MainEntryPoint implements EntryPoint {
         }
     }
 
+    private int getChildWidgetIndex(ComplexPanel panel, String title) {
+        int index = panel.getWidgetCount() - 1;
+        while (index >= 0) {
+            if (panel.getWidget(index).getTitle().equalsIgnoreCase(title)) {
+                break;
+            }
+            index--;
+        }
+        debug.add(new Label("childddd " + index));
+        return index;
+    }
+
     private int getTabIndex(String id) {
         int index = documentViewerPanel.getWidgetCount() - 1;
         while (index >= 0) {
@@ -429,5 +420,11 @@ public class MainEntryPoint implements EntryPoint {
             index--;
         }
         return index;
+    }
+
+    private Widget requestDocumentView(String path, String witness) {
+        Label retval = new Label("sono " + witness);
+        retval.setTitle(witness);
+        return retval;
     }
 }
