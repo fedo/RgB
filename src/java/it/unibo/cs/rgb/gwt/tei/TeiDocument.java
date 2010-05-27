@@ -69,6 +69,19 @@ public class TeiDocument {
         return absolutePath;
     }
 
+    public NodeList xpathQueryNL(String expression) {
+        NodeList str = null;
+
+        if(type.equals("file"))
+            try {
+                str =  (NodeList) xpath.evaluate(expression, doc, XPathConstants.NODESET);
+            } catch (XPathExpressionException ex) {
+                Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        return str;
+    }
+
     public String xpathQuery(String expression) {
         String str = "error";
 
