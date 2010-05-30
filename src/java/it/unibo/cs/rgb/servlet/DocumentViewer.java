@@ -7,6 +7,7 @@ package it.unibo.cs.rgb.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -42,6 +43,9 @@ public class DocumentViewer extends HttpServlet {
             out.println("<h1>DocumentViewer: trasformazione XSLT di un file Tei</h1>");
             out.println("<p>File selezionato: "+path+"</p>");
             out.println("<p>Witness selezionato: "+witness+"</p>");
+            Enumeration params = request.getParameterNames();
+            while(params.hasMoreElements())
+                out.println("<p>Parametri: "+params.nextElement()+"</p>");
             out.println("</html>");
 
         } finally {

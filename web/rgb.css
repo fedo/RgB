@@ -3,11 +3,15 @@ body {
 }
 
 .buttonDocumentsList {
-    color: fuchsia;
+    padding: 4px;
+    background: url("images/hdot2.gif") repeat-x scroll center bottom transparent;
 }
 
 .buttonDocumentsListOver {
-    color: yellow;
     cursor: pointer;
-    background: gray;
+    background: #DCDCDC;
+}
+
+.headerPanel {
+    background: navy;
 }

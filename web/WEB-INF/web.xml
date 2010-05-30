@@ -33,6 +33,10 @@
         <servlet-name>DocumentInfo</servlet-name>
         <servlet-class>it.unibo.cs.rgb.servlet.DocumentInfo</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Dispatcher</servlet-name>
+        <servlet-class>it.unibo.cs.rgb.servlet.Dispatcher</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>action</servlet-name>
         <url-pattern>*.do</url-pattern>
@@ -52,6 +56,10 @@
     <servlet-mapping>
         <servlet-name>DocumentInfo</servlet-name>
         <url-pattern>/DocumentInfo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Dispatcher</servlet-name>
+        <url-pattern>/Dispatcher</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

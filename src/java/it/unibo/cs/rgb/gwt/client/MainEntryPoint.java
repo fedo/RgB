@@ -65,6 +65,8 @@ public class MainEntryPoint implements EntryPoint {
         mainPanel.setHorizontalAlignment(HasAlignment.ALIGN_LEFT);
 
         header = createHeaderWidget();
+        header.addStyleName("headerPanel");
+        header.setHeight("100px");
         mainPanel.add(header, DockPanel.NORTH);
         mainPanel.setCellHeight(header, "100px");
 
@@ -178,8 +180,8 @@ public class MainEntryPoint implements EntryPoint {
                     info.setContent(new HTML(responseXml.getElementById("info").getFirstChild().toString()));
                     panel.add(info);
 
-                    debug.clear();
-                    debug.add(new Label(response.getText().toString()));
+                    //debug.clear();
+                    //debug.add(new Label(response.getText().toString()));
 
                     //witnesses
                     HorizontalPanel witnessesPanel = new HorizontalPanel();
@@ -428,7 +430,7 @@ public class MainEntryPoint implements EntryPoint {
         retval.setTitle(witness);
 
                 //DocumentViewer
-        String url = "http://localhost:8080/RgB/DocumentViewer";
+        String url = "http://localhost:8080/RgB/DocumentViewer?acaso=123";
         String postData = URL.encode("path") + "=" + URL.encode(path)+"&"+URL.encode("witness") + "=" + URL.encode(witness);
 
         RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, URL.encode(url));
