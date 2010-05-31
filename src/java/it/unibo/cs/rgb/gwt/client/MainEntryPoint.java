@@ -281,8 +281,9 @@ public class MainEntryPoint implements EntryPoint {
                             documentInfo.put("path", path);
                             final String shortName = new HTML(currentXml.getElementById("shortName").getFirstChild().toString()).getHTML();
                             documentInfo.put("shortName", shortName);
-                            final String longName = new HTML(currentXml.getElementById("longName").getFirstChild().toString()).getHTML();
+                            final String longName = currentXml.getElementById("longName").toString();
                             documentInfo.put("longName", longName);
+                            //debug.add(new HTML(currentXml.getElementById("longName").toString()));
 
                             final Label currentWidget;
                             currentWidget = new Label(shortName);
@@ -290,7 +291,7 @@ public class MainEntryPoint implements EntryPoint {
                             //finestra contenente nome lungo del documento
                             final PopupPanel overWidget = new PopupPanel(true);
                             overWidget.setVisible(false);
-                            overWidget.add(new Label(longName));
+                            overWidget.add(new HTML(longName));
 
                             MouseOverHandler overHandler = new MouseOverHandler() {
 
@@ -408,7 +409,7 @@ public class MainEntryPoint implements EntryPoint {
             }
             index--;
         }
-        debug.add(new Label("childddd " + index));
+        //debug.add(new Label("childddd " + index));
         return index;
     }
 

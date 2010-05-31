@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="services">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="globals"> <!-- di default minOccurs e maxOCcurs sono 1 -->
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="base">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:anyURI">
+                                        <xs:pattern value="http://.*"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="group">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:pattern value="LTW.*"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="members">
+                                <xs:complexType>
+                                    <xs:sequence maxOccurs="unbounded">
+                                        <xs:element name="member" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="service" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="name" type="xs:string"/>
+                            <xs:element name="description" type="xs:string"/>
+                            <xs:element name="URI" type="myString"/>
+                            <xs:element name="HTTPmethod">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="GET"/>
+                                        <xs:enumeration value="POST"/>
+                                        <xs:enumeration value="PUT"/>
+                                        <xs:enumeration value="DELETE"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="params">
+                                <xs:complexType>
+                                    <xs:sequence minOccurs="0" maxOccurs="unbounded"> <!-- per i servizi che non hanno parametri testuali -->
+                                        <xs:element name="param">
+                                            <xs:complexType>
+                                                <xs:simpleContent>
+                                                    <xs:extension base="xs:string">
+                                                        <xs:attribute name="name" type="myString" use="required"/>
+                                                        <xs:attribute name="type" use="required">
+                                                            <xs:simpleType>
+                                                                <xs:restriction base="xs:string">
+                                                                    <xs:enumeration value="string"/>
+                                                                    <xs:enumeration value="number"/>
+                                                                    <xs:enumeration value="boolean"/>
+                                                                </xs:restriction>
+                                                            </xs:simpleType>
+                                                        </xs:attribute>
+                                                    </xs:extension>
+                                                </xs:simpleContent>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="inputs">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="input" maxOccurs="2">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:enumeration value="application/xml"/>
+                                                    <xs:enumeration value="application/xml-dtd"/>
+                                                    <xs:enumeration value="application/rdf+xml"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="outputs">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="output" maxOccurs="5">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:enumeration value="application/xml"/>
+                                                    <xs:enumeration value="application/rdf+xml"/>
+                                                    <xs:enumeration value="text/html"/>
+                                                    <xs:enumeration value="application/xhtml+xml"/>
+                                                    <xs:enumeration value="application/json"/>
+                                                    <xs:enumeration value="image/svg+xml"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="myString">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:pattern value="[^' ']*"/>
+            <xs:pattern value="[0-9a-zA-Z]*"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>
