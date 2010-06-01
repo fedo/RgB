@@ -3,7 +3,7 @@ body {
 }
 
 .buttonDocumentsList {
-    padding: 4px;
+    padding: 2px;
     background: url("images/hdot2.gif") repeat-x scroll center bottom transparent;
 }
 
@@ -13,5 +13,5 @@ body {
 }
 
 .headerPanel {
-    background: navy;
+    background: #DCDCDC;
 }

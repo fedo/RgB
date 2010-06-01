@@ -14,11 +14,7 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import org.xml.sax.SAXException;
 import it.unibo.cs.rgb.gwt.RgBConfiguration;
-import java.io.ByteArrayInputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringReader;
 import javax.xml.parsers.*;
-import org.xml.sax.InputSource;
 
 /**
  *

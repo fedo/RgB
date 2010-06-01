@@ -41,6 +41,7 @@ public class TeiCollection {
     private static void fillList(String path, int deep) {
 
         File folder = new File(path);
+        if(folder.exists()){
         File[] listOfFiles = folder.listFiles();
         ArrayList<TeiDocument> tmp = new ArrayList<TeiDocument>();
 
@@ -54,12 +55,14 @@ public class TeiCollection {
                 }
             } else if (listOfFiles[i].isDirectory()) {
                 //cartella con documenti xml
-                    tmp.add(new TeiDocument(path + "/" + filename));
+                    //tmp.add(new TeiDocument(path + "/" + filename));
+                fillList(path+"/"+filename,deep+1);
             }
 
         }
-        listOfTei = tmp;
-
+        for(int i = 0; i < tmp.size(); i++)
+            listOfTei.add(tmp.get(i));
+}
 
 
 

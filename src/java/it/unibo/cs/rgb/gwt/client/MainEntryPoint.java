@@ -21,7 +21,6 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.http.client.*;
 import com.google.gwt.user.client.ui.PopupPanel.PositionCallback;
 import com.google.gwt.xml.client.Document;
-import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -170,8 +169,9 @@ public class MainEntryPoint implements EntryPoint {
 
                     Document responseXml = XMLParser.parse(response.getText().toString());
                     String longName = (String) hashMap.get("longName");
+                    String witnesses = (String) hashMap.get("witnesses");
 
-                    panel.add(new Label(longName));
+                    panel.add(new Label((String) hashMap.get("shortName")));
                     panel.add(new Label("BARRA DEI COMANDI ServizioX ServizioY ServizioZ ServizioK"));
 
                     //info
@@ -185,16 +185,21 @@ public class MainEntryPoint implements EntryPoint {
 
                     //witnesses
                     HorizontalPanel witnessesPanel = new HorizontalPanel();
-                    witnessesPanel.add(new Label("Scegli i witness da visualizzare: "));
-                    panel.add(witnessesPanel);
+                    if(witnesses.split(", ").length > 0)
+                        witnessesPanel.add(new Label("Scegli i witness da visualizzare: "));
+                    else
+                        witnessesPanel.add(new Label("Visualizza il documento: "));
+                    //if(!witnesses.equals(""))
+                        panel.add(witnessesPanel);
 
                     final HorizontalPanel witnessViewer = new HorizontalPanel();
                     witnessViewer.setBorderWidth(1);
                     panel.add(witnessViewer);
 
-                    NodeList witnessesList = XMLParser.parse(responseXml.getElementById("witnesses").toString()).getElementsByTagName("li");
-                    for (int i = 0; i < witnessesList.getLength(); i++) {
-                        final String witness = witnessesList.item(i).getFirstChild().toString();
+
+                    //NodeList witnessesList = XMLParser.parse(responseXml.getElementById("witnesses").toString()).getElementsByTagName("li");
+                    for (int i = 0; i < witnesses.split(" ").length; i++) {
+                        final String witness = witnesses.split(" ")[i];
                         final CheckBox checkbox = new CheckBox(witness);
 
                         //durante la crezione, checkbox è true e creo la prima visualizzazione
@@ -274,17 +279,40 @@ public class MainEntryPoint implements EntryPoint {
                             String current = responseXml.getElementsByTagName("li").item(i).toString();
                             Document currentXml = XMLParser.parse(current);
 
-
+                            //estrapolazione dati dalla servlet
                             final String id = new HTML(currentXml.getElementById("id").getFirstChild().toString()).getHTML();
                             documentInfo.put("id", id);
+
                             final String path = new HTML(currentXml.getElementById("path").getFirstChild().toString()).getHTML();
                             documentInfo.put("path", path);
-                            final String shortName = new HTML(currentXml.getElementById("shortName").getFirstChild().toString()).getHTML();
-                            documentInfo.put("shortName", shortName);
-                            final String longName = currentXml.getElementById("longName").toString();
-                            documentInfo.put("longName", longName);
-                            //debug.add(new HTML(currentXml.getElementById("longName").toString()));
 
+                            String doctitle = id;
+                            if (current.contains("docTitle")) {
+                                doctitle = new HTML(currentXml.getElementById("docTitle").getFirstChild().toString()).getHTML();
+                            }
+                            documentInfo.put("title", doctitle);
+
+
+                            String author = "(autore mancante)";
+                            if (current.contains("docAuthor")) {
+                                author = new HTML(currentXml.getElementById("docAuthor").getFirstChild().toString()).getHTML();
+                            }
+                            documentInfo.put("author", author);
+
+                            String witnesses = "";
+                            if (current.contains("docWit")) {
+                                witnesses = new HTML(currentXml.getElementById("docWit").getFirstChild().toString()).getHTML();
+                            }
+                            documentInfo.put("witnesses", witnesses);
+
+                            //final String shortName = new HTML(currentXml.getElementById("shortName").getFirstChild().toString()).getHTML();
+                            final String shortName = doctitle;
+                            documentInfo.put("shortName", shortName);
+
+                            final String longName = currentXml.getElementById("longName").toString() + "<b>Nome file:</b><br/>" + id;
+                            documentInfo.put("longName", longName);
+
+                            //*** disegno bottoni del menu doclist
                             final Label currentWidget;
                             currentWidget = new Label(shortName);
 
@@ -430,9 +458,9 @@ public class MainEntryPoint implements EntryPoint {
         final HTML retval = new HTML();
         retval.setTitle(witness);
 
-                //DocumentViewer
+        //DocumentViewer
         String url = "http://localhost:8080/RgB/DocumentViewer?acaso=123";
-        String postData = URL.encode("path") + "=" + URL.encode(path)+"&"+URL.encode("witness") + "=" + URL.encode(witness);
+        String postData = URL.encode("path") + "=" + URL.encode(path) + "&" + URL.encode("witness") + "=" + URL.encode(witness);
 
         RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, URL.encode(url));
         builder.setHeader("Content-type", "application/x-www-form-urlencoded");

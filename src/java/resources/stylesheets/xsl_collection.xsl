@@ -9,11 +9,21 @@
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-  <xsl:output method="xml" omit-xml-declaration="yes" encoding="UTF-8"/>
+  <xsl:output method="xml" indent="yes" omit-xml-declaration="yes" encoding="UTF-8"/>
 
   <xsl:variable name="newline">
      <br />
   </xsl:variable>
+
+  <xsl:variable name="blank">
+     <xsl:text> </xsl:text>
+  </xsl:variable>
+
+
+  <xsl:variable name="comma">
+     <xsl:text>, </xsl:text>
+  </xsl:variable>
+
 
   <xsl:template match="/">
      <!--
@@ -21,8 +31,8 @@
         <head>
 	 </head>
 
-        <body>
-           <div>-->
+        <body>-->
+           <div>
               <xsl:choose>
                  <!--
                  un manoscritto presenta il proprio titolo all'interno di
@@ -61,8 +71,8 @@
                  -->
                  <xsl:otherwise>
                     <b><xsl:text>Documento:</xsl:text></b>
-                    <span>
-                       <xsl:copy-of select="$newline"/>
+                    <xsl:copy-of select="$newline"/>
+                    <span id="docDescr">
                        <xsl:value-of select="//opener"/>
                     </span>
                  </xsl:otherwise>
@@ -73,13 +83,9 @@
               -->
               <xsl:apply-templates select="//witList"/>
               <xsl:apply-templates select="//revisionDesc"/>
-              <xsl:if test="//respStmt">
-                 <xsl:copy-of select="$newline"/>
-                 <b><xsl:text>Responsabili di codifica:</xsl:text></b>
-              </xsl:if>
               <xsl:apply-templates select="//respStmt"/>
-          <!-- </div>
-           
+           </div>
+           <!--
         </body>
      </html>-->
   </xsl:template>
@@ -88,9 +94,10 @@
   <!-- titolo del documento -->
   <xsl:template name="titolo">
      <xsl:param name="radix"/>
+     
      <b><xsl:text>Titolo:</xsl:text></b>
-     <span>
-        <xsl:copy-of select="$newline"/>
+     <xsl:copy-of select="$newline"/>
+     <span id="docTitle">
         <xsl:value-of select="$radix//title"/>
      </span>
   </xsl:template>
@@ -99,10 +106,12 @@
   <!-- autore del documento -->
   <xsl:template name="autore">
      <xsl:param name="radix"/>
+
      <xsl:copy-of select="$newline"/>
      <b><xsl:text>Autore:</xsl:text></b>
-     <span>
-        <xsl:copy-of select="$newline"/>
+
+     <xsl:copy-of select="$newline"/>
+     <span id="docAuthor">
         <xsl:value-of select="$radix//author"/>
      </span>
   </xsl:template>
@@ -111,47 +120,59 @@
   <xsl:template match="witList">
      <xsl:copy-of select="$newline"/>
      <b><xsl:text>Testimoni:</xsl:text></b>
-     <span>
+
+      <xsl:copy-of select="$newline"/>
+      <span id="docWit">
         <xsl:for-each select=".//witness[@sigil]">
-           <xsl:copy-of select="$newline"/>
+
+           <xsl:if test="position() &gt; 1">
+              <xsl:copy-of select="$comma"/>
+           </xsl:if>
            <xsl:value-of select="@sigil"/>
         </xsl:for-each>
      </span>
   </xsl:template>
 
+
   <!-- revisori -->
-  <!-- <xsl:template match="revisionDesc">
+  <xsl:template match="revisionDesc">
      <xsl:copy-of select="$newline"/>
      <b><xsl:text>Revisioni:</xsl:text></b>
-     <span>
+
+     <span id="docRev">
         <xsl:copy-of select="$newline"/>
-        <xsl:template match="date">
-           <xsl:value-of select=".//date"/>
-        </xsl:template>
+        <xsl:value-of select=".//date"/>
+
         <xsl:copy-of select="$newline"/>
-        <xsl:template match="name">
-           <xsl:value-of select=".//name"/>
-        </xsl:template>
+        <xsl:value-of select=".//name"/>
+
         <xsl:copy-of select="$newline"/>
-        <xsl:template match="item">
-           <xsl:value-of select=".//item"/>
-        </xsl:template>
+        <xsl:value-of select=".//item"/>
      </span>
-  </xsl:template> -->
+  </xsl:template>
+
 
   <!-- responsabili per la codifica -->
   <xsl:template match="respStmt">
-     <span>
+     <xsl:copy-of select="$newline"/>
+     <b><xsl:text>Responsabili di codifica:</xsl:text></b>
+
+     <xsl:copy-of select="$newline"/>
+     <span id="docResp">
         <xsl:choose>
            <xsl:when test=".//name">
               <xsl:for-each select=".//name">
-                 <xsl:copy-of select="$newline"/>
+                 <xsl:if test="position() != 1">
+                    <xsl:value-of select="$newline"/>
+                 </xsl:if>
                  <xsl:value-of select="."/>
               </xsl:for-each>
            </xsl:when>
            <xsl:otherwise>
               <xsl:for-each select="./*">
-                 <xsl:copy-of select="$newline"/>
+                 <xsl:if test="position() != 1">
+                    <xsl:value-of select="$newline"/>
+                 </xsl:if>
                  <xsl:value-of select="."/>
               </xsl:for-each>
            </xsl:otherwise>

@@ -2,11 +2,7 @@ package it.unibo.cs.rgb.test;
 
 import it.unibo.cs.rgb.gwt.RgBConfiguration;
 import it.unibo.cs.rgb.gwt.tei.TeiCollection;
-import java.io.IOException;
 import java.util.ArrayList;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPathExpressionException;
-import org.xml.sax.SAXException;
 
 /**
  *
