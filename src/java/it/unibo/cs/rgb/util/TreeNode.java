@@ -22,6 +22,8 @@ public class TreeNode implements java.io.Serializable
     protected String id;
     protected Integer depth;
     protected Boolean missing;
+    protected Boolean drawned;
+    protected Integer posX, posY;
     protected final List<TreeNode> children = new ArrayList<TreeNode>();
     protected TreeNode parent;
 
@@ -34,6 +36,8 @@ public class TreeNode implements java.io.Serializable
         this.setDepth(0);
         this.setId(id);
         this.setMissing(missing);
+        this.setDrawned(false);
+        this.setPosition(0,0);
     }
 
     public List<TreeNode> getChildren ()
@@ -112,5 +116,26 @@ public class TreeNode implements java.io.Serializable
 
     public Integer getDepth() {
         return depth;
+    }
+    
+    public void setDrawned(Boolean drawned) {
+        this.drawned = drawned;
+    }
+
+    public Boolean getDrawned() {
+        return drawned;
+    }
+
+    public void setPosition(Integer x, Integer y) {
+        this.posX = x;
+        this.posY = y;
+    }
+
+    public Integer getX() {
+        return posX;
+    }
+
+    public Integer getY() {
+        return posY;
     }
 }
