@@ -4,6 +4,7 @@
  */
 package it.unibo.cs.rgb.servlet;
 
+import it.unibo.cs.rgb.gwt.tei.TeiDocument;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -44,13 +45,8 @@ public class DocumentInfo extends HttpServlet {
             out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             out.println("<html xmlns=\"http://www.w3.org/1999/xhtml\" version=\"1.0\">");
             out.println("<h1>DocumentInfo: informazioni dettagliate documento Tei</h1>");
-            
             out.println("<p>File selezionato: "+path+"</p>");
-            out.println("<div id=\"info\"><p>sono la servlet che da le info info del documnto"+path+"</p></div>"); //TODO
-            out.println("<ul id=\"witnesses\">");
-            for (int i = 0; i < witList.size(); i++)
-                   out.println("<li>"+witList.get(i)+"</li>");
-            out.println("</ul>");
+            out.println("<div id=\"info\">"+new TeiDocument(path).getInfo()+"</div>"); //TODO
             out.println("</html>");
 
         } finally {

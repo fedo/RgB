@@ -176,6 +176,7 @@ public class MainEntryPoint implements EntryPoint {
 
                     //info
                     DisclosurePanel info = new DisclosurePanel("Informazioni sul documento");
+                    info.setWidth("100%");
                     info.setOpen(true);
                     info.setContent(new HTML(responseXml.getElementById("info").getFirstChild().toString()));
                     panel.add(info);
@@ -186,8 +187,8 @@ public class MainEntryPoint implements EntryPoint {
                     //witnesses
                     HorizontalPanel witnessesPanel = new HorizontalPanel();
                     if(witnesses.split(", ").length > 0)
-                        witnessesPanel.add(new Label("Scegli i witness da visualizzare: "));
-                    else
+                        witnessesPanel.add(new Label("Visualizza testimoni: "));
+                    else if (witnesses.equalsIgnoreCase(""))
                         witnessesPanel.add(new Label("Visualizza il documento: "));
                     //if(!witnesses.equals(""))
                         panel.add(witnessesPanel);
@@ -198,8 +199,8 @@ public class MainEntryPoint implements EntryPoint {
 
 
                     //NodeList witnessesList = XMLParser.parse(responseXml.getElementById("witnesses").toString()).getElementsByTagName("li");
-                    for (int i = 0; i < witnesses.split(" ").length; i++) {
-                        final String witness = witnesses.split(" ")[i];
+                    for (int i = 0; i < witnesses.split(", ").length; i++) {
+                        final String witness = witnesses.split(", ")[i];
                         final CheckBox checkbox = new CheckBox(witness);
 
                         //durante la crezione, checkbox è true e creo la prima visualizzazione
@@ -309,7 +310,7 @@ public class MainEntryPoint implements EntryPoint {
                             final String shortName = doctitle;
                             documentInfo.put("shortName", shortName);
 
-                            final String longName = currentXml.getElementById("longName").toString() + "<b>Nome file:</b><br/>" + id;
+                            final String longName = currentXml.getElementById("longName").toString() + "<b>Nome file:</b> " + id;
                             documentInfo.put("longName", longName);
 
                             //*** disegno bottoni del menu doclist

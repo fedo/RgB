@@ -29,5 +29,7 @@ public class TeiTest {
         System.out.println("-----------------");
         System.out.println("la collezione contiene n elementi: " + collection.getNumberOfDocument());
 
+        String splitta = "a, b, e, e, f";
+
     }
 }

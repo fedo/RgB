@@ -1,0 +1,178 @@
+<?xml version="1.0"?>
+<!DOCTYPE TEI.2 PUBLIC '-//BIBIT//DTD BibIt L1 TEI Document Type//EN' 'bibit-l1.dtd'>
+<?xml-stylesheet type="text/xsl" href="dattiloscritti.xsl"?>
+
+
+
+<TEI.2>
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+
+                <title>Paul Newman</title>
+
+                <author>Vincenzo Cerami</author>
+                <respStmt>
+                    <resp>Codifica</resp>
+                    <name>Lorenzo Geri</name>
+                    <name>Simone Onofri</name>
+                    <name>Sara Santorsa</name>
+                    <name>Daniele Silvi</name>
+                    <name>Marcello Vicidomini</name>
+                </respStmt>
+            </titleStmt>
+            <publicationStmt>
+                <publisher>Facoltà di Lettere e Filosofia, Università di Roma Tre. </publisher>
+                <pubPlace>Roma</pubPlace>
+                <date>2006</date>
+            </publicationStmt>
+            <seriesStmt>
+                <title>Digital Variants</title>
+            </seriesStmt>
+
+            <sourceDesc>
+                <bibl>
+
+                    <title>Paul Newman</title>
+                    <author>Vincenzo Cerami</author>
+
+                    <editor/>
+                    <publisher/>
+                    <pubPlace/>
+                    <date/>
+                </bibl>
+            </sourceDesc>
+        </fileDesc>
+        <profileDesc>
+
+            <langUsage>
+                <language id="codice">italiano</language>
+
+            </langUsage>
+        </profileDesc>
+
+        <revisionDesc>
+            <change>
+                <date>29-04-2006</date>
+                <respStmt>
+                    <name>Marcello Vicidomini</name>
+                </respStmt>
+                <item>Codifica del racconto apparso sul Messaggero</item>
+            </change>
+        </revisionDesc>
+    </teiHeader>
+
+    <text>
+        <body>
+            <div1>
+                <head>Una zitella moderna di Vincenzo Cerami</head>
+
+                <p>Trentasei anni, elegante, molto ben fatta, di piglio sicuro e fare spregiudicato,
+                    dirigente d'azienda. Quasi vergine. Si chiamava Patrizia Zampa. Abitava in un
+                    appartamento molto femminile nel centro del centro della città. Già in primavera
+                    cominciava a prendere il sole in terrazza spalmandosi di creme idratanti e
+                    profumate. Frequentava regolarmente l'istituto di bellezza, una volta per i
+                    massaggi, un'altra per la depilazione, un'altra per la cura del viso. Mangiava
+                    carote, cetrioli, yogurt e carne bianca. Gli amici maschi ne avevano una certa
+                    soggezione e nessuno di loro poteva vantarsi di aver avuto con Patrizia neanche
+                    una larva di avventura. Quasi tutti erano convinti che Patrizia i suoi amori
+                    andava ad inseguirli altrove, in un mondo a loro lontano e sconosciuto e del
+                    quale la donna non faceva volutamente menzione. Come se avesse deciso di
+                    separare la sua vita in due: una parte pubblica e una privatissima. Di qua
+                    rapporti solari d'amicizia, di lavoro e di scambi intellettuali; di là slanci
+                    irrazionali, tenebrosi, fughe nel sesso. Non pochi amici avrebbero preferito
+                    stare dall'altra parte per godersi quanto Patrizia aveva di meglio e per
+                    risparmiarsi nello stesso tempo alcune sue fredde tiritere sulle cose del mondo.
+                    Ma tant'è: col tempo si erano abituati ad ascoltarla senza gettarle più gli
+                    occhi addosso. Patrizia sapeva che i suoi amici immaginavano di lei cose
+                    inaudite, ma li lasciava fare perché tanto mistero creava intorno a lei
+                    interesse e un'inquietudine in fondo divertente. Si disturbava invece quando
+                    quelli, dimentichi del fatto che lei era donna, talvolta si lasciavano
+                    cameratescamente andare in apprezzamenti pesanti verso qualche bella ragazza di
+                    passaggio.</p>
+                <p>Ma un bel giorno nell'ufficio della dottoressa Zampa entrò un giovane bello come
+                    il Paul Newman dei tempi d'oro. Un ingegnerino timido ma dallo sguardo
+                    penetrante, capace di far sentire nuda una donna in pelliccia. Era stato assunto
+                    dall'azienda e stava facendo il giro dei dirigenti. Patrizia tremò tutta.
+                    L'unica volta che veva provato un turbamento del genere era stato quell'unica
+                    altra volta, tanti, tantissimi anni prima, in cui un ragazzo era riuscito a
+                    spogliarla nello squallido locale dei cassoni del condominio. Aldo, il
+                    bell'ingegnere, si accorse subito del lieve smarrimento della bella dottoressa,
+                    ma non volle incoraggiarlo. La salutò sbrigativamente e se ne andò. La parte più
+                    segreta di Patrizia, quella che anche lei poco conosceva e in genere dominava,
+                    restò scombussolata da quell'incontro. Ma lei non volle approfondire, doveva
+                    rivedere quel giovane che era riuscito a muoverle dentro sentimenti che stavano
+                    fermi da anni come montagne. Di lì a meno di una settimana riuscì a farsi
+                    invitare a cena nel più esclusivo ristorante della città.</p>
+                <p>Aldo non la conosceva e l'idea che se n'era fatto non prevedeva certo una donna
+                    cerebrale e così zeppa di idee chiare sul mondo. Al contrario quella ragazza gli
+                    appariva moderna e disinvolta, un tipo che non stava troppo a sottilizzare anche
+                    sui piccoli piaceri della vita. Era bella, dotata di una ben visibile carica di
+                    sensualità; e libera da impegni sentimentali. In più, dopo la cenetta allegra in
+                    cui tutti e due s'erano sentiti a loro agio, lei l'aveva invitato a salire su in
+                    casa per un ultimo bicchierino. Tutto lasciava prevedere che avrebbero concluso
+                    insieme, sotto le stesse lenzuola, quella serata indimenticabile.</p>
+                <p>E Patrizia, forse senza confessarselo così apertamente, aveva la stessa
+                    convinzione; quell'ultimo bicchierino avrebbe spogliato entrambi di ogni residua
+                    esitazione e anche degli abiti. Ma mentre per Paul Newman cominciare a
+                    spogliarsi significava semplicemente sbottonarsi, per la bellissima ed esitante
+                    Patrizia Zampa voleva dire prendere a picconate quelle montagne di immobilità
+                    che si portava dentro da sempre. Eccola allora prendere involontariamente
+                    prendere una posizione di difesa travestendosi da donna sicura e spregiudicata.
+                    Fu proprio lei ad introdurre l'argomento dell'erotismo, e ne parlava come se si
+                    trattasse di un programma dei computer. Senza reticenze diceva a quel ragazzo
+                    quanto lei detestasse quegli uomini troppo aggressivi, che nei momenti fatidici
+                    manipolano la donna come più fa piacere a loro, del tutto sordi ai sentimenti e
+                    ai trasporti femminili e che spesso, addirittura, la coprono di insulti per
+                    sentirsi più maschi. Aldo non poteva che essere d'accordo e intanto, dentro di
+                    sé, si diceva: «Nel caso, mi raccomando, fa' le cose con calma, sta' zitto e non
+                    essere prepotente come al solito!». Ma non finì di farsi queste raccomandazioni
+                    perché Patrizia cominciò ad inveire anche contro quegli uomini che non fanno
+                    niente, che se ne stanno lì ad aspettare che la donna prenda le iniziative. «Un
+                    uomo del genere -diceva lei- non si cura per niente del piacere della donna.
+                    Tutto gli è dovuto. Per lui la donna non è che una geisha, una semplice fonte di
+                    piacere!» E anche dopo questo Aldo non poteva fare altro che sì con la testa. E
+                    intanto dava istruzioni a se stesso, nell'eventualità fosse finito a letto con
+                    Patrizia, di non starsene lì con le mani in mano e gli occhi chiusi come un
+                    baccalà.</p>
+                <p>Mandarono giù un altro sorso e lei riattaccò: "I peggiori, poi, sono quegli
+                    uomini che vogliono mostrare di essere più maschi di tutti trascinando le cose
+                    per le lunghe. Quelli che per raggiungere il piacere possono star lì anche due
+                    ore. Sono disgustosi e patetici. Non fanno altro che dire alla donna: guarda
+                    quanto sono bravo! Il piacere che provano a mostrarsi bravi è superiore
+                    all'amore stesso. E pessimo è quello che fa l'esatto contrario: ignorando
+                    completamente che l'amore si fa in due, in quattro quattr'otto si libera del
+                    problema e buonanotte. In men che nulla è tutto finito. Poi si fuma una
+                    sigaretta e non vede l'ora di andarsene. Forse questo è il peggio di tutti,
+                    perché una donna si sente completamente inutile."</p>
+                <p>Nella testa di Aldo cominciò a svolazzare l'idea di lasciar perdere: gli era
+                    difficile immaginarsi di poter evitare tutte quelle possibilità prospettate
+                    dalla donna. Si diceva: "Sarai capace di non essere aggressivo e nemmeno troppo
+                    baccalà? Sarai capace di non aprire bocca? Sarai capace di non tirarla per le
+                    lunghe senza per questo fare troppo in fretta? Dovrai essere maschio ma non
+                    molto; tenero misuratamente, aggressivo senza essere violento; non puoi essere
+                    né sadico né masochista; e soprattutto non devi mai dimenticare che non sei
+                    solo, ma con una donna che se ne intende più di te!" E mentre Aldo si perdeva in
+                    questi pensieri, Patrizia Zampa continuava la sua rassegna degli erotismi
+                    sbagliati. Adesso s'era addentrata nel gravoso problema della simultaneità del
+                    piacere: "Un uomo e una donna non portanno dire di aver fatto all'amore se il
+                    piacere ognuno l'ha provato per conto suo e in due momenti diversi".
+                    Quest'ultima affermazione di Patrizia tagliò la testa al toro: Aldo cominciò a
+                    guardare l'orologio. Poi, d'improvviso disse: "Invece di fare tante chiacchiere,
+                    Patrizia, abbi il coraggio di confessare che fare all'amore non ti piace".
+                    Patrizia restò qualche momento senza fiato: Aldo con una violenta manata aveva
+                    mandato per aria tutto il suo bel castello di carte. Poi, in uno scoppio di
+                    lacrime, menando pugni all'impazzata, si scagliò contro il giovane. Finalmente i
+                    due corpi vennero a contatto e da quel contatto nacque l'amore. All'inizio fu un
+                    po' brutale, poi, col passare delle ore, s'addolcì e durò fino alla mattina
+                    dopo. Quando contro la finestra si accese la luce del giorno dopo i due
+                    dormivano esausti. Quella notte che avevano passato insieme ne aveva viste di
+                    tutti i colori: Aldo aveva recitato tutto il repertorio descritto da Patrizia,
+                    era caduto in tutti gli errori che lei aveva previsto. Ma la somma finale di
+                    tutti quegli errori regalò a Patrizia un sentimento nuovo, insieme di
+                    liberazione e di beatitudine.</p>
+            </div1>
+        </body>
+    </text>
+
+</TEI.2>

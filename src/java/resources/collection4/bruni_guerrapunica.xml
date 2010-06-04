@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TEI SYSTEM "tei-msMarco.dtd" 
+[
+<!ENTITY c24r SYSTEM "c24r.jpg" NDATA JPEG>
+<!NOTATION JPEG SYSTEM "image/jpeg">
+
+<!ELEMENT figure EMPTY>
+<!ATTLIST figure
+entity CDATA #REQUIRED
+>
+]>
+
+<TEI>
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title>Edizione elettronica di una pagina di manoscritto</title>
+                <respStmt>
+                    <resp>Compilata da</resp>
+                    <name>Marco Caracciolo</name>
+                </respStmt>
+            </titleStmt>
+            <editionStmt>
+                <edition>Edizione elettronica realizzata per il Laboratorio di codifica dei testi</edition>
+                <respStmt>
+                    <resp>Laboratorio a cura di</resp>
+                    <name>Francesca Tomasi</name>
+                </respStmt>
+            </editionStmt>
+            <publicationStmt>
+                <pubPlace>Bologna</pubPlace>
+                <date>2008</date>
+            </publicationStmt>
+            <sourceDesc>
+                <msDesc>
+                    <msIdentifier>
+                        <country>United States</country>
+                        <region>California</region>
+                        <settlement>Berkeley</settlement>
+                        <repository>Bancroft Library</repository>
+                        <idno>UCB 096</idno>
+                        <altIdentifier><idno>2MS uncat 1967 1.13</idno></altIdentifier>
+                    </msIdentifier>
+                    <msContents>
+                        <msItemStruct>
+                            <locus>cc. 1r-115r</locus>
+                            <author>Leonardo Bruni</author>
+                            <respStmt cert="50%"><resp>Traduzione di</resp> <persName>Lodovico Domenichi</persName></respStmt>
+                            <title type="convenzionale">Della prima guerra punica</title>
+                            <rubric>Historia della prima Guerra tra Romani e Cartaginesi per supplimento di quello, che ne scrisse T. Livio, che hora non si <sic>ritruoua</sic>. Composta da incerto autore.</rubric>
+                            <incipit>Parra forse a <sic>multe</sic> che io vada dietro a cose troppo antiche</incipit>
+                            <textLang>Italiano antico</textLang>
+                        </msItemStruct>
+                    </msContents>
+                    <physDesc>
+                        <objectDesc form="codex">
+                            <supportDesc>
+                                <support>Cartaceo con <watermark>filigrana ciseaux</watermark> simile al <bibl>Briquet 3675</bibl>. Carte di guardia pergamenacee, <date>XVII secolo</date>.</support>
+                                <extent>iv + 115 + iv.
+                                    <dimensions unit="mm">
+                                        <height>203</height>
+                                        <width>140</width>
+                                    </dimensions>
+                                </extent>
+                                <condition>Mancano cinque carte.</condition>
+                            </supportDesc>
+                            <layoutDesc>
+                                <layout columns="1" ruledLines="23" writtenLines="23">23 linee tracciate a secco.</layout>
+                            </layoutDesc>
+                        </objectDesc>
+                        <handDesc hands="2">
+                            <p>Note a margine di altra mano.</p>
+                        </handDesc>
+                    </physDesc>
+                    <history>
+                        <p><origDate notBefore="1440" notAfter="1460">Metà XIV secolo</origDate>, <origPlace>Italia</origPlace>.</p>
+                        <p>Appartenuto a <persName from="1792" to="1872">Sir Thomas Phillipps </persName> (1792-1872), acquistato da Sotheby's il <date when="29-11-1966">29 Novembre 1966</date>.</p>
+                    </history>
+                </msDesc>
+            </sourceDesc>
+        </fileDesc>
+        <encodingDesc>
+            <p>Siamo partiti dall'immagine della carta 24 recto del ms.  disponibile sul
+                sito di <ref
+                    target="http://www.scriptorium.columbia.edu"
+                    >Digital Scriptorium</ref>. Abbiamo deciso di fornire tre trascrizioni diverse: la
+                prima, diplomatica, è il più possibile vicina all'originale: segue le
+                raccomandazioni della <ref target="http://www.mufi.info">MUFI</ref> per la
+                resa dei glifi e tiene conto di tutti i fenomeni del manoscritto. Nella trascrizione interpretativa abbiamo scelto di
+                sciogliere le abbreviazioni tra parentesi tonde, segnalare la normalizzazione dei
+                segni glifici e separare le parole in scriptio
+                continua. La messa in pagina originale è mantenuta. Nella trascrizione critica, infine,
+                è stata introdotta la punteggiatura e modificata la disposizione del testo.</p>
+            <refsDecl><p>La mano delle note marginali è codificata come <name xml:id="AM">AM</name>.</p></refsDecl>
+            <classDecl>
+                <taxonomy xml:id="CDD">
+                    <bibl>Classificazione decimale Dewey</bibl>
+                </taxonomy>
+            </classDecl>
+        </encodingDesc>
+        <profileDesc>
+            <textClass>
+                <keywords scheme="CDD">
+                    <term>D 878.04 MISCELLANEA LATINA. 1350-</term>
+                </keywords>
+            </textClass>
+        </profileDesc>
+        <revisionDesc>
+            <change>
+                <date></date>
+                <name>Marco Caracciolo</name></change>
+        </revisionDesc>
+    </teiHeader>
+    <text>            <fw type="pageNum" place="top-right">24</fw>
+        <body>
+            <p>
+
+<figure entity="c24r"/> 
+<lb n="1"/>to et<reg type="SC"> </reg><choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>ifficult<choice><orig>a</orig><reg type="modernizzazione">à</reg></choice> <sic><choice><abbr type="contraction">&iSegnoSopra;</abbr><expan>in</expan></choice>tro<choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>a<choice><orig>&ctLeg;</orig><reg type="SG">ct</reg></choice>o</sic> certo ra<choice><orig>&gStondata;</orig><reg type="SG">g</reg></choice>iona<lb n="2"/>mento
+                <choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice><reg type="aggiuntaPunteggiatura">'</reg>acor<choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>o uenen<choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>o il<reg type="SC"> </reg>con<choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>olo a<reg type="SC"> </reg>collo<lb n="3"/>quio c<choice><abbr type="contraction">&oSegnoSopra;</abbr><expan>on</expan></choice><reg type="SC"> </reg>llu<choice><orig>&iAllungata;</orig><reg type="SG">i</reg></choice>, fu pre<choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>o<anchor xml:id="M1"/>
+                a<choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice><reg type="SC"> </reg>in<choice><orig>&gStondata;</orig><reg type="SG">g</reg></choice>anno et in<choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>ieme <lb n="4"/>c<choice><abbr type="contraction">&oSegnoSopra;</abbr><expan>on</expan></choice><reg type="SC"> </reg>li <choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>e<choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>ici naui ne fu<reg type="SC"> </reg><term>minato</term> a<choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice> <choice><abbr type="contraction">&aMaiuscSegnoSopra;</abbr><expan>An</expan></choice>nibale<choice><orig>,</orig><reg type="aggiuntaPunteggiatura">:</reg></choice> pare<lb n="5"/>ua la fortuna auer fauori<choice><orig>&gStondata;</orig><reg type="SG">g</reg></choice>iato <choice><orig>&gStondata;</orig><reg type="SG">g</reg></choice>ran<choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>emente <lb n="6"/>i<reg type="SC"> </reg><choice><orig>c</orig><reg type="aggiuntaMaiuscola">C</reg></choice>arta<choice><orig>&gStondata;</orig><reg type="SG">g</reg></choice>ine<choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>i in<reg type="SC"> </reg>que<choice><orig>&stLeg;</orig><reg type="SG">st</reg></choice>o <choice><abbr type="contraction">&pri;</abbr><expan>pri</expan></choice>ncipio. Ma po<reg type="aggiuntaPunteggiatura">'</reg> che <choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>i <lb n="7"/>poi <choice><abbr type="superscription">&qu;</abbr><expan>qu</expan></choice>i come uole<choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice><choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>e far
+                uen<choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>e<choice><orig>&ctLeg;</orig><reg type="SG">ct</reg></choice>a, et afflixe <choice><abbr type="superscription">&gStondataQsopra;</abbr><expan>queg</expan></choice>li <lb n="8"/><choice><orig>c</orig><reg type="aggiuntaMaiuscola">C</reg></choice>arta<choice><orig>&gStondata;</orig><reg type="SG">g</reg></choice>ine<choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>i con<reg type="SC"> </reg><choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>imile <choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>anno, et
+                <choice><orig>&gStondata;</orig><reg type="SG">g</reg></choice>ia<choice><orig>&ctLeg;</orig><reg type="SG">ct</reg></choice>ura <choice><abbr type="contraction">&per1;</abbr><expan>per</expan></choice><choice><orig>o</orig><reg type="modernizzazione">ò</reg></choice> <lb n="9"/>che Annibale montato <choice><abbr type="suspension">&iSegnoSopra;</abbr><expan>in</expan></choice><reg type="SC"> </reg><choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>perança <choice><abbr type="suspension">&per1;</abbr><expan>per</expan></choice><reg type="SC"> </reg>la <term xml:id="VACpresura"><choice><abbr type="contraction">&pre;</abbr><expan>pre</expan></choice><choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>ura</term> <lb n="10"/><choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>el con<choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>olo et<reg type="SC"> </reg><choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>elle
+                naui, n<choice><abbr type="contraction">&oSegnoSopra;</abbr><expan>on</expan></choice> pren<choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>en<choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>o exe<lb n="11"/>mplo <choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>e<choice><orig>&gStondata;</orig><reg type="SG">g</reg></choice>li errori altru<choice><orig>&iAllungata;</orig><reg type="SG">i</reg></choice>,
+                ma proci<choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>en<choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>o <lb n="12"/>c<choice><abbr type="contraction">&oSegnoSopra;</abbr><expan>on</expan></choice> <choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>imile temerit<choice><orig>a</orig><reg type="modernizzazione">à</reg></choice>. <choice><choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice><reg type="aggiuntaMaiuscola">S</reg></choice>enten<choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>o che
+                il<reg type="SC"> </reg>re<choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>to <choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>elle <lb n="13"/>naui romane <choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>ouea fare il<reg type="SC"> </reg>camino per<reg type="SC"> </reg>lo<reg type="SC"> </reg>li<lb n="14"/>to <choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice><reg type="aggiuntaPunteggiatura">'</reg><choice><orig>i</orig><reg type="aggiuntaMaiuscola">I</reg></choice>talia <choice><abbr type="contraction">&uer;</abbr><expan>uer</expan></choice><choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>o la<reg type="SC"> </reg><choice><orig>c</orig><reg type="aggiuntaMaiuscola">C</reg></choice>icilia, <choice><orig>L</orig><reg type="modernizzazione">l</reg></choice>ui c<choice><abbr>&oSegnoSopra;</abbr><expan>on</expan></choice><reg type="SC"> </reg>cinquanta <lb n="15"/>naui
+                ele<choice><orig>&ctLeg;</orig><reg type="SG">ct</reg></choice>e et <term>bene <choice><abbr type="suspension">&iSegnoSopra;</abbr><expan>in</expan></choice> punto</term> <choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>i<reg type="SC"> </reg>f<choice><orig>e</orig><reg type="modernizzazione">é</reg></choice> <choice><abbr type="contraction">&iSegnoSopra;</abbr><expan>in</expan></choice>contra. Et <lb n="16"/>naui<choice><orig>&gStondata;</orig><reg type="SG">g</reg></choice>an<choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>o pe<reg type="aggiuntaPunteggiatura">'</reg><reg type="SC"> </reg>contrario camino <choice><abbr type="contraction">&uer;</abbr><expan>uer</expan></choice><choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>o l<reg type="aggiuntaPunteggiatura">'</reg><term>aue<lb n="17"/>nimento</term> <choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>i<reg type="SC"> </reg><choice><orig>r</orig><reg type="aggiuntaMaiuscola">R</reg></choice>omani et<reg type="SC"> </reg><choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>prou<choice><orig>&iAllungata;</orig><reg type="SG">i</reg></choice><choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>uta<choice><abbr type="contraction">&mSegnoSopra;</abbr><expan>men</expan></choice>ti allo <choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>pu<lb n="18"/>ntare <choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>i certo promuntorio
+                <choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>e <choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>contr<choice><orig>o</orig><reg type="modernizzazione">ò</reg></choice> nel na<lb n="19"/>uilio <choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>e<reg type="aggiuntaPunteggiatura">'</reg><reg type="SC"> </reg><choice><orig>r</orig><reg type="aggiuntaMaiuscola">R</reg></choice>oman<choice><orig>&iAllungata;</orig><reg type="SG">i</reg></choice> <choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>al<reg type="SC"> </reg><choice><abbr type="superscription">&qAsopra;</abbr><expan>qua</expan></choice>le <choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>ubito torniato et <lb n="20"/>uinto <choice><abbr type="contraction">&per1;</abbr><expan>per</expan></choice><choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>e <choice><abbr type="superscription">&qu;</abbr><expan>qu</expan></choice>i to<choice><orig>&ctLeg;</orig><reg type="SG">ct</reg></choice>e le<reg type="SC"> </reg>naui cinquanta<anchor xml:id="M2"/> che <lb n="21"/><choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>eco aueua. Et<reg type="SC"> </reg>la<reg type="SC"> </reg><choice><abbr type="contraction">&per1;</abbr><expan>per</expan></choice><choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>ona <choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>ua ancora fu <choice><abbr type="contraction">&pre;</abbr><expan>pre</expan></choice><choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>a. <lb n="22"/>Ma poi trafo<choice><orig>&gStondata;</orig><reg type="SG">g</reg></choice>an<choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>o<choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>i per<reg type="SC"> </reg>la ba<choice><orig>&ctLeg;</orig><reg type="SG">ct</reg></choice>a<choice><orig>&gStondata;</orig><reg type="SG">g</reg></choice>la fuor <lb n="23"/><choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice><reg type="aggiuntaPunteggiatura">'</reg>o<choice><orig>&gStondata;</orig><reg type="SG">g</reg></choice>ni <choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>perança <choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>e<reg type="aggiuntaPunteggiatura">'</reg><reg type="SC"> </reg>nemici et<reg type="SC"> </reg><choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>e<reg type="aggiuntaPunteggiatura">'</reg> <choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>uoi <choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>c<choice><abbr type="contraction">&aSegnoSopra;</abbr><expan>am</expan></choice>p<choice><orig>o</orig><reg type="modernizzazione">ò</reg></choice></p>
+        </body>
+        <note target="#M1" place="margin-right" type="gloss" resp="#AM"><lb/>Cornelio Consolo <lb/>preso con<reg type="SC"> </reg>se<choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>ici <lb/>naue nel<reg type="SC"> </reg>porto <lb/><choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>e <choice><orig>l</orig><reg type="aggiuntaMaiuscola">L</reg></choice>ipari <choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>al<reg type="SC"> </reg>pre<lb/>fetto <choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>e<reg type="aggiuntaPunteggiatura">'</reg><reg type="SC"> </reg><choice><orig>c</orig><reg type="aggiuntaMaiuscola">C</reg></choice>artagi<lb/>nesi<reg type="aggiuntaPunteggiatura">.</reg></note>
+        <note target="#M2" place="margin-right" type="gloss" resp="#AM"><lb/><choice><orig>c</orig><reg type="aggiuntaMaiuscola">C</reg></choice>inquanta<reg type="SC"> </reg>naue <lb/><choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>e<reg type="aggiuntaPunteggiatura">'</reg> <choice><orig>c</orig><reg type="aggiuntaMaiuscola">C</reg></choice>artaginesi <lb/>presi <choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>a Romani<reg type="aggiuntaPunteggiatura">.</reg></note>
+    </text>
+</TEI>

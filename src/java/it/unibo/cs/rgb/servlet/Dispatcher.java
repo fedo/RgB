@@ -28,10 +28,6 @@ import javax.xml.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
@@ -84,7 +80,7 @@ public class Dispatcher extends HttpServlet {
 
         try {
             out.println("ci provo servlet file upload");
-            boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+            boolean isMultipart = true; //ServletFileUpload.isMultipartContent(request); //BOH
             if (!isMultipart) {
             } else {
                 InputStreamReader input = new InputStreamReader(request.getInputStream());

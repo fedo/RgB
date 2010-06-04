@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.sf.saxon.s9api.SaxonApiException;
 import org.w3c.dom.*;
 import javax.xml.xpath.*;
 
@@ -15,6 +16,13 @@ import javax.xml.transform.TransformerFactory;
 import org.xml.sax.SAXException;
 import it.unibo.cs.rgb.gwt.RgBConfiguration;
 import javax.xml.parsers.*;
+import javax.xml.transform.stream.StreamSource;
+import net.sf.saxon.s9api.Processor;
+import net.sf.saxon.s9api.Serializer;
+import net.sf.saxon.s9api.XdmNode;
+import net.sf.saxon.s9api.XsltCompiler;
+import net.sf.saxon.s9api.XsltExecutable;
+import net.sf.saxon.s9api.XsltTransformer;
 
 /**
  *
@@ -60,7 +68,7 @@ public class TeiDocument {
             ;
             File[] listOfXml = folder.listFiles();
             for (int i = 0; i < listOfXml.length; i++) {
-                xmlList.add(""+listOfXml[i]);
+                xmlList.add("" + listOfXml[i]);
             }
         }
     }
@@ -154,66 +162,83 @@ public class TeiDocument {
 
     public String getHover() {
 
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        String retval = "error";
 
-
-        String retval ="error";
-
-        TransformerFactory tFactory = TransformerFactory.newInstance();
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        String xml;
-        String xsl = RgBConfiguration.stylesheetsDirectoryPath + "/hover.xsl";
-
+        String inputXsl = RgBConfiguration.stylesheetsDirectoryPath + "/hover.xsl";
+        String inputXml;
         if (type.equals("file")) {
-            xml = absolutePath;
+            inputXml = absolutePath;
         } else {
-            xml = xmlList.get(0);
+            inputXml = xmlList.get(0);
         }
 
         try {
-            Transformer transformer = tFactory.newTransformer(new javax.xml.transform.stream.StreamSource(xsl));
- 
-            transformer.transform(new javax.xml.transform.stream.StreamSource(xml),
-                    new javax.xml.transform.stream.StreamResult(output));
-        } catch (Exception e) {
-            e.printStackTrace();
+            Processor proc = new Processor(false);
+            XsltCompiler comp = proc.newXsltCompiler();
+            XsltExecutable exp = comp.compile(new StreamSource(new File(inputXsl)));
+            XdmNode source = proc.newDocumentBuilder().build(new StreamSource(new File(inputXml)));
+            Serializer out = new Serializer();
+            out.setOutputStream(outputStream);
+            XsltTransformer trans = exp.load();
+            trans.setInitialContextNode(source);
+            trans.setDestination(out);
+            trans.transform();
+        } catch (SaxonApiException ex) {
+            Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        
-        /*try {
-            try {
-                InputSource is = new InputSource();
-        is.setCharacterStream(new StringReader(output.toString()));
-
-                Document tmp = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(is); //fa schifo
-                retval = tmp.getElementsByTagName("div").item(0).getTextContent();
-
-                retval = "info "+teiName;
-
-            } catch (ParserConfigurationException ex) {
-                Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (SAXException ex) {
-            Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
-
-
         String ret = "encoding error";
         try {
-            ret = output.toString("UTF-8");
+            ret = outputStream.toString("UTF-8");
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
         }
         return ret;//.substring("<?xml version=\"1.0\" encoding=\"UTF-8\"?> ".length(), output.toString().length()-1);
     }
 
-    public String firstFile(){
+    public String getInfo() {
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        String retval = "error";
+
+        String inputXsl = RgBConfiguration.stylesheetsDirectoryPath + "/preface.xsl";
+        String inputXml;
+        if (type.equals("file")) {
+            inputXml = absolutePath;
+        } else {
+            inputXml = xmlList.get(0);
+        }
+
+        try {
+            Processor proc = new Processor(false);
+            XsltCompiler comp = proc.newXsltCompiler();
+            comp.setSchemaAware(false);
+            XsltExecutable exp = comp.compile(new StreamSource(new File(inputXsl)));
+            XdmNode source = proc.newDocumentBuilder().build(new StreamSource(new File(inputXml)));
+            Serializer out = new Serializer();
+            out.setOutputStream(outputStream);
+            XsltTransformer trans = exp.load();
+            trans.setInitialContextNode(source);
+            trans.setDestination(out);
+            trans.transform();
+        } catch (SaxonApiException ex) {
+            Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String ret = "encoding error";
+        try {
+            ret = outputStream.toString("UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ret;//.substring("<?xml version=\"1.0\" encoding=\"UTF-8\"?> ".length(), output.toString().length()-1);
+    }
+
+    public String firstFile() {
         String retval = "error";
         if (type.equals("file")) {
-            retval = teiName+" file: "+absolutePath;
-        }else{
-            retval = teiName+" multifile: "+xmlList.get(0);
+            retval = teiName + " file: " + absolutePath;
+        } else {
+            retval = teiName + " multifile: " + xmlList.get(0);
         }
 
         return retval;
