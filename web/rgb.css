@@ -15,3 +15,8 @@ body {
 .headerPanel {
     background: #DCDCDC;
 }
+
+.servicePanel {
+    background: #DCDCDC;
+    width: 100%;
+}

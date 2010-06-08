@@ -5,34 +5,18 @@
 package it.unibo.cs.rgb.servlet;
 
 import com.oreilly.servlet.MultipartRequest;
-import it.unibo.cs.rgb.servlet.util.MultiPartFormData;
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
-import com.oreilly.servlet.multipart.MultipartParser;
-import com.oreilly.servlet.multipart.Part;
 import it.unibo.cs.rgb.gwt.RgBConfiguration;
 
 /**
@@ -52,6 +36,7 @@ public class Dispatcher extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, DispatcherException, ParserConfigurationException, SAXException {
+
 
         //StemmaCodicum POST input: 1 file tei, output: svg o html+svg
         //EstrazioneDiConcordanze: un documento TEI + una parola P + un numero N
@@ -84,8 +69,13 @@ public class Dispatcher extends HttpServlet {
             throw new DispatcherException(response);
         }
 
-        //dispatching dei servizi
-        if (service.equalsIgnoreCase("StemmaCodicum")) {
+        //dispatching delle serviceTranslations (client -> dispatcher) //TODO gestire le richieste, spedire quelle nuove e rispondere correttamente
+        if (service.equalsIgnoreCase("translateFrequenzeDiOccorrenza")) {
+        } else if (service.equalsIgnoreCase("translateColocazioni")) {
+        } else if (service.equalsIgnoreCase("translateEstrazioneDiConcordanze")) {
+        } else if (service.equalsIgnoreCase("translateStemmaCodicum")) {
+        } //dispatching dei servizi
+        else if (service.equalsIgnoreCase("StemmaCodicum")) {
             response.setContentType("teimage/svg+xml");
             PrintWriter out = response.getWriter();
 
@@ -131,7 +121,7 @@ public class Dispatcher extends HttpServlet {
             } else {
                 //edc = EstrazioneDiConcordanze(xml,dtd,word,number)
             }
-            out.println("<p>xmlfile: "+xml+" dtdfile: "+dtd+" word: "+word+" number: "+number+"</p>");
+            out.println("<p>xmlfile: " + xml + " dtdfile: " + dtd + " word: " + word + " number: " + number + "</p>");
 
 
         } else if (service.equalsIgnoreCase("Differenziazione")) {

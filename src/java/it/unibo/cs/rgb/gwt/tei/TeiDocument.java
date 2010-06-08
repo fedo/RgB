@@ -163,7 +163,6 @@ public class TeiDocument {
     public String getHover() {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        String retval = "error";
 
         String inputXsl = RgBConfiguration.stylesheetsDirectoryPath + "/hover.xsl";
         String inputXml;
@@ -187,13 +186,13 @@ public class TeiDocument {
         } catch (SaxonApiException ex) {
             Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String ret = "encoding error";
+        String retval = "encoding error";
         try {
-            ret = outputStream.toString("UTF-8");
+            retval = outputStream.toString("UTF-8");
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return ret;//.substring("<?xml version=\"1.0\" encoding=\"UTF-8\"?> ".length(), output.toString().length()-1);
+        return retval;//.substring("<?xml version=\"1.0\" encoding=\"UTF-8\"?> ".length(), output.toString().length()-1);
     }
 
     public String getInfo() {

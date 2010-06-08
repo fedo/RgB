@@ -40,6 +40,7 @@ public class MainEntryPoint implements EntryPoint {
     Label title;
     Widget content;
     TabPanel documentViewerPanel = new TabPanel();
+    Panel service = new VerticalPanel();
     HTML homepage;
     HorizontalPanel debug = new HorizontalPanel();
     //variabili
@@ -172,7 +173,6 @@ public class MainEntryPoint implements EntryPoint {
                     String witnesses = (String) hashMap.get("witnesses");
 
                     panel.add(new Label((String) hashMap.get("shortName")));
-                    panel.add(new Label("BARRA DEI COMANDI ServizioX ServizioY ServizioZ ServizioK"));
 
                     //info
                     DisclosurePanel info = new DisclosurePanel("Informazioni sul documento");
@@ -181,20 +181,35 @@ public class MainEntryPoint implements EntryPoint {
                     info.setContent(new HTML(responseXml.getElementById("info").getFirstChild().toString()));
                     panel.add(info);
 
+                    //servizi
+                    HorizontalPanel serviceButtons = new HorizontalPanel();
+                    serviceButtons.add(new Label("Servizi:"));
+                    serviceButtons.add(createFrequenzeDiOccorrenzaButton(path));
+                    serviceButtons.add(createColocazioniButton(path));
+                    serviceButtons.add(createEstrazioneDiConcordanzeButton(path));
+                    serviceButtons.add(createStemmaCodicumButton(path));
+
+                    panel.add(serviceButtons);
+                    service.setStyleName("servicePanel");
+                    panel.add(service);
+                    service.setVisible(false);
+
                     //debug.clear();
                     //debug.add(new Label(response.getText().toString()));
 
                     //witnesses
                     HorizontalPanel witnessesPanel = new HorizontalPanel();
-                    if(witnesses.split(", ").length > 0)
+                    if (witnesses.split(", ").length > 1) {
                         witnessesPanel.add(new Label("Visualizza testimoni: "));
-                    else if (witnesses.equalsIgnoreCase(""))
+                    } else {
                         witnessesPanel.add(new Label("Visualizza il documento: "));
+                    }
                     //if(!witnesses.equals(""))
-                        panel.add(witnessesPanel);
+                    panel.add(witnessesPanel);
 
                     final HorizontalPanel witnessViewer = new HorizontalPanel();
                     witnessViewer.setBorderWidth(1);
+                    witnessViewer.setWidth("100%");
                     panel.add(witnessViewer);
 
 
@@ -257,6 +272,9 @@ public class MainEntryPoint implements EntryPoint {
         //DocumentList
         String url = "http://localhost:8080/RgB/DocumentsList";
         RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(url));
+
+        final Label loading = new Label("Caricamento in corso...");
+        west.add(loading);
 
         try {
             Request request = builder.sendRequest(null, new RequestCallback() {
@@ -353,7 +371,6 @@ public class MainEntryPoint implements EntryPoint {
                             currentWidget.setTitle(id);
                             currentWidget.addMouseOverHandler(overHandler);
                             currentWidget.addMouseOutHandler(outHandler);
-                            //TODO puntatore
 
                             //handler del click: creazione/selezione tab
                             currentWidget.addClickHandler(new ClickHandler() {
@@ -378,7 +395,6 @@ public class MainEntryPoint implements EntryPoint {
                                         // tabText
                                         HorizontalPanel tabText = new HorizontalPanel();
 
-                                        //TODO: visualizzare un tabText "carino"
                                         Label tabTitle = new Label(shortName);
                                         tabTitle.setWidth(shortName.length() * 8 + "px");
                                         tabText.add(tabTitle);
@@ -419,6 +435,9 @@ public class MainEntryPoint implements EntryPoint {
                             });
 
                             west.add(currentWidget);
+                            if (i == numberOfDocuments - 1) {
+                                west.remove(loading);
+                            }
                         }
                     } else {
                         Window.alert("ERRORE: la risposta del servizio DocumentList non è quella aspettata");
@@ -476,6 +495,7 @@ public class MainEntryPoint implements EntryPoint {
                     if (200 == response.getStatusCode()) {
                         //xhtml parsing
                         Document responseXml = XMLParser.parse(response.getText().toString());
+                        //debug.add(new Label(response.getText().toString()));
 
 
                         retval.setHTML(responseXml.toString());
@@ -493,5 +513,44 @@ public class MainEntryPoint implements EntryPoint {
 
 
         return retval;
+    }
+
+    public Widget createFrequenzeDiOccorrenzaButton(String path) { //TODO
+        Button button = new Button("Frequenze di occorrenza");
+        button.addClickHandler(new ClickHandler() {
+
+            public void onClick(ClickEvent event) {
+
+                service.clear();
+                service.setVisible(true);
+                service.add(new Label("servizioabbestia"));
+                
+
+                Button closeButton = new Button("Chiudi il servizio");
+                closeButton.addClickHandler(new ClickHandler() {
+
+                    public void onClick(ClickEvent event) {
+                        service.clear();
+                        service.setVisible(false);
+                    }
+                });
+
+                service.add(closeButton);
+
+            }
+        });
+        return button;
+    }
+
+    public Widget createColocazioniButton(String path) { //TODO
+        return new Button("Colocazioni");
+    }
+
+    public Widget createEstrazioneDiConcordanzeButton(String path) { //TODO
+        return new Button("Estrazione di concordanze");
+    }
+
+    public Widget createStemmaCodicumButton(String path) { //TODO
+        return new Button("Stemma Codicum");
     }
 }

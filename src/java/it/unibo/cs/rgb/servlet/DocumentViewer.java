@@ -41,6 +41,7 @@ public class DocumentViewer extends HttpServlet {
             out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             out.println("<html xmlns=\"http://www.w3.org/1999/xhtml\" version=\"1.0\">");
             out.println("<h1>DocumentViewer: trasformazione XSLT di un file Tei</h1>");
+            out.println("<div style=\"width:400px;\"></div>");
             out.println("<p>File selezionato: "+path+"</p>");
             out.println("<p>Witness selezionato: "+witness+"</p>");
             Enumeration params = request.getParameterNames();

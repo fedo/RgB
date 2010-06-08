@@ -4,14 +4,27 @@
  */
 package it.unibo.cs.rgb.servlet;
 
+import it.unibo.cs.rgb.gwt.RgBConfiguration;
 import it.unibo.cs.rgb.gwt.tei.TeiDocument;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.io.UnsupportedEncodingException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.stream.StreamSource;
+import net.sf.saxon.s9api.Processor;
+import net.sf.saxon.s9api.SaxonApiException;
+import net.sf.saxon.s9api.Serializer;
+import net.sf.saxon.s9api.XdmNode;
+import net.sf.saxon.s9api.XsltCompiler;
+import net.sf.saxon.s9api.XsltExecutable;
+import net.sf.saxon.s9api.XsltTransformer;
 
 /**
  *
@@ -33,10 +46,6 @@ public class DocumentInfo extends HttpServlet {
         response.setHeader("Cache-Control", "no-cache");
         response.setStatus(200);
 
-        ArrayList<String> witList = new ArrayList<String>(); //TODO document.getWitList();
-        witList.add("witnessuno");
-        witList.add("witnessdue");
-
         PrintWriter out = response.getWriter();
         try {
 
@@ -45,8 +54,8 @@ public class DocumentInfo extends HttpServlet {
             out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             out.println("<html xmlns=\"http://www.w3.org/1999/xhtml\" version=\"1.0\">");
             out.println("<h1>DocumentInfo: informazioni dettagliate documento Tei</h1>");
-            out.println("<p>File selezionato: "+path+"</p>");
-            out.println("<div id=\"info\">"+new TeiDocument(path).getInfo()+"</div>"); //TODO
+            out.println("<p>File selezionato: " + path + "</p>");
+            out.println("<div id=\"info\">" + new TeiDocument(path).getInfo() + "</div>");
             out.println("</html>");
 
         } finally {
