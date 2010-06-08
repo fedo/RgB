@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Document   : catalog.xml
+    Author     : RgB
+    Description: the catalog itself
+-->
+
 <services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="catalog.xsd">
     <globals>
@@ -10,49 +17,51 @@
             <member>Federico Roffi</member>
         </members>
     </globals>
+
     <service>
-        <name>Indici Di Termini Marcati</name>
-        <description></description>
-        <URI>IndiciDiTerminiMarcati</URI>
+        <name>Diff Ontologico</name>
+        <description>Diff tra documenti TEI sulla base di una data ontologia</description>
+        <URI>DiffOntologico</URI>
+        <HTTPmethod>POST</HTTPmethod>
+        <params>nessun parametro</params>
+        <inputs>
+            <input>text/xml</input>
+            <input>application/octet-stream</input>
+        </inputs>
+        <outputs>
+            <output>application/rdf+xml</output>
+        </outputs>
+    </service>
+
+    <service>
+        <name>Estrazione di concordanze</name>
+        <description>Motore di ricerca per l'estrazione delle concordanze</description>
+        <URI>EstrazioneDiConcordanze</URI>
         <HTTPmethod>POST</HTTPmethod>
         <params>
-            <param name="keyword" type="string">Keyword da ricercare</param>
+            <param name="word" type="string">la parola da ricercare</param>
+            <param name="number" type="number">il numero di parole "di contesto" che si vogliono visualizzare prima e dopo la parola ricercata</param>
         </params>
         <inputs>
-            <input>application/xml</input>
+            <input>text/xml</input>
         </inputs>
         <outputs>
             <output>text/html</output>
         </outputs>
-
     </service>
+    
     <service>
-        <name>Frequenze Di Occorrenza</name>
-        <description></description>
-        <URI>FrequenzeDiOccorrenza</URI>
-        <HTTPmethod>POST</HTTPmethod>
-        <params>
-        </params>
-        <inputs>
-            <input>application/xml</input>
-        </inputs>
-        <outputs>
-            <output>text/html</output>
-        </outputs>
-
-    </service>
-    <service>
-        <name>StemmaCodicum</name>
-        <description></description>
+        <name>Stemma Codicum</name>
+        <description>Visualizzazione dello Stemma Codicum di un documento</description>
         <URI>StemmaCodicum</URI>
         <HTTPmethod>POST</HTTPmethod>
-                <params>
-        </params>
+        <params>nessun parametro</params>
         <inputs>
-            <input>application/xml</input>
+            <input>text/xml</input>
+            <input>application/octet-stream</input>
         </inputs>
         <outputs>
-            <output>application/xml</output>
+            <output>image/svg+xml</output>
         </outputs>
 
     </service>

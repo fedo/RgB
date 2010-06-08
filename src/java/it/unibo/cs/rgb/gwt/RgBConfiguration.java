@@ -15,4 +15,5 @@ public class RgBConfiguration {
     
     public final static String collection1DirectoryPath = basename +"/RgB/src/java/resources/collection1/parallel segmentation";
     public final static String stylesheetsDirectoryPath = basename +"/RgB/src/java/resources/stylesheets";
+    public final static String tempRequestsDirectory = "/Users/fedo/data/programming/netbeans/RgB/tmp";
 }

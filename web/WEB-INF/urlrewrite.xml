@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.2//EN"
-        "http://tuckey.org/res/dtds/urlrewrite3.2.dtd">
+"http://tuckey.org/res/dtds/urlrewrite3.2.dtd">
 
 <!--
 
@@ -18,6 +18,23 @@
         <from>/test/status/</from>
         <to type="redirect">%{context-path}/rewrite-status</to>
     </rule>
+
+    <rule>
+        <from>^/StemmaCodicum</from>
+        <to>/Dispatcher?service=StemmaCodicum</to>
+    </rule>
+<!--
+    <rule>
+        <from>^/EstrazioneDiConcordanze/([0-9]+)$</from>
+        <to>/Dispatcher?service=EstrazioneDiConcordanze&word=$1&amp;number=$2</to>
+    </rule>
+-->
+    <rule>
+        <from>^/EstrazioneDiConcordanze/([a-zA-Z0-9]+)/([0-9]+)$</from>
+        <to>/Dispatcher?service=EstrazioneDiConcordanze&amp;word=$1&amp;number=$2</to>
+    </rule>
+
+
 
 
     <outbound-rule>
