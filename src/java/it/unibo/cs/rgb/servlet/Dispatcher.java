@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
-import it.unibo.cs.rgb.gwt.RgBConfiguration;
 
 /**
  *
@@ -47,7 +46,9 @@ public class Dispatcher extends HttpServlet {
             throw new DispatcherException(response);
         }
 
-        MultipartRequest mrequest = new MultipartRequest(request, RgBConfiguration.tempRequestsDirectory);
+        //this.getServletContext().getResourceAsStream("/urlrewrite.xml"); //TODO
+
+        MultipartRequest mrequest = new MultipartRequest(request, this.getServletContext().getRealPath("./tmp"));
         Enumeration filesEnumeration = mrequest.getFileNames();
         ArrayList<String> files = new ArrayList<String>();
         Enumeration parametersEnumeration = mrequest.getParameterNames();

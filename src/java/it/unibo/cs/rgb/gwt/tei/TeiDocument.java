@@ -11,14 +11,13 @@ import javax.xml.xpath.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
 import org.xml.sax.SAXException;
-import it.unibo.cs.rgb.gwt.RgBConfiguration;
 import javax.xml.parsers.*;
 import javax.xml.transform.stream.StreamSource;
 import net.sf.saxon.s9api.Processor;
+import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.Serializer;
+import net.sf.saxon.s9api.XdmAtomicValue;
 import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XsltCompiler;
 import net.sf.saxon.s9api.XsltExecutable;
@@ -36,9 +35,11 @@ public class TeiDocument {
     private XPath xpath;
     private Document doc;
     private ArrayList<String> xmlList = new ArrayList<String>();
+    private String context;
 
-    public TeiDocument(String absolutePath) {
+    public TeiDocument(String absolutePath, String context) {
 
+        this.context = context;
         File file = new File(absolutePath);
         if (file.isFile()) {
             this.type = "file";
@@ -164,7 +165,7 @@ public class TeiDocument {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-        String inputXsl = RgBConfiguration.stylesheetsDirectoryPath + "/hover.xsl";
+        String inputXsl = context + "stylesheets/hover.xsl";
         String inputXml;
         if (type.equals("file")) {
             inputXml = absolutePath;
@@ -200,7 +201,7 @@ public class TeiDocument {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         String retval = "error";
 
-        String inputXsl = RgBConfiguration.stylesheetsDirectoryPath + "/preface.xsl";
+        String inputXsl = context + "stylesheets/preface.xsl";
         String inputXml;
         if (type.equals("file")) {
             inputXml = absolutePath;
@@ -219,6 +220,44 @@ public class TeiDocument {
             XsltTransformer trans = exp.load();
             trans.setInitialContextNode(source);
             trans.setDestination(out);
+            trans.transform();
+        } catch (SaxonApiException ex) {
+            Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String ret = "encoding error";
+        try {
+            ret = outputStream.toString("UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ret;//.substring("<?xml version=\"1.0\" encoding=\"UTF-8\"?> ".length(), output.toString().length()-1);
+    }
+
+    public String getView(String witness) {
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        String retval = "error";
+
+        String inputXsl = context + "stylesheets/content.xsl";
+        String inputXml;
+        if (type.equals("file")) {
+            inputXml = absolutePath;
+        } else {
+            inputXml = xmlList.get(0);
+        }
+
+        try {
+            Processor proc = new Processor(false);
+            XsltCompiler comp = proc.newXsltCompiler();
+            comp.setSchemaAware(false);
+            XsltExecutable exp = comp.compile(new StreamSource(new File(inputXsl)));
+            XdmNode source = proc.newDocumentBuilder().build(new StreamSource(new File(inputXml)));
+            Serializer out = new Serializer();
+            out.setOutputStream(outputStream);
+            XsltTransformer trans = exp.load();
+            trans.setInitialContextNode(source);
+            trans.setDestination(out);
+            trans.setParameter(new QName("witNum"), new XdmAtomicValue(witness)); //"witNum", a666
             trans.transform();
         } catch (SaxonApiException ex) {
             Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);

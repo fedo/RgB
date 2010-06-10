@@ -4,7 +4,6 @@
  */
 package it.unibo.cs.rgb.servlet;
 
-import it.unibo.cs.rgb.gwt.RgBConfiguration;
 import it.unibo.cs.rgb.gwt.tei.TeiDocument;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -55,7 +54,8 @@ public class DocumentInfo extends HttpServlet {
             out.println("<html xmlns=\"http://www.w3.org/1999/xhtml\" version=\"1.0\">");
             out.println("<h1>DocumentInfo: informazioni dettagliate documento Tei</h1>");
             out.println("<p>File selezionato: " + path + "</p>");
-            out.println("<div id=\"info\">" + new TeiDocument(path).getInfo() + "</div>");
+            out.println("<div id=\"info\">" + (new TeiDocument(path,this.getServletContext().getRealPath("/"))).getInfo() + "</div>");
+            out.println("<p>File selezionato: " + "naaaaaaa" + "</p>");
             out.println("</html>");
 
         } finally {

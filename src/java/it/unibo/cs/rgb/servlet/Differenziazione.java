@@ -5,7 +5,6 @@
 
 package it.unibo.cs.rgb.servlet;
 
-import it.unibo.cs.rgb.gwt.tei.TeiDocument;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -17,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author fedo
  */
-public class DocumentViewer extends HttpServlet {
+public class Differenziazione extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -29,22 +28,19 @@ public class DocumentViewer extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        response.setHeader("Cache-Control", "no-cache");
-        response.setStatus(200);
-
         PrintWriter out = response.getWriter();
         try {
-
-            String path = request.getParameter("path");
-            String witness = request.getParameter("witness");
-
-            out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-            out.println("<html xmlns=\"http://www.w3.org/1999/xhtml\" version=\"1.0\">");
-            out.println("<p>Witness selezionato: "+witness+"</p>");
-            out.println("<div id=\"view\" style=\"width:400px;\">" + (new TeiDocument(path,this.getServletContext().getRealPath("/"))).getView(witness) + "</div>");
+            /* TODO output your page here
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Differenziazione</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet Differenziazione at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
             out.println("</html>");
-
-        } finally {
+            */
+        } finally { 
             out.close();
         }
     } 

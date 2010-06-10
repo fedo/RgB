@@ -1,0 +1,214 @@
+<?xml version="1.0"?>
+<!DOCTYPE TEI.2 PUBLIC '-//BIBIT//DTD BibIt L1 TEI Document Type//EN' 'bibit-l1.dtd'>
+<?xml-stylesheet type="text/xsl" href="dattiloscritti.xsl"?>
+
+<TEI.2>
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+
+                <title>L'uovo di Colombo</title>
+
+                <author>Vincenzo Cerami</author>
+                <respStmt>
+                    <resp>Codifica</resp>
+                    <name>Lorenzo Geri</name>
+                    <name>Simone Onofri</name>
+                    <name>Sara Santorsa</name>
+                    <name>Daniele Silvi</name>
+                    <name>Marcello Vicidomini</name>
+                </respStmt>
+            </titleStmt>
+            <publicationStmt>
+                <publisher>Facoltà di Lettere e Filosofia, Università di Roma Tre. </publisher>
+                <pubPlace>Roma</pubPlace>
+                <date>2006</date>
+            </publicationStmt>
+            <seriesStmt>
+                <title>Digital Variants</title>
+            </seriesStmt>
+
+            <sourceDesc>
+                <bibl>
+
+                    <title>L'uovo di Colombo</title>
+                    <author>Vincenzo Cerami</author>
+
+                    <editor/>
+                    <publisher/>
+                    <pubPlace/>
+                    <date/>
+                </bibl>
+            </sourceDesc>
+        </fileDesc>
+        <profileDesc>
+
+            <langUsage>
+                <language id="codice">italiano</language>
+
+            </langUsage>
+        </profileDesc>
+
+        <revisionDesc>
+            <change>
+                <date>13-06-2006</date>
+                <respStmt>
+                    <name>Marcello Vicidomini</name>
+                </respStmt>
+                <item>Codifica delle correzioni d'autore sul dattiloscritto (II versione)</item>
+            </change>
+        </revisionDesc>
+    </teiHeader>
+
+    <text>
+        <body>
+            <div1>
+                <head>L'UOVO DI COLOMBO</head>
+
+                <p>Era il 1993. Si viaggiava ancora in treno e per andare da Roma a Los Angeles si
+                    usavano ancora quei bestioni a reazione che restavano in cielo per la bellezza
+                    di dodici ore. Era ancora l'epoca dei grandi sarti. La politica, dopo aver visto
+                    ministri in discoteca, parlamentari a Malindi e comunisti a Capalbio, faceva la
+                    spola tra le patrie galere e la televisione <add place="top">gli italiani
+                        vedevano morire</add>
+                    <del rend="tratto a matita">prometteva sfaceli del</del>la vecchia Repubblica.
+                    Nello sport e negli spot furoreggiava sempre <add place="right">un</add> tal
+                    Berlusconi, circondato da pupattole e da sottoposto vestiti come lui. Volava
+                    Senna sulla sua carcassa, mentre a Mosca non si sapeva ancora che pesci
+                    prendere. Tra Nord e Sud erano ancora <del rend="tratto a matita">rosa</del>
+                    <add place="supralinear">rose</add> e fiori.</p>
+                <p>Bei tempi passati, pieni di vitalità, d'avventura, di grandi sconvolgimenti della
+                    storia. L'Italia, soffocata da una intera catena montuosa di debiti e di truffe
+                    allo Stato, faceva parte dei sette, otto Paesi più ricchi del mondo. Dalle
+                    frontiere sfondate entravano frotte di disperati di tutti i colori.
+                    S'accampavano dove potevano mentre accanto a loro, a tutta velocità,
+                    sfrecciavano le Ferrari dei nuovi ricchi. I figli non andavano di moda, nessuno
+                    li faceva più: il piacere del danaro aveva svuotato le case. Si riempivano solo
+                    l asera <del rend="tratto a matita">per vedere quelle</del>
+                    <add place="superlinear">davanti alle</add> immagini pallide e un po' disfatte
+                    della televisione (non c'era ancora neanche l'alta definizione). Le donne
+                    lavoravano quasi tutte e gli uomini avevano ognuno due, tre lavori. Solo i
+                    vecchi se ne restavano fra le quattro mura e d'estate ne morivano a grappoli
+                    sulle panchine sotto casa. Giapponesi, americani, tedeschi, australiani
+                    scorrazzavano in mutande da Palermo a Venezia e con le loro ciabattelle
+                    solcavano le antiche strade romane e medievali.</p>
+                <p>Bene, in quell'Italia an cora felice e rubiconda viveva un omino appartato e
+                    silenzioso. Nessuno lo conosceva, nessuno si curava di lui. Per strada lo
+                    urtavano tutti perché non lo vedevano. Si chiamave Demetrio Trivelli. Sì proprio
+                    lui.</p>
+                <p>Il suo immenso talento sbocciò proprio quell'anno. Ma ci vollero ben tre quarti
+                    di secolo perché qualcuno scoprisse l'ingegno di quest'uomo che molti studenti
+                    faticano ad immaginare piccolo e grigio. Quel che oggi a tutti appare come
+                    l'uovo di Colombo e che a Demetrio Trivelli costò sette camicie, all'epoca era
+                    assolutamente <del rend="tratto a matita">inimmaginabile</del>
+                    <add place="right">impensabile</add>, del tutto estraneo alla mente umana. Basta
+                        <del rend="tratto a matita">pensare</del>
+                    <add place="right">dire</add> che in quei tempi lontani nessuno sapeva nemmeno
+                    perché si nasce e si muore.</p>
+                <p>Forse il segreto di Demetrio Trivelli, la sua capacità di immaginare
+                    l'inimmaginabile, di vedere ciò che era davanti agli occhi di tutti e che
+                    nessuno vedeva, va cercato nel suo essere un uomo comunissimo<del
+                        rend="tratto a matita">, comune più di ogni altro</del>. La natura aveva
+                    dotato il suo genio di una prerogatvia che all'epoca tutto era tranne che un<add
+                        place="inline">a</add>
+                    <del rend="sottolineatura a matita">dono</del>
+                    <add place="right">virtù</add>: quella di assorbire fino all'ultima goccia le
+                    mitologie del suo tempo. Demetrio non si difendeva da nulla, era una specie di
+                    spugna. Si lasciava travolgere dalla cultura <del rend="tratto a matita">del suo
+                        tempo</del>
+                    <add place="right">corrente</add> senza opporre mai, neanche per un momento, una
+                    sua idea del mondo. Non aveva nessuna immaginazione. Negli anni Novanta
+                    l'idealismo religioso e l'edonismo pag<add place="inline">a</add>no trovarono un
+                    loro punto di identificazione: la ricerca del piacere individuale era <del
+                        rend="sottolineatura a matita">cresciut<del rend="lettera sovrascritta"
+                            >o</del><add place="inline">a</add></del>
+                    <add place="right">si era diffusa e accresciuta</add> al punto da invadere
+                    l'antichissimo anelito verso la trascendenza. In un certo senso il naturale
+                    richiamo all'orgnasmo, che è individuale, <del rend="tratto a matita">ha
+                        coinciso</del>
+                    <add place="superlinear">coincise</add> con la vocazione alla palingenesi
+                    mistico-religiosa che sopravviveva nella cultura collettiva. Demetrio Trivelli,
+                    insomma, fu il primo uomo nel quale queste due forze si concretizzarono in
+                    un'unica identità. L'emozione che provava nell'acquistare un magnifico paio di
+                    scarpe <del rend="tratto a matita">si caricava di quella stessa <hi
+                            rend="italic">pietas</hi> che un sacerdote prova <del
+                            rend="tratto a matita">nel</del>
+                        <add place="superlinear">al</add> momento di spezzare l'Ostia</del>
+                    <add place="right">non aveva nualla da invidiare alla pietas del sacerdote nel
+                        momento in cui spezza l'Ostia</add> Con Demetrio Trivelli l'uomo cancellava
+                    l'eterno dualismo tra ius e fas, tra bene e male, tra alto e basso. Davanti a
+                    Demetrio Trivelli si aprivano orizzonti inesplorati.</p>
+                <p>Un piccolissimo episodi della sua vita, che si può ritrovare nei <hi
+                        rend="italic">Diari</hi>, quasi sempre trascurato nella chilometrica
+                    bibliografia su Demetrio Trivelli, mette a nduo questa sua particolare
+                    attitudine ad identificarsi totalmente col suo tempo.</p>
+                <p>Era la fine dell'estate del 1993. Esistevano all'epoca, in quasi tutto il mondo,
+                    locali chiamati Mc<del rend="tratto a matita"> </del>Donald in cui si poteva
+                    mangiare a qualsiasi ora del giorno. Servivano polpette di carne chiamate <hi
+                        rend="italic">hamburger</hi>, accompagnate da patate tagliate a <del
+                        rend="sottolineatura a matita">listelle</del>
+                    <add place="right">listarelle</add> e fritte nell'olio, il tutto condito da una
+                    disgustosa pappetta rossa estratta dalla conserva di pomodoro. Demetrio Trivelli
+                    quel giorno non aveva l'orologio ma era stato preso da fame improvvisa (quanto
+                    si è scritto dei suoi attacchi di bulimìa!) Entrò nel locale e vide che era
+                    vuoto. Non era<del rend="tratto a matita">no</del> dunque quell<del
+                        rend="lettera sovrascritta">e</del><add place="inline">a</add>
+                    <del rend="croce a matita">le</del><add place="inline">l'</add> or<del
+                        rend="lettera sovrascritta">e</del><add place="inline">a</add> più
+                        opportun<del rend="lettera sovrascritta">e</del><add place="inline">a</add>
+                    per mangiare visto che non lo faceva nessuno. Non stette troppo a sottogliare,
+                    ordinò molte polpette e le divorò a grandi bocconi. Aveva deciso di uscir fuori
+                    dalle abitudini, di trasgredire per una volta una norma secolare. Niente di
+                    rivoluzionario, per carità, anche se a quei tempi era molto difficile
+                    sorprendere persone sane di mente <del rend="tratto a matita">che pranzassero</del>
+                    <add place="right">a pranzare</add> la sera e <del rend="tratto a matita"
+                        >cenassero</del>
+                    <add place="superlinear">a cenare</add> la mattina. Demetrio Trivelli mangiava
+                    le polpette, sotto lo sguardo indifferente degli inservienti, con la coscienza
+                    tranquilla. Ma Demetrio Trivelli non sapeva che in realtà quella era l'ora del
+                    pranzo e che la strada dove sorgeva il locale era interrotta sia a destra che a
+                    sinistra per lavori stradali. Gli <hi rend="italic">operai</hi> (si chiamavano
+                    così quelli che aggiustavano i marciapiedi) l'avevano chiusa mentre lui,
+                    passeggiando pigramente lungo il marciapiede, si era fermato ad ammirare, una
+                    dopo l'altra, le belle vetrine dei negozi. Se non che, ingoiata l'ultima
+                    polpetta, le barriere dei lavori in corso furono rimosse e d'improvviso
+                    entrarono da Mc<del rend="tratto a matita"> </del>Donald centinaia di giovani
+                    affamati. Era l'ora del pranzo e quelli si misero in fila di fronte a ogni
+                    inserviente per ordinare le <del rend="tratto a matita">loro</del> polpette.
+                    Demetrio Trivelli, senza nemmeno accorgersene, come gli fosse tornata
+                    d'improvviso la fame, si accodò anche lui e mandò giù altre porzioni di quelle
+                    polpette, che certo non dovevano essere una meraviglia di bontà. Quando ebbe
+                    finito di ingozzarsi per la seconda volta, si asciugò le mani con il tovagliolo
+                    di carta e fece per uscire. Ma si fermò subito perché l'aver mangiato insieme
+                    con tutta quella gente gli fece nascere il desiderio di fare qualcosa che gli
+                    altri non facevano: un desiderio che egli stesso nel suo diario paragona a
+                    quello sessuale. Veramente lui quella trasgressione l'aveva già consumata quando
+                    aveva mangiato le prime polpette in solitudine, convinto di pranzare in un'ora
+                    non canonica. Ma adesso che aveva capito com'erano andate veramente le cose, si
+                    rese conto di essere stato illusoriamente trasgressivo, <del
+                        rend="tratto a matita">perché aveva mangiato, come tutti,</del>
+                    <add place="superlinear">avendo mangiato proprio</add> all'ora <del
+                        rend="tratto a matita">del</del>
+                    <add place="superlinear">di</add> pranzo. Cosa fece allora? Rientrò, ordinò di
+                    nuovo altre polpette e patatine e se le mangiò con grande godimento dello
+                    spirito. Adesso sì, stava facendo qualcosa che agli altri neanche passava per la
+                    mente.</p>
+                <p>Questo aneddoto rivela che Demetrio Trivelli aveva ingordamente avuto tutto: sia
+                    la trasgressione che il conformismo. Si sentiva in pace con l'una e con l'altro.
+                    E in più aveva reso felice la pancia visto che quelle strane polpette gli
+                    piacevano moltissimo e ne avrebbe mangiate altrettante se in quell'epoca non
+                    fosse stato vietato dalla buone maniere. Buone maniere che comunque Demetrio
+                    Trivelli una volta adottava e un'altra tradiva con la medesima, quasi delirante,
+                    soddisfazione. E tanta capacità di passare dal giusto all'ingiusto, dal buono al
+                    cattivo, dal bello al brutto, portava alla ribalta per la prima volta sulla
+                    faccia della terra l'immagine dell'uomo moderno, perfetto come un punto. Solo
+                    così si capisce perché proprio Demetrio Trivelli abbia potuto fare quella <del
+                        rend="tratto a matita">sua</del> grande, fondamentale scoperta di cui oggi
+                    noi tutti godiamo senza neanche rendercene conto. In fondo, a pensarci bene,
+                    Demetrio Trivelli ha scoperto la cosa più ovvia del mondo.</p>
+            </div1>
+        </body>
+    </text>
+
+
+</TEI.2>

@@ -37,6 +37,18 @@
         <servlet-name>Dispatcher</servlet-name>
         <servlet-class>it.unibo.cs.rgb.servlet.Dispatcher</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>StemmaCodicum</servlet-name>
+        <servlet-class>it.unibo.cs.rgb.servlet.StemmaCodicum</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EstrazioneDiConcordanze</servlet-name>
+        <servlet-class>it.unibo.cs.rgb.servlet.EstrazioneDiConcordanze</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Differenziazione</servlet-name>
+        <servlet-class>it.unibo.cs.rgb.servlet.Differenziazione</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>action</servlet-name>
         <url-pattern>*.do</url-pattern>
@@ -60,6 +72,18 @@
     <servlet-mapping>
         <servlet-name>Dispatcher</servlet-name>
         <url-pattern>/Dispatcher</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StemmaCodicum</servlet-name>
+        <url-pattern>/StemmaCodicum</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EstrazioneDiConcordanze</servlet-name>
+        <url-pattern>/EstrazioneDiConcordanze</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Differenziazione</servlet-name>
+        <url-pattern>/Differenziazione</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

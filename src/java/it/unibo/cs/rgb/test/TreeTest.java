@@ -21,7 +21,7 @@ public class TreeTest {
     public static void main(String[] args) throws IOException {
         System.out.println("Test tree");
 
-        TeiCollection collection = new TeiCollection();
+        TeiCollection collection = new TeiCollection("/Users/fedo/data/programming/netbeans/RgB/build/web/");
         collection.init("src/java/resources/collection1/parallel segmentation/");
         ArrayList<TreeNode> nodes = new ArrayList<TreeNode>();
         NodeList witness = (NodeList) collection.getTeiDocument(0).xpathQueryNL("//witList/witness");

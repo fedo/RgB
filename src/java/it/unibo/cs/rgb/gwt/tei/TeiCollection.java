@@ -11,8 +11,10 @@ public class TeiCollection {
 
     private static String folderPath;
     private static ArrayList<TeiDocument> listOfTei;
+private static String context;
 
-    public TeiCollection() {
+    public TeiCollection(String context) {
+        this.context = context;
         folderPath = "toInitialize";
     }
 
@@ -51,7 +53,7 @@ public class TeiCollection {
             if (listOfFiles[i].isFile()) {
                 //file xml
                 if (filename.endsWith(".xml")) {
-                    tmp.add(new TeiDocument(path + "/" + filename));
+                    tmp.add(new TeiDocument(path + "/" + filename,context));
                 }
             } else if (listOfFiles[i].isDirectory()) {
                 //cartella con documenti xml

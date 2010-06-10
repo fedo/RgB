@@ -1,6 +1,5 @@
 package it.unibo.cs.rgb.test;
 
-import it.unibo.cs.rgb.gwt.RgBConfiguration;
 import it.unibo.cs.rgb.gwt.tei.TeiCollection;
 import java.util.ArrayList;
 
@@ -12,8 +11,8 @@ public class TeiTest {
 
     public static void main(String[] args) {
 
-        TeiCollection collection = new TeiCollection();
-        collection.init(RgBConfiguration.collectionDirectoryPath);
+        TeiCollection collection = new TeiCollection("/Users/fedo/data/programming/netbeans/RgB/build/web/");
+        collection.init("/Users/fedo/data/programming/netbeans/RgB/build/web/collection5");
         ArrayList<String> alstr = new ArrayList<String>();
 
         for (int i = 0; i < collection.getNumberOfDocument(); i++) {
@@ -23,7 +22,7 @@ public class TeiTest {
             //System.out.println(collection.getTeiDocument(i).getAuthor());
             System.out.println(collection.getTeiDocument(i).firstFile());
             System.out.println(alstr.get(i));
-            System.out.println(collection.getTeiDocument(i).getHover());
+            System.out.println(collection.getTeiDocument(i).getView("asd"));
 
         }
         System.out.println("-----------------");

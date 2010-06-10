@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<!DOCTYPE TEI.2 PUBLIC '-//BIBIT//DTD BibIt L1 TEI Document Type//EN' 'bibit-l1.dtd'>
+<?xml-stylesheet type="text/xsl" href="dattiloscritti.xsl"?>
+
+
+<TEI.2>
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+
+                <title>Paul Newman</title>
+
+                <author>Vincenzo Cerami</author>
+                <respStmt>
+                    <resp>Codifica</resp>
+                    <name>Lorenzo Geri</name>
+                    <name>Simone Onofri</name>
+                    <name>Sara Santorsa</name>
+                    <name>Daniele Silvi</name>
+                    <name>Marcello Vicidomini</name>
+                </respStmt>
+            </titleStmt>
+            <publicationStmt>
+                <publisher>Facoltà di Lettere e Filosofia, Università di Roma Tre. </publisher>
+                <pubPlace>Roma</pubPlace>
+                <date>2006</date>
+            </publicationStmt>
+            <seriesStmt>
+                <title>Digital Variants</title>
+            </seriesStmt>
+
+            <sourceDesc>
+                <bibl>
+
+                    <title>Paul Newman</title>
+                    <author>Vincenzo Cerami</author>
+
+                    <editor/>
+                    <publisher/>
+                    <pubPlace/>
+                    <date/>
+                </bibl>
+            </sourceDesc>
+        </fileDesc>
+        <profileDesc>
+
+            <langUsage>
+                <language id="codice">italiano</language>
+
+            </langUsage>
+        </profileDesc>
+
+        <revisionDesc>
+            <change>
+                <date>28-04-2006</date>
+                <respStmt>
+                    <name>Marcello Vicidomini</name>
+                </respStmt>
+                <item>Codifica delle correzioni d'autore sul dattiloscritto (II versione)</item>
+            </change>
+        </revisionDesc>
+    </teiHeader>
+
+    <text>
+        <body>
+            <div1>
+                <head>PAUL NEWMAN</head>
+
+                <p>Elegante, molto ben fatta, di piglio sicuro e modi spregiudicati, dirigente
+                    d'azienda. <del rend="tratto a matita">Quasi vergine.</del> Si chiamava
+                    Patrizia. Abitava in un appartamento molto femminile nel centro del centro della
+                    città. Già in primavera cominciava a prendere il sole in terrazza spalmandosi di
+                    creme idratanti e profumate. Frequentava regolarmente l'istituto di bellezza,
+                    una volta per i massaggi, un'altra per la depilazione, un'altra per la cura del
+                    viso. Mangiava carote, cetrioli, yogurt e carne bianca. Gli amici maschi ne
+                    avevano una certa soggezione e nessuno di loro poteva vantarsi di aver avuto con
+                    Patrizia una larva di avventura. Quasi tutti erano convinti che lei i suoi amori
+                    andava ad inseguirli altrove, in un mondo a loro lontano e sconosciuto e del
+                    quale la donna non faceva volutamente menzione. Come se avesse deciso di
+                    separare la sua vita in due: una parte pubblica e una privatissima. Di qua
+                    rapporti solari d'amicizia, di lavoro e di scambi intellettuali; di là slanci
+                    irrazionali, tenebrosi, fughe notturne nel sesso. non pochi <del
+                        rend="tratto a matita">amici</del> avrebbero preferito stare dall'altra
+                    parte per godersi quanto Patrizia aveva di meglio e per risparmiarsi alcune sue
+                    fredde tiritere sulle cose del mondo. Ma tant'è : col tempo si erano abituati ad
+                    ascoltarla senza gettarle più gli occhi addosso. Patrizia sapeva che i suoi
+                    amici immaginavano di lei cose inaudite, ma li lasciava fare perché tanto
+                    mistero le creava intorno interesse e un'inquietudine in fondo divertente. Si
+                    disturbava invece quando quelli, dimentichi del fatto che lei era <del
+                        rend="tratto a matita">una</del> donna, talvolta si lasciavano
+                    cameratescamente andare in apprezzamenti pesanti verso <del
+                        rend="tratto a matita">amici</del>
+                    <add place="infralinear">una</add> ragazza di passaggio.</p>
+                <p>Ma un bel giorno nell'ufficio di Patrizia entrò un giovane che somigliava a<add
+                        place="inline">l</add> Paul Newman dei tempi d'oro. Un ingegnerino timido ma
+                    dallo sguardo penetrante, capace di far sentire nuda una donna in pelliccia. Era
+                    stato assunto dall'azienda e stava facendo il giro dei dirigenti. Patrizia tremò
+                    tutta. <del rend="tratto a matita">L'unica volta che</del>
+                    <del rend="lettera sovrascritta a matita">a</del><add place="inline">A</add>veva
+                    provato un turbamento del genere <del rend="tratto a matita">era stato
+                        quell'unica altra</del>
+                    <add place="superlinear">solo quella</add> volta, tanti, tantissimi anni prima,
+                    in cui un ragazzo era riuscito a spogliarla nello squallido locale dei cassoni
+                    del condominio. Aldo, il bell'ingegnere, si accorse subito del lieve smarrimento
+                    della bella dottoressa, ma non volle <del rend="tratto a matita">incoraggiarlo</del>
+                    <add place="right">sottolinearlo</add>. La salutò sbrigativamente e se ne andò.
+                    La parte più segreta di Patrizia, quella che anche lei poco conosceva e in
+                    genere dominava, restò scombussolata da quell'incontro. <del
+                        rend="tratto a matita">ma lei non volle approfondire, doveva rivedere quel
+                        giovane che era riuscito a muoverle dentro sentimenti che stavano fermi da
+                        anni.</del></p>
+                <p>Dopo appena una settimana riuscì a farsi invitare a cena nel più esclusivo
+                    ristorante della città.</p>
+                <p>Aldo non la conosceva e l'idea che se n'era fatto non prevedeva certo una donna
+                    cerebrale e così zeppa di idee chiare sul mondo. Comunque era dotata di una <del
+                        rend="tratto a matita">ben visibile</del>
+                    <add place="right">manifesta</add> carica di sensualità; e libera da impegni
+                    sentimentali. In più, dopo la cenetta allegra in cui tutti e due s'erano sentiti
+                    a loro agio, lei l'aveva invitato a salire su in casa per un ultimo bicchierino.
+                    Tutto lasciava prevedere che avrebbero concluso insieme, <del
+                        rend="tratto a matita">sotto lenzuola,</del> quella serata indimenticabile.</p>
+                <p><del rend="tratti diagonali a matita">E Patrizia, forse senza confessarselo
+                        apertamente, aveva la stessa convinzione: quell'ultimo bicchierino avrebbe
+                        spogliato entrambi di ogni residua esitazione e anche degli abiti.</del> Fu
+                    proprio lei ad introdurre l'argomento dell'erotismo, e ne parlava come se si
+                    trattasse di un programma del computer. Senza reticenze diceva a quel ragazzo
+                    quanto lei detestasse gli uomini troppo aggressivi, che nei momenti fatidici
+                    manipolano la donna a loro piacere, del tutto sordi ai sentimenti e ai trasporti
+                    femminili e che addirittura, spesso, la coprono di insulti per sentirsi più
+                    maschi. Aldo non poteva che essere d'accordo e intanto, dentro di sé, si diceva:
+                    "Nel caso, mi raccomando, fa' le cose con calma, sta' zitto e non essere
+                    prepotente come al solito!". Ma non finì di farsi queste raccomandazioni<add
+                        place="inline">,</add>
+                    <del rend="tratto a matita">perché</del>
+                    <add place="superlinear">che</add> Patrizia cominciò ad inveire anche contro
+                    quegli uomini che non fanno niente, che se ne stanno lì ad aspettare che la
+                    donna prenda le iniziative. "Un uomo del genere -diceva lei- non si cura per
+                    niente del piacere della donna. Tutto gli è dovuto. Per lui la donna non è che
+                    una gheis<del rend="lettera sovrascritta a matita">h</del><add
+                        place="superlinear">a</add>a, una semplice fonte di piacere!" E <del
+                        rend="tratto a matita">anche dopo questo</del> Aldo faceva sì con la testa.
+                    E nello stesso tempo dava istruzioni a se stesso, nell'eventualità fosse finito
+                    a letto con Patrizia, di non starsene lì con le mani in mano e gli occhi chiusi
+                    come un baccalà.</p>
+                <p>Mandarono giù un altro sorso e lei riattaccò: "I peggiori, poi, sono quegli
+                    uomini che vogliono mostrare di essere più maschi di tutti trascinando le cose
+                    per le lunghe. Quelli che per raggiungere il piacere possono star lì anche due
+                    ore. Sono disgustosi e patetici. Non fanno altro che dire alla donna: guarda
+                    quanto sono bravo! Il piacere che provano a mostrarsi bravi è superiore
+                    all'amore stesso. E pessimo è quello che fa l'esatto contrario: ignorando
+                    completamente che l'amore si fa in due, in quattro quattr'otto si libera del
+                    problema e buonanotte. In men che nulla è tutto finito. Poi si fuma una
+                    sigaretta e non vede l'ora di andarsene. Forse questo è il peggiore di tutti,
+                    perché una donna si sente completamente inutile.</p>
+                <p>Nella testa di Aldo cominciò a svolazzare l'idea di lasciar perdere. Si diceva:
+                    "Sarai capace di non essere aggressivo e nemmeno troppo baccalà? Sarai capace di
+                    non aprire bocca? Sarai capace di non tirarla per le lunghe senza per questo
+                    fare troppo in fretta? Dovrai essere maschio ma non molto; tenero misuratamente,
+                    aggressivo senza essere violento; non puoi essere né sadico né masochista; e
+                    soprattuto non devi mai dimenticare che non sei solo, ma con una donna che sa il
+                    fatto suo!" E mentre Aldo si perdeva in questi pensieri, Patrizia continuava la
+                    sua rassegna degli erotismi sbagliati. Adesso s'era addentrata nel gravoso
+                    problema della simultaneità del piacere: "Un uomo e una donna non potranno dire
+                    di aver fatto all'amore se il piacere ognuno l'ha provato per conto suo, in due
+                    momenti diversi". Quest'ultima affermazione di Patrizia tagliò la testa al toro:
+                    Aldo cominciò a guardare l'orologio. Si alzò in piedi.</p>
+                <p>Gli ultimi minuti di quella piacevole serata <del rend="tratto a matita">i due</del>
+                    <add place="superlinear">a due</add> li trascorsero parlando dell'azienda, del
+                    suo presente difficile e delle diverse prospettive di sviluppo. E così, il
+                    giorno dopo, Aldo finì nel novero degli amici d'ufficio. E in poco tempo, agli
+                    occhi di Patrizia, perse la sua incredibile somiglianza con Paul Newman.</p>
+            </div1>
+        </body>
+    </text>
+
+</TEI.2>

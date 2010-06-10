@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE TEI.2 PUBLIC '-//BIBIT//DTD BibIt L1 TEI Document Type//EN' 'bibit-l1.dtd'>
+<?xml-stylesheet type="text/xsl" href="dattiloscritti.xsl"?>
+
+<TEI.2>
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+
+                <title>Le visioni del calvo</title>
+
+                <author>Vincenzo Cerami</author>
+                <respStmt>
+                    <resp>Codifica</resp>
+                    <name>Lorenzo Geri</name>
+                    <name>Daniele Silvi</name>
+                </respStmt>
+            </titleStmt>
+            <publicationStmt>
+                <publisher>Università di Roma3</publisher>
+                <pubPlace>Roma</pubPlace>
+                <date>2008</date>
+            </publicationStmt>
+            <seriesStmt>
+                <title/>
+            </seriesStmt>
+
+            <sourceDesc>
+                <bibl>
+
+                    <title>Le visioni del calvo</title>
+                    <author>Vincenzo Cerami</author>
+
+                    <editor/>
+                    <publisher/>
+                    <pubPlace/>
+                    <date/>
+                </bibl>
+            </sourceDesc>
+        </fileDesc>
+        <profileDesc>
+
+            <langUsage>
+                <language id="codice">italiano</language>
+
+            </langUsage>
+        </profileDesc>
+
+        <revisionDesc>
+            <change>
+                <date>15-02-2008</date>
+                <respStmt>
+                    <name>Geri-Silvi</name>
+                </respStmt>
+                <item>Codifica livello 1</item>
+            </change>
+        </revisionDesc>
+    </teiHeader>
+
+
+    <text>
+        <front/>
+
+        <body>
+            <div1>
+                <head>Le visioni del calvo</head>
+                <head>di Vincenzo Cerami</head>
+                <p>Una mattina mi svegliai, mi guardai allo specchio e dissi: "Adesso basta, debbo
+                    subito fare qualcosa!" Mi lavai la testa col mio solito sciampo per bambini e
+                    giù di corsa a prendere l'autobus. Destinazione: via dei Monti di Creta,
+                    Istituto dermatologico. Dovevo mettere fine a un destino che si trasmetteva di
+                    padre in figlio nei secoli. Fino ad un anno prima portavo sulla testa un casco
+                    di capelli talmente fitti e affollati che essi litigavano fra di loro per
+                    guadagnarsi un po' di spazio. La mattina, quando li pettinavo, tiravo via i
+                    cadaveri e staccavo uno dall'altro quanti di loro stavano ancora lottando. Alla
+                    fine una lisciatina di balsamo e i capelli tornavano tranquilli e traslucidi a
+                    sonnecchiare uno accanto all'altro. Me li portavo in giro allegramente
+                    rimettendoli a posto con le dita ogni volta che mi facevano il dispetto di
+                    scendermi sugli occhi. Poi, chi sa perché, da un anno a questa parte, malgrado
+                    l'affetto profondo e la riconoscenza che nutrivo per loro, hanno cominciato a
+                    impigrirsi, a perdere fiducia nella vita. </p>
+                <p> Ogni mattina trovavo tra i denti del pettine ciuffi interi di capelli che
+                    avevano scelto l'olocausto. L'acqua del rubinetto, quasi con cinismo, li
+                    raccoglieva e li dava in pasto alla bocca buia e profonda del lavandino. Ogni
+                    mattina la stessa storia.</p>
+                <p> Primo rimedio: la farmacia. Lozioni. All'inizio quelle delicate, poi le frizioni
+                    sempre più energiche, fino alla boccetta azzurra il cui contenuto mi arrossava
+                    la faccia e le tempie da farmi somigliare a un fiore vaiolato. I capelli non
+                    avevano più ragione di litigare per rubarsi lo spazio, anzi, adesso se ne
+                    stavano comodamente accoccolati uno distante dall'altro senza neanche guardarsi.
+                    Specialmente a destra e a sinistra della fronte, dove si stavano aprendo due
+                    piazzette lucide e deserte. Pensai a mio padre e a mio nonno paterno: entrambi
+                    erano stempiati allo stesso modo, ma con una fronte molto più ampia della mia.
+                    Voleva dire che la mia strada era quella: se non riuscivo a fermare l'ecatombe
+                    anch'io mi sarei ritrovato con una testa altrettanto triste e piena di
+                    bitorzoli. Così quella mattina presi il toro per le corna e decisi di rivolgermi
+                    ai grandi specialisti, alle massime autorità scientifiche nel campo
+                    dermatologico.</p>
+                <p>L'Istituto era peggio di una stazione ferroviaria: la folla bisbigliante si
+                    accalcava intorno a un distributore automatico di biglietti numerati. Mi misi in
+                    coda e soltanto dopo un'oretta riuscii a staccare il mio numero. Poi chiesi a
+                    qualcuno che cosa dovessi farci con quel biglietto. Mi risposero che dovevo
+                    aspettare il mio turno per poter andare allo sportello per parlare con
+                    un'infermiera. Ben munito di pazienza aspettai un'altra ora e mezza,
+                    avvicinandomi passetto dopo passetto all'infermiera seminascosta dallo
+                    sportello. Finalmente toccò a me. Le dissi che volevo essere visitato da un
+                    professore sapiente di capelli. Quella alzò lo sguardo sulla mia testa e con una
+                    smorfia mi consegnò un biglietto numerato. Pagai in silenzio e mi persi di nuovo
+                    nella calca. Notai che sulla grande porta vetrata, proprio al centro, c'era una
+                    specie di orologio che di tanto in tanto faceva scattare numeri progressivi.
+                    Capii che avrei potuto varcare quella soglia presentandomi alla porta quando il
+                    mio numero fosse comparso nel contatore. Ora c'era il numero 28. Guardai il mio
+                    biglietto sul quale era stampato il numero 421. Misurai il tempo medio che
+                    passava tra un numero e l'altro del contatore, feci un calcolo veloce e capii
+                    che non sarei entrato prima delle sedici del pomeriggio. Decisi di andare in una
+                    trattoria vicina e di passare tutto il tempo da quelle parti.</p>
+                <p> In trattoria scoprii che c'era anche Mirella, non la non vedevo da almeno sei
+                    anni. Ma lei, purtroppo, non mi riconobbe, sicuramente a causa dei miei capelli
+                    scesi di volume. E tanto bastò perché la fame mi passasse d'un colpo. Mi limitai
+                    al prosciutto e melone e un caffé. Quindi scappai di là e andai a sedermi su una
+                    panchina a un mezzo chilometro dall'Istituto. M'addormentai per qualche momento,
+                    ma mi sembrò di essere rimasto nel sogno una vita intera. Nel buio degli occhi
+                    mi apparve, sotto il cielo fosco, una pianura vasta e arida. La siccità aveva
+                    spaccato la superficie terrestre e di tanto in tanto da quelle fenditure
+                    emergevano cespuglietti spinosi. Sembrava il fondo di un lago completamente
+                    asciugato dal sole; la spianata dava infatti l'impressione di fango secco,
+                    divorato dalle rughe. Lontano si vedeva una montagna di creta dello stesso
+                    colore della mota. Non c'era anima viva. Nemmeno io. E la sensazione angosciosa
+                    veniva proprio da questa mia assenza. Mi cercavo in quel luogo pur sapendo che
+                    ero io a cercarmi. Mi svegliai dallo spavento, ma l'angoscia si moltiplicò
+                    subito per mille perché, pur avendo gli occhi aperti, lo spettrale spettacolo
+                    non cambiava. Anzi, cominciai perfino a sentire l'odore acre e polveroso di quel
+                    luogo abbandonato. Nelle mie orecchie fischiava appena un venticello caldo e
+                    umido. Urlai. Ma in quella valle sorda io stesso non sentivo la mia voce. Provai
+                    ad alzarmi dalla panchina, come un cieco. Inciampai nella siepe e caddi a terra.
+                    Chiusi gli occhi, li riaprii: erano quasi le sedici.</p>
+                <p>Ci risi un po' su, tanto per alleggerirmi l'animo prima di affrontare il medico.
+                    Capii che quella specie di incubo era legato alla paura di essere osservato dal
+                    professore: un fatto episodico e del tutto normale. Comunque mi fece concludere
+                    che per i capelli me la stavo prendendo un po' troppo. Di lì a poco avrei
+                    affidato nelle mani del medico tutta la questione e a me non sarebbe rimasto
+                    altro da fare che obbedire ai suoi ordini.</p>
+                <p>Comparve sul contatore il numero 421 e mi presentai all'infermiera della grande
+                    vetrata. Questa mi fece entrare e mi indicò una sala d'aspetto dove c'era già
+                    una mezza dozzina d'altri pazienti. Chi tatuato dall'erpes, chi invaso dai
+                    brufoli, chi mascherato dalle pomate. Per un momento mi vergognai di trovarmi
+                    tra tanti disgraziati col mio stupido problema dei capelli, ma ormai stavo in
+                    ballo e inoltre quelle visioni apocalittiche che mi avevano aggredito potevano
+                    anche essere il segno di un male ben più grave di una semplice impetigine.</p>
+                <p>Aspettai pazientemente il mio turno. Un'altra oretta almeno. E siccome vedevo che
+                    dalla porta del professore i pazienti uscivano tutti con un bel sorriso, mi
+                    caricai di fiducia. Finché l'infermiera non mi chiamò per nome. Mi alzai ed
+                    entrai nello studio del dottore.</p>
+                <p>Rimasi di ghiaccio. Non riuscivo a mandare giù la saliva tanto ero paralizzato.
+                    Il medico mi guardava interrogativamente, con il suo sguardo arcigno. Io gli
+                    fissavo la testa e balbettavo: il medico, alto e grosso, era completamentecalvo,
+                    la sua faccia sembrava una lampadina accesa. Era nudo di peli perfino dietro la
+                    nuca e sopra le orecchie. Mi chiese: "Allora, che problemi ha lei?" Non risposi
+                    subito e quello cominciava a innervosirsi. Lì per lì non riuscii ad inventarmi
+                    una malattia della pelle. Mi gettai a corpo morto, dovevo andare fino in fondo.
+                    Mi avvicinai alla sua faccia e, allargando con le dita i capelli sopra le
+                    tempie, gli mostrai che in quei due punti li stavo perdendo. Il medico mi guardò
+                    storcendo la bocca e disse: "Non c'è niente da fare!" Io feci di sì col capo,
+                    ome a dire: "Capisco! Mi dà una brutta notizia." E lui proseguì: "Potrei
+                    illuderla prescrivendole una lozione. Ma mi creda: non c'è niente da fare!" E
+                    io: "Le credo, le credo!" Così dicendo voltai le spalle e me ne andai.</p>
+                <p> Insomma passai una giornata intera in Purgatorio per trovarmi davanti, alla
+                    fine, il diavolo in persona. Mi rassegnai alla calvizie, ma rimaneva irrisolto
+                    il mistero di quella spaventosa visione a occhi aperti. Pensai che forse era
+                    un'immagine simbolica del profondo, la trasfigurazione di un destino deciso da
+                    forze ben più potenti della medicina. Da qualche parte era scritto che dovevo
+                    somigliare a mio padre e a mio nonno: nessuna lozione di questo mondo avrebbe
+                    potuto mai disfare un disegno così potente.</p>
+            </div1>
+        </body>
+    </text>
+</TEI.2>

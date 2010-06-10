@@ -4,7 +4,6 @@
  */
 package it.unibo.cs.rgb.servlet;
 
-import it.unibo.cs.rgb.gwt.RgBConfiguration;
 import it.unibo.cs.rgb.gwt.tei.TeiCollection;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -35,9 +34,10 @@ public class DocumentsList extends HttpServlet {
 
         PrintWriter out = response.getWriter();
 
+        String context = this.getServletContext().getRealPath("/");
         // creazione json dai files tei
-        TeiCollection collection = new TeiCollection();
-        String path = RgBConfiguration.collectionDirectoryPath;
+        TeiCollection collection = new TeiCollection(context);
+        String path = context +"collection5";
         collection.init(path);
 
         out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
@@ -46,6 +46,7 @@ public class DocumentsList extends HttpServlet {
 
         out.println("<p>Path selezionato: "+path+"<br />"
                 + "Numero documenti Tei presenti: <span id=\"numberOfDocuments\">" + collection.getNumberOfDocument() + "</span></p>");
+        out.println("<p>Context: "+context+"</p>");
 
         out.println("\t<ul>");
         for (int i = 0; i < collection.getNumberOfDocument(); i++) {
