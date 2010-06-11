@@ -1,6 +1,7 @@
 build/*
 *.DS_Store
 src/java/it/unibo/cs/rgb/gwt/RgBConfiguration.java
+dist/*
 nbproject/ant-deploy.xml
 nbproject/build-gwt.xml
 nbproject/build-impl.xml

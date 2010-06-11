@@ -37,7 +37,7 @@ public class DocumentsList extends HttpServlet {
         String context = this.getServletContext().getRealPath("/");
         // creazione json dai files tei
         TeiCollection collection = new TeiCollection(context);
-        String path = context +"collection5";
+        String path = context +"/collection5";
         collection.init(path);
 
         out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
