@@ -35,6 +35,7 @@ public class MainEntryPoint implements EntryPoint {
     //elementi grafici
     Widget header;
     Widget footer;
+    
     VerticalPanel west = new VerticalPanel();
     VerticalPanel center;
     Label title;
@@ -477,9 +478,10 @@ public class MainEntryPoint implements EntryPoint {
 
         final HTML retval = new HTML();
         retval.setTitle(witness);
+        retval.setStyleName("documentView");
 
         //DocumentViewer
-        String url = "http://localhost:8080/RgB/DocumentViewer?acaso=123";
+        String url = "http://localhost:8080/RgB/DocumentViewer";
         String postData = URL.encode("path") + "=" + URL.encode(path) + "&" + URL.encode("witness") + "=" + URL.encode(witness);
 
         RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, URL.encode(url));

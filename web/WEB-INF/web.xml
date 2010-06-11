@@ -1,22 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-    <servlet>
-        <servlet-name>action</servlet-name>
-        <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
-        <init-param>
-            <param-name>config</param-name>
-            <param-value>/WEB-INF/struts-config.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>debug</param-name>
-            <param-value>2</param-value>
-        </init-param>
-        <init-param>
-            <param-name>detail</param-name>
-            <param-value>2</param-value>
-        </init-param>
-        <load-on-startup>2</load-on-startup>
-    </servlet>
+    <welcome-file-list>
+        <welcome-file>welcomeGWT.html</welcome-file>
+    </welcome-file-list>
     <servlet>
         <servlet-name>DocumentMetadata</servlet-name>
         <servlet-class>it.unibo.cs.rgb.servlet.DocumentMetadata</servlet-class>
@@ -49,10 +35,6 @@
         <servlet-name>Differenziazione</servlet-name>
         <servlet-class>it.unibo.cs.rgb.servlet.Differenziazione</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>action</servlet-name>
-        <url-pattern>*.do</url-pattern>
-    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DocumentMetadata</servlet-name>
         <url-pattern>/DocumentMetadata</url-pattern>
@@ -90,9 +72,6 @@
             30
         </session-timeout>
     </session-config>
-    <welcome-file-list>
-        <welcome-file>welcomeGWT.html</welcome-file>
-    </welcome-file-list>
     <filter>
         <filter-name>UrlRewriteFilter</filter-name>
         <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
