@@ -5,10 +5,13 @@
 
 package it.unibo.cs.rgb.test;
 
+import it.unibo.cs.rgb.gwt.RgB;
 import it.unibo.cs.rgb.gwt.tei.TeiCollection;
 import it.unibo.cs.rgb.util.TreeNode;
+import java.io.ByteArrayOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import org.w3c.dom.NodeList;
@@ -21,37 +24,36 @@ public class TreeTest {
     public static void main(String[] args) throws IOException {
         System.out.println("Test tree");
 
-        TeiCollection collection = new TeiCollection("/Users/fedo/data/programming/netbeans/RgB/build/web/");
-        collection.init("src/java/resources/collection1/parallel segmentation/");
+        TeiCollection collection = new TeiCollection("noStylesheetPath");
+        collection.init((new RgB().getBasename())+"/collection1/parallel segmentation/");
         ArrayList<TreeNode> nodes = new ArrayList<TreeNode>();
-        NodeList witness = (NodeList) collection.getTeiDocument(0).xpathQueryNL("//witList/witness");
+        NodeList witness = (NodeList) collection.getTeiDocument(2).xpathQueryNL("//witList/witness");
         
-        int rCircle = 40, fontSize = 0, nFontSize = 20, gFontSize =26;
-        String colourStroke = "", nColourStroke = "#83adf7", gColourStroke = "red";
+        int rCircle = 40, ySpaceBetweenCircle = 60, xSpaceBetweenCircle = 60, footerSpace=80, fontSize = 0, nFontSize = 20, gFontSize =26;
+        String colourStroke = "", nColourStroke = "#83adf7", gColourStroke ="red", classStyle="";
         String littleLetters="filtjr", mediumLetters="abcdeghnopqzsuvkzy0123456789", bigLetters="mw";
         int xLitWordLoc =-1, xMedWordLoc =-5, xBigWordLoc =-7, xGWordLoc = -7, xWordLoc = 0,nGreekNodes = 0;
         int yWordLoc = 5, yGWordLoc = 7;
-        //DEBUG disegno del nodo
-        //int xCirclePos=0, yCirclePos=0,xTextPos=0,yTextPos=0,xFirstPLinePos=0,yFirstPLinePos=0,xSecondPLinePos=0,ySecondPLinePos=0;
-        int xCirclePos=100, yCirclePos=50;//,xFirstPLinePos=0,yFirstPLinePos=0,xSecondPLinePos=0,ySecondPLinePos=0;
-        String labelId ="init";
-        //end debug
+        int xCirclePos, yCirclePos,xFirstPLinePos,yFirstPLinePos,xSecondPLinePos,ySecondPLinePos;
+        String labelId ="";
 
-        //riempo l'albero della astrutta dati
+        //riempo la lista della astrutta dati con i nodi
         for (int i=0; i<witness.getLength(); i++){
-            String id= witness.item(i).getAttributes().getNamedItem("sigil").getTextContent().toLowerCase();
+            String id= witness.item(i).getAttributes().getNamedItem("id").getTextContent().toLowerCase();
+            String sigil= witness.item(i).getAttributes().getNamedItem("sigil").getTextContent().toLowerCase();
             if (witness.item(i).getAttributes().getNamedItem("missing").getTextContent().equalsIgnoreCase("true"))
-                nodes.add(new TreeNode(null, id, true));
+                nodes.add(new TreeNode(null, id, sigil, true));
             else
-                nodes.add(new TreeNode(null, id, false));
+                nodes.add(new TreeNode(null, id, sigil, false));
         }
 
+        //collego i nodi fra loro cosi' che siano un albero generico
         for (int i=0; i<nodes.size(); i++){
             if (witness.item(i).getAttributes().getNamedItem("der") != null){
-                String parent=witness.item(i).getAttributes().getNamedItem("der").getTextContent();
-            
+                String parent=witness.item(i).getAttributes().getNamedItem("der").getTextContent().toLowerCase();
+
                 for (int n=0; n<nodes.size();n++){
-                    if (nodes.get(n).getId().equalsIgnoreCase(parent)){
+                    if (nodes.get(n).getId().matches(parent)){
                         nodes.get(n).addChild(nodes.get(i));
                         break;
                     }
@@ -59,80 +61,94 @@ public class TreeTest {
             }
         }
 
+        //setto la profondita' dei nodi
         for (int i=0;i<nodes.size();i++){
              nodes.get(i).setDepth(countDepth(nodes.get(i)));
         }
         
-        int nLeaf=countLeaf(nodes.get(0));
-        int depth=maxDepth(nodes);
-        // end
-        /*System.out.println("depth:"+depth);
-        int circleSpace = 80, spaceBetweenCicle = 40;
+        //setta le coordinate x,y delle foglie
+        int nDrawned=1, nNodes = nodes.size();
+        for (int n=0;n<nNodes;n++){
+            if(! nodes.get(n).getDrawned()){
+                if (isLeaf(nodes.get(n))){
+                   int nSibling=nodes.get(n).getParent().getChildren().size();
+                   int depth=nodes.get(n).getDepth(),
+                           y=rCircle+(depth-1)*(rCircle*2+ySpaceBetweenCircle)+rCircle;
+                   for (int s=0; s<nSibling; s++){
+                       if (isLeaf(nodes.get(n).getParent().getChildren().get(s))){
+                         int x=rCircle+(nDrawned-1)*(rCircle*2+xSpaceBetweenCircle)+rCircle;
+                            nodes.get(n).getParent().getChildren().get(s).setDrawned(true);
+                            nodes.get(n).getParent().getChildren().get(s).setPosition(x, y);
+                            nDrawned++;
+                       }
+                   }
 
-        //per tutti i livelli
-        for (int i=depth;i>0;i--) {
-            
-            int x=0, y=i*((rCircle*2)+spaceBetweenCicle)-(rCircle*2), nNodeXLvl=1;
-            //per tutti i nodi
-            for (int n=0;n<nodes.size();n++){
-                //se sono nodi di quel livello
-                if (nodes.get(n).getDepth()==i){
-                        System.out.println("node:"+nodes.get(n).getId()+" depth:"+nodes.get(n).getDepth());
-                        // se non sono stati disegnati
-                        if (! nodes.get(n).getDrawned()) {
-                            if (nodes.get(n).getParent() != null) {
-                                int nSibling = nodes.get(n).getParent().getChildren().size();
-                                if (n != 0) {
-                                    int swapX=0;
-                                    for (int c=0; c<nSibling;c++) {
-                                        swapX=nodes.get(n).getParent().getChildren().get(c).getX();
-                                        if (x<swapX)
-                                            x = swapX;
-                                    }
-                                }
-
-                                //per tutti i fratelli
-                                for (int c=0; c<nSibling;c++) {
-                                    if (c == 0 && n != 0)
-                                        x += (rCircle+spaceBetweenCicle);
-                                    else
-                                        x += (rCircle*2)+spaceBetweenCicle;
-
-                                     nodes.get(n).getParent().getChildren().get(c).setPosition(x, y);
-                                     nodes.get(n).getParent().getChildren().get(c).setDrawned(true);
-                                }
-
-                                int xParent = 0;
-                                if (isOdd(nSibling)) {
-                                    if (nSibling == 1)
-                                        xParent = nodes.get(n).getParent().getChildren().get(0).getX();
-                                    else
-                                        xParent = nodes.get(n).getParent().getChildren().get(((nSibling-1)/2)).getX();
-                                } else {
-                                    int x1=nodes.get(n).getParent().getChildren().get(0).getX();
-                                    int x2=nodes.get(n).getParent().getChildren().get(nSibling).getX();
-                                    xParent =(x1+x2)/2;
-                                }
-
-                                y = y=(i-1)*((rCircle*2)+spaceBetweenCicle);
-
-                                nodes.get(n).getParent().setPosition(xParent, y);
-                                nodes.get(n).getParent().setDrawned(true);
-                                }
-                            }
-                    }
+                }
             }
+        }
 
-        }*/
- 
+        //setta le coordinate x,y dei nodi padre
+        nDrawned--;
+        while (nDrawned < nNodes) {
+            for (int n=0; n < nNodes; n++) {
+                if(! nodes.get(n).getDrawned()){
+                    int nSibling = nodes.get(n).getChildren().size();
+                    boolean allSiblingDrawned = true;
+                    for (int c=0; c<nSibling;c++) {
+                        if (! nodes.get(n).getChildren().get(c).getDrawned()){
+                          allSiblingDrawned = false;
+                          break;
+                        } 
+                    }
+
+                    if (allSiblingDrawned) {
+                        int depth = nodes.get(n).getDepth(),
+                            y=rCircle+(depth-1)*(rCircle*2+ySpaceBetweenCircle)+rCircle;
+                        if (nSibling == 1)
+                            nodes.get(n).setPosition(nodes.get(n).getChildren().get(0).getX(), y);
+                        else 
+                            nodes.get(n).setPosition(((nodes.get(n).getChildren().get(--nSibling).getX()+nodes.get(n).getChildren().get(0).getX())/2), y);
+
+                        nodes.get(n).setDrawned(true);
+                        nDrawned++;
+                    }
+                }
+            }
+        }
+
+        int maxX=maxPos(nodes, true);
+        int maxY=maxPos(nodes, false);
+
+        // end alberi
+
         try {
-            FileWriter outFile = new FileWriter("/Users/fedo/Desktop/svg1.xml");
+            FileWriter outFile = new FileWriter("/Users/fedo/Temp/svg3.xml");
             PrintWriter out = new PrintWriter(outFile);
-
+            out.println("<?xml-stylesheet type=\"text/css\" href=\"svg.css\" ?>");
             out.println("<html xmlns:svg=\"http://www.w3.org/2000/svg\">");
             out.println("<body>");
-            out.println("<svg:svg width=\"2000\" height=\"1000\" version=\"1.1\" >");
+            out.println("<svg:svg width=\""+(maxX+footerSpace)+"\" height=\""+(maxY+footerSpace)+"\" version=\"1.1\" >");
 
+            //String lineStyle="style=\"fill:none;fill-rule:evenodd;stroke:"+nColourStroke+";stroke-width:2.93415856;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1";
+            //disegna le linee
+            for (int i = 0; i < nodes.size(); i++){
+                if (! isLeaf(nodes.get(i))) {
+                   int nSibling=nodes.get(i).getChildren().size();
+                   for (int s=0;s<nSibling;s++) {
+                       xFirstPLinePos=nodes.get(i).getX();
+                       yFirstPLinePos=nodes.get(i).getY();
+                       xSecondPLinePos=nodes.get(i).getChildren().get(s).getX();
+                       ySecondPLinePos=nodes.get(i).getChildren().get(s).getY();
+
+                       //String line="<svg:line id=\""+nodes.get(i)+"\" x1=\""+xFirstPLinePos+"\" y1=\""+yFirstPLinePos+"\" x2=\""+xSecondPLinePos+"\" y2=\""+ySecondPLinePos+"\" " +lineStyle+"\"/>";
+                       String line="<svg:line id=\""+nodes.get(i).getId()+"\" x1=\""+xFirstPLinePos+"\" y1=\""+yFirstPLinePos+"\" x2=\""+xSecondPLinePos+"\" y2=\""+ySecondPLinePos+"\"/>";
+                       
+                       out.println(line);
+                   }
+                }
+            }
+
+            //disegna cerchi e testo
             for (int i = 0; i < nodes.size(); i++){
                 if (nodes.get(i).getMissing()) {
                     labelId = getGreek(nGreekNodes);
@@ -140,34 +156,32 @@ public class TreeTest {
                     yWordLoc=yGWordLoc;
                     fontSize=gFontSize;
                     colourStroke=gColourStroke;
+                    classStyle="witness-greek";
                     nGreekNodes++;
                 } else {
                     xWordLoc = 0;
-                    labelId=nodes.get(i).getId();
+                    labelId=nodes.get(i).getSigil();
                     xWordLoc += howMuchMove(littleLetters,xLitWordLoc,labelId);
                     xWordLoc += howMuchMove(mediumLetters,xMedWordLoc,labelId);
                     xWordLoc += howMuchMove(bigLetters,xBigWordLoc,labelId);
-
+                    classStyle="witness";
                     fontSize=nFontSize;
                     colourStroke=nColourStroke;
                 }
 
-                String circleStyle="style=\"fill:none;fill-opacity:1;fill-rule:nonzero;stroke:"+colourStroke+";stroke-width:3;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1",
-                       textStyle="style=\"font-size:"+fontSize+"px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial",
-                       lineStyle="style=\"fill:none;fill-rule:evenodd;stroke:"+nColourStroke+";stroke-width:2.93415856;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1";
-                //debug
-                xCirclePos += 120;
-                //xCirclePos = nodes.get(i).getX();
-                //yCirclePos = nodes.get(i).getY();
+                //String circleStyle="style=\"fill:"+colourStroke+";fill-opacity:1;fill-rule:nonzero;stroke:"+colourStroke+";stroke-width:3;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1",
+                //       textStyle="style=\"font-size:"+fontSize+"px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial";
+                       
+                xCirclePos = nodes.get(i).getX();
+                yCirclePos = nodes.get(i).getY();
                 int xIdPos=xCirclePos+xWordLoc, yIdPos=yCirclePos+yWordLoc;
-                //System.out.println("labelId:"+labelId+" xCirclePos:"+xCirclePos+ " xIdPos:"+xIdPos+" xWordLoc:"+xWordLoc);
-                String text="<svg:text id=\""+labelId+"\" x=\""+xIdPos+"\" y=\""+yIdPos+"\"  " + textStyle + "\">"+ labelId +"</svg:text>";
-                String circle="<svg:circle id=\""+labelId+"\" cx=\""+xCirclePos+"\" cy=\""+yCirclePos+"\" r=\""+rCircle+"\" "+circleStyle+"\" />";//,
-                       //line="<svg:line id=\""+id+"\" x1=\""+xFirstPLinePos+"\" y1=\""+yFirstPLinePos+"\" x2=\""+xSecondPLinePos+"\" y2=\""+ySecondPLinePos+"\" " +lineStyle+"\"/>";
+                //String text="<svg:text class=\""+classStyle+"\" id=\""+nodes.get(i)+"\" x=\""+xIdPos+"\" y=\""+yIdPos+"\"  " + textStyle + "\">"+ labelId +"</svg:text>",
+                //     circle="<svg:circle class=\""+classStyle+"\" id=\""+nodes.get(i)+"\" cx=\""+xCirclePos+"\" cy=\""+yCirclePos+"\" r=\""+rCircle+"\" "+circleStyle+"\" />";
+                String text="<svg:text class=\""+classStyle+"\" id=\""+nodes.get(i).getId()+"\" x=\""+xIdPos+"\" y=\""+yIdPos+"\">"+ labelId +"</svg:text>",
+                     circle="<svg:circle class=\""+classStyle+"\" id=\""+nodes.get(i).getId()+"\" cx=\""+xCirclePos+"\" cy=\""+yCirclePos+"\" r=\""+rCircle+"\"/>";
 
                 out.println(circle);
                 out.println(text);
-                //out.println(line);
            }
 
            out.println("</svg:svg>");
@@ -177,16 +191,24 @@ public class TreeTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-        // DEBUG: tree */
-        /*for (int i=0; i<nodes.size(); i++){
-           System.out.println("node id:"+nodes.get(i).getId()+" node depth:"+nodes.get(i).getDepth());
+    public static int maxPos(ArrayList<TreeNode> nodes,boolean pos) {
+        int ret=0,swapRet=0;
+
+        for (int n=0; n<nodes.size(); n++){
+            if (pos)
+                swapRet=nodes.get(n).getX();
+            else
+                swapRet=nodes.get(n).getY();
+
+            System.out.println("ret:"+ret+ " <? swap:"+swapRet );
+            if (ret<swapRet){
+                ret=swapRet;
+            }
         }
-        
-        System.out.println(""+nodes.get(0).getChildren().get(0).getId());
-        System.out.println(""+nodes.get(1).getParent().getId());
-        System.out.println(""+nLeaf);
-        */
+        System.out.println("f ret:"+ret);
+        return ret;
     }
 
     public static boolean isOdd(int n){
@@ -201,10 +223,12 @@ public class TreeTest {
 
     public static String getGreek(int nGreekNodes){
         String gLetters="αβγδεζηθικλμνξοπρςτυφχψω";
-        //char ret =
+        
         return ""+gLetters.charAt(nGreekNodes);
     }
 
+    //calcola di quanto deve essere spostata la label di un nodo rispetto il
+    //centro di questo, alla lunghezza della parola e al tipo di lettera
     public static int howMuchMove(String letters, int x, String id){
         int ret = 0;
 
@@ -213,7 +237,7 @@ public class TreeTest {
                     ret += x;
             }
         }
-        //System.out.println("type:" + x + "");
+
         return ret;
     }
 
@@ -226,20 +250,27 @@ public class TreeTest {
             swapNode = swapNode.getParent();
         }
 
-        System.out.println("count:"+count);
-
-        return count;
+        return ++count;
     }
-    
+
+    private static int maxDepth(ArrayList<TreeNode> tree) {
+        int ret=0;
+        for (int i=0; i<tree.size();i++){
+            int newRet = tree.get(i).getDepth();
+            if (ret<newRet)
+                ret = newRet;
+        }
+
+        return ret;
+    }
+
     private static boolean isLeaf(TreeNode node)
     {
         boolean ret=false;
 
-
         if (node.getChildren().size() == 0)
             ret=true;
 
-        //System.out.println("isLeaf:"+ret+" nodes id:"+nodes.getId());
         return ret;
     }
 
@@ -249,27 +280,12 @@ public class TreeTest {
 
         if (isLeaf(root)) {
             count++;
-            //System.out.println("root isLeaf"+count);
         } else {
-            //System.out.println("children"+count);
             for (int i=0; i<root.getChildren().size(); i++ ){
                 count += countLeaf(root.getChildren().get(i));
-                //System.out.println("children isLeaf"+count);
             }
         }
         
         return count;
-    }
-
-    private static int maxDepth(ArrayList<TreeNode> tree) {
-        int ret=0;
-        for (int i=0; i<tree.size();i++){
-            int newRet = tree.get(i).getDepth();
-            //System.out.println("depth:"+newRet);
-            if (ret<newRet)
-                ret = newRet;
-        }
-
-        return ret;
     }
 }

@@ -11,10 +11,10 @@ public class TeiCollection {
 
     private static String folderPath;
     private static ArrayList<TeiDocument> listOfTei;
-private static String context;
+private static String stylesheetsPath;
 
-    public TeiCollection(String context) {
-        this.context = context;
+    public TeiCollection(String stylePath) {
+        this.stylesheetsPath = stylePath;
         folderPath = "toInitialize";
     }
 
@@ -53,7 +53,7 @@ private static String context;
             if (listOfFiles[i].isFile()) {
                 //file xml
                 if (filename.endsWith(".xml")) {
-                    tmp.add(new TeiDocument(path + "/" + filename,context));
+                    tmp.add(new TeiDocument(path + "/" + filename,stylesheetsPath));
                 }
             } else if (listOfFiles[i].isDirectory()) {
                 //cartella con documenti xml

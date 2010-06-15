@@ -4,6 +4,7 @@
  */
 package it.unibo.cs.rgb.servlet;
 
+import it.unibo.cs.rgb.gwt.RgB;
 import it.unibo.cs.rgb.gwt.tei.TeiCollection;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -34,20 +35,22 @@ public class DocumentsList extends HttpServlet {
 
         PrintWriter out = response.getWriter();
 
-        String context = this.getServletContext().getRealPath("/");
+        String basename = new RgB().getBasename();
         // creazione json dai files tei
-        TeiCollection collection = new TeiCollection(context);
-        String path = context +"/collection5";
-        collection.init(path);
+        TeiCollection collection = new TeiCollection(basename+"/stylesheets");
+        String folderPath = basename +"/collection5";
+        collection.init(folderPath);
 
         out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         out.println("<html xmlns=\"http://www.w3.org/1999/xhtml\" version=\"1.0\">");
         out.println("<h1>DocumentsList: lista e descrizione dei documenti Tei</h1>");
-
-        out.println("<p>Path selezionato: "+path+"<br />"
-                + "Numero documenti Tei presenti: <span id=\"numberOfDocuments\">" + collection.getNumberOfDocument() + "</span></p>");
-        out.println("<p>Context: "+context+"</p>");
-
+        out.println("<p>");
+        out.println("Basename selezionato: "+basename+"<br/>");
+        out.println("Path selezionato: "+folderPath+"<br/>");
+        out.println("Numero documenti Tei presenti: <span id=\"numberOfDocuments\">" + collection.getNumberOfDocument() + "</span><br/>");
+        out.println("Context: "+basename+"<br/>");
+        out.println("</p>");
+        
         out.println("\t<ul>");
         for (int i = 0; i < collection.getNumberOfDocument(); i++) {
             out.println("<li id=\"document\">");

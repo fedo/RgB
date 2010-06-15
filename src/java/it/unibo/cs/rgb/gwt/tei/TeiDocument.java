@@ -10,6 +10,7 @@ import org.w3c.dom.*;
 import javax.xml.xpath.*;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import org.xml.sax.SAXException;
 import javax.xml.parsers.*;
@@ -18,6 +19,7 @@ import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.Serializer;
 import net.sf.saxon.s9api.XdmAtomicValue;
+
 import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XsltCompiler;
 import net.sf.saxon.s9api.XsltExecutable;
@@ -35,18 +37,17 @@ public class TeiDocument {
     private XPath xpath;
     private Document doc;
     private ArrayList<String> xmlList = new ArrayList<String>();
-    private String context;
+    private String stylesheetsPath;
 
-    public TeiDocument(String absolutePath, String context) {
+    public TeiDocument(String absolutePath, String stylePath) {
 
-        this.context = context;
+        stylesheetsPath = stylePath;
         File file = new File(absolutePath);
         if (file.isFile()) {
             this.type = "file";
         } else if (file.isDirectory()) {
             this.type = "directory";
         }
-
 
         this.absolutePath = absolutePath;
         this.teiName = new File(this.absolutePath).getName();
@@ -74,6 +75,20 @@ public class TeiDocument {
         }
     }
 
+      public TeiDocument(InputStream stream) {
+            try {
+                DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+                doc = builder.parse(stream);
+                xpath = XPathFactory.newInstance().newXPath();
+            } catch (SAXException ex) {
+                Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParserConfigurationException ex) {
+                Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
+
     public String getTeiName() {
         return teiName;
     }
@@ -82,16 +97,14 @@ public class TeiDocument {
         return absolutePath;
     }
 
-    public NodeList xpathQueryNL(String expression) {
+public NodeList xpathQueryNL(String expression) {
         NodeList str = null;
 
-        if (type.equals("file")) {
             try {
                 str = (NodeList) xpath.evaluate(expression, doc, XPathConstants.NODESET);
             } catch (XPathExpressionException ex) {
                 Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
 
         return str;
     }
@@ -165,7 +178,7 @@ public class TeiDocument {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-        String inputXsl = context + "stylesheets/hover.xsl";
+        String inputXsl = stylesheetsPath + "/hover.xsl";
         String inputXml;
         if (type.equals("file")) {
             inputXml = absolutePath;
@@ -201,7 +214,7 @@ public class TeiDocument {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         String retval = "error";
 
-        String inputXsl = context + "stylesheets/preface.xsl";
+        String inputXsl = stylesheetsPath + "/preface.xsl";
         String inputXml;
         if (type.equals("file")) {
             inputXml = absolutePath;
@@ -238,7 +251,7 @@ public class TeiDocument {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         String retval = "error";
 
-        String inputXsl = context + "stylesheets/content.xsl";
+        String inputXsl = stylesheetsPath + "/content.xsl";
         String inputXml;
         if (type.equals("file")) {
             inputXml = absolutePath;

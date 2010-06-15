@@ -5,6 +5,7 @@
 
 package it.unibo.cs.rgb.servlet;
 
+import it.unibo.cs.rgb.gwt.RgB;
 import it.unibo.cs.rgb.gwt.tei.TeiDocument;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -41,7 +42,7 @@ public class DocumentViewer extends HttpServlet {
             out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             out.println("<html xmlns=\"http://www.w3.org/1999/xhtml\" version=\"1.0\">");
             out.println("<p>Witness selezionato: "+witness+"</p>");
-            out.println("<div id=\"view\" style=\"width:400px;\">" + (new TeiDocument(path,this.getServletContext().getRealPath("/"))).getView(witness) + "</div>");
+            out.println("<div id=\"view\" style=\"width:400px;\">" + (new TeiDocument(path,new RgB().getBasename()+"/stylesheets")).getView(witness) + "</div>");
             out.println("</html>");
 
         } finally {

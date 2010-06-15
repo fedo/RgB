@@ -27,7 +27,7 @@ public class TreeNode implements java.io.Serializable
     protected final List<TreeNode> children = new ArrayList<TreeNode>();
     protected TreeNode parent;
 
-    public TreeNode (TreeNode parent, String id, Boolean missing)
+    public TreeNode (TreeNode parent, String id, String sigil, Boolean missing)
     {
         if (parent != null) {
             parent.addChild(this);
@@ -35,6 +35,7 @@ public class TreeNode implements java.io.Serializable
 
         this.setDepth(0);
         this.setId(id);
+        this.setSigil(sigil);
         this.setMissing(missing);
         this.setDrawned(false);
         this.setPosition(0,0);
@@ -99,6 +100,14 @@ public class TreeNode implements java.io.Serializable
     }
 
     public String getId() {
+        return  id;
+    }
+
+    public void setSigil (String sigil) {
+        this.id = id;
+    }
+
+    public String getSigil() {
         return  id;
     }
 

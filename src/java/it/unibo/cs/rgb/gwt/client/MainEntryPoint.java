@@ -46,6 +46,7 @@ public class MainEntryPoint implements EntryPoint {
     HorizontalPanel debug = new HorizontalPanel();
     //variabili
     final ArrayList<HashMap> documents = new ArrayList<HashMap>(); //{ String "id", String "path", String "shortName", String "longName", HTML "info", ArrayList<String> "files" }
+    String host;
 
     /**
      * Creates a new instance of MainEntryPoint
@@ -58,6 +59,8 @@ public class MainEntryPoint implements EntryPoint {
      * that declares an implementing class as an entry-point
      */
     public void onModuleLoad() {
+
+        host = Window.Location.getHost();
 
         DockPanel mainPanel = new DockPanel();
 
@@ -126,7 +129,7 @@ public class MainEntryPoint implements EntryPoint {
     }
 
     private Widget createHomepage() {
-        homepage = new HTML("<p>Questa è l'home page, clicca su un documento per fare delle storie</p>");
+        homepage = new HTML("<p>Questa è l'home page, clicca su un documento per fare delle storie: "+host+"</p>");
         return homepage;
     }
 
@@ -157,10 +160,11 @@ public class MainEntryPoint implements EntryPoint {
         panel.setTitle(id);
 
         //DocumentInfo
-        String url = "http://localhost:8080/RgB/DocumentInfo";
+        String url = "http://"+host+"/RgB/DocumentInfo";
         String postData = URL.encode("path") + "=" + URL.encode(path);
 
         RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, URL.encode(url));
+        builder.setTimeoutMillis(1000000);
         builder.setHeader("Content-type", "application/x-www-form-urlencoded");
         try {
             Request request = builder.sendRequest(postData, new RequestCallback() {
@@ -271,8 +275,9 @@ public class MainEntryPoint implements EntryPoint {
 
     private void createDocumentsList() {
         //DocumentList
-        String url = "http://localhost:8080/RgB/DocumentsList";
+        String url = "http://"+host+"/RgB/DocumentsList";
         RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(url));
+        builder.setTimeoutMillis(1000000);
 
         final Label loading = new Label("Caricamento in corso...");
         west.add(loading);
@@ -285,7 +290,9 @@ public class MainEntryPoint implements EntryPoint {
                 }
 
                 public void onResponseReceived(Request request, Response response) {
+                    
                     if (200 == response.getStatusCode()) {
+                        
                         //xhtml parsing
                         Document responseXml = XMLParser.parse(response.getText().toString());
 
@@ -481,10 +488,11 @@ public class MainEntryPoint implements EntryPoint {
         retval.setStyleName("documentView");
 
         //DocumentViewer
-        String url = "http://localhost:8080/RgB/DocumentViewer";
+        String url = "http://"+host+"/RgB/DocumentViewer";
         String postData = URL.encode("path") + "=" + URL.encode(path) + "&" + URL.encode("witness") + "=" + URL.encode(witness);
 
         RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, URL.encode(url));
+        builder.setTimeoutMillis(1000000);
         builder.setHeader("Content-type", "application/x-www-form-urlencoded");
         try {
             Request request = builder.sendRequest(postData, new RequestCallback() {
