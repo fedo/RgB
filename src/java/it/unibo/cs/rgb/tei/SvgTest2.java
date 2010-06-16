@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package it.unibo.cs.rgb.gwt.tei;
+package it.unibo.cs.rgb.tei;
 import java.io.*;
 /**
  *

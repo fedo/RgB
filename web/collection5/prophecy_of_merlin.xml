@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE TEI.2 SYSTEM "teixtstc.dtd">
 <TEI.2>
 	<teiHeader>
@@ -49,9 +49,10 @@
 		<front>
 			<div>
 				<witList>
-					<witness sigil="dublin">The Prophecy of Merlin</witness>
-					<witness sigil="oxford">The Prophecy of Merlin</witness>
-					<witness sigil="cambridge">The Prophecy of Merlin</witness>
+                                        <witness id="no1" missing="true" sigil="otherside">The Prophecy of Merlin</witness>
+					<witness der="no1" missing="false" id="tpof1" sigil="dublin">The Prophecy of Merlin</witness>
+					<witness der="no1" missing="false" id="tpof2" sigil="oxford">The Prophecy of Merlin</witness>
+					<witness der="no1" missing="false" id="tpof3" sigil="cambridge">The Prophecy of Merlin</witness>
 				</witList>
 			</div>
 		</front>

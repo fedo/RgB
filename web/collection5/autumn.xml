@@ -39,17 +39,14 @@
   <text> 
 	 <front> 
 		<div> 
-		  <witList> 
-			 <witness sigil="a1">'A Short History of Our Own Time'
-				(7989/1/10)</witness> 
-			 <witness sigil="a2">'Civil War', which was deleted and
-				replaced with 'Ireland, Autumn 1922'</witness> 
-			 <witness sigil="a3">'Ireland Autumn, 1922'
-				(7989/1/7)</witness> 
-			 <witness sigil="a4">(7989/1/8)</witness> 
-			 <witness sigil="pub">The poem was published in 
-				<title type="italic">Poems</title> under the title 'Autumn,
-				1922'</witness> 
+		  <witList>
+                        <witness missing="true" id="no1" der="a1" sigil="no1"></witness>
+                        <witness missing="true" id="no2" der="no1" sigil="no2"></witness>
+			 <witness missing="false" id="a1" sigil="a1">'A Short History of Our Own Time' (7989/1/10)</witness>
+			 <witness missing="false" id="a2" der="no1" sigil="a2">'Civil War', which was deleted and	replaced with 'Ireland, Autumn 1922'</witness>
+			 <witness missing="false" id="a3" der="no2" sigil="a3">'Ireland Autumn, 1922'(7989/1/7)</witness>
+			 <witness missing="false" id="a4" der="no2" sigil="a4">(7989/1/8)</witness>
+			 <witness missing="false" id="pub" der="no2" sigil="pub">The poem was published in <title type="italic">Poems</title> under the title 'Autumn, 1922'</witness>
 		  </witList> 
 		</div> 
 	 </front> 

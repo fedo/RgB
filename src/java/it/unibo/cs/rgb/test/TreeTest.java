@@ -6,7 +6,7 @@
 package it.unibo.cs.rgb.test;
 
 import it.unibo.cs.rgb.gwt.RgB;
-import it.unibo.cs.rgb.gwt.tei.TeiCollection;
+import it.unibo.cs.rgb.tei.TeiCollection;
 import it.unibo.cs.rgb.util.TreeNode;
 import java.io.ByteArrayOutputStream;
 import java.io.FileWriter;

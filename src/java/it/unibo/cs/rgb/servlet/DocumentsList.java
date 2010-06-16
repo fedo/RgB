@@ -4,10 +4,17 @@
  */
 package it.unibo.cs.rgb.servlet;
 
-import it.unibo.cs.rgb.gwt.RgB;
-import it.unibo.cs.rgb.gwt.tei.TeiCollection;
+import it.unibo.cs.rgb.tei.TeiDocument;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,36 +36,60 @@ public class DocumentsList extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        String teiFolder = "/collection5";
+        String stylesheetsFolder = "/stylesheets";
+        ArrayList<String> xmlFilesList = new ArrayList<String>();
+
         response.setContentType("text/html;charset=UTF-8");
         response.setHeader("Cache-Control", "no-cache");
         response.setStatus(200);
 
         PrintWriter out = response.getWriter();
 
-        String basename = new RgB().getBasename();
-        // creazione json dai files tei
-        TeiCollection collection = new TeiCollection(basename+"/stylesheets");
-        String folderPath = basename +"/collection5";
-        collection.init(folderPath);
+        // lettura degli stylesheets (xsl)
+        HashMap xsl = new HashMap();
+        Set stylesheetsSet = getServletContext().getResourcePaths(stylesheetsFolder);
+        Iterator stylesheetsIter = stylesheetsSet.iterator();
+        while (stylesheetsIter.hasNext()) {
+            String current = (String) stylesheetsIter.next();
+            if (current.endsWith(".xsl")) {
+                //out.println("Xsl: " + current + "<br/>");
+                xsl.put(current, convertStreamToString(getServletContext().getResourceAsStream(current)));
+            }
+        }
+
+        // lettura dei documenti TEI (xml) e aggiunta dei nomi in una lista
+        Set set = getServletContext().getResourcePaths(teiFolder);
+        Object[] files = set.toArray();
+        for (int i = 0; i < files.length; i++) {
+            if (((String) files[i]).endsWith(".xml")) {
+                xmlFilesList.add("" + (String) files[i]);
+            }
+        }
 
         out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         out.println("<html xmlns=\"http://www.w3.org/1999/xhtml\" version=\"1.0\">");
         out.println("<h1>DocumentsList: lista e descrizione dei documenti Tei</h1>");
         out.println("<p>");
-        out.println("Basename selezionato: "+basename+"<br/>");
-        out.println("Path selezionato: "+folderPath+"<br/>");
-        out.println("Numero documenti Tei presenti: <span id=\"numberOfDocuments\">" + collection.getNumberOfDocument() + "</span><br/>");
-        out.println("Context: "+basename+"<br/>");
+
+        out.println("Cartella files TEI (xml) selezionato: " + teiFolder + "<br/>");
+        out.println("Numero documenti Tei presenti: <span id=\"numberOfDocuments\">" + xmlFilesList.size() + "</span><br/>");
+
         out.println("</p>");
-        
-        out.println("\t<ul>");
-        for (int i = 0; i < collection.getNumberOfDocument(); i++) {
+        out.println("<ul>");
+
+        // scrittura informazioni sui documenti TEI
+        for (int i = 0; i < xmlFilesList.size(); i++) {
+            TeiDocument tei = new TeiDocument(xmlFilesList.get(i), convertStreamToString(getServletContext().getResourceAsStream(xmlFilesList.get(i))), xsl);
+
             out.println("<li id=\"document\">");
-            out.println("<span id=\"id\">" + collection.getTeiDocument(i).getTeiName() + "</span>");
-            out.println("<br /><span id=\"path\">" + collection.getTeiDocument(i).getAbsolutePath() + "</span>");
-            out.println("<br /><span id=\"longName\">" + collection.getTeiDocument(i).getHover() + "</span>");
+            out.println("<span id=\"id\">" + tei.getTeiName() + "</span>");
+            out.println("<br /><span id=\"path\">" + tei.getAbsolutePath() + "</span>");
+            out.println("<br /><span id=\"longName\">" + tei.getHover() + "</span>");
+            //out.println("<br /><span id=\"debug\">" + tei.getTeiString() + "</span>"); //DEBUG
             out.println("</li>");
         }
+
         out.println("</ul>");
         out.println("</html>");
 
@@ -100,4 +131,29 @@ public class DocumentsList extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    public static String convertStreamToString(InputStream is) throws IOException {
+        /*
+         * To convert the InputStream to String we use the BufferedReader.readLine()
+         * method. We iterate until the BufferedReader return null which means
+         * there's no more data to read. Each line will appended to a StringBuilder
+         * and returned as String.
+         */
+        if (is != null) {
+            StringBuilder sb = new StringBuilder();
+            String line;
+
+            try {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line).append("\n");
+                }
+            } finally {
+                is.close();
+            }
+            return sb.toString();
+        } else {
+            return "";
+        }
+    }
 }

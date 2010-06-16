@@ -56,15 +56,13 @@
   <text> 
 	 <front> 
 		<div> 
-		  <witList> 
-			 <witness sigil="a1">'Nocturne, Saint Eloi, 1918' (TCD
-				7878/1/2)</witness> 
-			 <witness sigil="a2">'Nocturne of St. Eloi, 1918' (TCD MS
-				7989/1/3)</witness> 
-			 <witness sigil="a3">'Nocturne, Saint Eloi' (TCD MS
-				79891/1)</witness> 
-			 <witness sigil="pub">This poem was published in Poems as
-				'Nocturne'</witness> 
+		  <witList>
+                        <witness id="no1" missing="true" sigil="no1"></witness>
+                        <witness id="no2" missing="true" der="a1" sigil="no2"></witness>
+			 <witness id="a1" missing="false" der="no1" sigil="a1">'Nocturne, Saint Eloi, 1918' (TCD 7878/1/2)</witness>
+			 <witness id="a2" missing="false" der="a1" sigil="a2">'Nocturne of St. Eloi, 1918' (TCD MS 7989/1/3)</witness>
+			 <witness id="a3" missing="false" der="a1" sigil="a3">'Nocturne, Saint Eloi' (TCD MS 79891/1)</witness>
+			 <witness id="pub" missing="false" der="no2" sigil="pub">This poem was published in Poems as 'Nocturne'</witness>
 		  </witList> 
 		</div> 
 	 </front> 

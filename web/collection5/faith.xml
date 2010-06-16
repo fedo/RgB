@@ -53,13 +53,14 @@ Letters (1894)--p. 191, Complete Poems (1924)--LVI, and Life and Letters (1926)-
 	 <front> 
 		<div> 
 		  <witList> 
-			 <witness sigil="A660" id="va660">A 660, verse embedded in letter to Samuel Bowles.</witness> 
-			 <witness sigil="H201" id="vh201">H 201, fascicle version of poem.</witness> 
-			 <witness sigil="H72" id="vh72">H 72, fascicle version of poem.</witness> 
-			 <witness sigil="P1891" id="vp1891">Published as poem XXX in the second volume of Todd and Higginson's <title rend="italic">Poems of Emily Dickinson</title>.</witness>
-			 <witness sigil="L1894" id="vl1894">Letter to Samuel Bowles published in Todd's edition of Dickinson's letters.</witness>
-			 <witness sigil="CP" id="vcp32">Published as poem LVI in Martha Dickinson Bianchi's <title rend="italic">Complete Poems of Emily Dickinson</title>.</witness>
-			 <witness sigil="LL" id="vll227">Letter to Samuel Bowles published in Bianchi's <title rend="italic">The Life and Letters of Emily Dickinson</title>.</witness> 
+			 <witness  missing="false" sigil="A660" id="va660">A 660, verse embedded in letter to Samuel Bowles.</witness>
+			 <witness der="va660" missing="false" sigil="H201" id="vh201">H 201, fascicle version of poem.</witness>
+			 <witness der="va660" missing="false" sigil="H72" id="vh72">H 72, fascicle version of poem.</witness>
+			 <witness der="vh201" missing="false" sigil="P1891" id="vp1891">Published as poem XXX in the second volume of Todd and Higginson's <title rend="italic">Poems of Emily Dickinson</title>.</witness>
+			 <witness der="vp1891" missing="false" sigil="L1894" id="vl1894">Letter to Samuel Bowles published in Todd's edition of Dickinson's letters.</witness>
+			 <witness der="no1" missing="false" sigil="CP" id="vcp32">Published as poem LVI in Martha Dickinson Bianchi's <title rend="italic">Complete Poems of Emily Dickinson</title>.</witness>
+			 <witness der="no1"  missing="false" sigil="LL" id="vll227">Letter to Samuel Bowles published in Bianchi's <title rend="italic">The Life and Letters of Emily Dickinson</title>.</witness>
+                         <witness der="vh201" missing="true" sigil="NO" id="no1">Lo ho aggiunto io ma non esiste<title rend="italic">The Life and Letters of Emily Dickinson</title>.</witness>
 		  </witList> 
 		</div> 
 	 </front> 

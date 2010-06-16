@@ -3,11 +3,10 @@
  * and open the template in the editor.
  */
 
-package it.unibo.cs.rgb.gwt.tei;
-
+package it.unibo.cs.rgb.tei;
 import it.unibo.cs.rgb.util.TreeNode;
-import java.io.InputStream;
 import java.util.ArrayList;
+
 import org.w3c.dom.NodeList;
 /**
  *
@@ -17,17 +16,40 @@ public class TeiSvg {
     int rCircle = 40;
     NodeList witness;
 
-    TeiSvg(InputStream input) {
+    /*public TeiSvg(InputStream input) {
         TeiDocument xml = new TeiDocument(input);
         witness = (NodeList) xml.xpathQueryNL("//witList/witness");
+    }*/
+    public TeiSvg(String xmlDoc) {
+        TeiDocument xml = new TeiDocument(xmlDoc);
+        witness = (NodeList) xml.xpathQueryNL("//witList/witness");
     }
+
+    /*public TeiSvg(String xmlDoc) {
+        String query="//witList/witness";
+
+        InputSource is = new InputSource(xmlDoc);
+        SAXSource source = new SAXSource(is);
+        witness = (NodeList) xPathQuery(source,query);
+    }*/
     
-    public boolean hasDtd(){
-        return true;
-    }
-    
-    public boolean isValid(){
-        return true;
+     /*public NodeList xPathQuery(SAXSource source, String xpath) {
+        NodeList ret = null;
+        
+        try {
+            XPathEvaluator xpe = new XPathEvaluator();
+            XPathExpression exp = xpe.createExpression(xpath);
+
+            ret = (NodeList) exp.evaluate(source);
+        } catch(Exception e) {
+            System.out.println(e.getMessage()); 
+        }
+        
+        return ret;
+    }*/
+
+    public NodeList getWitness(){
+        return witness;
     }
 
     public boolean canGetSvg(){
@@ -55,12 +77,16 @@ public class TeiSvg {
         return ret;
     }
 
+    public boolean hasDtd(){
+        return true;
+    }
+
+    public boolean isValid(){
+        return true;
+    }
+
     public String getSvg(){
-        int footerSpace=80;//, fontSize = 0, nFontSize = 20, gFontSize =26;
-        //String colourStroke = "", nColourStroke = "#83adf7", gColourStroke = "red";
-        String littleLetters="filtjr", mediumLetters="abcdeghnopqzsuvkzy0123456789", bigLetters="mw";
-        int xLitWordLoc =-1, xMedWordLoc =-5, xBigWordLoc =-7, xGWordLoc = -7, xWordLoc = 0,nGreekNodes = 0;
-        int yWordLoc = 5, yGWordLoc = 7;
+        int footerSpace=80,yText=5, nGreekNodes = 0;
         int xCirclePos, yCirclePos,xFirstPLinePos,yFirstPLinePos,xSecondPLinePos,ySecondPLinePos;
         String labelId ="", out="", classStyle="";
 
@@ -74,7 +100,6 @@ public class TeiSvg {
         out.concat("<body>");
         out.concat("<svg:svg width=\""+(maxY+footerSpace)+"\" height=\""+(maxX+footerSpace)+"\" version=\"1.1\" >");
 
-        //String lineStyle="style=\"fill:none;fill-rule:evenodd;stroke:"+nColourStroke+";stroke-width:2.93415856;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1";
         //disegna le linee
         for (int i = 0; i < nodes.size(); i++){
              if (! isLeaf(nodes.get(i))) {
@@ -85,7 +110,6 @@ public class TeiSvg {
                     xSecondPLinePos=nodes.get(i).getChildren().get(s).getX();
                     ySecondPLinePos=nodes.get(i).getChildren().get(s).getY();
 
-                    //String line="<svg:line id=\""+nodes.get(i).getId()+"\" x1=\""+xFirstPLinePos+"\" y1=\""+yFirstPLinePos+"\" x2=\""+xSecondPLinePos+"\" y2=\""+ySecondPLinePos+"\" " +lineStyle+"\"/>";
                     String line="<svg:line id=\""+nodes.get(i).getId()+"\" x1=\""+xFirstPLinePos+"\" y1=\""+yFirstPLinePos+"\" x2=\""+xSecondPLinePos+"\" y2=\""+ySecondPLinePos+"\"/>";
                     out.concat(line);
                  }
@@ -96,42 +120,29 @@ public class TeiSvg {
         for (int i = 0; i < nodes.size(); i++){
             if (nodes.get(i).getMissing()) {
                 labelId = getGreek(nGreekNodes);
-                xWordLoc=xGWordLoc;
-                yWordLoc=yGWordLoc;
                 classStyle="witness-greek";
-                //fontSize=gFontSize;
-                //colourStroke=gColourStroke;
                 nGreekNodes++;
             } else {
-                xWordLoc = 0;
                 labelId=nodes.get(i).getSigil();
-                xWordLoc += howMuchMove(littleLetters,xLitWordLoc,labelId);
-                xWordLoc += howMuchMove(mediumLetters,xMedWordLoc,labelId);
-                xWordLoc += howMuchMove(bigLetters,xBigWordLoc,labelId);
                 classStyle="witness";
-                //fontSize=nFontSize;
-                //colourStroke=nColourStroke;
             }
 
-            //String circleStyle="style=\"fill:"+colourStroke+";fill-opacity:1;fill-rule:nonzero;stroke:"+colourStroke+";stroke-width:3;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1",
-            //    textStyle="style=\"font-size:"+fontSize+"px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:black;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Arial";
+            xCirclePos = nodes.get(i).getX();
+            yCirclePos = nodes.get(i).getY();
 
-             xCirclePos = nodes.get(i).getX();
-             yCirclePos = nodes.get(i).getY();
-             int xIdPos=xCirclePos+xWordLoc, yIdPos=yCirclePos+yWordLoc;
-             //String text="<svg:text id=\""+nodes.get(i).getId()+"\" x=\""+xIdPos+"\" y=\""+yIdPos+"\"  " + textStyle + "\">"+ labelId +"</svg:text>",
-             //     circle="<svg:circle id=\""+nodes.get(i).getId()+"\" cx=\""+xCirclePos+"\" cy=\""+yCirclePos+"\" r=\""+rCircle+"\" "+circleStyle+"\" />";
-             String text="<svg:text class=\""+classStyle+"\" id=\""+nodes.get(i).getId()+"\" x=\""+xIdPos+"\" y=\""+yIdPos+"\">"+ labelId +"</svg:text>",
-                  circle="<svg:circle class=\""+classStyle+"\" id=\""+nodes.get(i).getId()+"\" cx=\""+xCirclePos+"\" cy=\""+yCirclePos+"\" r=\""+rCircle+"\"/>";
+            String text="<svg:text class=\""+classStyle+"\" id=\""+nodes.get(i).getId()+"\" y=\""+yText+"\">"+ labelId +"</svg:text>",
+                   circle="<svg:circle class=\""+classStyle+"\" id=\""+nodes.get(i).getId()+"\" r=\""+rCircle+"\"/>",
+                   group="<svg:g transform=\"translate("+xCirclePos+" "+yCirclePos+")\">";
 
-             out.concat(circle);
-             out.concat(text);
+            out.concat(group);
+            out.concat(circle);
+            out.concat(text);
+            out.concat("</svg:g>");
         }
 
         out.concat("</svg:svg>");
         out.concat("</body>");
         out.concat("</html>");
-
 
         return out;
     }
@@ -140,6 +151,7 @@ public class TeiSvg {
         ArrayList<TreeNode> nodes = new ArrayList<TreeNode>();
         int ySpaceBetweenCircle = 60, xSpaceBetweenCircle = 60;
 
+        //creo i nodi
         for (int i=0; i<witness.getLength(); i++){
             String id= witness.item(i).getAttributes().getNamedItem("id").getTextContent().toLowerCase();
             String sigil= witness.item(i).getAttributes().getNamedItem("sigil").getTextContent().toLowerCase();
@@ -220,7 +232,6 @@ public class TeiSvg {
 
         return nodes;
     }
-
     // pos=true --> x, pos=false --> y
     private int maxPos(ArrayList<TreeNode> nodes,boolean pos) {
         int ret=0,swapRet=0;
@@ -239,34 +250,10 @@ public class TeiSvg {
         return ret;
     }
 
-    private boolean isOdd(int n){
-        boolean ret=false;
-
-        if (n%2 > 0) {
-            ret = true;
-        }
-
-        return ret;
-    }
-
     private String getGreek(int nGreekNodes){
         String gLetters="αβγδεζηθικλμνξοπρςτυφχψω";
 
         return ""+gLetters.charAt(nGreekNodes);
-    }
-
-    //calcola di quanto deve essere spostata la label di un nodo rispetto il
-    //centro di questo, alla lunghezza della parola e al tipo di lettera
-    private int howMuchMove(String letters, int x, String id){
-        int ret = 0;
-
-        for (int i=0; i<id.length();i++){
-            if(letters.indexOf(id.charAt(i)) > -1 ) {
-                    ret += x;
-            }
-        }
-
-        return ret;
     }
 
     private int countDepth(TreeNode node){
@@ -281,17 +268,6 @@ public class TeiSvg {
         return ++count;
     }
 
-    private int maxDepth(ArrayList<TreeNode> tree){
-        int ret=0;
-        for (int i=0; i<tree.size();i++){
-            int newRet = tree.get(i).getDepth();
-            if (ret<newRet)
-                ret = newRet;
-        }
-
-        return ret;
-    }
-
     private boolean isLeaf(TreeNode node){
         boolean ret=false;
 
@@ -299,19 +275,5 @@ public class TeiSvg {
             ret=true;
 
         return ret;
-    }
-
-    private int countLeaf(TreeNode root){
-        int count = 0;
-
-        if (isLeaf(root)) {
-            count++;
-        } else {
-            for (int i=0; i<root.getChildren().size(); i++ ){
-                count += countLeaf(root.getChildren().get(i));
-            }
-        }
-
-        return count;
     }
 }

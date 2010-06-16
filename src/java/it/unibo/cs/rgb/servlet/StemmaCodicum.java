@@ -7,10 +7,9 @@ package it.unibo.cs.rgb.servlet;
 import com.oreilly.servlet.multipart.FilePart;
 import com.oreilly.servlet.multipart.MultipartParser;
 import com.oreilly.servlet.multipart.Part;
-import it.unibo.cs.rgb.gwt.tei.TeiSvg;
+import it.unibo.cs.rgb.tei.TeiSvg;
 import java.io.BufferedReader;
-import java.io.File;
-
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -41,53 +40,61 @@ public class StemmaCodicum extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, StemmaCodicumException {
 
+        String xml = null;
 
-        ArrayList<Part> parts = new ArrayList<Part>();
+        // imposto l'outputstream
+        PrintWriter out = response.getWriter();
+        //response.setContentType("teimage/svg+xml;charset=UTF-8");
+        response.setContentType("plain/text;charset=UTF-8"); //DEBUG
+
         errors.clear();
 
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-
-        out.println("sdflka " + convertStreamToString(this.getServletContext().getResourceAsStream("/collection5/faith.xml")));
-        out.println("sdflka " + this.getServletContext().getRealPath("./"));
-
-
+        // la request dev'essere "multipart/form-data"
         if (!request.getContentType().startsWith("multipart/form-data")) {
             errors.add("content type sbagliatissimo");
             throw new StemmaCodicumException(response);
         }
 
+        // parso la request
         MultipartParser mparser = new MultipartParser(request, 1000999);
 
+        // esamino ogni Part della request
         Part tmpPart = mparser.readNextPart();
         while (tmpPart != null) {
-            parts.add(tmpPart);
-            tmpPart = mparser.readNextPart();
-        }
-
-        FilePart xml = null;
-        for (int i = 0; i < parts.size(); i++) {
-            if (parts.size() != 0 && parts.get(i).isFile() && ((FilePart) parts.get(i)).getContentType().equalsIgnoreCase("text/xml")) {
-                xml = (FilePart) parts.get(i);
-                out.println("trovato xml");
+            if (tmpPart.isFile()) {
+                String filename = "" + ((FilePart) tmpPart).getFileName();
+                if (filename.endsWith(".xml")) {
+                    xml = ""+convertStreamToString(((FilePart) tmpPart).getInputStream());
+                }
             }
+            tmpPart = mparser.readNextPart();
+
         }
 
+        // verifica
         if (xml == null) {
             errors.add("manca file xml");
             throw new StemmaCodicumException(response);
         }
 
-        /*TeiSvg svg = new TeiSvg(xml.getInputStream());
+        // inizializzo il TeiSvg
+        TeiSvg tei = new TeiSvg(xml);
 
-        if (!svg.canGetSvg()) {
-            errors.add("svg non generabile con questo xml");
+        // verifica
+        /*if (tei.hasDtd() && !tei.isValid()) {
+            errors.add("tei non valido");
             throw new StemmaCodicumException(response);
-        }
-        
-        String output = svg.getSvg();
-        out.println(output);
-*/
+        }*/
+
+        // verifica
+        /*if (!tei.canGetSvg()) {
+        errors.add("svg non generabile per questo documento tei");
+        throw new StemmaCodicumException(response);
+        }*/
+
+        //out.print(tei.getSvg());
+
+        out.close();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -1,7 +1,7 @@
 package it.unibo.cs.rgb.test;
 
 import it.unibo.cs.rgb.gwt.RgB;
-import it.unibo.cs.rgb.gwt.tei.TeiCollection;
+import it.unibo.cs.rgb.tei.TeiCollection;
 import java.util.ArrayList;
 
 /**
@@ -11,6 +11,8 @@ import java.util.ArrayList;
 public class TeiTest {
 
     public static void main(String[] args) {
+
+
 
         TeiCollection collection = new TeiCollection(new RgB().getBasename()+"/stylesheets");
         collection.init(new RgB().getBasename()+"/collection5");
