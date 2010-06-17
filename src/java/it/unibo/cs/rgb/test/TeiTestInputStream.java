@@ -22,7 +22,7 @@ public class TeiTestInputStream {
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
 
-        String xmlString = "/Users/fedo/data/programming/netbeans/RgB/web/collection5/autumn.xml";
+        String xmlString = "/Users/fedo/data/programming/netbeans/RgB/web/collection5/faith.xml";
         String xslString = "/Users/fedo/data/programming/netbeans/RgB/web/stylesheets/hover.xsl";
 
         File xmlFile = new File(xmlString);
@@ -40,10 +40,11 @@ public class TeiTestInputStream {
 
         System.out.println("nome " + tei.getTeiName());
         System.out.println("path " + tei.getAbsolutePath());
-        System.out.println("xsl " + tei.getHover());
+        System.out.println("xslt " + tei.getHover());
+        //System.out.println("view " + tei.getView("fasdfdfs"));
         
-        TeiSvg svg = new TeiSvg(FileUtils.readFileToString(xslFile));
-        System.out.println(svg.getSvg());
+        //TeiSvg svg = new TeiSvg(FileUtils.readFileToString(xmlFile));
+        //System.out.println("svg "+svg.getSvg());
 
 
     }

@@ -4,74 +4,58 @@
  */
 
 package it.unibo.cs.rgb.tei;
+
 import it.unibo.cs.rgb.util.TreeNode;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import javax.xml.transform.sax.SAXSource;
+import net.sf.saxon.sxpath.XPathEvaluator;
+import net.sf.saxon.sxpath.XPathExpression;
 
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 /**
  *
  * @author gine
  */
 public class TeiSvg {
     int rCircle = 40;
-    NodeList witness;
+    ArrayList<HashMap> witlist;
 
-    /*public TeiSvg(InputStream input) {
-        TeiDocument xml = new TeiDocument(input);
-        witness = (NodeList) xml.xpathQueryNL("//witList/witness");
-    }*/
-    public TeiSvg(String xmlDoc) {
-        TeiDocument xml = new TeiDocument(xmlDoc);
-        witness = (NodeList) xml.xpathQueryNL("//witList/witness");
-    }
-
-    /*public TeiSvg(String xmlDoc) {
-        String query="//witList/witness";
-
-        InputSource is = new InputSource(xmlDoc);
-        SAXSource source = new SAXSource(is);
-        witness = (NodeList) xPathQuery(source,query);
-    }*/
-    
-     /*public NodeList xPathQuery(SAXSource source, String xpath) {
-        NodeList ret = null;
-        
-        try {
-            XPathEvaluator xpe = new XPathEvaluator();
-            XPathExpression exp = xpe.createExpression(xpath);
-
-            ret = (NodeList) exp.evaluate(source);
-        } catch(Exception e) {
-            System.out.println(e.getMessage()); 
-        }
-        
-        return ret;
-    }*/
-
-    public NodeList getWitness(){
-        return witness;
+    public TeiSvg(ArrayList<HashMap> witlist) {
+        this.witlist = witlist;
     }
 
     public boolean canGetSvg(){
         boolean ret = false;
-        int wLength=witness.getLength(), derCounter=0, sigilCounter=0, idCounter=0, missingCounter=0;
+
+        int wLength=witlist.size(), derCounter=0, sigilCounter=0, idCounter=0, missingCounter=0;
 
         for (int i=0; i<wLength; i++){
-            if (witness.item(i).getAttributes().getNamedItem("der") != null)
+            if (witlist.get(i).get("der") != null)
                 derCounter++;
 
-            if (witness.item(i).getAttributes().getNamedItem("sigil") != null)
+            if (witlist.get(i).get("sigil") != null)
                 sigilCounter++;
 
-            if (witness.item(i).getAttributes().getNamedItem("id") != null)
+            if (witlist.get(i).get("id") != null)
                 idCounter++;
 
-            if (witness.item(i).getAttributes().getNamedItem("missing") != null)
+            if (witlist.get(i).get("missing") != null)
                 missingCounter++;
         }
 
-        if (derCounter == --wLength && sigilCounter == wLength && idCounter == wLength && missingCounter == wLength) {
-            ret=true;
+        if (derCounter == (wLength-1) && sigilCounter == wLength && idCounter == wLength && missingCounter == wLength) {
+            int counter=0;
+            for (int d=0; d<wLength; d++)
+                for (int i=0; i<wLength; i++)
+                    if(witlist.get(d).get("der") != null)
+                        if (witlist.get(i).containsValue(witlist.get(d).get("der")))
+                            counter++;
+
+            if (counter == (wLength-1))
+                ret=true;
         }
 
         return ret;
@@ -152,10 +136,10 @@ public class TeiSvg {
         int ySpaceBetweenCircle = 60, xSpaceBetweenCircle = 60;
 
         //creo i nodi
-        for (int i=0; i<witness.getLength(); i++){
-            String id= witness.item(i).getAttributes().getNamedItem("id").getTextContent().toLowerCase();
-            String sigil= witness.item(i).getAttributes().getNamedItem("sigil").getTextContent().toLowerCase();
-            if (witness.item(i).getAttributes().getNamedItem("missing").getTextContent().equalsIgnoreCase("true"))
+        for (int i=0; i<witlist.size(); i++){
+            String id= (String) witlist.get(i).get("id");
+            String sigil= (String) witlist.get(i).get("sigil");
+            if ((Boolean) witlist.get(i).get("missing"))
                 nodes.add(new TreeNode(null, id, sigil, true));
             else
                 nodes.add(new TreeNode(null, id, sigil, false));
@@ -163,8 +147,8 @@ public class TeiSvg {
 
         //collego i nodi fra loro cosi' che siano un albero generico
         for (int i=0; i<nodes.size(); i++){
-            if (witness.item(i).getAttributes().getNamedItem("der") != null){
-                String parent=witness.item(i).getAttributes().getNamedItem("der").getTextContent().toLowerCase();
+            if (witlist.get(i).get("der") != null){
+                String parent= (String) witlist.get(i).get("der");
 
                 for (int n=0; n<nodes.size();n++){
                     if (nodes.get(n).getId().matches(parent)){

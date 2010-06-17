@@ -1,15 +1,13 @@
 package it.unibo.cs.rgb.tei;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.sf.saxon.s9api.SaxonApiException;
-import org.w3c.dom.*;
-import javax.xml.xpath.*;
+
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,10 +19,13 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamSource;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import org.xml.sax.SAXException;
 
 
-import net.sf.saxon.s9api.DocumentBuilder;
 import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.Serializer;
@@ -34,7 +35,11 @@ import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XsltCompiler;
 import net.sf.saxon.s9api.XsltExecutable;
 import net.sf.saxon.s9api.XsltTransformer;
-import org.xml.sax.InputSource;
+import net.sf.saxon.sxpath.XPathEvaluator;
+import net.sf.saxon.sxpath.XPathExpression;
+import org.w3c.dom.Document;
+
+import org.w3c.dom.NodeList;
 
 /**
  *
@@ -66,11 +71,12 @@ public class TeiDocument {
 
         this.teiString = ignoreDTD(tei);
 
+        //System.out.print(teiString);
+
         /*String xmlDoc = teiString;
                 try {
             javax.xml.parsers.DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            //doc = builder.parse(stream);
-            doc = builder.parse(xmlDoc);
+            doc = builder.parse(teiString);
             xpath = XPathFactory.newInstance().newXPath();
         } catch (SAXException ex) {
             Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
@@ -140,7 +146,7 @@ public class TeiDocument {
         return absolutePath;
     }
 
-    public NodeList xpathQueryNL(String expression) {
+    /*public NodeList xpathQueryNL(String expression) {
         NodeList str = null;
 
         try {
@@ -150,7 +156,30 @@ public class TeiDocument {
         }
 
         return str;
-    }
+    }*/
+
+    public NodeList xpathQueryNL(String xpath) {
+       NodeList ret = null;
+
+       /*//InputSource is = new InputSource(teiString);
+       StringReader xmlStringReader = new StringReader(teiString);
+
+       //SAXSource source = new SAXSource(is);
+       // System.out.print(is == null);
+
+       try {
+           XPathEvaluator xpe = new XPathEvaluator();
+           XPathExpression exp = xpe.createExpression(xpath);
+
+           ret = (NodeList) exp.evaluate(new StreamSource(xmlStringReader));
+       } catch(Exception e) {
+           System.out.println(e.getMessage());
+       }
+
+       System.out.print(ret == null);*/
+
+       return ret;
+   }
 
     public NodeList xpathQuerySaxNL(){
         NodeList str = null;
@@ -198,15 +227,12 @@ public class TeiDocument {
         StringReader xmlStringReader = new StringReader(teiString);
         String xslString = (String) xsl.get("/stylesheets/hover.xsl");
         StringReader xslStringReader = new StringReader(xslString);
-        SAXSource ss = new SAXSource();
 
         try {
             Processor proc = new Processor(false);
             XsltCompiler comp = proc.newXsltCompiler();
             XsltExecutable exp = comp.compile(new StreamSource(xslStringReader));
-            DocumentBuilder db = proc.newDocumentBuilder();
-            db.setDTDValidation(false);
-            XdmNode source = db.build(new StreamSource(xmlStringReader));
+            XdmNode source = proc.newDocumentBuilder().build(new StreamSource(xmlStringReader));
             Serializer out = new Serializer();
             out.setOutputStream(outputStream);
             XsltTransformer trans = exp.load();
@@ -229,16 +255,16 @@ public class TeiDocument {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-        StreamSource xmlSource = new StreamSource(teiStream);
-        StreamSource xslSource = new StreamSource((InputStream) xsl.get("/stylesheets/preface.xsl"));
+        StringReader xmlStringReader = new StringReader(teiString);
+        String xslString = (String) xsl.get("/stylesheets/hover.xsl"); //preface
+        StringReader xslStringReader = new StringReader(xslString);
 
         try {
             Processor proc = new Processor(false);
 
             XsltCompiler comp = proc.newXsltCompiler();
-            XsltExecutable exp = comp.compile(xslSource);
-            comp.setSchemaAware(false);
-            XdmNode source = proc.newDocumentBuilder().build(xmlSource);
+            XsltExecutable exp = comp.compile(new StreamSource(xslStringReader));
+            XdmNode source = proc.newDocumentBuilder().build(new StreamSource(xmlStringReader));
             Serializer out = new Serializer();
             out.setOutputStream(outputStream);
             XsltTransformer trans = exp.load();
@@ -261,15 +287,16 @@ public class TeiDocument {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-        StreamSource xmlSource = new StreamSource(teiStream);
-        StreamSource xslSource = new StreamSource((InputStream) xsl.get("/stylesheets/content.xsl"));
+        StringReader xmlStringReader = new StringReader(teiString);
+        String xslString = (String) xsl.get("/stylesheets/content.xsl");
+        StringReader xslStringReader = new StringReader(xslString);
 
         try {
             Processor proc = new Processor(false);
             XsltCompiler comp = proc.newXsltCompiler();
             comp.setSchemaAware(false);
-            XsltExecutable exp = comp.compile(xslSource);
-            XdmNode source = proc.newDocumentBuilder().build(xmlSource);
+            XsltExecutable exp = comp.compile(new StreamSource(xslStringReader));
+            XdmNode source = proc.newDocumentBuilder().build(new StreamSource(xmlStringReader));
             Serializer out = new Serializer();
             out.setOutputStream(outputStream);
             XsltTransformer trans = exp.load();
@@ -326,7 +353,7 @@ public class TeiDocument {
     }
 
     public String getTeiString() {
-        return teiString.substring(0, 100);
+        return teiString;
     }
 
     public String ignoreDTD(String tei) {
@@ -338,5 +365,36 @@ public class TeiDocument {
             retval = tei.replace(tei.substring(start, end), " ");
         }
         return retval;
+    }
+
+    public String getSvgDataString() {
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        StringReader xmlStringReader = new StringReader(teiString);
+        String xslString = (String) xsl.get("/stylesheets/svg.xsl");
+        StringReader xslStringReader = new StringReader(xslString);
+
+        try {
+            Processor proc = new Processor(false);
+            XsltCompiler comp = proc.newXsltCompiler();
+            XsltExecutable exp = comp.compile(new StreamSource(xslStringReader));
+            XdmNode source = proc.newDocumentBuilder().build(new StreamSource(xmlStringReader));
+            Serializer out = new Serializer();
+            out.setOutputStream(outputStream);
+            XsltTransformer trans = exp.load();
+            trans.setInitialContextNode(source);
+            trans.setDestination(out);
+            trans.transform();
+        } catch (SaxonApiException ex) {
+            Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String retval = "encoding error";
+        try {
+            retval = outputStream.toString("UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return retval;//.substring("<?xml version=\"1.0\" encoding=\"UTF-8\"?> ".length(), output.toString().length()-1);
     }
 }

@@ -13,7 +13,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -37,7 +36,7 @@ public class DocumentsList extends HttpServlet {
             throws ServletException, IOException {
 
         String teiFolder = "/collection5";
-        String stylesheetsFolder = "/stylesheets";
+        
         ArrayList<String> xmlFilesList = new ArrayList<String>();
 
         response.setContentType("text/html;charset=UTF-8");
@@ -47,6 +46,7 @@ public class DocumentsList extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         // lettura degli stylesheets (xsl)
+        String stylesheetsFolder = "/stylesheets";
         HashMap xsl = new HashMap();
         Set stylesheetsSet = getServletContext().getResourcePaths(stylesheetsFolder);
         Iterator stylesheetsIter = stylesheetsSet.iterator();

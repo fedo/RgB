@@ -35,13 +35,12 @@ public class DocumentViewer extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String stylesheetsFolder = "/stylesheets";
-
         response.setContentType("text/html;charset=UTF-8");
         response.setHeader("Cache-Control", "no-cache");
         response.setStatus(200);
 
         // lettura degli stylesheets (xsl)
+        String stylesheetsFolder = "/stylesheets";
         HashMap xsl = new HashMap();
         Set stylesheetsSet = getServletContext().getResourcePaths(stylesheetsFolder);
         Iterator stylesheetsIter = stylesheetsSet.iterator();
@@ -63,7 +62,7 @@ public class DocumentViewer extends HttpServlet {
             out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             out.println("<html xmlns=\"http://www.w3.org/1999/xhtml\" version=\"1.0\">");
             out.println("<p>Witness selezionato: " + witness + "</p>");
-            out.println("<div id=\"view\" style=\"width:400px;\">" + tei.getHover() + "</div>");
+            out.println("<div id=\"view\" style=\"width:400px;\">" + tei.getView(witness) + "</div>");
             out.println("</html>");
 
         } finally {

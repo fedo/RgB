@@ -35,13 +35,12 @@ public class DocumentInfo extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String stylesheetsFolder = "/stylesheets";
-
         response.setContentType("text/html;charset=UTF-8");
         response.setHeader("Cache-Control", "no-cache");
         response.setStatus(200);
 
         // lettura degli stylesheets (xsl)
+        String stylesheetsFolder = "/stylesheets";
         HashMap xsl = new HashMap();
         Set stylesheetsSet = getServletContext().getResourcePaths(stylesheetsFolder);
         Iterator stylesheetsIter = stylesheetsSet.iterator();

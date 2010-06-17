@@ -20,6 +20,7 @@ import java.util.List;
 public class TreeNode implements java.io.Serializable
 {
     protected String id;
+    protected String sigil;
     protected Integer depth;
     protected Boolean missing;
     protected Boolean drawned;
@@ -104,11 +105,11 @@ public class TreeNode implements java.io.Serializable
     }
 
     public void setSigil (String sigil) {
-        this.id = id;
+        this.id = sigil;
     }
 
     public String getSigil() {
-        return  id;
+        return  sigil;
     }
 
     public void setMissing(Boolean missing) {

@@ -7,6 +7,7 @@ package it.unibo.cs.rgb.servlet;
 import com.oreilly.servlet.multipart.FilePart;
 import com.oreilly.servlet.multipart.MultipartParser;
 import com.oreilly.servlet.multipart.Part;
+import it.unibo.cs.rgb.tei.TeiDocument;
 import it.unibo.cs.rgb.tei.TeiSvg;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -14,7 +15,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -64,7 +68,7 @@ public class StemmaCodicum extends HttpServlet {
             if (tmpPart.isFile()) {
                 String filename = "" + ((FilePart) tmpPart).getFileName();
                 if (filename.endsWith(".xml")) {
-                    xml = ""+convertStreamToString(((FilePart) tmpPart).getInputStream());
+                    xml = "" + convertStreamToString(((FilePart) tmpPart).getInputStream());
                 }
             }
             tmpPart = mparser.readNextPart();
@@ -77,13 +81,35 @@ public class StemmaCodicum extends HttpServlet {
             throw new StemmaCodicumException(response);
         }
 
+        // parsing dei dati ricevuti
+        ArrayList<HashMap> data = new ArrayList<HashMap>();
+        TeiDocument tei = new TeiDocument(xml);
+        //String svgDataString = tei.getSvgDataString();
+        String svgDataString = "der1 1 sigil1 id1" + "----" + "der2 0 sigil2 id2"; //tring "der", boolean "missing", String "sigil", String "id"
+
+        String[] lines = svgDataString.split("----");
+        for (int i = 0; i < lines.length; i++) {
+            HashMap witnessMap = new HashMap();
+            StringTokenizer tokens = new StringTokenizer(lines[i]);
+            witnessMap.put("der", tokens.nextToken());
+            witnessMap.put("missing", Boolean.parseBoolean(tokens.nextToken()));
+            witnessMap.put("sigil", tokens.nextToken());
+            witnessMap.put("id", tokens.nextToken());
+            data.add(witnessMap);
+        }
+
+        for (int i = 0; i < data.size(); i++) {
+            HashMap witnessMap = data.get(i);
+            out.println("- " + (String) witnessMap.get("der") + "- " + (Boolean) witnessMap.get("missing") + "- " + (String) witnessMap.get("sigil") + "- " + (String) witnessMap.get("id"));
+        }
+
         // inizializzo il TeiSvg
-        TeiSvg tei = new TeiSvg(xml);
+        TeiSvg svg = new TeiSvg(data);
 
         // verifica
         /*if (tei.hasDtd() && !tei.isValid()) {
-            errors.add("tei non valido");
-            throw new StemmaCodicumException(response);
+        errors.add("tei non valido");
+        throw new StemmaCodicumException(response);
         }*/
 
         // verifica
@@ -92,7 +118,8 @@ public class StemmaCodicum extends HttpServlet {
         throw new StemmaCodicumException(response);
         }*/
 
-        //out.print(tei.getSvg());
+        //out.print(docu.getTeiString());
+        out.print(svg.getSvg());
 
         out.close();
     }

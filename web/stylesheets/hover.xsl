@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-    Document   : hover.xsl
-    Author     : illbagna
-    Description: XSL stylesheet for the data retrieval associated to the hover event
+Document: hover.xsl
+Author: illbagna
+Description: XSL stylesheet for the data retrieval associated to the mouse hover event associated to the document list
 -->
 
 <xsl:stylesheet version="2.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
+
   <xsl:output method="xml" indent="yes" omit-xml-declaration="yes" encoding="UTF-8"/>
   <xsl:strip-space elements="*"/> 
 
-  <!-- global variables -->
+
+
+  <!-- variabili -->
   <xsl:variable name="blank">
      <xsl:text> </xsl:text>
   </xsl:variable>
@@ -28,108 +31,195 @@
   </xsl:variable>
 
 
+
   <!-- templates -->
   <xsl:template match="/">
-     <div>
-        <xsl:choose>
-           <!--
-           un manoscritto presenta il proprio titolo all'interno di
-           <msContents>
-           -->
-		   <xsl:when test="//*:msContents">
-			 <xsl:variable name="location" select="//*:msContents"/>
+	<div>
+	  <xsl:choose>
 
-			 <xsl:apply-templates select="$location//*:title"/>
-			 <xsl:copy-of select="$newline"/>
-			 <xsl:apply-templates select="$location//*:author"/>
-		   </xsl:when>
-           <!--
-           mentre gli altri documenti presentano titolo ed autore all'interno
-           o del tag <sourceDesc>
-           -->
-           <xsl:when test="//*:sourceDesc//*:title and //*:sourceDesc//*:author">
-			 <xsl:variable name="location" select="//*:sourceDesc"/>
 
-			 <xsl:apply-templates select="$location//*:title"/>
-			 <xsl:copy-of select="$newline"/>
-			 <xsl:apply-templates select="$location//*:author"/>
-           </xsl:when>
-           <!--
-           o del tag <titleStmt>
-           -->
-           <xsl:when test="//*:titleStmt//*:title and //*:titleStmt//*:author">
-			 <xsl:variable name="location" select="//*:titleStmt"/>
-
-			 <xsl:apply-templates select="$location//*:title"/>
-			 <xsl:copy-of select="$newline"/>
-			 <xsl:apply-templates select="$location//*:author"/>
-           </xsl:when>
-           <!--
-           o in nessuno dei precedenti, se non si tratta di un'opera
-           -->
-           <xsl:otherwise>
-			 <!--<xsl:call-template name="nao"/>-->
-			 <b><xsl:text>Documento:</xsl:text></b>
-			 <xsl:copy-of select="$blank"/>
-			 <span id="docDescr">
-			   <xsl:value-of select="//*:opener"/>
-			 </span>
-           </xsl:otherwise>
-        </xsl:choose>
-
-        <!--
-        therefore, every document may have the following info
+		<!--
+		il documento codificato e` un'opera
 		-->
-		<xsl:if test="//*:witList">
-		  <xsl:copy-of select="$newline"/>
-		  <b><xsl:text>Testimoni:</xsl:text></b>
-		  <xsl:copy-of select="$blank"/>
-		  <span id="docWit">
-			<xsl:apply-templates select="//*:witList"/>
-		  </span>
-		</xsl:if>
+		<xsl:when test="//element()[((child::*:title) and (child::*:author))]">
+		  <!--xsl:variable name="location" select="name(//element()[((child::*:title) and (child::*:author))])"/-->
 
-		<xsl:if test="//*:revisionDesc">
-		  <xsl:copy-of select="$newline"/>
-		  <b><xsl:text>Revisioni:</xsl:text></b>
-		  <xsl:copy-of select="$blank"/>
-		  <span id="docRev">
-			<xsl:apply-templates select="//*:revisionDesc"/>
-		  </span>
-		</xsl:if>
+		  <xsl:variable name="location" as="xs:string*">
+			<xsl:for-each select="//element()[((child::*:title) and (child::*:author))]">
+			  <xsl:sequence select="name(.)"/> <!-- puo` esserci piu` di un elemento con questi figli -->
+			</xsl:for-each>
+		  </xsl:variable>
 
-		<xsl:if test="//*:respStmt">
-		  <xsl:copy-of select="$newline"/>
-		  <b><xsl:text>Responsabili di codifica:</xsl:text></b>
+		  <!-- il titolo del testo codificato -->
+		  <b><xsl:text>Titolo:</xsl:text></b>
 		  <xsl:copy-of select="$blank"/>
-		  <span id="docResp">
-			<xsl:apply-templates select="//*:respStmt"/>
+		  <span id="docTitle">
+			<xsl:apply-templates select="//*:title">
+			  <xsl:with-param name="location" select="$location[1]"/>
+			</xsl:apply-templates>
 		  </span>
-		</xsl:if>
-     </div>
+
+		  <xsl:copy-of select="$newline"/>
+
+		  <!-- l'autore del testo codificato -->
+		  <b><xsl:text>Autore:</xsl:text></b>
+		  <xsl:copy-of select="$blank"/>
+
+		  <span id="docAuthor">
+			<xsl:apply-templates select="//*:author">
+			  <xsl:with-param name="location" select="$location[1]"/>
+			</xsl:apply-templates>
+		  </span>
+
+		  <xsl:if test="//element()[((child::*:title) and (child::*:author)) and (child::*:respStmt)]">
+			<xsl:copy-of select="$newline"/>
+
+			<!-- responsabili di codifica -->
+			<b><xsl:text>Responsabili:</xsl:text></b>
+			<xsl:copy-of select="$blank"/>
+
+			<span id="docResp">
+			  <xsl:apply-templates select="//*:respStmt">
+				<xsl:with-param name="location" select="$location[1]"/>
+			  </xsl:apply-templates>
+			</span>
+		  </xsl:if>
+		</xsl:when>
+
+
+		<!--
+		un documento codificato non e` un'opera;
+		puo` essere una lettera, un quaderno di appunti, ecc
+		-->
+		<xsl:when test="//*:opener">
+		  <xsl:variable name="location" select="name(//element(opener))"/>
+
+		  <b><xsl:text>Documento:</xsl:text></b>
+		  <xsl:copy-of select="$blank"/>
+		  <span id="docDescr">
+			<xsl:value-of select="//*:opener"/>
+		  </span>
+		</xsl:when>
+
+
+		<!-- altro -->
+		<xsl:otherwise>
+		  <xsl:text/>
+		</xsl:otherwise>
+
+	  </xsl:choose>
+
+
+
+	  <!-- gli eventuali testimoni -->
+	  <xsl:if test="//*:witList">
+		<xsl:copy-of select="$newline"/>
+		<b><xsl:text>Testimoni:</xsl:text></b>
+		<xsl:copy-of select="$blank"/>
+		<span id="docWit">
+		  <xsl:apply-templates select="//*:witList"/>
+		</span>
+	  </xsl:if>
+
+
+
+	  <!-- gli eventuali revisori -->
+	  <xsl:if test="//*:revisionDesc">
+		<xsl:copy-of select="$newline"/>
+		<b><xsl:text>Revisioni:</xsl:text></b>
+		<xsl:copy-of select="$blank"/>
+		<span id="docRev">
+		  <xsl:apply-templates select="//*:revisionDesc"/>
+		</span>
+	  </xsl:if>
+
+
+
+	  <!-- l'edizione -->
+	  <xsl:if test="//*:editionStmt">
+		<xsl:copy-of select="$newline"/>
+		<b><xsl:text>Edizione:</xsl:text></b>
+		<xsl:copy-of select="$blank"/>
+		<span id="docEdit">
+		  <xsl:apply-templates select="//*:editionStmt"/>
+		</span>
+	  </xsl:if>
+
+	</div>
   </xsl:template>
+
 
 
   <!-- titolo -->
   <xsl:template match="*:title">
-	<b><xsl:text>Titolo:</xsl:text></b>
-	<xsl:copy-of select="$blank"/>
+	<xsl:param name="location"/>
 
-	<span id="docTitle">
+	<xsl:if test="ancestor::node()[contains(name(), $location)]">
 	  <xsl:value-of select="."/>
-	</span>
+	</xsl:if>
   </xsl:template>
+
 
 
   <!-- autore -->
   <xsl:template match="*:author">
-	<b><xsl:text>Autore:</xsl:text></b>
-	<xsl:copy-of select="$blank"/>
+	<xsl:param name="location"/>
 
-	<span id="docAuthor">
+	<xsl:if test="ancestor::node()[contains(name(), $location)]">
 	  <xsl:value-of select="."/>
-	</span>
+	</xsl:if>
   </xsl:template>
+
+
+
+  <!-- responsabili di codifica -->
+  <xsl:template match="*:respStmt">
+	<xsl:param name="location"/>
+
+	<xsl:choose>
+
+	  <xsl:when test="ancestor::node()[contains(name(), $location)]">
+		<!-- spacer -->
+		<xsl:if test="position() &gt; 1">
+		  <xsl:copy-of select="$blank"/>
+		</xsl:if>
+
+		<xsl:for-each select="*">
+		  <xsl:value-of select="."/>
+		  <xsl:choose>
+			<xsl:when test="position() != last()">
+			  <xsl:value-of select="$blank"/>
+			</xsl:when>
+			<xsl:otherwise>
+			  <xsl:value-of select="$period"/>
+			</xsl:otherwise>
+		  </xsl:choose>
+		</xsl:for-each>
+	  </xsl:when>
+
+	  <xsl:when test="not(//*:revisionDesc//node())">
+		<!-- spacer -->
+		<xsl:if test="position() &gt; 1">
+		  <xsl:copy-of select="$blank"/>
+		</xsl:if>
+
+		<xsl:for-each select="*">
+		  <xsl:value-of select="."/>
+		  <xsl:choose>
+			<xsl:when test="position() != last()">
+			  <xsl:value-of select="$blank"/>
+			</xsl:when>
+			<xsl:otherwise>
+			  <xsl:value-of select="$period"/>
+			</xsl:otherwise>
+		  </xsl:choose>
+		</xsl:for-each>
+	  </xsl:when>
+
+	</xsl:choose>
+
+  </xsl:template>
+
 
 
   <!-- testimoni -->
@@ -139,7 +229,8 @@
 	</xsl:variable>
 
 	<xsl:value-of select="$witnesses" separator=", "/>
-   </xsl:template>
+  </xsl:template>
+
 
 
   <!-- revisori -->
@@ -154,16 +245,19 @@
   </xsl:template>
 
 
-  <!-- responsabili per la codifica -->
-  <xsl:template match="*:respStmt">
-	<xsl:variable name="responsible" as="xs:string*">
-	  <xsl:sequence select="./element()"/>
-	  <xsl:sequence select="$period"/>
-	</xsl:variable>
 
-	<xsl:for-each select="$responsible">
+  <!-- editori -->
+  <xsl:template match="*:editionStmt">
+	<xsl:for-each select="*">
 	  <xsl:value-of select="."/>
-	  <xsl:copy-of select="$blank"/>
+	  <xsl:choose>
+		<xsl:when test="position() != last()">
+		  <xsl:value-of select="$blank"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:value-of select="$period"/>
+		</xsl:otherwise>
+	  </xsl:choose>
 	</xsl:for-each>
   </xsl:template>
 
