@@ -1,0 +1,198 @@
+<?xml version="1.0"?>
+<!DOCTYPE TEI.2 PUBLIC '-//BIBIT//DTD BibIt L1 TEI Document Type//EN' 'bibit-l1.dtd'>
+<?xml-stylesheet type="text/xsl" href="dattiloscritti.xsl"?>
+
+<TEI.2>
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+
+                <title>Urbino vista dal basso</title>
+
+                <author>Vincenzo Cerami</author>
+                <respStmt>
+                    <resp>Codifica</resp>
+                    <name>Lorenzo Geri</name>
+                    <name>Simone Onofri</name>
+                    <name>Sara Santorsa</name>
+                    <name>Daniele Silvi</name>
+                    <name>Marcello Vicidomini</name>
+                </respStmt>
+            </titleStmt>
+            <publicationStmt>
+                <publisher>Facoltà di Lettere e Filosofia, Università di Roma Tre. </publisher>
+                <pubPlace>Roma</pubPlace>
+                <date>2006</date>
+            </publicationStmt>
+            <seriesStmt>
+                <title>Digital Variants</title>
+            </seriesStmt>
+
+            <sourceDesc>
+                <bibl>
+
+                    <title>Urbino vista dal basso</title>
+                    <author>Vincenzo Cerami</author>
+
+                    <editor/>
+                    <publisher/>
+                    <pubPlace/>
+                    <date/>
+                </bibl>
+            </sourceDesc>
+        </fileDesc>
+        <profileDesc>
+
+            <langUsage>
+                <language id="codice">italiano</language>
+
+            </langUsage>
+        </profileDesc>
+
+        <revisionDesc>
+            <change>
+                <date>27-04-2006</date>
+                <respStmt>
+                    <name>Marcello Vicidomini</name>
+                </respStmt>
+                <item>Codifica del racconto apparso sul Messaggero</item>
+            </change>
+        </revisionDesc>
+    </teiHeader>
+
+    <text>
+        <body>
+            <div1>
+                <head>UNA DONNA ALTA</head>
+                <p>Non sono alto di statura, questo lo dico subito. Per onestà. E' probabile che nel
+                    corso del mio racconto mi scappi qualche involontaria cattiveria, dettata
+                    certamente da un moto d'invidia, non tanto per le persone alte, il che sarebbe
+                    pure comprensibile, quanto nei confronti della vita in generale, visto che <add
+                        place="left">un po'</add> di rancore me lo porto dietro da quel giorno in
+                    cui mi accorsi che non avevo più speranze di superare il metro e sessantadue di
+                    altezza. Quindi chiedo preventivamente di perdonarmi alcune possibili cadute di
+                    gusto che io, nel mio intimo, non so giudicare tali. Ho deciso di rendere
+                    pubblico un episodio della mia vita affinché possa servire da insegnamento per
+                    tutti e non solo per chi è stato punito dalla natura a non rientrare
+                    nell'altezza standard degli esseri umani. Sono convinto che la mia vicenda è
+                    così zeppa di filosofia e di metafore <seg rend="tratto a matita">da far
+                        rientrare nell'apologo</seg> tanti altri <seg rend="tratto a matita"
+                        >reconditi significati</seg> che riguardano uomini di ogni statura.</p>
+                <p>L'avventura cominciò durante un convegno a Urbino. Ero stato invitato a parlare
+                    dei terreni vulcanici. Avevo preparato un bell'intervento sul metasilicato di
+                    alluminio e potassio presente in molte zone del Lazio <add place="supralinear">e
+                        della Toscana</add>. Me ne stavo seduto al bar con i miei fogli in mano
+                    quando, girando una pagina, gettai l'occhio sulla sinistra e vidi due bellissime
+                    ginocchia femminili proprio all'altezza del mio naso. Mi alzai in piedi quasi
+                    d'istinto e il naso mi si arrestò a due palmi da un seno che premeva
+                    forsennatamente contro la camicetta bianca. Dovetti sollevare il mento per
+                    guardare in faccia quel monumento di ragazza di oltre due metri. Non credevo ai
+                    miei occhi. Dietro di lei s'era formato un semicerchio di congressisti con gli
+                    occhiali in mano talmente incantat<del rend="tratto a matita"
+                    >o</del><add>i</add> nell'ammirare quella <del rend="tratto a matita">bellezza</del>
+                    <add place="supralinear">statura</add> da non acccorgersi della comicità del
+                    quadro: io e lei vicini sembravamo l'articolo il, ma con la elle maisucola,
+                    così: iL.</p>
+                <p>Appena lei, spedito giù per il lunghissimo esofago un bicchierone d'acqua, si
+                    mosse, tutti quei professori, presi dallo spavento, scapparono come <del
+                        rend="tratto a matita">topi</del><add place="supralinear">scarafaggi</add>.
+                    Effettivamente Rossella, là dentro, sembrava la statua della Libertà. In più
+                    indossava una mnigonna stretta <del rend="tratto a matita">a</del><add>e</add>
+                    corta cosicché le due gambe si potevano ammirare in tutta la loro scultorea
+                    perfezione. La scellerata, oltretutto, quasi pe dispetto o per una forma <add
+                        place="supralinear">acuta di</add> aggressiv<del rend="tratto a matita"
+                        >a</del><add>ità</add>
+                    <del rend="tratto a matita">di sfida</del>, calzava due scarpe dai tacchi alti e
+                    sottili. E anche il suo seno, che <del rend="tratto a matita">a</del><add
+                        place="supralinear">per</add> una ragazza di normale statura avrebbe
+                    rappresentato un pesante fardello da portarsi dietro, piazzato lassù, sotto la
+                    camicetta di Rossella, appariva perfino troppo discreto.</p>
+                <p>La vidi uscire dal bar e dopo un po' vidi scomparire anche la sua ombra. Seppi
+                    solo il giorno dopo che Rossella era entrata a bere un bicchiere d'acqua proprio
+                    per farsi notare da me. Me lo confidò lei stessa fermandomi subito fuori dalla
+                    sala dei congressi mentre sentivo che le gambe mi stavano cedendo. "Professor
+                    Acquari!", è così che mi gelò. Mi voltai, era lei. Volle fare due passi con me
+                    su per le salite dell'antica cittadina. Io, <del rend="tratto a matita">che
+                    da</del> uomo <del rend="tratto a matita">che</del> di piccola statura <add
+                        place="supralinear">che</add> conosc<del rend="tratto a matita"
+                        >o</del><add>e</add> bene queste cose, me ne guardai bene dal portare il
+                    discorso sull'altezza fisica degli uomini. Anzi, fra tante antiche bellezze, mi
+                    sperticavo in lodi per la statura artistica e spiritual<del
+                        rend="tratto a matita">i</del><add>e</add> dei grandi uomini del passato. Si
+                    finì per parlare di altezza e di bassezza umana sempre riferendoci all'anima
+                    delle persone. Mi sembrava che quei discorsi liberassero Rossella da chi sa
+                    quali pesi, anche perché lei mostrava di apprezzarli più del dovuto. Rossella,
+                    d'altra parte, s'era presentata al Convegno con un intervento in merito alle
+                    tecniche di estrazione di alluminio dalla bauxite: tanto dire e fantasticare
+                    sugli artisti di Urbino le smuoveva la fantasia. E quell'aria appena sognante
+                    faceva sbocciare tra le sue meravigliose labbra sorrisi di raro candore.
+                    Insomma, rifiutandomi energicamente di ragionare, approfittando della magia
+                    dell'incontro, mi innamorai di Rossella. Qualcuno nel vederci vicini rideva, me
+                    ne accorgevo, ma mi ero intestardito con me stesso e chiudevo gli occhi. D'altra
+                    parte, pensavo, Rossella era talmente alta che tutti gli uomini le dovevano
+                    apparire bassi. Io per lei non ero tanto più basso degli altri. E poi, devo dire
+                    la verità, Rossella sembrava proprio presa da me, mi veniva dietro dovunque
+                    andassi.</p>
+                <p>Lei stava in un altro albergo, ma era sempre la prima a muoversi. Suonava il
+                    telefono della mia camera e il portiere mi annunciava che la dottoressa era là
+                    ad aspettarmi. A pranzo, a cena, la mattina, il pomeriggio, sempre assieme.
+                    Tanto è vero che i miei colleghi cominciarono a guardarmi con occhi molto
+                    diversi da prima. Non riuscivano ad accettare l'idea che quella <seg
+                        rend="tratto a matita">stanga</seg> di ragazza si fosse invaghita di me. A
+                    turno ci seguivano per controllare che non fossimo finiti a letto. Non
+                    l'avrebbero mai sopportato. <seg rend="tratto a matita laterale">Sol<del
+                            rend="tratto a matita">tant</del>o chi <del rend="tratto a matita">fra
+                            loro</del> si convinse che ormai niente più avrebbe potuto evitare il
+                        nostro appuntamento su quel letto, cominciò a riscoprirmi veramente, a
+                        diventarmi veramente amico.</seg></p>
+                <p>E puntualmente giunse il fatidico momento dell'amore. <seg rend="tratto a matita"
+                        >I tempi erano maturati da soli, nel modo più sano.</seg> Ci ritrovammo
+                    nella camera di lei senza neanche accorgercene, ma appena la porta di richiuse
+                    alle nostre spalle fui investito da problemi nuovi a cui non avevo <del
+                        rend="tratto a matita">mai</del> pensato. Diciamo da pensieri di carattere
+                    tecnico. Niente avrebbe potuto evitare che io fossi costretto continuamente e
+                    alternativamente a scegliere tra i baci e il sesso propriamente detto. Una cosa
+                    escludeva necessariamente l'altra. I primi baci vennero naturali perché,
+                    sdraiato com'eravamo sul letto, la mia bocca e la sua stavano alla stessa
+                    altezza. Anche se i miei piedi navigavano tra le sue ginocchia. Ma poi, quando
+                    la passione, come sempre fa e come è giusto che faccia, chiese di più, presi
+                    tempo per non rompere l'incantesimo con qualche errore grossolano. Così, per un
+                    tempo che a persone di statura vicina sarebbe spropositato, Rossella ed io ci
+                    perdemmo nei baci. E mentre ero lì che mi beavo tra quelle lunghe braccia
+                    succhiando nettare dalle sue labbra, notai che dalla finestra spalancata
+                        cominci<del rend="tratto a matita">ò</del><add>ava</add> ad entrare un vento
+                    freddo e sempre più dispettoso. Volli andare a chiudere, ma lei mi fermò. Mi
+                    disse che la finestra doveva rimanere aperta perchè da un momento all'altro
+                    poteva arrivare suo marito. Non era sicura, ma poteva arrivare. Lei l'avrebbe
+                    riconosciuto dal rombo della macchina. In quel caso avrei avuto tutto il tempo
+                    per raccogliere i miei abiti e darmela a gambe levate. Fu come se mi avesse dato
+                    una bastonata in testa. Io, quasi piangendo dall'emozione, la coprivo di baci. E
+                    lei intanto se ne stava con le orecchie tese alla finestra in ascolto delle
+                    macchine che passavano. Lì per lì fui preso dalla voglia di prenderla a schiaffi
+                    e di insultarla. Tuttavia sentivo dentro di me, nella parte più nascosta, più
+                    segreta, un sapore di buono. Non capivo cosa fosse, ma ero certo che qualcosa di
+                    positivo, di bello si stava muovendo nel mio spirito. Malgrado la sgradevolezza
+                    e la violenza della situazione in cui mi trovavo, mi sentivo sempre più felice.
+                    Di colpo capii di che si trattava: all'origine di quel piccolo dramma il mio
+                    metro e sessantadue non c'entrava per niente. Per la prima volta nella mia vita
+                    mi trovavo nel cuore di un problema intimo in cui la mia statura, direttamente o
+                    indirettamente, non entrava in gioco. Insomma, in quel momento, avvinghiato a
+                    quel corpo favoloso, mi sentivo uguale ad un uomo alto due metri, magnificamente
+                    gettato dentro la più ovvia e quotidiana questione di corna. Non vedevo l'ora
+                    che arrivasse il marito per scappare come un ladro. La felicità che stavo
+                    scoprendo dentro di me mi dette la forza di inorgoglirmi e di mostrarmi offeso.
+                    Ripresi i miei abiti, dissi a Rossella di aspettare da sola suo marito e me ne
+                    andai sbattendo la porta.</p>
+                <p>Più tardi, quando rimasi solo, mi posi questa domanda: "Ma se fossi stato <del
+                        rend="tratto a matita">veramente</del> un uomo alto due metri, me ne sarei
+                    andato così? Avrei così facilmente rinunciato a quella ghiottoneria tanto rara e
+                    forse anche a una grande storia d'amore che poteva nascere?". Amaramente dovetti
+                        <del rend="tratto a matita">ammettere</del><add place="supralinear"
+                        >confessare</add> a me stesso che era stata proprio la scoperta di quella
+                    segreta felicità a far rientrare dalla finestra il problema della statura che
+                    lei, la bellissima Rossella, era riuscita a far uscire dalla porta.</p>
+            </div1>
+        </body>
+    </text>
+
+</TEI.2>

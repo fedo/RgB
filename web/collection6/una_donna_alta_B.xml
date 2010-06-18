@@ -1,0 +1,202 @@
+<?xml version="1.0"?>
+<!DOCTYPE TEI.2 PUBLIC '-//BIBIT//DTD BibIt L1 TEI Document Type//EN' 'bibit-l1.dtd'>
+<?xml-stylesheet type="text/xsl" href="dattiloscritti.xsl"?>
+
+
+<TEI.2>
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+
+                <title>Una complicazione cercata</title>
+
+                <author>Vincenzo Cerami</author>
+                <respStmt>
+                    <resp>Codifica</resp>
+                    <name>Lorenzo Geri</name>
+                    <name>Simone Onofri</name>
+                    <name>Sara Santorsa</name>
+                    <name>Daniele Silvi</name>
+                    <name>Marcello Vicidomini</name>
+                </respStmt>
+            </titleStmt>
+            <publicationStmt>
+                <publisher>Facoltà di Lettere e Filosofia, Università di Roma Tre. </publisher>
+                <pubPlace>Roma</pubPlace>
+                <date>2006</date>
+            </publicationStmt>
+            <seriesStmt>
+                <title>Digital Variants</title>
+            </seriesStmt>
+
+            <sourceDesc>
+                <bibl>
+
+                    <title>Una complicazione cercata</title>
+                    <author>Vincenzo Cerami</author>
+
+                    <editor/>
+                    <publisher/>
+                    <pubPlace/>
+                    <date/>
+                </bibl>
+            </sourceDesc>
+        </fileDesc>
+        <profileDesc>
+
+            <langUsage>
+                <language id="codice">italiano</language>
+
+            </langUsage>
+        </profileDesc>
+
+        <revisionDesc>
+            <change>
+                <date>27-04-2006</date>
+                <respStmt>
+                    <name>Marcello Vicidomini</name>
+                </respStmt>
+                <item>Codifica delle correzioni d'autore sul dattiloscritto (II versione)</item>
+            </change>
+        </revisionDesc>
+    </teiHeader>
+
+<text>
+    <body>
+        <div1>
+            <head>UNA COMPLICAZIONE CERCATA ?</head>
+            <p>Da qualche parte deve essere scritto -forse in ebraico antico o in sanscrito- chei
+                cani non ragliano e le galline non miagolano, così come gli zoppi non saltano e gli
+                orbi non guidano l'aeroplano. Se sei nato tondo, insomma, neanche un miracolo ti
+                farà morire quadrato. Fin qui può anche andar bene: tutto sommato il cane è conteno
+                di abbiare e l'asino di ragliare.</p>
+            <p>La vera complicazione nasce quando la vita, per chi sa quali assurde circostanze, ti
+                offre, per una volta, su un piatto d'argento, la possibilità di essere ciò che
+                vorresti veramente essere... e, tu, incredulo, forse per paura, o fore perché
+                schiavo della sorte, fai del tutto perché il miracolo non si compia.</p>
+            <p><seg rend="tratto a matita">Questa circostanza l'ho definita complicazione</seg> in
+                quanto la vittima, prigioniera del suo destino, in una furia masochistica, si
+                precipita a richiudere la porta imporivvisamente aperta sull'aria frizzantina della
+                liberta. Ed è la complicità attiva, la colpevola combutta con il proprio destino a
+                rendere malinconica e grigia ogni infelicità.</p>
+            <p>Ho deciso di rendere pubblico un episodio della mia vita affinché possa servire da
+                insegnamento <del rend="tratto a matita">per</del>
+                <add place="superlinear">a</add> tutti e non solo <del rend="tratto a matita">per</del>
+                <add place="superlinear">a</add> chi, come me, è stato punito dalla natura <seg
+                    rend="tratto a matita">a non</seg> rientrare nell'altezza sta<del
+                    rend="lettera sovrascritta">r</del><add place="inline">n</add>dard della razza
+                umana. Sono convinto che la mia vicenda è così zeppa di filosofia e di metafore
+                universali, da coinvolgere uomini e donne di ogni statura.</p>
+            <p>L'avventura ebbe come teatro l'incantevole città di Urbino, durante un convegno di
+                studi. Ero stato invitato a parlare dei terreni vulcanici. Avevo preparato un
+                intervento sul metasilicato di alluminio e potassio presente in molte zone del Lazio
+                e della Toscana. Stavo seduto al bar con i miei fogli in mano quando, girando
+                pagina, bloccai lo sguardo su due stupende ginocchia -femminili naturalmente- che si
+                erano fermate proprio accanto a me. Mi alzai in piedi quasi per dovere, e il naso mi
+                si arrestò a due palmi da un seno che premeva forsennatamente contro la camicetta
+                bianca. Dovetti sollevare il mento per guardare in faccia quel monumento di ragazza
+                alta <del rend="tratto a matita">oltre due metri</del>. Non credevo ai miei occhi.
+                Dietro di lei si era formato un semicerchio di congressisti con gli occhiali in
+                mano, talmente incantati nell'ammirare quella dea dell'Olimpo da non accorgersi
+                della comicità del quadro: io e lei vicini sembravamo l'articolo "il", ma con la
+                elle maiuscola, così: iL.</p>
+            <p>Appena lei, spedito giù per il lunghissimo esofago un bicchiere d'acqua, si mosse,
+                tutti quei professori, presi dallo spavento, scapparono come scarafaggi per andare a
+                rintanarsi nelle loro stanzette. In effetti Rossella sembrava la statua della
+                Libertà: bella, araldica e minacciosa. In più indossava una gonna stretta e corta
+                cosicché le due gambe si potevano ammirare in tutta la loro scultorea perfezione. La
+                scellerata, oltre tutto, quasi per dispetto, calzava due scarpe dai tacchi alti e
+                sottili. E anche il suo seno, che per una ragazza di normale statura avrebbe
+                rappresentato un pesante fardello da <del rend="tratto a matita">portarsi dietro</del>
+                <add place="right">portare avanti</add>, piazzato lassù, <del rend="tratto a matita"
+                    >sotto la camicia di Rossella,</del> appariva perfino troppo discreto. La vidi
+                uscire dal bar e dopo un po' vidi scomparire anche la sua ombra.</p>
+            <p>Il giorno dopo seppi -e quasi svenni dall'emozione- che Rossella era entrata a bere
+                un bicchiere d'acqua proprio per farsi notare da me. Me lo <del
+                    rend="tratto a matita">confermò</del>
+                <add place="right">disse</add> lei stessa fermandosi subito fuori dalla sala dei
+                congressi. "Professore!": è così che mi gelò. Voltai la testa, era lei. Da quanto
+                tempo voleva conoscermi! Aveva letto con sommo interesse i miei studi sulla leucite
+                e sul caolino. Volle fare due passi su per le salite dell'antica cittadina. Io, uomo
+                di piccola statura che conosce queste cose, immerso con lei <del
+                    rend="tratto a matita">in tante</del>
+                <add place="superlinear">nelle</add> sublimi bellezze di Urbino, mi sperticano nelle
+                lodi per la statura artistica e spirituale dei grandi uomini del passato. Si finì
+                per parlare di altezza e di bassezza umana, ma sempre riferendoci all'animo e
+                all'indole delle persone.</p>
+            <p>Avevo l'impressione che quei discorsi liberassero Rossella da chi sa quali pesi,
+                perché lei mostrava di apprezzarli più del dovuto. La giovane collega s'era
+                presentata al Convegno con un'intervento sulle ultime tecniche di estrazione
+                dell'alluminio dalla bauxite. E ora, tanto dire e fantasticare di cose effimere,
+                stravaganti, così lontane dalla chimica inorganica, di artisti sfaccendati e pazzi,
+                di nobili urbinati decadenti e megalomani, le smuoveva <del rend="tratto a matita"
+                    >la fantasia</del>
+                <add place="left">l'immaginazione</add> e la esaltava. E in quell'aria appena
+                sognante che s'era creata fra di noi, faceva sbocciare tra le labbra sorrisi di raro
+                candore. In poche parole, per una volta, mi sono lasciato andare: approfittando
+                della magia dell'incontro, provai a innamorarmi un poco di Rossella.</p>
+            <p>Qualcuno nel vederci vicini rideva, me ne accorgevo. Ma mi ero intestardito con me
+                stesso e chiudevo gli occhi. D'altra parte, pensavo, Rossella era talmente alta che
+                tutti gli uomini le dovevano apparire bassi. Io per lei non ero tanto più basso
+                degli altri. E poi, devo dire la verità, Rossella sembrava proprio presa da me, mi
+                veniva dietro ovunque andassi.</p>
+            <p>Lei stava in un altro albergo, ma era sempre la prima a muoversi. Suonava il telefono
+                della mia camera e il portiere, con tono ammiccante, mi annunciava che la dottoressa
+                era là ad aspettarmi. A pranzo, a cena, la mattina, il pomeriggio, sempre assieme.
+                Tanto è vero che i colleghi cominciarono a guardarmi con occhi molto diversi da
+                prima. Non riuscivano ad accettare l'idea che quel bel quintale di ragazza si fosse
+                invaghito di me. A turno ci seguivano per controllare <del rend="tratto a matita"
+                    >che non fossimo finiti a letto</del>
+                <add place="infralinear">se andassimo o no a letto insieme</add>. Non l'avrebbero
+                mai sopportato.</p>
+            <p>E puntuale giunse il fatidico momento dell'amore. Ci ritrovammo nella camera di lei
+                senza neanche accorgercene. Ma appena la porta si richiuse alle nostre spalle fui
+                investito da problemi nuovi, a cui non avevo pensato. Diciamo da pensieri di
+                carattere tecnico. Niente avrebbe potuto evitare che io fossi costretto
+                continuamente e alternativamente a scegliere tra i baci e il sesso propriamente
+                detto. Una cosa escludeva necessariamente l'altra. I primi baci vennero naturali
+                perché, sdraiati com'eravamo sul letto, la mia bocca e la sua stavano alla stessa
+                altezza. Anche se i miei piedi navigavano tra le sue ginocchia. Ma poi, quando la
+                passione, come sempre fa e come è giusto che faccia, chiese di più, presi tempo per
+                non rompere l'incantesimo con qualche errore grossolano. Così per un tempo che a
+                persone di statura <del rend="tratto a matita">vicina</del>
+                <add place="right">più o meno uguale</add> sarebbe spropositato, Rossella e io ci
+                perdemmo nei baci. <del rend="tratto a matita">E mentre ero lì che mi beavo tra
+                    quelle lunghe braccia succhiando nettare dalle sue labbra, notai che dall'altra
+                    finestra spalancata cominciava ad entrare un vento freddo e sempre più
+                    dispettoso. Volli andare a chiudere, ma lei mi fermò, mi disse che la finestra
+                    doveva rimanere aperta perché da un momento all'altro poteva arrivare suo
+                    marito. Non era sicura, ma poteva arrivare. Lei l'avrebbe riconosciuto dal rombo
+                    della macchina. In quel caso avrei avuto tutto il tempo per raccogliere i miei
+                    abiti e darmela a gambe levate.</del></p>
+            <p>Fu come se mi avesse dato una bastonata in testa. Io, quasi piangendo dalla
+                frustrazione, <seg rend="tratto a matita">continuavo a coprirla di baci, e con più
+                    trasporto di prima. Lei intanto se ne stava con le orcchie</seg> tese alla
+                finestra in ascolto della macchine che passavano. Lì per lì fui preso dalla voglia
+                di prenderla a schiaffi e di insultarla. Tuttavia sentivo dentro di me, nella parte
+                più nascosta, più segreta, un sapore di buono. Non capivo cosa fosse, ma ero certo
+                che qualcosa di positivo, di bello si stava muovendo nel mio spirito. Malgrado la
+                sgradevolezza e la violenza della situazione in cui mi trovavo, mi sentivo sempre
+                più felice. Di colpo capii di che si trattava: all'origine di quel piccolo dramma il
+                mio metro e sessantadue non c'entrava per niente. Per la prima volta nella mia vita
+                mi trovavo nel cuore di un problema intimo in cui la mia statura non entrava per
+                nulla in gioco. Insomma, in quel momento, avvinghiato a quel corpo numinoso, ero
+                oggettivamente uguale a un uomo alto due metri e anche più, magnificamente gettato
+                dentro la più ovvia e quotidiana questione di corna.</p>
+            <p>Non vedevo l'ora che arrivasse il marito per scappare come un ladro. La felicità che
+                stavo scoprendo dentro di me mi dette la forza di inorgoglirmi e di mostrarmi
+                offeso. Profondamente offeso. Ripresi i miei abiti, dissi a Rossella di aspettare da
+                sola suo marito e me ne andai a testa alta, sbattendo la porta.</p>
+            <p>Più tardi, quando rimasi solo, mi posi questa domanda: "Ma se fossi stato uomo alto
+                due metri me ne sarei andato così? Avrei così facilmente rinunciato a <del
+                    rend="tratto a matita">quella</del>
+                <add place="right">una</add> ghiottoneria tanto rara e forse anche a una grande
+                storia d'amore che poteva nascere?"</p>
+            <p>Amaramente dovetti confessare a me stesso di non essermi comportato da persona alta:
+                l'occasione di sentirmi finalmente l'uomo che ho sempre sognato di essere m'era
+                stata offerta. A Urbino. E io, timorato servo del mio destino, l'avevo rifiutata.
+                Con eleganza, ma l'avevo rifiutata.</p>
+        </div1>
+    </body>
+</text>
+</TEI.2>

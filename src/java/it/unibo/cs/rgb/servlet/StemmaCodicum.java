@@ -7,12 +7,10 @@ package it.unibo.cs.rgb.servlet;
 import com.oreilly.servlet.multipart.FilePart;
 import com.oreilly.servlet.multipart.MultipartParser;
 import com.oreilly.servlet.multipart.Part;
+import it.unibo.cs.rgb.gwt.RgB;
 import it.unibo.cs.rgb.tei.TeiDocument;
 import it.unibo.cs.rgb.tei.TeiSvg;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,9 +51,9 @@ public class StemmaCodicum extends HttpServlet {
         Iterator stylesheetsIter = stylesheetsSet.iterator();
         while (stylesheetsIter.hasNext()) {
             String current = (String) stylesheetsIter.next();
-            if (current.endsWith(".xsl")) { //TODO controlla meglio con il content type
+            if (current.endsWith(".xsl")) { //TODOcontrolla meglio con il content type
                 //out.println("Xsl: " + current + "<br/>");
-                xsl.put(current, convertStreamToString(getServletContext().getResourceAsStream(current)));
+                xsl.put(current, RgB.convertStreamToString(getServletContext().getResourceAsStream(current), "UTF-8"));
             }
         }
 
@@ -79,9 +77,9 @@ public class StemmaCodicum extends HttpServlet {
         Part tmpPart = mparser.readNextPart();
         while (tmpPart != null) {
             if (tmpPart.isFile()) {
-                String filename = "" + ((FilePart) tmpPart).getFileName();
-                if (filename.endsWith(".xml")) {
-                    xml = "" + convertStreamToString(((FilePart) tmpPart).getInputStream());
+                String contentType = "" + ((FilePart) tmpPart).getContentType();
+                if (contentType.equals("text/xml") || contentType.equals("application/xml")) {
+                    xml = "" + RgB.convertXmlStreamToString(((FilePart) tmpPart).getInputStream());
                 }
             }
             tmpPart = mparser.readNextPart();
@@ -100,45 +98,46 @@ public class StemmaCodicum extends HttpServlet {
         String svgDataString = tei.getSvgDataString();
 
         // verifica
-        if ( svgDataString.length() <= 0) {
+        if (svgDataString.length() <= 0) {
             errors.add("svg non genrabile su questo documento, non contiene witlist");
             throw new StemmaCodicumException(response);
         }
 
-        
-        try{// parsing dei dati ricevuti dall'elaborazione
-        String[] lines = svgDataString.split("\\-");
-        //out.println("_linesNumber_"+lines.length+"_");
-        for (int i = 0; i < lines.length; i++) {
 
-            HashMap witnessMap = new HashMap();
-            StringTokenizer tokens = new StringTokenizer(lines[i]);
+        try {// parsing dei dati ricevuti dall'elaborazione
+            String[] lines = svgDataString.split("\\-");
+            //out.println("_linesNumber_"+lines.length+"_");
+            for (int i = 0; i < lines.length; i++) {
 
-            String der = tokens.nextToken();
-            boolean missing = Boolean.parseBoolean(tokens.nextToken());
-            String sigil = tokens.nextToken();
-            String id = tokens.nextToken();
+                HashMap witnessMap = new HashMap();
+                StringTokenizer tokens = new StringTokenizer(lines[i]);
 
-            if (!der.equalsIgnoreCase("null")) {
-                witnessMap.put("der", der);
+                String der = tokens.nextToken();
+                boolean missing = Boolean.parseBoolean(tokens.nextToken());
+                String sigil = tokens.nextToken();
+                String id = tokens.nextToken();
+
+                if (!der.equalsIgnoreCase("null")) {
+                    witnessMap.put("der", der);
+                }
+                witnessMap.put("missing", missing);
+                witnessMap.put("sigil", sigil);
+                witnessMap.put("id", id);
+
+                //out.println(" "+der+" "+missing+" "+sigil+" "+id);
+
+                data.add(witnessMap);
             }
-            witnessMap.put("missing", missing);
-            witnessMap.put("sigil", sigil);
-            witnessMap.put("id", id);
-
-            //out.println(" "+der+" "+missing+" "+sigil+" "+id);
-
-            data.add(witnessMap);
-        }}catch(Exception e){
+        } catch (Exception e) {
             errors.add("svg non genrabile su questo documento, dati mancanti dalla witlist");
             throw new StemmaCodicumException(response);
 
         }
 
-        for (int i = 0; i < data.size(); i++) {
-            HashMap witnessMap = data.get(i);
-            //out.println("- " + (String) witnessMap.get("der") + "- " + (Boolean) witnessMap.get("missing") + "- " + (String) witnessMap.get("sigil") + "- " + (String) witnessMap.get("id"));
-        }
+        /*for (int i = 0; i < data.size(); i++) { //DEBUG
+        HashMap witnessMap = data.get(i);
+        //out.println("- " + (String) witnessMap.get("der") + "- " + (Boolean) witnessMap.get("missing") + "- " + (String) witnessMap.get("sigil") + "- " + (String) witnessMap.get("id"));
+        }*/
 
         // inizializzo il TeiSvg
         TeiSvg svg = new TeiSvg(data);
@@ -151,12 +150,11 @@ public class StemmaCodicum extends HttpServlet {
 
         // verifica
         if (!svg.canGetSvg()) {
-        errors.add("svg non generabile per questo documento tei: i dati non generano un albero");
-        throw new StemmaCodicumException(response);
+            errors.add("svg non generabile per questo documento tei: i dati non generano un albero");
+            throw new StemmaCodicumException(response);
         }
 
         out.print(svg.getSvg());
-        //out.print(tei.getSvgDataString());
 
         out.close();
     }
@@ -236,31 +234,4 @@ public class StemmaCodicum extends HttpServlet {
 
         }
     }
-
-    public String convertStreamToString(InputStream is) throws IOException {
-        /*
-         * To convert the InputStream to String we use the BufferedReader.readLine()
-         * method. We iterate until the BufferedReader return null which means
-         * there's no more data to read. Each line will appended to a StringBuilder
-         * and returned as String.
-         */
-        if (is != null) {
-            StringBuilder sb = new StringBuilder();
-            String line;
-
-            try {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line).append("\n");
-                }
-            } finally {
-                is.close();
-            }
-            return sb.toString();
-        } else {
-            return "";
-        }
-    }
 }
-
-

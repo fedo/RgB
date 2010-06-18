@@ -1,0 +1,1090 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TEI.2 SYSTEM "sept1914.dtd"> 
+<TEI.2>
+ <teiHeader>
+ <fileDesc>
+ <titleStmt>
+ <title>Wittgenstein September 1914</title>
+ <author>The Wittgenstein September 1914 group</author>
+ </titleStmt>
+ <editionStmt>
+ <edition>1.3</edition>
+ </editionStmt>
+ <publicationStmt>
+ <p>Using XML to generate research tools for Wittgenstein scholars by collaborative groupwork.</p>
+ </publicationStmt>
+ <sourceDesc>
+ <p>
+ <note>Her må det inn tekst</note>
+ </p>
+ </sourceDesc>
+ 
+ </fileDesc>
+ <revisionDesc>
+ <change>
+ <date>Jan 2002. May 2003. Jan 2004</date>
+ <respStmt>
+ <name>Alois Pichler, Tone Merete Bruvik</name>
+ <resp>Encoder</resp>
+ </respStmt>
+ <item>
+ <p>2002.01. AP: first XML version. 2003.05. AP: first XML TEI version. 2004.01. TMB: TEI implementation for xref, note, dateRange, notation.</p>
+ 
+ <!-- AP: all alpha codes change case, keep case have been thrown out -->
+ <!-- AP: p pos="bl1" means: BEFORE the section there is one (1) blank line -->
+ <!-- AP: date ranges, page ranges, section ranges - multiple hierarchies -->
+ <!-- AP: shall we have a separate blank entity?-->
+ <!-- Experimenting with WAB's MV in XML-TEI, enriching it with supplementing resources.</p>Laget direkte i elektronisk form; konvertert ved Oxygen. Se også http://gandalf.hit.uib.no/cgi-bin/xml/konvert.cgi, http://helmer.hit.uib.no/his/stil/ og http://decentius.hit.uib.no/transform/. -->
+ <!-- AP: the encoding of overwritings needs revision with regard to inconsistent 
+ treatment of "add type='our'" and "p.dsl type='on'" --> 
+ </item>
+ </change>
+ </revisionDesc>
+ </teiHeader>
+ <text>
+ <body>
+ <lb/>
+ <lb/>
+ <lb/>
+ <lb/>
+ 
+ <div>
+ <head>
+ <supplied resp="AP"><dateRange from="19140902" to="19140902">1914.09.02</dateRange></supplied>
+ </head>
+ 
+ 
+ <pb corresp="http://wab.aksis.uib.no/sept1914/fax/016.jpg" id="recto_12r" n="16?"/>
+ <fw place="right">
+ <note resp="fremd" type="author">12</note>
+ </fw>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es"> (...)</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ <xref link="http://library.nlx.com/">
+ <note>All this can be linked to InteLex' Wittgenstein Databases</note>
+ </xref>
+ <xref link="http://wab.aksis.uib.no/sept1914/correspondence.html">
+ <note>All this can also be linked to the Brenner Archives'
+ Correspondence edition</note>
+ </xref>
+ 
+ <s type="es">Wir m&uuml;<sic corr="ss">&szlig;</sic>en in einem <sic
+ corr="g">G</sic>ewissen <lb/> Sinne uns nicht in der Logik <lb/>irren k&ouml;nnen.</s>
+ 
+ <s type="es"> Dies ist schon teil<lb type="hypp"/><pb corresp="http://wab.aksis.uib.no/sept1914/fax/017.jpg"
+ id="recto_13r" n="18"/>
+ <fw place="right" resp="fremd">13</fw>weise darin ausgedr&uuml;ckt:
+ Die Logik <lb/> mu&szlig; f&uuml;r sich selbst sorgen.</s>
+ <lb/>
+ 
+ <s type="es"> Dies ist eine ungemein tiefe &amp.und; wich<lb
+ type="hypl"/>tige Erkenntnis.</s>
+ <note>Here possibly a link to a webplace with comments on Wittgenstein and Frege</note>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es"><persName value="Frege, Gottlob">Frege</persName> sagt: jeder <sic
+ corr="r" type="trsn">R</sic>echtm&auml;&szlig;ig gebil<lb
+ type="hypl"/>dete Satz mu&szlig; einen Sinn haben <lb/> und ich
+ sage: jeder m<sic corr="ö" type="trsn">o</sic>gliche Satz <lb/> ist
+ rechtm&auml;&szlig;ig gebildet &amp.und;<lb/> wenn er keinen
+ Sinn hat so kann <lb/> da<sic corr="s" type="trsn">&szlig;</sic>
+ nu<add type="our">r</add> daran liegen da&szlig; wir <lb/>
+ einigen seiner Bestandteile<sic type="npcn">n</sic> keine <lb/>
+ Bedeutung <hi rend="us1">gegeben</hi> haben.</s>
+ 
+ <s type="es"> Wenn wir auch <lb/> glauben es getan zu haben.</s>
+ <xref link="http://wab.aksis.uib.no/sept1914/geheimschrift.html">
+ <note>Here something from Alois about Wittgenstein's use of the Code</note>
+ </xref>
+ <note>Here possibly a link to a webplace with comments on Wittgenstein and Tolstoi</note>
+ </p></div>
+ 
+ <div>
+ <head>
+ <supplied resp="AP"><dateRange from="19140903" to="19140903">1914.09.03</dateRange></supplied>
+ </head>
+ <!-- End change -->
+ <p note="XXX" n="TLP 4.1274. PT 4.10227254, 4.1022729, 4.10227291" pos="bl0">
+ <dateline pos="right" value="19140903" rend="3.9.1914">3.<add type="our">9</add>.14.</dateline>
+ <code>
+ 
+ <s type="es">Gestern nicht ganz erfolglos <lb/> gearbeitet.</s>
+ 
+ <s type="es"><add type="our">I</add>n <persName value="Tolstoj, Lew">Tolst<add
+ type="our">o</add>i</persName> gelesen <lb/> mit gro<sic corr="ß"
+ type="trsn">ss</sic>em <sic corr="G" type="trsn">g</sic>ewinn.</s>
+ </code>
+ 
+ <s pos="indl3" type="eis">Wie ist es mit der Aufgabe<lb/> der Philosophie
+ vereinbar da&szlig;<lb/> die Logik f&uuml;r sich selbst
+ sorgen<lb/> soll?</s>
+ 
+ <s type="eis">Wenn wir <abbr>z.B.</abbr> fragen: ist<lb/> die &amp.und;
+ die Tatsache von der <sic type="npc">Subje<sic corr="k" type="trsn">c</sic>t</sic>
+ <pb corresp="http://wab.aksis.uib.no/sept1914/fax/018.jpg"
+ id="recto_14r" n="17"/>
+ <fw place="right" resp="fremd">14</fw>
+ <sic corr="Subjekt-Prädikat-Form" type="trs">Pr&auml;dicat
+ form</sic> dann m&uuml;<sic corr="ss"
+ type="trsn">&szlig;</sic>en <xref link="http://wab.aksis.uib.no/sept1914/correspondence.html">
+ <note>See Monika, Correspondence</note>
+ </xref> wir doch <lb/> wissen was wir unter der &ldq.sldq;<abbr
+ corr="Subjekt-Prädikat-Form">S.P.form</abbr>&udq.eudq;<lb/> verstehen.</s>
+ 
+ <s type="es">Wir m&uuml;<sic corr="ss" type="trsn">&szlig;</sic>en
+ wissen <hi rend="us1"> ob</hi> es <lb/> so eine Form &uuml;berhaupt
+ gi<sic type="npcn">e</sic>bt.</s>
+ <lb/>
+ 
+ <s type="eis">Wie k&ouml;nnen wir dies wissen?</s>
+ 
+ <s type="ees">&ldq.sldq;Aus den <lb/> Zeichen!&udq.eudq;</s>
+ 
+ <s type="eis">Aber wie?</s>
+ 
+ <s type="es"><del type="dnpc">Es</del>
+ <sic corr="W" type="trsn">w</sic>ir haben <lb/> ja gar keine <hi
+ rend="us1">Zeichen</hi> von dieser <lb/> Form.</s>
+ 
+ <s type="eis">Wir k&ouml;nnen zwar sagen: wir <lb/> haben Zeichen die
+ sich so benehmen <lb/> wie solche von der <abbr
+ corr="Subjekt-Prädikat-Form">S.P. form</abbr>, aber <lb/> beweist
+ d<add type="our">a</add>s da&szlig; es wirklich <lb/> Tatsachen
+ dieser Form geben <lb/> mu&szlig;?</s>
+ 
+ <s type="es">N&auml;<add type="our">m</add>lich: wenn diese <add
+ type="our">v</add>oll<lb type="hypl"/>st&auml;ndig analysiert sind.</s>
+ 
+ <s type="eis">Und hier <lb/> fr&auml;gt es sich wieder: Gi<sic
+ type="npcn">e</sic>bt es so eine <lb/> vollst&auml;ndige Analyse.</s>
+ 
+ <s type="eisees">
+ <hi rend="us1">Und wenn <lb/> nicht</hi>: Was ist denn dann die Aufga<lb
+ type="hypl"/>be der Philosophie?!!?</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="eis">Also k&ouml;nnen wir uns fragen: Gi<sic
+ type="npcn">e</sic>bt es <lb/> die <sic corr="Subjekt-Prädikat-Form"
+ type="trs">Subject&ndash;Pr&auml;<add
+ type="our">d</add>icat form</sic>?</s>
+ 
+ <s type="eis">Gi<sic type="npcn">e</sic>bt es <lb/> die Relationsform?</s>
+ 
+ <s type="eis">Gi<sic type="npcn">e</sic>bt es &uuml;ber<lb type="hypp"/>
+ <pb corresp="http://wab.aksis.uib.no/sept1914/fax/019.jpg"
+ id="recto_15r" n="19"/>
+ <fw place="right" resp="fremd">15</fw> haupt irgend eine der Formen von
+ denen <lb/>
+ <persName value="Russell, Bertrand">Russell</persName> und ich immer
+ gesprochen <lb/> haben?</s>
+ 
+ <s type="es"> (<persName value="Russell, Bertrand">Russell</persName>
+ w&uuml;rde sagen: &ldq.sldq;ja! <lb/> denn das ist einleuchtend.&udq.eudq;</s>
+ 
+ <s type="ees">
+ <hi rend="us1">
+ <notation>Jaha</notation>
+ </hi>!)</s>
+ <note>And so on</note>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es"> A<add type="our">l</add>so: wenn <hi rend="us1">alles</hi>
+ w<add type="our">as</add> gezei<add type="our">gt</add> werden <lb/>
+ braucht durch die Existenz der <lb/>
+ <sic corr="Subjekt-Pädikat-Sätze" type="trs">Subject-P&auml;dicat
+ <hi rend="us2">S&auml;tze</hi>
+ </sic>
+ 
+ <add type="im">
+ <abbr corr="etc.">etc</abbr>
+ </add> gezeigt <lb/> wird dann ist die Aufgabe der Philo<lb
+ type="hypl"/>so<add type="our">ph</add>ie eine andere als ich
+ urspr&uuml;nglich <lb/> annahm.</s>
+ 
+ <s type="es">Wenn dem aber nicht so <lb/> ist so m&uuml;&szlig;te
+ das <sic corr="F" type="trsn">f</sic>ehlende durch <lb/> eine Art <add
+ type="our">E</add>rfahrung gezeigt werden <lb/> und da<sic corr="s"
+ type="trsn">&szlig;</sic> halte ich f&uuml;r ausgeschlossen<sic
+ corr="." type="tran"/>
+ </s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="ees">Die Unklarheit <p.dsl>
+ <p.dsl.el>
+ <del>befindet <sic corr="sich" type="tra"/>
+ </del>
+ </p.dsl.el>
+ <p.dsl.el>
+ <add type="i">liegt</add>
+ </p.dsl.el>
+ </p.dsl>
+ <hi rend="us1">offenbar</hi> in <lb/> der Frage <del
+ type="npc">wie</del> worin eigentlich die <lb/> logische
+ Identit&auml;t von Zeichen und <lb/>
+ <sic corr="B" type="trsn">b</sic>ezeichnetem <sic corr="b" type="trsn">B</sic>esteht!</s>
+ 
+ <s type="es">Und <lb/> diese Frage ist <add type="el" rend="doubt">(</add>
+ <hi rend="us1">wieder</hi>
+ <add type="el" rend="doubt">)</add> eine Haupt<lb type="hypl"/>ansicht
+ des ganzen <sic corr="p" type="trsn">P</sic>hilosophischen Problems.</s>
+ <xref link="http://wab.aksis.uib.no/sept1914/correspondence.html">
+ <note>See Monika, Correspondence</note>
+ </xref>
+ </p>
+ <pb corresp="http://wab.aksis.uib.no/sept1914/fax/020.jpg" id="recto_16r" n="20"/>
+ <fw place="right" resp="fremd">16</fw>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="ees"> Es sei eine<del type="dnpcn">&#x25A1;</del> Frage der
+ Philosophie gege<lb type="hypl"/>ben: etwa die ob
+ &ldq.sldq;<notation attr="c" rend="literal"
+ type="quantificational variable">A</notation> ist gut&udq.eudq; ein
+ <sic corr="Subjekt-Prädikat-Satz" type="trs">Sub<lb
+ type="hypl"/>ject&ndash;Pradicat <p.dsl type="on">
+ <p.dsl.el type="on">s</p.dsl.el>
+ <p.dsl.el type="on">S</p.dsl.el>
+ </p.dsl>atz</sic> sei; oder die <lb/> ob &ldq.sldq;<notation
+ attr="c" rend="literal" type="quantificational variable">A</notation>
+ ist heller als <notation attr="c" rend="literal"
+ type="quantificational variable">B</notation>&udq.eudq; ein <sic
+ corr="Relationssatz" type="trs">Relations <lb/> Satz</sic> <!-- AP: this coding
+ does not handle the linebreak for corr outputs --> 
+ sei!</s>
+ 
+ <s type="eisees">
+ <hi rend="us1">Wie l&auml;&szlig;t sich so eine <lb/> Frage</hi>
+ <hi rend="us1">&uuml;berhaupt</hi>
+ <hi rend="us1">entscheiden?!</hi>
+ </s>
+ <lb/>
+ 
+ <s type="eis">Was f&uuml;r eine Evidenz kann mich <lb/>
+ <del>&uuml;berhaupt</del> dar&uuml;ber beruhigen <lb/>
+ da&szlig; &dash; <hi rend="us1">zum Beispiel</hi> &dash; die
+ erste Frage <lb/> bejaht werden mu&szlig;?</s>
+ 
+ <s type="es"><p.dsl type="on">
+ <p.dsl.el type="on">&dash;</p.dsl.el>
+ <p.dsl.el type="on">(</p.dsl.el>
+ </p.dsl>Dies ist eine <lb/> ungemein wichtige Frage).</s>
+ 
+ <s type="eis">Ist die <lb/> einzige Evidenz hier wieder <lb/>
+ <hi rend="us1">jenes <del type="dnpc">zw</del> h&ouml;chst
+ zweifelhafte <lb/>&ldq.sldq;Einleuchten&udq.eudq;??</hi>
+ </s>
+ 
+ <s type="eis">Nehmen wir eine <lb/> ganz &auml;hnliche Frage die aber
+ einfacher <lb/>&amp.und; grundlegender ist; n<sic corr="ä"
+ type="trsn">a</sic>mlich diese:<lb/> ist ein Punkt in unserem
+ Gesichts<lb type="hypl"/>bild ein &ldq.sldq;<hi
+ rend="us1">einfacher Gegenstand</hi>&udq.eudq;,<lb/> ein <hi rend="us1">Ding</hi>?</s>
+ 
+ <s type="eis">Solche Fragen habe <lb/> ich doch bisher <add
+ type="our">im</add>mer als die <lb/> eigentlichen philosophischen <lb/>
+ angesehen &dash; und sie sind es auch <lb/> gewi<sic corr="ß"
+ type="trsn">ss</sic> in einem Sinne &dash; aber <lb/>
+ <pb corresp="http://wab.aksis.uib.no/sept1914/fax/022.jpg"
+ id="recto_17r" n="22"/>
+ <fw place="right" resp="fremd">17</fw> nochmals<sic corr=":"
+ type="tran"/> welche Evidenz k&ouml;nnte so eine <lb/> Frage <sic
+ corr="ü" type="trsn">
+ <add type="our">u</add>
+ </sic>berhaupt entscheiden?</s>
+ 
+ <s type="es">Ist hier <lb/> nicht ein Fehler in der Fragestellung <lb/>
+ <add type="our">d</add>enn es scheint als leuchtete mir
+ <lb/>&uuml;ber diese Frage <hi rend="us1"> gar nichts</hi> ein; <lb/>
+ <del type="dnpc">als</del> es scheint als k&ouml;nnte ich mit <lb/>
+ Bestimmtheit sagen, da&szlig; diese <lb/> Fragen &uuml;berhaupt
+ nie entschieden <lb/>
+ <add type="our">w</add>erden k&ouml;nnten.</s>
+ </p>
+ 
+ </div>
+ 
+ <div>
+ <head>
+ <supplied><dateRange from="19140904" to="19140904">1914.09.04</dateRange></supplied>
+ </head>
+ 
+ <p note="XXX" n="0" pos="bl0">
+ <dateline pos="right" value="19140904" rend="4.9.1914">4.9.14</dateline>
+ 
+ <s type="es"> Wenn nicht die <sic corr="E" type="trsn">e</sic>xistenz des
+ <sic corr="Subjekt-Prädikat-Satzes" type="trsn">Sub<lb
+ type="hypl"/>ject&ndash;Pr&auml;dicat <hi rend="us1">S<p.dsl type="on">
+ <p.dsl.el type="on">&auml;</p.dsl.el>
+ <p.dsl.el type="on">a</p.dsl.el>
+ </p.dsl>tzes</hi>
+ </sic>
+ alles <sic corr="N"
+ type="trsn">n</sic>&ouml;tige <lb/> zeigt dann k&ouml;nnte es
+ doch <lb/> nur die <sic corr="E" type="trsn">e</sic>xistenz <add
+ type="our">i</add>rgend einer beson<lb type="hypl"/>deren Tatsache jener
+ Form zeigen.</s>
+ 
+ <s type="es">Und <lb/> die Kenntnis einer solchen kann nicht <lb/>
+ f&uuml;r die Logik wesentlich sein.</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="eis">Gesetzt den Fall wir h&auml;tten ein Zeichen <lb/> das <hi
+ rend="us1">wirklich</hi> von der <abbr corr="Subjekt-Prädikat-Form">S.P.
+ Form</abbr> w&auml;re, <lb/> w&auml;re dieses f&uuml;r den
+ Ausdruck von <lb/>
+ <abbr corr="Subjekt-Prädikat-Sätzen">S.P. S&auml;tzen</abbr>
+ irgendwie geeigneter als <lb/> unsere <del type="dnpc">&ldq.sldq;</del>
+ <abbr corr="Subjekt-Prädikat-Sätze">S.P. S&auml;tze</abbr>?</s>
+ 
+ <s type="ees">Es scheint nein!</s>
+ <lb/>
+ <pb corresp="http://wab.aksis.uib.no/sept1914/fax/024.jpg"
+ id="recto_18r" n="24"/>
+ <fw place="right" resp="fremd">18</fw>
+ 
+ <s type="eis">
+ <add type="our">L</add>iegt das an der bezeichnenden Relation?</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1" secml="/">
+ 
+ <s type="es">Wenn sich die Logik ohne die Beantwortung <lb/> gewisser Fragen
+ abschlie&szlig;en l&auml;&szlig;t <lb/>
+ <p.dsl type="on">
+ <p.dsl.el type="on">s</p.dsl.el>
+ <p.dsl.el type="on">d</p.dsl.el>
+ </p.dsl>ann <hi rend="us1">mu&szlig; sie ohne</hi> sie abgeschlossen
+ <lb/> wer<add type="our">d</add>en.</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es"> Die <add type="im">
+ <sic corr="l" type="trsn">L</sic>ogische</add> Identit<sic corr="ä"
+ type="trsn">a</sic>t <p.dsl type="on">
+ <p.dsl.el type="on">d</p.dsl.el>
+ <p.dsl.el type="on">v</p.dsl.el>
+ </p.dsl>on Zeichen &amp.und; Bezeichnetem <lb/> besteht darin
+ da&szlig; man im Zeichen <lb/> nicht mehr &amp.und; nicht
+ weniger <del type="dnpc">
+ <gap extent="1" reason="urw"/>
+ </del>
+ <!--MB: this does not show-->
+ <lb/> w<p.dsl type="on">
+ <p.dsl.el type="on">r</p.dsl.el>
+ <p.dsl.el type="on">i</p.dsl.el>
+ </p.dsl>edererkennen darf als im Bezeich<lb type="hypl"/>neten.</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1" secml="slash.sm;">
+ 
+ <s type="es">W&auml;ren Zeichen &amp.und; Bezeichnetes <hi
+ rend="us1"> nicht</hi> ihrem <lb/> vollen logischen Inhalte nach
+ <lb/> identisch dann m&uuml;&szlig;te es noch <lb/> etwas <sic
+ corr="F" type="trsn">f</sic>undamentaleres geben als <lb/> die Logik.</s>
+ </p>
+ 
+ </div>
+ <div>
+ 
+ <head>
+ <supplied resp="AP"><dateRange from="19140905" to="19140905">1914.09.05</dateRange></supplied>
+ </head>
+ 
+ <p note="XXX" n="0" pos="bl0">
+ <dateline pos="right" value="19140905" rend="5.9.1914">5.9.14.</dateline>
+ <lb type="hl"/>
+ 
+ <s type="es"><notation attr="c" rend="literal"
+ type="quantificational formula, type-theoretic formula">&varph;(a)
+ &pm.con;&varph;(b) &pm.con; aRb &def;&varph;&lb;aRb&rb;</notation>
+ </s>
+ <!--AP: varph does not show-->
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="ees">Erinnere dich da&szlig; die Worte
+ &ldq.sldq;Funktion&udq.eudq;<lb/>
+ &ldq.sldq;Argument&udq.eudq; &ldq.sldq;Satz&udq.eudq;
+ <abbr corr="etc.">etc</abbr> in der Logik nicht<pb
+ corresp="http://wab.aksis.uib.no/sept1914/fax/026.jpg"
+ id="recto_19r" n="26"/>
+ <fw place="right" resp="fremd">19</fw> vorkommen d&uuml;rfen!</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es"><notation attr="c" rend="literal" pos="centered" type="quantificational formula, type-theoretic formula">
+ <add type="our">&varph;(x)(y)&ps;&equ;</add>
+ (x)&varph;&ps;(y) &equ; (x)R(y) &equ; xRy</notation>
+ </s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es"><notation attr="c" rend="literal" type="nonstandard quantificational formula, type-theoretic formula">
+ <add
+ type="our">&PHI;&lb;&carZ;&ps;Z&rb;&p;&def;&p;&varph;x
+ &ekv;<sub>x</sub>&ps;x &p;&prsups.;&p;<sub>&varph;</sub>&PHI;&varph;</add>
+ </notation>
+ </s>
+ <lb type="hl"/>
+ 
+ <s type="es">Von zwei <sic corr="K" type="trsn">k</sic>lassen <sic
+ corr="zu sagen" type="trs">zusagen</sic> sie seien <lb/>
+ <sic corr="i" type="trsn">I</sic>dentisch sagt etwas.</s>
+ 
+ <s type="es">Von zwei <lb/> Dingen dies <del type="dnpcn">sz</del> zu sagen
+ sagt nichts <lb/> dies schon zeigt die Unzul&auml;<sic corr="ss"
+ type="trsn">&szlig;</sic>ig<lb type="hypl"/>keit der <persName
+ value="Russell, Bertrand">Russellschen</persName> Definition</s>
+ </p>
+ 
+ </div>
+ 
+ <div>
+ <head>
+ <supplied resp="AP"><dateRange from="19140906" to="19140906">1914.09.06</dateRange></supplied>
+ </head>
+ 
+ <p note="XXX" n="0" pos="bl0">
+ <dateline pos="right" value="19140906" rend="6.9.1914">6.9.14.</dateline>
+ <lb type="hl"/>
+ 
+ <s type="es"><notation attr="c" rend="literal"
+ type="quantificational formula, type-theoretic formula">&PHI;(&#x25A1;)
+ &A.3dotl;&def;&A.3dotl;&PHI;&lb;&carZ;&lcb;Z&notequ;Z&rcb;&rb;&A.3dotl;&def;&A.3dotl;&varph;(x)
+ &p;&ekv;<sub>x</sub>&p; x&notequ;x &colon.A.2grp;&prsups.;&colon.A.2grp;&PHI;(&varph;)</notation>
+ </s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es">Der letzte Satz ist eigentlich nichts <lb/> anderes als der
+ uralte E<sic corr="i" type="tran"/>nwand gegen <lb/> die
+ Identit&auml;t in der Mathematik.</s>
+ 
+ <s type="es"><add type="our">N</add>&auml;m<lb type="hypl"/>lich der
+ da&szlig; wenn <notation rend="literal" type="arithmetic">2
+ &x.xmult; 2</notation> wirklich <hi rend="us1"> gleich</hi>
+ <lb/> 4 w<add type="our">&auml;re</add> da&szlig; dieser Sa<add
+ type="el">t</add>z dann nicht <lb/> mehr sagen w&uuml;rde als
+ <notation attr="c" rend="literal" type="quantificational formula">a
+ &equ; a</notation>.</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es">K&ouml;nnte man sagen: Die Logik k&uuml;mmert <lb/> die
+ Analysierbarkeit der Funktionen <lb/> mit denen sie arbeitet <hi rend="us1">nicht</hi>.</s>
+ </p>
+ <pb corresp="http://wab.aksis.uib.no/sept1914/fax/027.jpg" id="recto_20r" n="27"/>
+ <fw place="right" resp="fremd">20</fw>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es"><notation attr="c" rend="literal"
+ type="nonstandard quantificational formula, type-theoretic formula">a
+ &eps;&carZ;(&ps;Z) &p;&def;&p;&varph;(x)
+ &ekv;<sub>x</sub>&ps;(x) &p;&prsups.;&p; a &eps;&varph;</notation>
+ </s>
+ </p>
+ 
+ </div>
+ 
+ 
+ <div>
+ <head>
+ <supplied resp="AP"><dateRange from="19140907" to="19140907">1914.09.07</dateRange></supplied>
+ </head>
+ 
+ <p note="XXX" n="0" pos="bl0">
+ <dateline pos="right" value="19140907" rend="7.9.1914">7.9.14</dateline>
+ <lb type="hl"/>
+ 
+ <s type="es"> Bedenke da&szlig; auch ein unana<lb type="hypl"/>lysierter
+ <abbr corr="Subjekt-Prädikat-Satz">S.P. Satz</abbr> etwas <hi rend="us1">ganz</hi>
+ <lb/>
+ <hi rend="us1">
+ <sic corr="B" type="trsn">b</sic>estimmtes</hi> klar aussagt.</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es">Kann man nicht sagen: Es <add type="our">k</add>ommt <lb/>
+ nicht darauf an da&szlig; wir es mit <lb/>
+ <del type="dnpc">
+ <gap extent="1" reason="urw"/>
+ </del> nicht analysierbaren <abbr corr="Subjekt-Prädikat-Sätzen">S.P. S&auml;tzen</abbr>
+ <lb/> zu tun haben sondern darauf da&szlig;<lb/> unsere <abbr
+ corr="Subjekt-Prädikat-Sätze">S.P. S&auml;tze</abbr> sich in <hi
+ rend="us1"> jeder</hi> Bezie<lb type="hypl"/>hung <p.cos>
+ <p.cos.el>so <endarrback/>benehmen <corr type="arrback">wie solche</corr>
+ <lb/>
+ </p.cos.el>
+ <p.cos.el>
+ <sic type="npc">so</sic> wie solche benehmen</p.cos.el>
+ </p.cos>
+ <abbr> d.h.</abbr> also da&szlig; die <sic corr="L"
+ type="trsn">l</sic>ogik <hi rend="us1"> unserer</hi>
+ <lb/>
+ <abbr corr="Subjekt-Prädikat-Sätze">S.P. S&auml;tze</abbr> dieselbe
+ ist wie die Logik <lb/> jener anderen.</s>
+ 
+ <s type="es">Es kommt uns ja <lb/> nur darauf an die Logik abzus<add
+ type="our">ch</add>lie<lb type="hypl"/>
+ <sic corr="ß" type="trsn">ss</sic>en und unser <sic corr="Haupteinwand" type="trs">haupt&ndash;Einwand</sic>
+ <lb/> gegen die nicht&ndash;an<add type="our">a</add>lysierten <abbr
+ corr="Subjekt-Prädikat-Sätze">S.P. S&auml;tze</abbr>
+ <lb/> war der, da&szlig; wir ihre Syntax <lb/> nicht aufstellen
+ k&ouml;nnen solange <lb/> wir ihre <sic corr="A"
+ type="trsn">a</sic>nalyse nicht kennen.</s>
+ <lb/>
+ 
+ <s type="eis">Mu&szlig; aber nicht die Logik eines <pb
+ corresp="http://wab.aksis.uib.no/sept1914/fax/029.jpg"
+ id="recto_21r" n="29"/>
+ <fw place="right" resp="fremd">21</fw> scheinbaren <abbr
+ corr="Subjekt-Prädikat-Satzes">S.P. Satzes</abbr> dieselbe sein
+ <lb/> wie die Logik eines wirklichen?</s>
+ <lb/>
+ 
+ <s type="eis"> Wenn eine Definition &uuml;berhaupt <lb/>
+ m&ouml;glich ist, die dem Satz die <abbr
+ corr="Subjekt-Prädikat-Form">S.P. <lb/>
+ </abbr> Form gi<sic type="npcn">e</sic>bt &sp;?</s>
+ </p>
+ 
+ </div>
+ 
+ <div>
+ <head>
+ <supplied resp="AP"><dateRange from="19140908" to="19140908">1914.09.08</dateRange></supplied>
+ </head>
+ 
+ <p note="XXX" n="0" pos="bl0">
+ <dateline pos="right" value="19140908" rend="8.9.1914">8.9.14</dateline>
+ 
+ <s type="es"><add type="our">Da</add>s &ldq.sldq;Einleuchten&udq.eudq; von
+ dem <persName value="Russell, Bertrand">Russell</persName> so viel <lb/>
+ sprach kann nur dadurch in der Logik<lb/> entbeh<add
+ type="our">rl</add>ich werden da&szlig; die Sprache <lb/> selbst
+ jeden logischen Fehler verhindert.</s>
+ <lb/>
+ 
+ <s type="es"> Und es ist klar da&szlig; jenes
+ &ldq.sldq;Einleuchten&udq.eudq;<lb/> immer g&auml;nzlich
+ tr&uuml;gerisch ist &amp.und; war.</s>
+ </p>
+ 
+ </div>
+ 
+ <div>
+ <head>
+ <supplied resp="AP"><dateRange from="19140919" to="19140919">1914.09.19</dateRange></supplied>
+ </head>
+ 
+ <p note="XXX" n="0" pos="bl0">
+ <dateline pos="right" value="19140919" rend="19.9.1914">19.9.14.</dateline>
+ 
+ <s type="es"><notation attr="c" rend="literal"
+ type="quantificational formula, type-theoretic formula">aRb
+ &pm.con; bRc &pm.con; cRd &pm.con; dRe &equ;&varph;(a,e)</notation>
+ <lb/>
+ <notation attr="c" rend="literal" pos="indl3"
+ type="quantificational formula, type-theoretic formula">(&ex;R<sup>s</sup>)
+ aR<sup>s</sup> e</notation>
+ </s>
+ <!--AP: MB check how this comes out in diplo and norm-->
+ <lb type="hl"/>
+ 
+ <s type="es">Ein Satz wie &ldq.sldq;dieser Sessel ist<lb/>
+ braun&udq.eudq; scheint etwas enorm <sic corr="K"
+ type="trsn">c</sic>om<lb type="hypl"/>pli<sic corr="z"
+ type="trsn">c</sic>iertes zu sagen, denn wollten <lb/> wir <del
+ type="npc">ganz</del> diesen Satz so aussprechen <lb/> da&szlig; uns
+ niemand gegen i<add type="our">h</add>n <sic corr="E"
+ type="trsn">e</sic>in<lb type="hypl"/>wendungen die aus seiner
+ Vieldeutigkeit<lb/> entspringen machen k&ouml;nnte so w&uuml;rde
+ <lb/> er endlos lang werden m&uuml;<sic corr="ss" type="trsn">&szlig;</sic>en.</s>
+ </p>
+ <pb corresp="http://wab.aksis.uib.no/sept1914/fax/031.jpg" id="recto_22r" n="31"/>
+ <fw place="right" resp="fremd">22</fw>
+ 
+ </div>
+ 
+ <div>
+ <head>
+ <supplied resp="AP"><dateRange from="19140920" to="19140920">1914.09.20</dateRange></supplied>
+ </head>
+ 
+ <p note="XXX" n="TLP 4.01. PT 4.01" pos="bl0">
+ <dateline pos="right" value="19140920" rend="20.9.1914">20.9.14.</dateline>
+ <lb type="hl"/>
+ 
+ <s type="es"><code> Da<sic corr="ß" type="trsn">ss</sic> der</code> Satz ein
+ logisches Abbild <lb/> seiner Bedeutung ist leuchtet dem <lb/>
+ unbefangenen Auge ein.</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="eis"> Gi<sic type="npcn">e</sic>bt es Funktionen von Tatsachen?</s>
+ <lb/>
+ 
+ <s type="es"><abbr> Z.B.</abbr>&ldq.sldq;Es ist besser wenn dies der Fall ist
+ <lb/> als wenn jenes der Fall ist.&udq.eudq;</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="eis"> Worin besteht denn die Verbindung <lb/> zwischen dem Zeichen
+ p und den <lb/>&uuml;brigen Zeichen des Satzes: &ldq.sldq;Es ist
+ <lb/> gut da&szlig; p der Fall ist.&udq.eudq;?</s>
+ 
+ <s type="eis">Worin <lb/> besteht d<add type="our">ie</add>se Verbindung??</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="eis">
+ <add type="our">D</add>er Unbefangene wird sagen: offenbar <lb/> in der
+ r&auml;umlichen <sic corr="B" type="trsn">b</sic>eziehung <lb/> des
+ Buchstaben <notation type="p??">p</notation> zu den zwei Nach<lb type="hypl"/>barzeichen.</s>
+ 
+ <s type="es">Wenn aber die Tatsache <lb/>&ldq.sldq;<notation
+ type="p??">p</notation>&udq.eudq; eine solche w&auml;re in
+ welcher keine <lb/> Dinge vorkommen??</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es">&ldq.sldq;Es ist gut <hi rend="us1">da&szlig;</hi>
+ <notation type="p??">p</notation>&udq.eudq; kann wo<sic corr="h"
+ type="tran"/>l analysiert<pb
+ corresp="http://wab.aksis.uib.no/sept1914/fax/033.jpg"
+ id="recto_23r" n="33"/>
+ <fw hand="fremd" place="right">23</fw>
+ <add type="our">w</add>erden in &ldq.sldq;<notation attr="c"
+ rend="literal" type="propositional formula">p &pm.con; es ist gut
+ <hi rend="us1">wenn</hi> p</notation>&udq.eudq;<sic corr="." type="tran"/>
+ </s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="eis">
+ <hi rend="us1">Wir setzen voraus: <notation type="p??">p</notation> sei</hi>
+ <!--AP: MB, us2 does not come out in norm-->
+ <hi rend="us2">nicht</hi>
+ <hi rend="us1">der <sic corr="F" type="trsn">f</sic>all</hi>:<lb/> Was
+ hei&szlig;t es dann zu sagen, &ldq.sldq;es ist <lb/> gut
+ da&szlig; <notation type="p??">p</notation>?&udq.eudq;</s>
+ 
+ <s type="es">Wir k&ouml;nnen ganz<lb/> offenbar sagen, der Sachverhalt <lb/>
+ <notation type="p??">p</notation> sei gut ohne zu wissen ob
+ <lb/>&ldq.sldq;<notation type="p??">p</notation>&udq.eudq;
+ wahr oder <sic corr="f" type="trsn">F</sic>alsch ist.</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es">Der Ausdruck der Gram<sic corr="m" type="tran"/>atik:
+ <lb/>&ldq.sldq;Ein Wort bezieht sich auf ein <lb/>
+ anderes&udq.eudq; wird hier <add type="our">b</add>ele<add type="el">u</add>chtet.</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es">Es handelt sich in den obigen F&auml;llen <lb/> darum
+ anzugeben wie S&auml;tze in <lb/> sich zusammenh&auml;ngen.</s>
+ 
+ <s type="es">Wie der <lb/>
+ <hi rend="us1">Satz&ndash;Verband</hi> zustande kommt.</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ <notation attr="c" rend="literal"
+ type="incomplete quantificational formula, type-theoretic formula">
+ (&alpha;&beta;&gamma;) &emsp18;&varph;(<add type="our">&alpha;</add>&sp;)</notation>
+ <lb type="hl"/>
+ 
+ <s type="eis">Wie kann sich eine Funktion <hi rend="us1">auf <lb/> einen
+ Satz beziehen</hi>????</s>
+ 
+ <s type="ees">Immer die <lb/>
+ <add type="our">ura</add>lten Fragen!</s>
+ </p>
+ <pb corresp="http://wab.aksis.uib.no/sept1914/fax/035.jpg" id="recto_24r" n="35"/>
+ <fw place="right" resp="fremd">24</fw>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="ees">Nur sich nicht von Fragen &uuml;berh&auml;ufen <lb/>
+ lassen; nur es sich bequem machen!</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s pos="indl3" type="es">&ldq.sldq;<notation attr="c" rend="literal"
+ type="quantificational formula, type-theoretic formula">&varph;(&ps;x)</notation>&udq.eudq;:
+ Nehmen wir an uns sei eine<lb/> Funktion eines <abbr
+ corr="Subjekt-Prädikat-Satzes">S.P. Satzes</abbr> gegeben <lb/> und
+ wir wollen die <del type="dnpc"> &#x25A1;&#x25A1;</del> Art der
+ Beziehung <lb/> der Funktion zum Satz dadurch <lb/> erkl&auml;ren
+ da&szlig; wir sagen: Die Fun<lb type="hypl"/>ktion bezieht sich
+ unmittelbar <lb/> nur auf das Subjekt des <abbr
+ corr="Subjekt-Prädikat-Satzes">S.P. Satzes</abbr>
+ <lb/> und was <sic corr="b" type="trsn">B</sic>ezeichnet ist das
+ logische <lb/> Produkt aus dieser Beziehung <lb/> und dem <abbr corr="Subjekt-Prädikat-Satzeichen">S.P.&ndash;Satzzeichen</abbr>.</s>
+ 
+ <s type="eis">Wenn <lb/> wir das nun s<add type="our">a</add>gen so
+ k&ouml;nnte man<lb/> fragen: wenn du d<add type="our">en</add> Satz
+ so erkl&auml;<lb type="hypl"/>ren kan<sic corr="n" type="tran"/>st
+ warum erkl&auml;rst du <lb/> dann nicht auch seine Bedeutung <lb/>
+ auf die analoge Art &amp.und; Weise.</s>
+ 
+ <s type="eis"> N&auml;mlich <lb/>&ldq.sldq;sie sei keine Funktion
+ einer <abbr corr="Subjekt-Prädikat-Tatsache">S.P. Tatsache</abbr>
+ <lb/> sondern das logische Produkt einer <lb/> solchen &amp.und;
+ einer Funktion ihres Subjektes&udq.eudq;?</s>
+ <lb/>
+ 
+ <s type="eis">Mu&szlig; nicht der Einwand der gegen die<add type="el">se</add>
+ <del type="dnpcn">&#x25A1;&#x25A1;&#x25A1;</del>
+ <pb corresp="http://wab.aksis.uib.no/sept1914/fax/037.jpg"
+ id="recto_25r" n="37"/>
+ <fw place="right" resp="fremd">25</fw> Erkl&auml;rung gilt auch
+ gegen jene gelten?</s>
+ </p>
+ 
+ </div>
+ 
+ <div>
+ <head>
+ <supplied resp="AP"><dateRange from="19140921" to="19140921">1914.09.21</dateRange></supplied>
+ </head>
+ 
+ <p note="XXX" n="0" pos="bl0">
+ <dateline pos="right" value="19140921" rend="21.9.1914">21.9.14.</dateline>
+ 
+ <s type="es">Es scheint mir jetzt pl<add type="our">&ouml;</add>tz<add
+ type="our">lich i</add>n irgend <lb/> e<add type="our">i</add>ne<add type="our">m</add>
+ <lb/> Sinne klar da&szlig; eine Eigenschaft<lb/> eine<add
+ type="our">s</add> Sachverhalts immer intern <lb/> sein mu&szlig;.</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es"><notation attr="c" rend="literal"
+ type="quantificational formula list, type-theoretic formula list">&varph;a,
+ &ps;b &emsp15; aRb</notation> man k&ouml;nnte sagen
+ <lb/> der Sachverhalt <notation attr="c" rend="literal"
+ type="quantificational formula">aRb</notation> habe immer <lb/> eine
+ gewisse Eigenschaft, wenn die <lb/> beiden ersten S&auml;tze wahr sind.</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es">Wenn ich sage: Es ist gut da&szlig; <notation
+ type="p??">p</notation> der Fall ist <lb/> dann mu&szlig; dies eben
+ <hi rend="us1">in sich</hi> gut sein.</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es">Es scheint mir jetzt klar da&szlig; es keine Funktio<lb
+ type="hypl"/>nen von Sachverhalten geben kann.</s>
+ </p>
+ 
+ </div>
+ 
+ <div>
+ <head>
+ <supplied resp="AP"><dateRange from="19140923" to="19140923">1914.09.23</dateRange></supplied>
+ </head>
+ 
+ <p note="XXX" n="0" pos="bl0">
+ <dateline pos="right" value="19140923" rend="23.9.1914">23.9.14.</dateline>
+ 
+ <s type="es"><notation attr="c" rend="literal"
+ type="quantificational inference, type-theoretic inference">&varph;(a),
+ &ps;(b), aRb; (<add type="our">&ex;x</add>
+ <p.dsl type="on">
+ <p.dsl.el type="on">)</p.dsl.el>
+ <p.dsl.el type="on">y</p.dsl.el>
+ </p.dsl>): &varph;x &pm.con;&ps;y &pm.con; xRy</notation>
+ <lb type="hl"/>
+ <notation attr="c" rend="literal"
+ type="quantificational formula, type-theoretic formula">aRb
+ &p;&varph;a &pm.con;&ps;b &def;
+ (&varph;,&ps;) (aRb) &equ;&OMEGA;(x)</notation>
+ </s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es"><notation attr="graphic c"
+ corresp="http://wab.aksis.uib.no/sept1914/fax/k101001a.bmp"
+ rend="bitmap" type="quantificational formula list, nonstandard type-theoretic formula">k101001a.bmp</notation>
+ <notation attr="graphic cs"
+ corresp="http://wab.aksis.uib.no/sept1914/fax/k101001b.bmp"
+ rend="bitmap" type="quantificational formula list, nonstandard type-theoretic formula">k101001b.bmp</notation>
+ <notation attr="graphic c"
+ corresp="http://wab.aksis.uib.no/sept1914/fax/k101001c.bmp"
+ rend="bitmap" type="quantificational formula list, nonstandard type-theoretic formula">k101001c.bmp</notation>
+ <xref link="http://wab.aksis.uib.no/sept1914/graphics.html">
+ <note>Here possibly a link to a webplace administrated by Michael,
+ with comments on this &ndash; if and whether it is
+ &ndash; and other graphic</note>
+ </xref>
+ </s>
+ </p>
+ <pb corresp="http://wab.aksis.uib.no/sept1914/fax/039.jpg" id="recto_26r" n="??"/>
+ <fw place="right">
+ <note resp="fremd" type="author">26</note>
+ </fw>
+ <p note="XXX" n="0" pos="1">
+ 
+ <s type="eis">Man k&ouml;nnte fragen: wie kann <lb/>der <add
+ type="our">S</add>achverhalt <notation type="p??">p</notation> eine
+ Eigenschaft <lb/>haben, wenn es sich am Ende gar<lb/> nicht so verh&auml;lt?</s>
+ </p>
+ 
+ </div>
+ 
+ <div>
+ <head>
+ <supplied resp="AP"><dateRange from="19140924" to="19140924">1914.09.24</dateRange></supplied>
+ </head>
+ 
+ <p note="XXX" n="0" pos="bl0">
+ <dateline pos="right" value="19140924" rend="24.9.1914">24.9.14.</dateline>
+ 
+ <s type="es"> Die Frage, wie ist eine Zuordnung von <lb/>Relationen
+ m&ouml;glich, ist identisch <lb/>mit dem Wahrheits&ndash;Pro<add type="our">b</add>lem.</s>
+ </p>
+ 
+ </div>
+ 
+ <div>
+ <head>
+ <supplied resp="AP"><dateRange from="19140925" to="19140925">1914.09.25</dateRange></supplied>
+ </head>
+ 
+ <p note="XXX" n="0" pos="bl0">
+ <dateline pos="right" value="19140925" rend="25.9.1914">
+ <p.dsl type="on">
+ <p.dsl.el type="on">31</p.dsl.el>
+ <p.dsl.el type="on">25</p.dsl.el>
+ </p.dsl>.9.14.</dateline>
+ 
+ <s type="es">Denn <add type="our">d</add>ies ist identisch mit der Frage
+ <lb/>wie ist die Zuordnung von Sach<lb type="hypl"/>verhalten
+ m&ouml;glich (einem bezeich<lb type="hypl"/>nenden &amp.und;
+ einem bezeichneten)<sic corr="." type="tran"/>
+ </s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es">Sie ist nur durch die Zuordnung der <lb/>Bestandteile
+ m&ouml;glich; ein Beispiel <lb/>bietet die Zuordnung von Namen
+ <lb/>&amp.und; Ben<add type="our">a</add>nntem.</s>
+ 
+ <s type="es">(Und es ist klar da&szlig; <lb/>auch eine Zuordnung der
+ Relationen <lb/>auf irgend eine Weise stattfindet<sic corr="." type="tran"/>)</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es"><!--sjekk-->
+ <notation rend="literal"
+ type="quantificational formula list, type-theoretic formula list">&bar;aRb&bar;;
+ &bar;a b&bar;; p&equ;aRb &def;</notation>
+ </s>
+ <lb type="hl"/>
+ <add type="ilom">
+ 
+ <s type="es"><sic corr="H">h</sic>ier wird ein <sic corr="e">E</sic>infa<add
+ type="our">c</add>hes Zeichen einem Sachverha<sic corr="l"
+ type="tran"/>t zugeordnet.</s>
+ </add>
+ </p>
+ <pb corresp="http://wab.aksis.uib.no/sept1914/fax/041.jpg" id="recto_27r" n="??"/>
+ <fw place="right" resp="fremd">27</fw>
+ 
+ </div>
+ 
+ <div>
+ <head>
+ <supplied resp="AP"><dateRange from="19140926" to="19140926">1914.09.26</dateRange></supplied>
+ </head>
+ 
+ <p note="XXX" n="0" pos="bl0">
+ <dateline pos="right" value="19140926" rend="26.9.1914">26.9.14</dateline>
+ <lb type="hl"/>
+ 
+ <s type="eis"> Worauf gr&uuml;ndet sich unsere <lb/>&mdash; sicher
+ wo<add type="our">hl</add> begr&uuml;ndete &mdash; <sic
+ corr="Z">z</sic>u<lb type="hypl"/>versicht da&szlig; wir jeden
+ beliebigen <lb/> Sinn in unserer zweidimensionalen <lb/>Schrift werden
+ ausdr&uuml;cken k&ouml;n<lb type="hypl"/>nen?!</s>
+ </p>
+ 
+ </div>
+ 
+ <div>
+ <head>
+ <supplied resp="AP"><dateRange from="19140927" to="19140927">1914.09.27</dateRange></supplied>
+ </head>
+ 
+ <p note="XXX" n="0" pos="bl0">
+ <dateline pos="right" value="19140927" rend="27.9.1914">27.9.14</dateline>
+ <lb type="hl"/>
+ 
+ <s type="ees">Ein Satz kann seinen Sinn ja nur <lb/>d<add
+ type="our">a</add>dur<add type="our">ch</add> ausdr&uuml;cken
+ da&szlig; er dessen <lb/>logisches Abbild ist!</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es">Auffallend ist die &Auml;hnlichkeit zwischen <lb
+ rend="indl3"/> den Zeichen <notation rend="literal" type="quantificational formula, type-theoretic formula">&ldq.sldq;aRb&udq.eudq;</notation>
+ <lb rend="indl3"/> und
+ <!--AP: MB check this-->
+ <notation rend="literal"
+ type="quantificational formula, type-theoretic formula">&ldq.sldq;a&sigma;R
+ &pmid.con; R&sigma;b&udq.eudq;</notation>
+ <sic corr="."/>
+ </s>
+ </p>
+ <!--AP: MB output of sigma etc-->
+ 
+ </div>
+ 
+ <div>
+ <head>
+ <supplied resp="AP"><dateRange from="19140929" to="19140929">1914.09.29</dateRange></supplied>
+ </head>
+ 
+ <p note="XXX" n="TLP 4.016. PT 4.0115, 4.0116" pos="bl0">
+ <dateline pos="right" value="19140929" rend="29.9.1914">29.9.14.</dateline>
+ <lb type="hl"/>
+ 
+ <s type="ees">
+ <code>Der allgemeine</code> Begriff des <lb/>Satzes f&uuml;hrt auch
+ <add type="our">e</add>in<add type="our">en</add>
+ <lb/>gan<add type="our">z</add> allgemein<add type="our">e</add>n
+ Begriff der <lb/>Zuordnung von Satz und Sach<lb type="hypl"/>verhalt mit
+ sich: Die L<sic corr="&ouml;">o</sic>sung <lb/>aller meiner Fragen
+ mu&szlig; <hi rend="us1">h&ouml;chst</hi>
+ <lb/>
+ <add type="our">e</add>infach sein!</s>
+ </p>
+ <pb corresp="http://wab.aksis.uib.no/sept1914/fax/043.jpg" id="recto_28r" n="??"/>
+ <fw place="right" resp="fremd">28</fw>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es"> Im Satz wird ein<add type="our">e</add> Welt probeweise <lb/>zusammengestellt.</s>
+ 
+ <s type="es">(Wie wenn im <lb/>
+ <name reg="Paris">Pariser</name> Gerichtssa<sic corr="a" type="tran"/>l
+ ein Automobil<lb type="hypl"/>ungl&uuml;ck mit Puppen <abbr corr="etc.">etz</abbr>
+ <lb/>
+ <p.dsl>
+ <p.dsl.el>
+ <del>
+ <hi rend="us1">demonstriert</hi>
+ </del>
+ </p.dsl.el>
+ <p.dsl.el>dargestellt</p.dsl.el>
+ </p.dsl> wird.</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es">Daraus mu&szlig; sich (wenn ich nicht blind
+ <lb/>w&auml;re) sofort das Wesen der Wahrheit <lb/>ergeben.</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es">Denken wir an <sic corr="h">H</sic>i<sic corr="e"
+ type="tran"/>roglyphische Schriften <lb/>bei denen jedes Wort seine
+ <lb/>Bedeutung darstellt!</s>
+ 
+ <s type="es">Denken <lb/>wir daran da&szlig; auch <hi rend="us1">wirkliche</hi>
+ <lb/>Bilder von Sachverhalten <hi rend="us1">stimmen</hi>
+ <lb/>
+ <add type="our">u</add>nd <hi rend="us1">nicht stimmen</hi> k&ouml;nnen.</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es"> &ldq.sldq;<notation attr="graphic c"
+ corresp="http://wab.aksis.uib.no/sept1914/fax/101001.bmp"
+ rend="bitmap"
+ type="Abbild; Mensch(en)">k101001.bmp</notation>&udq.eudq;: Wenn in
+ diesem Bild der <sic corr="r">R</sic>echte <lb/>Mann den Menschen
+ <notation type="quantificational constant">A</notation> vorstellt
+ und <lb/>bezeichnet der linke den Menschen <lb/>
+ <notation type="quantificational constant">B</notation> so
+ k&ouml;nnte etwa das <sic corr="G">g</sic>anze <lb/>aussagen
+ &ldq.sldq;<notation
+ type="quantificational constant">A</notation> ficht mit <notation type="quantificational constant">B</notation>&udq.eudq;.</s>
+ 
+ <s type="es">Der <lb/>
+ <pb corresp="http://wab.aksis.uib.no/sept1914/fax/045.jpg"
+ id="recto_29r" n="29"/>
+ <fw place="right" resp="fremd">29</fw> Satz in Bilderschrift kann <sic
+ corr="w">W</sic>ahr <lb/>und falsch sein.</s>
+ 
+ <s type="es">Er hat <del type="dnpcn">Si</del> einen <lb/>Sinn
+ unabh&auml;ngig von seiner <lb/>Wahr<sic corr="&ndash;"/> oder Falschheit.</s>
+ 
+ <s type="es">An ihm <lb/>mu&szlig; sich alles <sic
+ corr="W">w</sic>esentliche de<lb type="hypl"/>monstrieren lassen.</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es">Man kann sagen wir haben zwar nicht <lb/>die Gewi<sic
+ corr="&szlig;">ss</sic>heit da&szlig; wir alle <lb/>
+ <sic corr="S">s</sic>achverhalte in Bildern aufs <lb/>Papier b<add
+ type="our">r</add>ingen k&ouml;nnen wo<sic corr="h"/>l aber <lb/>die
+ Gewi<sic corr="&szlig;">ss</sic>heit da&szlig; wir alle <hi rend="us1">logischen</hi>
+ <lb/>Eigenschaften der Sa<add type="our">c</add>hverhalte <lb/>
+ <add type="our">i</add>n einer zweidimensionalen <lb/>Schrift abbilden k&ouml;nnen.</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es">Wir sind <add type="im">hier</add> no<add type="our">c</add>h
+ immer sehr an der <add type="im">Oberfläche</add>
+ <lb/>aber wo<sic corr="h"/>l auf einer guten Ader.</s>
+ </p>
+ 
+ </div>
+ 
+ <div>
+ <head>
+ <supplied resp="AP"><dateRange from="19140930" to="19140930">1914.09.30</dateRange></supplied>
+ </head>
+ 
+ <p note="XXX" n="0" pos="bl0">
+ <dateline pos="right" value="19140930">30.9.14</dateline>
+ 
+ <s type="es"> Man kan<sic corr="n"/> sagen in unserem Bilde <lb/>stellt der
+ Rechte etwas dar und <lb/>auch der Linke, <hi rend="us1">aber</hi>
+ selbst wenn <lb/>dies nicht der Fall wäre so k&ouml;nnte<lb/>
+ <pb corresp="http://wab.aksis.uib.no/sept1914/fax/047.jpg"
+ id="recto_30r" n="??"/>
+ <fw place="right" resp="fremd">30</fw> ihre <sic
+ corr="g">G</sic>egenseitige Stellung etwas <lb/>darstellen.</s>
+ 
+ <s type="es">(Nämlich eine Beziehung)</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="ees">Ein Bild kann Beziehungen dar<lb type="hypl"/>stellen die es
+ nicht gi<sic type="npcn">e</sic>bt!!!</s>
+ <lb/>
+ 
+ <s type="es">Wie ist dies m&ouml;glich?</s>
+ </p>
+ <p note="XXX" n="0" pos="bl1">
+ 
+ <s type="es">Jetzt scheint es wieder als m&uuml;&szlig;ten <lb/>alle
+ Beziehungen logisch sein <lb/>damit ihre Existenz durch <lb/>die des
+ Zeichens verb&uuml;rgt sei.</s>
+ </p>
+ </div>
+ <div>
+ <head>
+	 <supplied resp="AP"><dateRange from="19141000" to="19141000">1914.10.00</dateRange></supplied>
+ </head>
+ 
+ 
+ <p note="XXX" n="0" pos="bl1"> (...)</p>
+ </div>
+ </body>
+ </text>
+</TEI.2>

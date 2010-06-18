@@ -65,7 +65,7 @@ public class TeiSvg {
         int maxX=maxPos(nodes, true);
         int maxY=maxPos(nodes, false);
 
-        out += "<?xml-stylesheet type=\"text/css\" href=\""+cssUri+"\" ?>"+"\n";
+        out += "<?xml-stylesheet type=\"text/css\" href=\""+cssUri+"\" encoding=\"UTF-8\"?>"+"\n";
         out += "<html xmlns:svg=\"http://www.w3.org/2000/svg\">"+"\n";
         out += "<body>"+"\n";
         out += "<svg:svg width=\""+(maxX+footerSpace)+"\" height=\""+(maxY+footerSpace)+"\" version=\"1.1\" >"+"\n";

@@ -6,10 +6,7 @@ package it.unibo.cs.rgb.servlet;
 
 import it.unibo.cs.rgb.gwt.RgB;
 import it.unibo.cs.rgb.tei.TeiDocument;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -48,7 +45,7 @@ public class DocumentInfo extends HttpServlet {
             String current = (String) stylesheetsIter.next();
             if (current.endsWith(".xsl")) {
                 //out.println("Xsl: " + current + "<br/>");
-                xsl.put(current, convertStreamToString(getServletContext().getResourceAsStream(current)));
+                xsl.put(current, RgB.convertXmlStreamToString(getServletContext().getResourceAsStream(current)));
             }
         }
 
@@ -56,7 +53,7 @@ public class DocumentInfo extends HttpServlet {
         try {
 
             String path = request.getParameter("path");
-            TeiDocument tei = new TeiDocument(path, convertStreamToString(getServletContext().getResourceAsStream(path)), xsl);
+            TeiDocument tei = new TeiDocument(path, RgB.convertXmlStreamToString(getServletContext().getResourceAsStream(path)), xsl);
 
             out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             out.println("<html xmlns=\"http://www.w3.org/1999/xhtml\" version=\"1.0\">");
@@ -105,29 +102,4 @@ public class DocumentInfo extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    public static String convertStreamToString(InputStream is) throws IOException {
-        /*
-         * To convert the InputStream to String we use the BufferedReader.readLine()
-         * method. We iterate until the BufferedReader return null which means
-         * there's no more data to read. Each line will appended to a StringBuilder
-         * and returned as String.
-         */
-        if (is != null) {
-            StringBuilder sb = new StringBuilder();
-            String line;
-
-            try {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line).append("\n");
-                }
-            } finally {
-                is.close();
-            }
-            return sb.toString();
-        } else {
-            return "";
-        }
-    }
 }

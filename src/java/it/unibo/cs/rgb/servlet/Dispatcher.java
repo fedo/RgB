@@ -52,11 +52,13 @@ public class Dispatcher extends HttpServlet {
         Enumeration parametersEnumeration = mrequest.getParameterNames();
         ArrayList<String> parameters = new ArrayList<String>();
 
+        //parametri
         while (parametersEnumeration.hasMoreElements()) {
             String tmp = (String) parametersEnumeration.nextElement();
             parameters.add(tmp);
         }
 
+        //files
         while (filesEnumeration.hasMoreElements()) {
             String tmp = (String) filesEnumeration.nextElement();
             files.add(tmp);
@@ -68,13 +70,8 @@ public class Dispatcher extends HttpServlet {
             throw new DispatcherException(response);
         }
 
-        //dispatching delle serviceTranslations (client -> dispatcher) //TODO gestire le richieste, spedire quelle nuove e rispondere correttamente
-        if (service.equalsIgnoreCase("translateFrequenzeDiOccorrenza")) {
-        } else if (service.equalsIgnoreCase("translateColocazioni")) {
-        } else if (service.equalsIgnoreCase("translateEstrazioneDiConcordanze")) {
-        } else if (service.equalsIgnoreCase("translateStemmaCodicum")) {
-        } //dispatching dei servizi
-        else if (service.equalsIgnoreCase("StemmaCodicum")) {
+        //dispatching dei servizi
+        if (service.equalsIgnoreCase("StemmaCodicum")) {
             response.setContentType("teimage/svg+xml");
             PrintWriter out = response.getWriter();
 
@@ -86,11 +83,13 @@ public class Dispatcher extends HttpServlet {
                 throw new DispatcherException(response);
             }
 
-            if (dtd == null) {
+            
+
+            /*if (dtd == null) {
                 //stemma(xml)
             } else {
                 //stemma(xml,dtd)
-            }
+            }*/
 
 
         } else if (service.equalsIgnoreCase("EstrazioneDiConcordanze")) {

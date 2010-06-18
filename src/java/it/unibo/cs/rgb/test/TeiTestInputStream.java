@@ -1,11 +1,8 @@
 package it.unibo.cs.rgb.test;
 
-
 import it.unibo.cs.rgb.tei.TeiDocument;
-import it.unibo.cs.rgb.tei.TeiSvg;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,14 +24,14 @@ public class TeiTestInputStream {
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
 
-        String xmlString = "/Users/fedo/data/programming/netbeans/RgB/web/collection5/bruni_guerrapunica.xml";
+        String xmlString = "/Users/fedo/data/programming/netbeans/RgB/web/collection5/faith.xml";
         String xslString = "/Users/fedo/data/programming/netbeans/RgB/web/stylesheets/facility.xsl";
 
         File xmlFile = new File(xmlString);
         File xslFile = new File(xslString);
 
         if (xmlFile.exists() && xslFile.exists()) {
-            System.out.println("i files esistono");
+            //System.out.println("i files esistono");
         }
 
         HashMap xslHashMap = new HashMap();
@@ -42,13 +39,18 @@ public class TeiTestInputStream {
 
         TeiDocument tei = new TeiDocument("zuppaditei", FileUtils.readFileToString(xmlFile), xslHashMap);
 
-        System.out.println(getContentType(new FileInputStream(xmlFile)));
-        System.out.println("nome " + tei.getTeiName());
-        System.out.println("path " + tei.getAbsolutePath());
-        System.out.println(tei.getHover());
-
+        //System.out.println(getContentType(new FileInputStream(xmlFile)));
+        //System.out.println("nome " + tei.getTeiName());
+        //System.out.println("path " + tei.getAbsolutePath());
+        //System.out.println(tei.getHover());
         //System.out.println("view " + tei.getView("fasdfdfs"));
 
+        //System.out.println(RgB.getXmlStreamEncoding(new FileInputStream(xmlFile)));
+        //System.out.println("\n\n\nCCCCC\n\n\n");
+        //System.out.println(RgB.convertXmlStreamToString(new FileInputStream(xmlFile)));
+        //System.out.println("\n\n\nCCCCC\n\n\n");
+        //System.out.println(FileUtils.readFileToString(xmlFile));
+        //System.out.println(RgB.convertStreamToString(new FileInputStream(xmlFile), "UTF-8"));
 
         // parsing dei dati ricevuti
         ArrayList<HashMap> data = new ArrayList<HashMap>();
@@ -69,7 +71,7 @@ public class TeiTestInputStream {
             witnessMap.put("id", tokens.nextToken());
             data.add(witnessMap);
         }
-        
+
         //TeiSvg svg = new TeiSvg(FileUtils.readFileToString(xmlFile));
         //System.out.println("svg "+svg.getSvg());
 
@@ -88,13 +90,13 @@ public class TeiTestInputStream {
 
 
         // cerca se il documento specifica un altro encoding
-        /*if (is != null) {
+        if (is != null) {
             StringBuilder sb = new StringBuilder();
             String line;
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));//"UTF-8"));
             while ((line = reader.readLine()) != null) { //CRASHA
-                /*sb.append(line).append("\n");
+                sb.append(line).append("\n");
                 if ((sb.toString().contains("<?") && sb.toString().contains("?>")) && sb.toString().contains("encoding=")) {
 
                     Pattern p = Pattern.compile(".*<\\?.*encoding=.(.*).\\?>.*", Pattern.DOTALL);
@@ -109,7 +111,9 @@ public class TeiTestInputStream {
                 }
             }
 
-        }*/
+
+
+        }
 
         // converte
         if (is != null) {
@@ -167,5 +171,5 @@ public class TeiTestInputStream {
         }
 
         return encoding;
-        }
+    }
 }

@@ -33,7 +33,7 @@ public class DocumentsList extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String teiFolder = "/collection5";
+        String teiFolder = "/collection6";
 
         ArrayList<String> xmlFilesList = new ArrayList<String>();
 
@@ -52,7 +52,7 @@ public class DocumentsList extends HttpServlet {
             String current = (String) stylesheetsIter.next();
             if (current.endsWith(".xsl")) {
                 //out.println("Xsl: " + current + "<br/>");
-                xsl.put(current, RgB.convertStreamToString(getServletContext().getResourceAsStream(current), RgB.getContentType(getServletContext().getResourceAsStream(current))));
+                xsl.put(current, RgB.convertXmlStreamToString(getServletContext().getResourceAsStream(current)));
             }
         }
 
@@ -78,7 +78,7 @@ public class DocumentsList extends HttpServlet {
 
         // scrittura informazioni sui documenti TEI
         for (int i = 0; i < xmlFilesList.size(); i++) {
-            String xml = RgB.convertStreamToString(getServletContext().getResourceAsStream(xmlFilesList.get(i)), RgB.getContentType(getServletContext().getResourceAsStream(xmlFilesList.get(i))));
+            String xml = RgB.convertXmlStreamToString(getServletContext().getResourceAsStream(xmlFilesList.get(i)));
             TeiDocument tei = new TeiDocument(xmlFilesList.get(i), xml, xsl);
 
             out.println("<li id=\"document\">");
