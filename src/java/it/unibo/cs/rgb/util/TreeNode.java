@@ -105,7 +105,7 @@ public class TreeNode implements java.io.Serializable
     }
 
     public void setSigil (String sigil) {
-        this.id = sigil;
+        this.sigil = sigil;
     }
 
     public String getSigil() {

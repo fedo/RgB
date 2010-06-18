@@ -7,8 +7,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.sf.saxon.s9api.SaxonApiException;
-
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -17,28 +15,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import org.xml.sax.SAXException;
-
-
 import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.Serializer;
 import net.sf.saxon.s9api.XdmAtomicValue;
-
 import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XsltCompiler;
 import net.sf.saxon.s9api.XsltExecutable;
 import net.sf.saxon.s9api.XsltTransformer;
-import net.sf.saxon.sxpath.XPathEvaluator;
-import net.sf.saxon.sxpath.XPathExpression;
 import org.w3c.dom.Document;
-
 import org.w3c.dom.NodeList;
 
 /**
@@ -256,7 +247,7 @@ public class TeiDocument {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         StringReader xmlStringReader = new StringReader(teiString);
-        String xslString = (String) xsl.get("/stylesheets/hover.xsl"); //preface
+        String xslString = (String) xsl.get("/stylesheets/preface.xsl"); //preface
         StringReader xslStringReader = new StringReader(xslString);
 
         try {
@@ -372,7 +363,7 @@ public class TeiDocument {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         StringReader xmlStringReader = new StringReader(teiString);
-        String xslString = (String) xsl.get("/stylesheets/svg.xsl");
+        String xslString = (String) xsl.get("/stylesheets/facility.xsl");
         StringReader xslStringReader = new StringReader(xslString);
 
         try {

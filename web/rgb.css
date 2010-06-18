@@ -4,7 +4,11 @@ body {
 
 .buttonDocumentsList {
     padding: 2px;
-    background: url("images/hdot2.gif") repeat-x scroll center bottom transparent;
+    background: url("images/hdot2.gif");
+    background-repeat: repeat-x;
+    background-position: center bottom;
+    background-attachment: scroll;
+    background-color: transparent;
 }
 
 .buttonDocumentsListOver {
@@ -13,7 +17,11 @@ body {
 }
 
 .headerPanel {
-    background: #DCDCDC;
+    background: #000000;
+    background-image: url("images/logo.png");
+    background-repeat: no-repeat;
+    background-position: left top;
+    height: 125px;
 }
 
 .servicePanel {

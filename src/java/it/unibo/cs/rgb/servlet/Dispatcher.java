@@ -46,8 +46,6 @@ public class Dispatcher extends HttpServlet {
             throw new DispatcherException(response);
         }
 
-        //this.getServletContext().getResourceAsStream("/urlrewrite.xml"); //TODO
-
         MultipartRequest mrequest = new MultipartRequest(request, this.getServletContext().getRealPath("./tmp"));
         Enumeration filesEnumeration = mrequest.getFileNames();
         ArrayList<String> files = new ArrayList<String>();

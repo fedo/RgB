@@ -70,9 +70,8 @@ public class MainEntryPoint implements EntryPoint {
 
         header = createHeaderWidget();
         header.addStyleName("headerPanel");
-        header.setHeight("100px");
+        header.setHeight("125px");
         mainPanel.add(header, DockPanel.NORTH);
-        mainPanel.setCellHeight(header, "100px");
 
         footer = createFooterWidget();
         mainPanel.add(footer, DockPanel.SOUTH);

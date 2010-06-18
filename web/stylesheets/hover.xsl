@@ -50,31 +50,23 @@ Description: XSL stylesheet for the data retrieval associated to the mouse hover
 			</xsl:for-each>
 		  </xsl:variable>
 
-		  <!-- il titolo del testo codificato -->
-		  <b><xsl:text>Titolo:</xsl:text></b>
-		  <xsl:copy-of select="$blank"/>
-		  <span id="docTitle">
-			<xsl:apply-templates select="//*:title">
-			  <xsl:with-param name="location" select="$location[1]"/>
-			</xsl:apply-templates>
-		  </span>
 
-		  <xsl:copy-of select="$newline"/>
+		  <!-- il titolo del testo codificato -->
+		  <xsl:apply-templates select="//*:title">
+			<xsl:with-param name="location" select="$location[1]"/>
+		  </xsl:apply-templates>
+
 
 		  <!-- l'autore del testo codificato -->
-		  <b><xsl:text>Autore:</xsl:text></b>
-		  <xsl:copy-of select="$blank"/>
+		  <xsl:apply-templates select="//*:author">
+			<xsl:with-param name="location" select="$location[1]"/>
+		  </xsl:apply-templates>
 
-		  <span id="docAuthor">
-			<xsl:apply-templates select="//*:author">
-			  <xsl:with-param name="location" select="$location[1]"/>
-			</xsl:apply-templates>
-		  </span>
 
+		  <!-- responsabili di codifica -->
 		  <xsl:if test="//element()[((child::*:title) and (child::*:author)) and (child::*:respStmt)]">
 			<xsl:copy-of select="$newline"/>
 
-			<!-- responsabili di codifica -->
 			<b><xsl:text>Responsabili:</xsl:text></b>
 			<xsl:copy-of select="$blank"/>
 
@@ -84,11 +76,12 @@ Description: XSL stylesheet for the data retrieval associated to the mouse hover
 			  </xsl:apply-templates>
 			</span>
 		  </xsl:if>
+
 		</xsl:when>
 
 
 		<!--
-		un documento codificato non e` un'opera;
+		un documento codificato non e` un'opera:
 		puo` essere una lettera, un quaderno di appunti, ecc
 		-->
 		<xsl:when test="//*:opener">
@@ -112,41 +105,21 @@ Description: XSL stylesheet for the data retrieval associated to the mouse hover
 
 
 	  <!-- gli eventuali testimoni -->
-	  <xsl:if test="//*:witList">
-		<xsl:copy-of select="$newline"/>
-		<b><xsl:text>Testimoni:</xsl:text></b>
-		<xsl:copy-of select="$blank"/>
-		<span id="docWit">
-		  <xsl:apply-templates select="//*:witList"/>
-		</span>
-	  </xsl:if>
+	  <xsl:apply-templates select="//*:witList"/>
 
 
 
 	  <!-- gli eventuali revisori -->
-	  <xsl:if test="//*:revisionDesc">
-		<xsl:copy-of select="$newline"/>
-		<b><xsl:text>Revisioni:</xsl:text></b>
-		<xsl:copy-of select="$blank"/>
-		<span id="docRev">
-		  <xsl:apply-templates select="//*:revisionDesc"/>
-		</span>
-	  </xsl:if>
+	  <xsl:apply-templates select="//*:revisionDesc"/>
 
 
 
 	  <!-- l'edizione -->
-	  <xsl:if test="//*:editionStmt">
-		<xsl:copy-of select="$newline"/>
-		<b><xsl:text>Edizione:</xsl:text></b>
-		<xsl:copy-of select="$blank"/>
-		<span id="docEdit">
-		  <xsl:apply-templates select="//*:editionStmt"/>
-		</span>
-	  </xsl:if>
+	  <xsl:apply-templates select="//*:editionStmt"/>
 
 	</div>
   </xsl:template>
+
 
 
 
@@ -155,9 +128,15 @@ Description: XSL stylesheet for the data retrieval associated to the mouse hover
 	<xsl:param name="location"/>
 
 	<xsl:if test="ancestor::node()[contains(name(), $location)]">
-	  <xsl:value-of select="."/>
+	  <b><xsl:text>Titolo:</xsl:text></b>
+	  <xsl:copy-of select="$blank"/>
+	  <span id="docTitle">
+		<xsl:value-of select="."/>
+	  </span>
 	</xsl:if>
+
   </xsl:template>
+
 
 
 
@@ -166,9 +145,16 @@ Description: XSL stylesheet for the data retrieval associated to the mouse hover
 	<xsl:param name="location"/>
 
 	<xsl:if test="ancestor::node()[contains(name(), $location)]">
-	  <xsl:value-of select="."/>
+	  <xsl:copy-of select="$newline"/>
+	  <b><xsl:text>Autore:</xsl:text></b>
+	  <xsl:copy-of select="$blank"/>
+	  <span id="docAuthor">
+		<xsl:value-of select="."/>
+	  </span>
 	</xsl:if>
+
   </xsl:template>
+
 
 
 
@@ -222,14 +208,21 @@ Description: XSL stylesheet for the data retrieval associated to the mouse hover
 
 
 
+
   <!-- testimoni -->
   <xsl:template match="*:witList">
 	<xsl:variable name="witnesses" as="xs:string*">
-	  <xsl:sequence select=".//*:witness[@sigil]/attribute(sigil)"/>
+	  <xsl:sequence select=".//*:witness[@sigil and not(contains(@missing, 'true'))]/attribute(sigil)"/>
 	</xsl:variable>
 
-	<xsl:value-of select="$witnesses" separator=", "/>
+	<xsl:copy-of select="$newline"/>
+	<b><xsl:text>Testimoni:</xsl:text></b>
+	<xsl:copy-of select="$blank"/>
+	<span id="docWit">
+	  <xsl:value-of select="$witnesses" separator=", "/>
+	</span>
   </xsl:template>
+
 
 
 
@@ -241,24 +234,35 @@ Description: XSL stylesheet for the data retrieval associated to the mouse hover
 	  <xsl:sequence select=".//*:item"/>
 	</xsl:variable>
 
-	<xsl:value-of select="$revisors" separator=", "/>
+	<xsl:copy-of select="$newline"/>
+	<b><xsl:text>Revisioni:</xsl:text></b>
+	<xsl:copy-of select="$blank"/>
+	<span id="docRev">
+	  <xsl:value-of select="$revisors" separator=", "/>
+	</span>
   </xsl:template>
+
 
 
 
   <!-- editori -->
   <xsl:template match="*:editionStmt">
-	<xsl:for-each select="*">
-	  <xsl:value-of select="."/>
-	  <xsl:choose>
-		<xsl:when test="position() != last()">
-		  <xsl:value-of select="$blank"/>
-		</xsl:when>
-		<xsl:otherwise>
-		  <xsl:value-of select="$period"/>
-		</xsl:otherwise>
-	  </xsl:choose>
-	</xsl:for-each>
+	<xsl:copy-of select="$newline"/>
+	<b><xsl:text>Edizione:</xsl:text></b>
+	<xsl:copy-of select="$blank"/>
+	<span id="docEdit">
+	  <xsl:for-each select="*">
+		<xsl:value-of select="."/>
+		<xsl:choose>
+		  <xsl:when test="position() != last()">
+			<xsl:value-of select="$blank"/>
+		  </xsl:when>
+		  <xsl:otherwise>
+			<xsl:value-of select="$period"/>
+		  </xsl:otherwise>
+		</xsl:choose>
+	  </xsl:for-each>
+	</span>
   </xsl:template>
 
 </xsl:stylesheet>

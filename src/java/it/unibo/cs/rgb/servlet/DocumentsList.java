@@ -4,11 +4,9 @@
  */
 package it.unibo.cs.rgb.servlet;
 
+import it.unibo.cs.rgb.gwt.RgB;
 import it.unibo.cs.rgb.tei.TeiDocument;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +34,7 @@ public class DocumentsList extends HttpServlet {
             throws ServletException, IOException {
 
         String teiFolder = "/collection5";
-        
+
         ArrayList<String> xmlFilesList = new ArrayList<String>();
 
         response.setContentType("text/html;charset=UTF-8");
@@ -54,7 +52,7 @@ public class DocumentsList extends HttpServlet {
             String current = (String) stylesheetsIter.next();
             if (current.endsWith(".xsl")) {
                 //out.println("Xsl: " + current + "<br/>");
-                xsl.put(current, convertStreamToString(getServletContext().getResourceAsStream(current)));
+                xsl.put(current, RgB.convertStreamToString(getServletContext().getResourceAsStream(current), RgB.getContentType(getServletContext().getResourceAsStream(current))));
             }
         }
 
@@ -80,7 +78,8 @@ public class DocumentsList extends HttpServlet {
 
         // scrittura informazioni sui documenti TEI
         for (int i = 0; i < xmlFilesList.size(); i++) {
-            TeiDocument tei = new TeiDocument(xmlFilesList.get(i), convertStreamToString(getServletContext().getResourceAsStream(xmlFilesList.get(i))), xsl);
+            String xml = RgB.convertStreamToString(getServletContext().getResourceAsStream(xmlFilesList.get(i)), RgB.getContentType(getServletContext().getResourceAsStream(xmlFilesList.get(i))));
+            TeiDocument tei = new TeiDocument(xmlFilesList.get(i), xml, xsl);
 
             out.println("<li id=\"document\">");
             out.println("<span id=\"id\">" + tei.getTeiName() + "</span>");
@@ -131,29 +130,4 @@ public class DocumentsList extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    public static String convertStreamToString(InputStream is) throws IOException {
-        /*
-         * To convert the InputStream to String we use the BufferedReader.readLine()
-         * method. We iterate until the BufferedReader return null which means
-         * there's no more data to read. Each line will appended to a StringBuilder
-         * and returned as String.
-         */
-        if (is != null) {
-            StringBuilder sb = new StringBuilder();
-            String line;
-
-            try {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line).append("\n");
-                }
-            } finally {
-                is.close();
-            }
-            return sb.toString();
-        } else {
-            return "";
-        }
-    }
 }

@@ -6,15 +6,9 @@
 package it.unibo.cs.rgb.tei;
 
 import it.unibo.cs.rgb.util.TreeNode;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import javax.xml.transform.sax.SAXSource;
-import net.sf.saxon.sxpath.XPathEvaluator;
-import net.sf.saxon.sxpath.XPathExpression;
 
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 /**
  *
  * @author gine
@@ -26,7 +20,8 @@ public class TeiSvg {
     public TeiSvg(ArrayList<HashMap> witlist) {
         this.witlist = witlist;
     }
-
+    // verifica che l'oggetto passato sia un albero e che abbia tutti gli
+    // elementi che servono per generare l'albero
     public boolean canGetSvg(){
         boolean ret = false;
 
@@ -51,7 +46,7 @@ public class TeiSvg {
             for (int d=0; d<wLength; d++)
                 for (int i=0; i<wLength; i++)
                     if(witlist.get(d).get("der") != null)
-                        if (witlist.get(i).containsValue(witlist.get(d).get("der")))
+                        if (((String)witlist.get(i).get("id")).equalsIgnoreCase((String) witlist.get(d).get("der")))
                             counter++;
 
             if (counter == (wLength-1))
@@ -60,29 +55,20 @@ public class TeiSvg {
 
         return ret;
     }
-
-    public boolean hasDtd(){
-        return true;
-    }
-
-    public boolean isValid(){
-        return true;
-    }
-
+    // disegna svg con un array di TreeNode
     public String getSvg(){
         int footerSpace=80,yText=5, nGreekNodes = 0;
         int xCirclePos, yCirclePos,xFirstPLinePos,yFirstPLinePos,xSecondPLinePos,ySecondPLinePos;
-        String labelId ="", out="", classStyle="";
-
+        String labelId, out="", classStyle,cssUri="http://ltw1001.web.cs.unibo.it/svg.css";
         ArrayList<TreeNode> nodes = getTree();
 
         int maxX=maxPos(nodes, true);
         int maxY=maxPos(nodes, false);
 
-        out.concat("<?xml-stylesheet type=\"text/css\" href=\"svg.css\" ?>");
-        out.concat("<html xmlns:svg=\"http://www.w3.org/2000/svg\">");
-        out.concat("<body>");
-        out.concat("<svg:svg width=\""+(maxY+footerSpace)+"\" height=\""+(maxX+footerSpace)+"\" version=\"1.1\" >");
+        out += "<?xml-stylesheet type=\"text/css\" href=\""+cssUri+"\" ?>"+"\n";
+        out += "<html xmlns:svg=\"http://www.w3.org/2000/svg\">"+"\n";
+        out += "<body>"+"\n";
+        out += "<svg:svg width=\""+(maxX+footerSpace)+"\" height=\""+(maxY+footerSpace)+"\" version=\"1.1\" >"+"\n";
 
         //disegna le linee
         for (int i = 0; i < nodes.size(); i++){
@@ -95,7 +81,7 @@ public class TeiSvg {
                     ySecondPLinePos=nodes.get(i).getChildren().get(s).getY();
 
                     String line="<svg:line id=\""+nodes.get(i).getId()+"\" x1=\""+xFirstPLinePos+"\" y1=\""+yFirstPLinePos+"\" x2=\""+xSecondPLinePos+"\" y2=\""+ySecondPLinePos+"\"/>";
-                    out.concat(line);
+                    out += line+"\n";
                  }
               }
         }
@@ -118,19 +104,19 @@ public class TeiSvg {
                    circle="<svg:circle class=\""+classStyle+"\" id=\""+nodes.get(i).getId()+"\" r=\""+rCircle+"\"/>",
                    group="<svg:g transform=\"translate("+xCirclePos+" "+yCirclePos+")\">";
 
-            out.concat(group);
-            out.concat(circle);
-            out.concat(text);
-            out.concat("</svg:g>");
+            out += group+"\n";
+            out += circle+"\n";
+            out += text+"\n";
+            out += "</svg:g>"+"\n";
         }
 
-        out.concat("</svg:svg>");
-        out.concat("</body>");
-        out.concat("</html>");
+        out += "</svg:svg>"+"\n";
+        out += "</body>"+"\n";
+        out += "</html>"+"\n";
 
         return out;
     }
-
+    // genera l'albero a partire dal hashmap ricevuta con il costruttore
     private ArrayList<TreeNode> getTree(){
         ArrayList<TreeNode> nodes = new ArrayList<TreeNode>();
         int ySpaceBetweenCircle = 60, xSpaceBetweenCircle = 60;
@@ -216,6 +202,14 @@ public class TeiSvg {
 
         return nodes;
     }
+    //TODO:
+    public boolean hasDtd(){
+        return true;
+    }
+    //TODO:
+    public boolean isValid(){
+        return true;
+    }
     // pos=true --> x, pos=false --> y
     private int maxPos(ArrayList<TreeNode> nodes,boolean pos) {
         int ret=0,swapRet=0;
@@ -233,7 +227,7 @@ public class TeiSvg {
 
         return ret;
     }
-
+    //preleva la lettera greca da usare per i nodi missing=true in base ad un counter
     private String getGreek(int nGreekNodes){
         String gLetters="αβγδεζηθικλμνξοπρςτυφχψω";
 

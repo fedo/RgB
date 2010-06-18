@@ -5,8 +5,13 @@
 
 package it.unibo.cs.rgb.gwt;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.util.ArrayList;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -32,6 +37,69 @@ public class RgB {
         
 
         return retval;
+    }
+
+    public static String convertStreamToString(InputStream is, String encoding) throws IOException {
+        /*
+         * To convert the InputStream to String we use the BufferedReader.readLine()
+         * method. We iterate until the BufferedReader return null which means
+         * there's no more data to read. Each line will appended to a StringBuilder
+         * and returned as String.
+         */
+
+        // converte
+        if (is != null) {
+            StringBuilder sb = new StringBuilder();
+            String line;
+
+            try {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is, encoding));//"UTF-8"));
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line).append("\n");
+                }
+            } finally {
+                is.close();
+            }
+            return sb.toString();
+        } else {
+            return "";
+        }
+    }
+
+    public static String getContentType(InputStream is) throws IOException {
+        /*
+         * To convert the InputStream to String we use the BufferedReader.readLine()
+         * method. We iterate until the BufferedReader return null which means
+         * there's no more data to read. Each line will appended to a StringBuilder
+         * and returned as String.
+         */
+
+        String encoding = "UTF-8"; //default
+
+
+        // cerca se il documento specifica un altro encoding
+        if (is != null) {
+            StringBuilder sb = new StringBuilder();
+            String line;
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));//"UTF-8"));
+            while ((line = reader.readLine()) != null) { //CRASHA
+                sb.append(line).append("\n");
+                if ((sb.toString().contains("<?") && sb.toString().contains("?>")) && sb.toString().contains("encoding=")) {
+
+                    Pattern p = Pattern.compile(".*<\\?.*encoding=.(.*).\\?>.*", Pattern.DOTALL);
+
+                    Matcher matcher = p.matcher(sb.toString());
+
+                    if (matcher.matches()) {
+                        encoding = matcher.group(1);
+                    }
+
+                    break;
+                }
+            }
+        }
+        return encoding;
     }
 
 }

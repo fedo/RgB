@@ -10,14 +10,14 @@ import com.oreilly.servlet.multipart.Part;
 import it.unibo.cs.rgb.tei.TeiDocument;
 import it.unibo.cs.rgb.tei.TeiSvg;
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,10 +46,23 @@ public class StemmaCodicum extends HttpServlet {
 
         String xml = null;
 
+        // lettura degli stylesheets (xsl)
+        String stylesheetsFolder = "/stylesheets";
+        HashMap xsl = new HashMap();
+        Set stylesheetsSet = getServletContext().getResourcePaths(stylesheetsFolder);
+        Iterator stylesheetsIter = stylesheetsSet.iterator();
+        while (stylesheetsIter.hasNext()) {
+            String current = (String) stylesheetsIter.next();
+            if (current.endsWith(".xsl")) { //TODO controlla meglio con il content type
+                //out.println("Xsl: " + current + "<br/>");
+                xsl.put(current, convertStreamToString(getServletContext().getResourceAsStream(current)));
+            }
+        }
+
         // imposto l'outputstream
         PrintWriter out = response.getWriter();
         //response.setContentType("teimage/svg+xml;charset=UTF-8");
-        response.setContentType("plain/text;charset=UTF-8"); //DEBUG
+        response.setContentType("text/xml;charset=UTF-8"); //DEBUG
 
         errors.clear();
 
@@ -81,45 +94,69 @@ public class StemmaCodicum extends HttpServlet {
             throw new StemmaCodicumException(response);
         }
 
-        // parsing dei dati ricevuti
+        // elaborazione dati del documento TEI
         ArrayList<HashMap> data = new ArrayList<HashMap>();
-        TeiDocument tei = new TeiDocument(xml);
-        //String svgDataString = tei.getSvgDataString();
-        String svgDataString = "der1 1 sigil1 id1" + "----" + "der2 0 sigil2 id2"; //tring "der", boolean "missing", String "sigil", String "id"
+        TeiDocument tei = new TeiDocument("", xml, xsl);
+        String svgDataString = tei.getSvgDataString();
 
-        String[] lines = svgDataString.split("----");
+        // verifica
+        if ( svgDataString.length() <= 0) {
+            errors.add("svg non genrabile su questo documento, non contiene witlist");
+            throw new StemmaCodicumException(response);
+        }
+
+        
+        try{// parsing dei dati ricevuti dall'elaborazione
+        String[] lines = svgDataString.split("\\-");
+        //out.println("_linesNumber_"+lines.length+"_");
         for (int i = 0; i < lines.length; i++) {
+
             HashMap witnessMap = new HashMap();
             StringTokenizer tokens = new StringTokenizer(lines[i]);
-            witnessMap.put("der", tokens.nextToken());
-            witnessMap.put("missing", Boolean.parseBoolean(tokens.nextToken()));
-            witnessMap.put("sigil", tokens.nextToken());
-            witnessMap.put("id", tokens.nextToken());
+
+            String der = tokens.nextToken();
+            boolean missing = Boolean.parseBoolean(tokens.nextToken());
+            String sigil = tokens.nextToken();
+            String id = tokens.nextToken();
+
+            if (!der.equalsIgnoreCase("null")) {
+                witnessMap.put("der", der);
+            }
+            witnessMap.put("missing", missing);
+            witnessMap.put("sigil", sigil);
+            witnessMap.put("id", id);
+
+            //out.println(" "+der+" "+missing+" "+sigil+" "+id);
+
             data.add(witnessMap);
+        }}catch(Exception e){
+            errors.add("svg non genrabile su questo documento, dati mancanti dalla witlist");
+            throw new StemmaCodicumException(response);
+
         }
 
         for (int i = 0; i < data.size(); i++) {
             HashMap witnessMap = data.get(i);
-            out.println("- " + (String) witnessMap.get("der") + "- " + (Boolean) witnessMap.get("missing") + "- " + (String) witnessMap.get("sigil") + "- " + (String) witnessMap.get("id"));
+            //out.println("- " + (String) witnessMap.get("der") + "- " + (Boolean) witnessMap.get("missing") + "- " + (String) witnessMap.get("sigil") + "- " + (String) witnessMap.get("id"));
         }
 
         // inizializzo il TeiSvg
         TeiSvg svg = new TeiSvg(data);
 
         // verifica
-        /*if (tei.hasDtd() && !tei.isValid()) {
-        errors.add("tei non valido");
-        throw new StemmaCodicumException(response);
-        }*/
+        if (svg.hasDtd() && !svg.isValid()) {
+            errors.add("tei non valido");
+            throw new StemmaCodicumException(response);
+        }
 
         // verifica
-        /*if (!tei.canGetSvg()) {
-        errors.add("svg non generabile per questo documento tei");
+        if (!svg.canGetSvg()) {
+        errors.add("svg non generabile per questo documento tei: i dati non generano un albero");
         throw new StemmaCodicumException(response);
-        }*/
+        }
 
-        //out.print(docu.getTeiString());
         out.print(svg.getSvg());
+        //out.print(tei.getSvgDataString());
 
         out.close();
     }
