@@ -5,6 +5,8 @@
 package it.unibo.cs.rgb.servlet;
 
 import com.oreilly.servlet.MultipartRequest;
+import it.unibo.cs.rgb.gwt.RgB;
+import it.unibo.cs.rgb.util.ClientHttpRequest;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -36,100 +38,90 @@ public class Dispatcher extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, DispatcherException, ParserConfigurationException, SAXException {
 
+        String host = "localhost:8080";
+
 
         //StemmaCodicum POST input: 1 file tei, output: svg o html+svg
         //EstrazioneDiConcordanze: un documento TEI + una parola P + un numero N
         //Differenziazione input: > 2 files tei, output: RDF
 
-        if (!request.getContentType().startsWith("multipart/form-data")) {
-            errors.add("content type sbagliatissimo");
-            throw new DispatcherException(response);
-        }
+        /*if (!request.getContentType().startsWith("multipart/form-data")) {
+        errors.add("content type sbagliatissimo");
+        throw new DispatcherException(response);
+        }*/
+
+        /*
 
         MultipartRequest mrequest = new MultipartRequest(request, this.getServletContext().getRealPath("./tmp"));
         Enumeration filesEnumeration = mrequest.getFileNames();
         ArrayList<String> files = new ArrayList<String>();
         Enumeration parametersEnumeration = mrequest.getParameterNames();
         ArrayList<String> parameters = new ArrayList<String>();
-
+         */
         //parametri
-        while (parametersEnumeration.hasMoreElements()) {
-            String tmp = (String) parametersEnumeration.nextElement();
-            parameters.add(tmp);
+        /*while (parametersEnumeration.hasMoreElements()) {
+        String tmp = (String) parametersEnumeration.nextElement();
+        parameters.add(tmp);
         }
 
         //files
         while (filesEnumeration.hasMoreElements()) {
-            String tmp = (String) filesEnumeration.nextElement();
-            files.add(tmp);
+        String tmp = (String) filesEnumeration.nextElement();
+        files.add(tmp);
         }
 
         String service = mrequest.getParameter("service");
         if (service == null) {
-            errors.add("non definito parametro service");
-            throw new DispatcherException(response);
-        }
+        errors.add("non definito parametro service");
+        throw new DispatcherException(response);
+        }*/
+
+        String service = request.getParameter("service");
 
         //dispatching dei servizi
-        if (service.equalsIgnoreCase("StemmaCodicum")) {
-            response.setContentType("teimage/svg+xml");
+        if (service == null) {
+            errors.add("servizio inesistente");
+            throw new DispatcherException(response);
+
+        } else if (service.equalsIgnoreCase("StemmaCodicum")) {
+            response.setContentType("text/html");
             PrintWriter out = response.getWriter();
+            String filePath = request.getParameter("path");
 
-            String xml = getFileNameByContentType(mrequest, "text/xml");
-            String dtd = getFileNameByContentType(mrequest, "application/octet-stream");
-
-            if (xml == null) {
-                errors.add("stemma: xml mancante");
-                throw new DispatcherException(response);
-            }
-
-            
-
-            /*if (dtd == null) {
-                //stemma(xml)
-            } else {
-                //stemma(xml,dtd)
-            }*/
-
+            ClientHttpRequest nreq = new ClientHttpRequest("http://"+host+"/RgB/StemmaCodicum");
+            nreq.setParameter("tei", filePath, getServletContext().getResourceAsStream(filePath), "application/xml");
+            out.println(RgB.convertXmlStreamToString(nreq.post()));
 
         } else if (service.equalsIgnoreCase("EstrazioneDiConcordanze")) {
             //EstrazioneDiConcordanze edc;
-
-            response.setContentType("text/html;charset=UTF-8");
+        } else if (service.equalsIgnoreCase("Colocazioni")) {
+            response.setContentType("text/html");
             PrintWriter out = response.getWriter();
+            String filePath = request.getParameter("path");
+            String word = request.getParameter("word");
 
-            String xml = getFileNameByContentType(mrequest, "text/xml");
-            String dtd = getFileNameByContentType(mrequest, "application/octet-stream");
-            String word = mrequest.getParameter("word");
-            String number = mrequest.getParameter("number");
+            //Colocazioni/Servizio_Col
 
-            if (xml == null) {
-                errors.add("estrazione: xml mancante");
-                if (word == null) {
-                    errors.add("estrazione: word mancante");
-                }
-                if (number == null) {
-                    errors.add("estrazione: number mancante");
-                }
-                throw new DispatcherException(response);
-            }
+            ClientHttpRequest nreq = new ClientHttpRequest("http://ltw1002.web.cs.unibo.it:8080/Colocazioni/Servizio_Col"+"/"+word);
+            nreq.setParameter("files", filePath, getServletContext().getResourceAsStream(filePath), "application/xml");
 
-            if (dtd == null) {
-                //edc = EstrazioneDiConcordanze(xml,word,number)
-            } else {
-                //edc = EstrazioneDiConcordanze(xml,dtd,word,number)
-            }
-            out.println("<p>xmlfile: " + xml + " dtdfile: " + dtd + " word: " + word + " number: " + number + "</p>");
+            out.println(RgB.convertXmlStreamToString(nreq.post()));
+        }else if (service.equalsIgnoreCase("FrequenzeDiOccorrenza")) {
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
+            String filePath = request.getParameter("path");
 
+            //Colocazioni/Servizio_Col
 
-        } else if (service.equalsIgnoreCase("Differenziazione")) {
+            ClientHttpRequest nreq = new ClientHttpRequest("http://ltw1002.web.cs.unibo.it:8080/FrequenzeOccorrenza/Servizio_Occorrenze");
+            nreq.setParameter("files", filePath, getServletContext().getResourceAsStream(filePath), "application/xml");
+
+            out.println(RgB.convertXmlStreamToString(nreq.post()));
+            
+        }else if (service.equalsIgnoreCase("Differenziazione")) {
             response.setContentType("application/rdf+xml");
             PrintWriter out = response.getWriter();
             out.println("differenziazione");
-
-        } else {
-            errors.add("servizio inesistente");
-            throw new DispatcherException(response);
         }
 
     }
@@ -172,27 +164,16 @@ public class Dispatcher extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        out.println("<p>accetto solo richieste post, tiè O,/</p> ");
-
-        /*
-
         try {
-        try {
-        processRequest(request, response);
+            processRequest(request, response);
+        } catch (DispatcherException ex) {
+            Logger.getLogger(Dispatcher.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParserConfigurationException ex) {
-        Logger.getLogger(Dispatcher.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Dispatcher.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SAXException ex) {
-        Logger.getLogger(Dispatcher.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Dispatcher.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-
-
-        } catch (DispatcherException ex) {
-        Logger.getLogger(Dispatcher.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
 
 
     }

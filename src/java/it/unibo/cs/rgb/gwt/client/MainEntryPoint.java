@@ -35,7 +35,6 @@ public class MainEntryPoint implements EntryPoint {
     //elementi grafici
     Widget header;
     Widget footer;
-    
     VerticalPanel west = new VerticalPanel();
     VerticalPanel center;
     Label title;
@@ -72,7 +71,7 @@ public class MainEntryPoint implements EntryPoint {
         header.addStyleName("headerPanel");
         header.setHeight("125px");
         mainPanel.add(header, DockPanel.NORTH);
-        mainPanel.setCellWidth(header, "125px");
+        
 
         footer = createFooterWidget();
         mainPanel.add(footer, DockPanel.SOUTH);
@@ -129,7 +128,7 @@ public class MainEntryPoint implements EntryPoint {
     }
 
     private Widget createHomepage() {
-        homepage = new HTML("<p>Questa è l'home page, clicca su un documento per fare delle storie: "+host+"</p>");
+        homepage = new HTML("<p>Questa è l'home page, clicca su un documento per fare delle storie: " + host + "</p>");
         return homepage;
     }
 
@@ -160,7 +159,7 @@ public class MainEntryPoint implements EntryPoint {
         panel.setTitle(id);
 
         //DocumentInfo
-        String url = "http://"+host+"/RgB/DocumentInfo";
+        String url = "http://" + host + "/RgB/DocumentInfo";
         String postData = URL.encode("path") + "=" + URL.encode(path);
 
         RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, URL.encode(url));
@@ -183,6 +182,9 @@ public class MainEntryPoint implements EntryPoint {
                     DisclosurePanel info = new DisclosurePanel("Informazioni sul documento");
                     info.setWidth("100%");
                     info.setOpen(true);
+                    final HTML loading = new HTML("<img src=\"images/loading.gif\" alt=\"Caricamento in corso\" />");
+                    loading.setStyleName("loading");
+                    info.setContent(loading);
                     info.setContent(new HTML(responseXml.getElementById("info").getFirstChild().toString()));
                     panel.add(info);
 
@@ -191,7 +193,6 @@ public class MainEntryPoint implements EntryPoint {
                     serviceButtons.add(new Label("Servizi:"));
                     serviceButtons.add(createFrequenzeDiOccorrenzaButton(path));
                     serviceButtons.add(createColocazioniButton(path));
-                    serviceButtons.add(createEstrazioneDiConcordanzeButton(path));
                     serviceButtons.add(createStemmaCodicumButton(path));
 
                     panel.add(serviceButtons);
@@ -275,11 +276,12 @@ public class MainEntryPoint implements EntryPoint {
 
     private void createDocumentsList() {
         //DocumentList
-        String url = "http://"+host+"/RgB/DocumentsList";
+        String url = "http://" + host + "/RgB/DocumentsList";
         RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(url));
         builder.setTimeoutMillis(1000000);
 
-        final Label loading = new Label("Caricamento in corso...");
+        final HTML loading = new HTML("<img src=\"images/loading.gif\" alt=\"Caricamento in corso\" />");
+        loading.setStyleName("loading");
         west.add(loading);
 
         try {
@@ -290,9 +292,9 @@ public class MainEntryPoint implements EntryPoint {
                 }
 
                 public void onResponseReceived(Request request, Response response) {
-                    
+
                     if (200 == response.getStatusCode()) {
-                        
+
                         //xhtml parsing
                         Document responseXml = XMLParser.parse(response.getText().toString());
 
@@ -488,7 +490,7 @@ public class MainEntryPoint implements EntryPoint {
         retval.setStyleName("documentView");
 
         //DocumentViewer
-        String url = "http://"+host+"/RgB/DocumentViewer";
+        String url = "http://" + host + "/RgB/DocumentViewer";
         String postData = URL.encode("path") + "=" + URL.encode(path) + "&" + URL.encode("witness") + "=" + URL.encode(witness);
 
         RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, URL.encode(url));
@@ -506,12 +508,7 @@ public class MainEntryPoint implements EntryPoint {
                         //xhtml parsing
                         Document responseXml = XMLParser.parse(response.getText().toString());
                         //debug.add(new Label(response.getText().toString()));
-
-
                         retval.setHTML(responseXml.toString());
-
-
-
                     } else {
                         Window.alert("ERRORE: la risposta del servizio DocumentList non è quella aspettata");
                     }
@@ -525,7 +522,7 @@ public class MainEntryPoint implements EntryPoint {
         return retval;
     }
 
-    public Widget createFrequenzeDiOccorrenzaButton(String path) { //TODO
+    public Widget createFrequenzeDiOccorrenzaButton(final String path) { //TODO
         Button button = new Button("Frequenze di occorrenza");
         button.addClickHandler(new ClickHandler() {
 
@@ -533,8 +530,8 @@ public class MainEntryPoint implements EntryPoint {
 
                 service.clear();
                 service.setVisible(true);
-                service.add(new Label("servizioabbestia"));
-                
+                service.add(makeFrequenzeDiOccorrenzaRequest(path));
+
 
                 Button closeButton = new Button("Chiudi il servizio");
                 closeButton.addClickHandler(new ClickHandler() {
@@ -552,15 +549,171 @@ public class MainEntryPoint implements EntryPoint {
         return button;
     }
 
-    public Widget createColocazioniButton(String path) { //TODO
-        return new Button("Colocazioni");
+    public Widget createColocazioniButton(final String path) { //TODO
+        Button button = new Button("Colocazioni");
+        button.addClickHandler(new ClickHandler() {
+
+            public void onClick(ClickEvent event) {
+
+                final Button closeButton = new Button("Chiudi il servizio");
+                closeButton.addClickHandler(new ClickHandler() {
+
+                    public void onClick(ClickEvent event) {
+                        service.clear();
+                        service.setVisible(false);
+                    }
+                });
+
+                service.clear();
+                service.setVisible(true);
+
+                VerticalPanel form = new VerticalPanel();
+                final TextBox wordBox = new TextBox();
+                
+                Button serviceButton = new Button("Invia");
+                serviceButton.addClickHandler(new ClickHandler() {
+
+                    public void onClick(ClickEvent event) {
+                        if(wordBox.getText().equalsIgnoreCase("")){
+                             Window.alert("Il servizio richiede una parola da ricercare. Inseriscila nella TextBox e clicca di nuovo il pulsante.");
+                        }else{
+                        service.clear();
+                        service.setVisible(true);
+                        service.add(closeButton);
+                         service.add(makeColocazioniRequest(path,wordBox.getText()));}
+                        
+                    }
+                });
+
+                form.add(wordBox);
+                form.add(serviceButton);
+
+                
+                service.add(form);
+                service.add(closeButton);
+
+            }
+        });
+        return button;
     }
 
-    public Widget createEstrazioneDiConcordanzeButton(String path) { //TODO
-        return new Button("Estrazione di concordanze");
+    public Widget createStemmaCodicumButton(final String path) { //TODO
+        Button button = new Button("StemmaCodicum");
+        button.addClickHandler(new ClickHandler() {
+
+            public void onClick(ClickEvent event) {
+
+                service.clear();
+                service.setVisible(true);
+                
+                Button closeButton = new Button("Chiudi il servizio");
+                closeButton.addClickHandler(new ClickHandler() {
+
+                    public void onClick(ClickEvent event) {
+                        service.clear();
+                        service.setVisible(false);
+                    }
+                });
+
+                service.add(closeButton);
+                service.add(makeStemmaCodicumRequest(path));
+                service.add(closeButton);
+
+            }
+        });
+        return button;
     }
 
-    public Widget createStemmaCodicumButton(String path) { //TODO
-        return new Button("Stemma Codicum");
+    public Widget makeStemmaCodicumRequest(String path) {
+
+        final Label retval = new Label();
+
+        //Dispatcher->StemmaCodicum
+        String url = "http://" + host + "/RgB/Dispatcher?service=StemmaCodicum&path=" + path;
+
+        RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, URL.encode(url));
+        builder.setTimeoutMillis(1000000);
+        builder.setHeader("Content-type", "application/x-www-form-urlencoded");
+        try {
+            Request request = builder.sendRequest(null, new RequestCallback() {
+
+                public void onError(Request request, Throwable exception) {
+                    Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
+                }
+
+                public void onResponseReceived(Request request, Response response) {
+                    if (200 == response.getStatusCode()) {
+                        retval.setText(response.getText().toString());
+                    } else {
+                        Window.alert("ERRORE: la risposta del servizio DocumentList non è quella aspettata");
+                    }
+                }
+            });
+        } catch (RequestException e) {
+            Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
+        }
+        return retval;
+    }
+
+    public Widget makeFrequenzeDiOccorrenzaRequest(String path) {
+
+        final HTML retval = new HTML();
+
+        //Dispatcher->StemmaCodicum
+        String url = "http://" + host + "/RgB/Dispatcher?service=FrequenzeDiOccorrenza&path=" + path;
+
+        RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, URL.encode(url));
+        builder.setTimeoutMillis(1000000);
+        builder.setHeader("Content-type", "application/x-www-form-urlencoded");
+        try {
+            Request request = builder.sendRequest(null, new RequestCallback() {
+
+                public void onError(Request request, Throwable exception) {
+                    Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
+                }
+
+                public void onResponseReceived(Request request, Response response) {
+                    if (200 == response.getStatusCode()) {
+                        retval.setHTML(response.getText().toString());
+                    } else {
+                        Window.alert("ERRORE: la risposta del servizio DocumentList non è quella aspettata");
+                    }
+                }
+            });
+        } catch (RequestException e) {
+            Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
+        }
+        return retval;
+    }
+
+    public Widget makeColocazioniRequest(String path, String word) {
+
+        final HTML retval = new HTML();
+
+        //Dispatcher->StemmaCodicum
+        String url = "http://" + host + "/RgB/Dispatcher?service=Colocazioni&path=" + path+"&word="+word;
+
+        RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, URL.encode(url));
+        builder.setTimeoutMillis(1000000);
+        builder.setHeader("Content-type", "application/x-www-form-urlencoded");
+        try {
+            Request request = builder.sendRequest(null, new RequestCallback() {
+
+                public void onError(Request request, Throwable exception) {
+                    Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
+                }
+
+                public void onResponseReceived(Request request, Response response) {
+                    if (200 == response.getStatusCode()) {
+                        retval.setHTML(response.getText().toString());
+                    } else {
+                        Window.alert("ERRORE: la risposta del servizio DocumentList non è quella aspettata");
+                    }
+                }
+            });
+        } catch (RequestException e) {
+            Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
+        }
+        return retval;
     }
 }
