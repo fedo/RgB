@@ -40,42 +40,6 @@ public class Dispatcher extends HttpServlet {
 
         String host = "localhost:8080";
 
-
-        //StemmaCodicum POST input: 1 file tei, output: svg o html+svg
-        //EstrazioneDiConcordanze: un documento TEI + una parola P + un numero N
-        //Differenziazione input: > 2 files tei, output: RDF
-
-        /*if (!request.getContentType().startsWith("multipart/form-data")) {
-        errors.add("content type sbagliatissimo");
-        throw new DispatcherException(response);
-        }*/
-
-        /*
-
-        MultipartRequest mrequest = new MultipartRequest(request, this.getServletContext().getRealPath("./tmp"));
-        Enumeration filesEnumeration = mrequest.getFileNames();
-        ArrayList<String> files = new ArrayList<String>();
-        Enumeration parametersEnumeration = mrequest.getParameterNames();
-        ArrayList<String> parameters = new ArrayList<String>();
-         */
-        //parametri
-        /*while (parametersEnumeration.hasMoreElements()) {
-        String tmp = (String) parametersEnumeration.nextElement();
-        parameters.add(tmp);
-        }
-
-        //files
-        while (filesEnumeration.hasMoreElements()) {
-        String tmp = (String) filesEnumeration.nextElement();
-        files.add(tmp);
-        }
-
-        String service = mrequest.getParameter("service");
-        if (service == null) {
-        errors.add("non definito parametro service");
-        throw new DispatcherException(response);
-        }*/
-
         String service = request.getParameter("service");
 
         //dispatching dei servizi
@@ -93,35 +57,41 @@ public class Dispatcher extends HttpServlet {
             out.println(RgB.convertXmlStreamToString(nreq.post()));
 
         } else if (service.equalsIgnoreCase("EstrazioneDiConcordanze")) {
-            //EstrazioneDiConcordanze edc;
+
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
+            String filePath = request.getParameter("path");
+            String word = request.getParameter("word");
+            String number = request.getParameter("number");
+
+
         } else if (service.equalsIgnoreCase("Colocazioni")) {
+
             response.setContentType("text/html");
             PrintWriter out = response.getWriter();
             String filePath = request.getParameter("path");
             String word = request.getParameter("word");
 
-            //Colocazioni/Servizio_Col
-
             ClientHttpRequest nreq = new ClientHttpRequest("http://ltw1002.web.cs.unibo.it:8080/Colocazioni/Servizio_Col"+"/"+word);
             nreq.setParameter("files", filePath, getServletContext().getResourceAsStream(filePath), "application/xml");
-
             out.println(RgB.convertXmlStreamToString(nreq.post()));
+
         }else if (service.equalsIgnoreCase("FrequenzeDiOccorrenza")) {
+
             response.setContentType("text/html");
             PrintWriter out = response.getWriter();
             String filePath = request.getParameter("path");
 
-            //Colocazioni/Servizio_Col
-
             ClientHttpRequest nreq = new ClientHttpRequest("http://ltw1002.web.cs.unibo.it:8080/FrequenzeOccorrenza/Servizio_Occorrenze");
             nreq.setParameter("files", filePath, getServletContext().getResourceAsStream(filePath), "application/xml");
-
             out.println(RgB.convertXmlStreamToString(nreq.post()));
             
         }else if (service.equalsIgnoreCase("Differenziazione")) {
+
             response.setContentType("application/rdf+xml");
             PrintWriter out = response.getWriter();
             out.println("differenziazione");
+            
         }
 
     }

@@ -30,8 +30,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class StemmaCodicum extends HttpServlet {
 
-    ArrayList<String> errors = new ArrayList<String>();
-
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -51,29 +49,20 @@ public class StemmaCodicum extends HttpServlet {
         Iterator stylesheetsIter = stylesheetsSet.iterator();
         while (stylesheetsIter.hasNext()) {
             String current = (String) stylesheetsIter.next();
-            if (current.endsWith(".xsl")) { //TODOcontrolla meglio con il content type
-                //out.println("Xsl: " + current + "<br/>");
+            if (current.endsWith(".xsl")) {
                 xsl.put(current, RgB.convertStreamToString(getServletContext().getResourceAsStream(current), "UTF-8"));
             }
         }
 
-        // imposto l'outputstream
-        PrintWriter out = response.getWriter();
-        //response.setContentType("teimage/svg+xml;charset=UTF-8");
-        response.setContentType("text/xml;charset=UTF-8"); //DEBUG
-
-        errors.clear();
-
         // la request dev'essere "multipart/form-data"
         if (!request.getContentType().startsWith("multipart/form-data")) {
-            errors.add("content type sbagliatissimo");
-            throw new StemmaCodicumException(response);
+            throw new StemmaCodicumException(response, "406", "Not acceptable", "Richiesto Content-Type 'multipart/form-data'.", "Imposta il Content-Type 'multipart/form-data'.");
         }
 
-        // parso la request
-        MultipartParser mparser = new MultipartParser(request, 1000999);
+        // parsing request
+        MultipartParser mparser = new MultipartParser(request, Integer.MAX_VALUE);
 
-        // esamino ogni Part della request
+        // ricerca documento TEI (xml)
         Part tmpPart = mparser.readNextPart();
         while (tmpPart != null) {
             if (tmpPart.isFile()) {
@@ -86,10 +75,9 @@ public class StemmaCodicum extends HttpServlet {
 
         }
 
-        // verifica
+        // verifica presenza documento TEI
         if (xml == null) {
-            errors.add("manca file xml");
-            throw new StemmaCodicumException(response);
+            throw new StemmaCodicumException(response, "406", "Not acceptable", "File input mancante.", "Inserisci nella richiesta un documento TEI.");
         }
 
         // elaborazione dati del documento TEI
@@ -99,12 +87,11 @@ public class StemmaCodicum extends HttpServlet {
 
         // verifica
         if (svgDataString.length() <= 0) {
-            errors.add("svg non genrabile su questo documento, non contiene witlist");
-            throw new StemmaCodicumException(response);
+            throw new StemmaCodicumException(response, "406", "Not acceptable", "Il documento TEI dato in input non contiene witList.", "Inserisci nella richiesta un documento TEI contenente witList.");
         }
 
-
-        try {// parsing dei dati ricevuti dall'elaborazione
+        // parsing dei dati ricevuti dall'elaborazione
+        try {
             String[] lines = svgDataString.split("\\-");
             //out.println("_linesNumber_"+lines.length+"_");
             for (int i = 0; i < lines.length; i++) {
@@ -124,38 +111,30 @@ public class StemmaCodicum extends HttpServlet {
                 witnessMap.put("sigil", sigil);
                 witnessMap.put("id", id);
 
-                //out.println(" "+der+" "+missing+" "+sigil+" "+id);
-
                 data.add(witnessMap);
             }
         } catch (Exception e) {
-            errors.add("svg non genrabile su questo documento, dati mancanti dalla witlist");
-            throw new StemmaCodicumException(response);
-
+            throw new StemmaCodicumException(response, "406", "Not acceptable", "Il documento TEI dato in input non contiene witList corretta.", "Inserisci nella richiesta un documento TEI contenente witList corretta.");
         }
-
-        /*for (int i = 0; i < data.size(); i++) { //DEBUG
-        HashMap witnessMap = data.get(i);
-        //out.println("- " + (String) witnessMap.get("der") + "- " + (Boolean) witnessMap.get("missing") + "- " + (String) witnessMap.get("sigil") + "- " + (String) witnessMap.get("id"));
-        }*/
 
         // inizializzo il TeiSvg
         TeiSvg svg = new TeiSvg(data);
 
         // verifica
         if (svg.hasDtd() && !svg.isValid()) {
-            errors.add("tei non valido");
-            throw new StemmaCodicumException(response);
+            throw new StemmaCodicumException(response, "406", "Not acceptable", "Il documento TEI dato in input non è valido.", "Inserisci nella richiesta un documento TEI valido.");
         }
 
         // verifica
         if (!svg.canGetSvg()) {
-            errors.add("svg non generabile per questo documento tei: i dati non generano un albero");
-            throw new StemmaCodicumException(response);
+            throw new StemmaCodicumException(response, "406", "Not acceptable", "Il documento TEI dato in input non permette di generare un albero.", "Inserisci nella richiesta un documento TEI che permetta di generare un albero.");
         }
 
+        // output
+        PrintWriter out = response.getWriter();
+        //response.setContentType("teimage/svg+xml;charset=UTF-8");
+        response.setContentType("text/xml;charset=UTF-8"); //DEBUG
         out.print(svg.getSvg());
-
         out.close();
     }
 
@@ -171,9 +150,8 @@ public class StemmaCodicum extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        errors.add("accetto solo richieste post");
         try {
-            throw new StemmaCodicumException(response);
+            throw new StemmaCodicumException(response, "405", "Method not allowed", "Accettate solo richieste POST.", "Imposta il metodo POST.");
         } catch (StemmaCodicumException ex) {
             Logger.getLogger(StemmaCodicum.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -209,29 +187,32 @@ public class StemmaCodicum extends HttpServlet {
 
     class StemmaCodicumException extends Exception {
 
-        StemmaCodicumException(HttpServletResponse response) {
-
+        StemmaCodicumException(HttpServletResponse response, String code, String shortDescription, String description, String tip) {
+            PrintWriter out = null;
             try {
-                response.setContentType("text/html;charset=UTF-8");
-                PrintWriter out = response.getWriter();
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Servlet Dispatcher</title>");
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h1>Dispatcher errors:</h1>");
-                for (int i = 0; i < errors.size(); i++) {
-                    out.println(errors.get(i));
+                response.setContentType("application/json");
+                out = response.getWriter();
+                /*
+                {
+                code : 'error code',
+                short : 'A short error description',
+                description : 'A verbose error description',
+                tip : 'One or more tips to resolve the error'
                 }
-                out.println("</body>");
-                out.println("</html>");
-                out.close();
-                errors.clear();
+                 */
+                String message = "";
+                message += "{";
+                message += "\n\tcode: '" + code + "',";
+                message += "\n\tshort: '" + shortDescription + "',";
+                message += "\n\tdescription : '" + description + "',";
+                message += "\n\ttip: '" + tip + "'";
+                message += "\n}";
+                out.print(message);
             } catch (IOException ex) {
-                Logger.getLogger(Dispatcher.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(EstrazioneDiConcordanze.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                out.close();
             }
-
-
         }
     }
 }

@@ -13,23 +13,34 @@ import java.util.List;
  * @author gine
  */
 public class Wtw {
-    protected String id = null;
-    protected String trasc = null;
+    //protected String sigil = null;
+    //protected String trasc = null;
+    protected String type = null;
+    protected int nConcordanze = 0;
     protected final List<String> words = new ArrayList<String>();
     protected final List<String> before = new ArrayList<String>();
     protected final List<String> after = new ArrayList<String>();
 
-    public Wtw(String id, String trasc){
-        this.id = id;
-        this.trasc = trasc;
+    public Wtw(/*String sigil, String trasc,*/ String type){
+    //   this.sigil = sigil;
+    //    this.trasc = trasc;
+        this.type = type;
     }
 
-    public String getId(){
-        return id;
+    //public String getSigil(){
+    //    return sigil;
+    //}
+
+    //public String getTrasc(){
+    //    return trasc;
+    //}
+
+    public String getType(){
+        return type;
     }
 
-    public String getTrasc(){
-        return trasc;
+    public int getConcordanze(){
+        return nConcordanze;
     }
 
     public List<String> getWords(){
@@ -44,12 +55,20 @@ public class Wtw {
         return after;
     }
 
-    public void setId(String id){
-        this.id = id;
+    //public void setSigil(String sigil){
+    //   this.sigil = sigil;
+    //}
+
+    //public void setTrasc(String trasc){
+    //    this.trasc = trasc;
+    //}
+
+    public void setType(String type){
+        this.type = type;
     }
 
-    public void setTrasc(String trasc){
-        this.trasc = trasc;
+    public void setConcordanze(int concordanze){
+        this.nConcordanze = concordanze;
     }
 
     public void addWord(String word){

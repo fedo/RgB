@@ -23,6 +23,7 @@ import com.google.gwt.user.client.ui.PopupPanel.PositionCallback;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.XMLParser;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 /**
@@ -40,7 +41,6 @@ public class MainEntryPoint implements EntryPoint {
     Label title;
     Widget content;
     TabPanel documentViewerPanel = new TabPanel();
-    Panel service = new VerticalPanel();
     HTML homepage;
     HorizontalPanel debug = new HorizontalPanel();
     //variabili
@@ -71,7 +71,7 @@ public class MainEntryPoint implements EntryPoint {
         header.addStyleName("headerPanel");
         header.setHeight("125px");
         mainPanel.add(header, DockPanel.NORTH);
-        
+        mainPanel.setCellHeight(header, "125px");
 
         footer = createFooterWidget();
         mainPanel.add(footer, DockPanel.SOUTH);
@@ -188,12 +188,16 @@ public class MainEntryPoint implements EntryPoint {
                     info.setContent(new HTML(responseXml.getElementById("info").getFirstChild().toString()));
                     panel.add(info);
 
+
+                    Panel service = new VerticalPanel();
+                    
                     //servizi
                     HorizontalPanel serviceButtons = new HorizontalPanel();
                     serviceButtons.add(new Label("Servizi:"));
-                    serviceButtons.add(createFrequenzeDiOccorrenzaButton(path));
-                    serviceButtons.add(createColocazioniButton(path));
-                    serviceButtons.add(createStemmaCodicumButton(path));
+                    serviceButtons.add(createFrequenzeDiOccorrenzaButton(service, path));
+                    serviceButtons.add(createColocazioniButton(service,path));
+                    serviceButtons.add(createStemmaCodicumButton(service,path));
+                    serviceButtons.add(createCloseAllServicesButton(service));
 
                     panel.add(serviceButtons);
                     service.setStyleName("servicePanel");
@@ -309,10 +313,10 @@ public class MainEntryPoint implements EntryPoint {
                             Document currentXml = XMLParser.parse(current);
 
                             //estrapolazione dati dalla servlet
-                            final String id = new HTML(currentXml.getElementById("id").getFirstChild().toString()).getHTML();
+                            String id = new HTML(currentXml.getElementById("id").getFirstChild().toString()).getHTML();
                             documentInfo.put("id", id);
 
-                            final String path = new HTML(currentXml.getElementById("path").getFirstChild().toString()).getHTML();
+                            String path = new HTML(currentXml.getElementById("path").getFirstChild().toString()).getHTML();
                             documentInfo.put("path", path);
 
                             String doctitle = id;
@@ -320,7 +324,6 @@ public class MainEntryPoint implements EntryPoint {
                                 doctitle = new HTML(currentXml.getElementById("docTitle").getFirstChild().toString()).getHTML();
                             }
                             documentInfo.put("title", doctitle);
-
 
                             String author = "(autore mancante)";
                             if (current.contains("docAuthor")) {
@@ -334,20 +337,40 @@ public class MainEntryPoint implements EntryPoint {
                             }
                             documentInfo.put("witnesses", witnesses);
 
-                            //final String shortName = new HTML(currentXml.getElementById("shortName").getFirstChild().toString()).getHTML();
-                            final String shortName = doctitle;
+                            String shortName = doctitle;
                             documentInfo.put("shortName", shortName);
 
-                            final String longName = currentXml.getElementById("longName").toString() + "<b>Nome file:</b> " + id;
+                            String longName = currentXml.getElementById("longName").toString() + "<b>Nome file:</​b> " + id;
                             documentInfo.put("longName", longName);
+                        }
 
+                        ArrayList<String> idArray = new ArrayList<String>();
+                        ArrayList<HashMap> ordDoc = new ArrayList<HashMap>();
+                        int docLength = documents.size();
+                        for (int i = 0; i < docLength; i++) {
+                            idArray.add(((String) documents.get(i).get("id")));
+                        }
+
+                        Collections.sort(idArray);
+                        for (int i = 0; i < docLength; i++) {
+                            for (int d = 0; d < docLength; d++) {
+                                if (idArray.get(i).equalsIgnoreCase(((String) documents.get(d).get("id")))) {
+                                    ordDoc.add(documents.get(d));
+                                }
+                            }
+                        }
+
+                        for (int i = 0; i < docLength; i++) {
                             //*** disegno bottoni del menu doclist
                             final Label currentWidget;
+                            final String path = (String) ordDoc.get(i).get("path");
+                            final String shortName = (String) ordDoc.get(i).get("shortName");
                             currentWidget = new Label(shortName);
 
                             //finestra contenente nome lungo del documento
                             final PopupPanel overWidget = new PopupPanel(true);
                             overWidget.setVisible(false);
+                            final String longName = (String) ordDoc.get(i).get("longName");
                             overWidget.add(new HTML(longName));
 
                             MouseOverHandler overHandler = new MouseOverHandler() {
@@ -360,7 +383,7 @@ public class MainEntryPoint implements EntryPoint {
                                         public void setPosition(int offsetWidth, int offsetHeight) {
                                             //int left = event.getClientX() + 50;
                                             int left = 165;
-                                            int top = event.getClientY();
+                                            int top = event.getScreenY();//event.getClientY();
                                             overWidget.setPopupPosition(left, top);
                                         }
                                     });
@@ -378,6 +401,7 @@ public class MainEntryPoint implements EntryPoint {
 
 
                             currentWidget.addStyleName("buttonDocumentsList");
+                            final String id = (String) ordDoc.get(i).get("id");
                             currentWidget.setTitle(id);
                             currentWidget.addMouseOverHandler(overHandler);
                             currentWidget.addMouseOutHandler(outHandler);
@@ -522,7 +546,20 @@ public class MainEntryPoint implements EntryPoint {
         return retval;
     }
 
-    public Widget createFrequenzeDiOccorrenzaButton(final String path) { //TODO
+    public Widget createCloseAllServicesButton(final Panel service) {
+        Button button = new Button("Chiudi tutti i servizi");
+        button.addClickHandler(new ClickHandler() {
+
+            public void onClick(ClickEvent event) {
+
+                service.clear();
+                service.setVisible(false);
+            }
+        });
+        return button;
+    }
+
+    public Widget createFrequenzeDiOccorrenzaButton(final Panel service, final String path) {
         Button button = new Button("Frequenze di occorrenza");
         button.addClickHandler(new ClickHandler() {
 
@@ -549,7 +586,7 @@ public class MainEntryPoint implements EntryPoint {
         return button;
     }
 
-    public Widget createColocazioniButton(final String path) { //TODO
+    public Widget createColocazioniButton(final Panel service, final String path) {
         Button button = new Button("Colocazioni");
         button.addClickHandler(new ClickHandler() {
 
@@ -569,26 +606,27 @@ public class MainEntryPoint implements EntryPoint {
 
                 VerticalPanel form = new VerticalPanel();
                 final TextBox wordBox = new TextBox();
-                
+
                 Button serviceButton = new Button("Invia");
                 serviceButton.addClickHandler(new ClickHandler() {
 
                     public void onClick(ClickEvent event) {
-                        if(wordBox.getText().equalsIgnoreCase("")){
-                             Window.alert("Il servizio richiede una parola da ricercare. Inseriscila nella TextBox e clicca di nuovo il pulsante.");
-                        }else{
-                        service.clear();
-                        service.setVisible(true);
-                        service.add(closeButton);
-                         service.add(makeColocazioniRequest(path,wordBox.getText()));}
-                        
+                        if (wordBox.getText().equalsIgnoreCase("")) {
+                            Window.alert("Il servizio richiede una parola da ricercare. Inseriscila nella TextBox e clicca di nuovo il pulsante.");
+                        } else {
+                            service.clear();
+                            service.setVisible(true);
+                            service.add(closeButton);
+                            service.add(makeColocazioniRequest(path, wordBox.getText()));
+                        }
+
                     }
                 });
 
                 form.add(wordBox);
                 form.add(serviceButton);
 
-                
+
                 service.add(form);
                 service.add(closeButton);
 
@@ -597,7 +635,7 @@ public class MainEntryPoint implements EntryPoint {
         return button;
     }
 
-    public Widget createStemmaCodicumButton(final String path) { //TODO
+    public Widget createStemmaCodicumButton(final Panel service, final String path) {
         Button button = new Button("StemmaCodicum");
         button.addClickHandler(new ClickHandler() {
 
@@ -605,7 +643,7 @@ public class MainEntryPoint implements EntryPoint {
 
                 service.clear();
                 service.setVisible(true);
-                
+
                 Button closeButton = new Button("Chiudi il servizio");
                 closeButton.addClickHandler(new ClickHandler() {
 
@@ -628,10 +666,9 @@ public class MainEntryPoint implements EntryPoint {
 
         final Label retval = new Label();
 
-        //Dispatcher->StemmaCodicum
         String url = "http://" + host + "/RgB/Dispatcher?service=StemmaCodicum&path=" + path;
 
-        RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, URL.encode(url));
+        RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(url));
         builder.setTimeoutMillis(1000000);
         builder.setHeader("Content-type", "application/x-www-form-urlencoded");
         try {
@@ -659,10 +696,9 @@ public class MainEntryPoint implements EntryPoint {
 
         final HTML retval = new HTML();
 
-        //Dispatcher->StemmaCodicum
         String url = "http://" + host + "/RgB/Dispatcher?service=FrequenzeDiOccorrenza&path=" + path;
 
-        RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, URL.encode(url));
+        RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(url));
         builder.setTimeoutMillis(1000000);
         builder.setHeader("Content-type", "application/x-www-form-urlencoded");
         try {
@@ -690,10 +726,9 @@ public class MainEntryPoint implements EntryPoint {
 
         final HTML retval = new HTML();
 
-        //Dispatcher->StemmaCodicum
-        String url = "http://" + host + "/RgB/Dispatcher?service=Colocazioni&path=" + path+"&word="+word;
+        String url = "http://" + host + "/RgB/Dispatcher?service=Colocazioni&path=" + path + "&word=" + word;
 
-        RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, URL.encode(url));
+        RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(url));
         builder.setTimeoutMillis(1000000);
         builder.setHeader("Content-type", "application/x-www-form-urlencoded");
         try {
@@ -706,6 +741,73 @@ public class MainEntryPoint implements EntryPoint {
                 public void onResponseReceived(Request request, Response response) {
                     if (200 == response.getStatusCode()) {
                         retval.setHTML(response.getText().toString());
+                    } else {
+                        Window.alert("ERRORE: la risposta del servizio DocumentList non è quella aspettata");
+                    }
+                }
+            });
+        } catch (RequestException e) {
+            Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
+        }
+        return retval;
+    }
+
+    public Widget makeEstrazioneDiConcordanzeRequest(String path, String word, String number) {
+
+        final HTML retval = new HTML();
+
+        String url = "http://" + host + "/RgB/Dispatcher?service=EstrazioneDiConcordanze&path=" + path + "&word=" + word + "&number=" + number;
+
+        RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(url));
+        builder.setHeader("Content-type", "application/x-www-form-urlencoded");
+        try {
+            Request request = builder.sendRequest(null, new RequestCallback() {
+
+                public void onError(Request request, Throwable exception) {
+                    Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
+                }
+
+                public void onResponseReceived(Request request, Response response) {
+                    if (200 == response.getStatusCode()) {
+                        retval.setHTML(response.getText().toString());
+                    } else {
+                        Window.alert("ERRORE: la risposta del servizio DocumentList non è quella aspettata");
+                    }
+                }
+            });
+        } catch (RequestException e) {
+            Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
+        }
+        return retval;
+    }
+
+    public Label makeDispatcherRequest(String path, ArrayList<HashMap> params) {
+
+        final Label retval = new Label();
+
+        String url = "http://" + host + "/RgB/Dispatcher";
+        for (int i = 0; i < params.size(); i++) {
+            HashMap hm = params.get(i);
+            if (i == 0) {
+                url = url + "?";
+            } else {
+                url = url + "&";
+            }
+            url = url + hm.get("name") + "=" + hm.get("value");
+        }
+
+        RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(url));
+        builder.setHeader("Content-type", "application/x-www-form-urlencoded");
+        try {
+            Request request = builder.sendRequest(null, new RequestCallback() {
+
+                public void onError(Request request, Throwable exception) {
+                    Window.alert("ERRORE: fallita richiesta servizio (Couldn't connect to server)");
+                }
+
+                public void onResponseReceived(Request request, Response response) {
+                    if (200 == response.getStatusCode()) {
+                        retval.setText(response.getText().toString());
                     } else {
                         Window.alert("ERRORE: la risposta del servizio DocumentList non è quella aspettata");
                     }

@@ -61,22 +61,7 @@ public class TeiDocument {
     public TeiDocument(String tei){
 
         this.teiString = ignoreDTD(tei);
-
-        //System.out.print(teiString);
-
-        /*String xmlDoc = teiString;
-                try {
-            javax.xml.parsers.DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            doc = builder.parse(teiString);
-            xpath = XPathFactory.newInstance().newXPath();
-        } catch (SAXException ex) {
-            Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParserConfigurationException ex) {
-            Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
-
+        
     }
 
     public TeiDocument(String absolutePath, String stylePath) {

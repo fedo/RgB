@@ -100,7 +100,7 @@ public class ClientHttpRequest {
    */
   public ClientHttpRequest(String urlString) throws IOException {
     this(new URL(urlString));
-    connection.setRequestProperty("Accept-Charset","UTF-8"); //TODO UTF-8
+    connection.setRequestProperty("Accept-Charset","UTF-8");
   }
 
 
