@@ -35,6 +35,10 @@
         <servlet-name>Differenziazione</servlet-name>
         <servlet-class>it.unibo.cs.rgb.servlet.Differenziazione</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DocumentNoteViewer</servlet-name>
+        <servlet-class>it.unibo.cs.rgb.servlet.DocumentNoteViewer</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DocumentMetadata</servlet-name>
         <url-pattern>/DocumentMetadata</url-pattern>
@@ -66,6 +70,10 @@
     <servlet-mapping>
         <servlet-name>Differenziazione</servlet-name>
         <url-pattern>/Differenziazione</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DocumentNoteViewer</servlet-name>
+        <url-pattern>/DocumentNoteViewer</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

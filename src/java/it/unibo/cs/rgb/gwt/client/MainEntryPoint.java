@@ -189,14 +189,15 @@ public class MainEntryPoint implements EntryPoint {
                     panel.add(info);
 
 
+                    panel.add(new HTML("<h3>Servizi disponibili:</h3>"));
                     Panel service = new VerticalPanel();
                     
                     //servizi
                     HorizontalPanel serviceButtons = new HorizontalPanel();
-                    serviceButtons.add(new Label("Servizi:"));
                     serviceButtons.add(createFrequenzeDiOccorrenzaButton(service, path));
                     serviceButtons.add(createColocazioniButton(service,path));
                     serviceButtons.add(createStemmaCodicumButton(service,path));
+                    serviceButtons.add(createEstrazioneDiConcordanzeButton(service,path));
                     serviceButtons.add(createCloseAllServicesButton(service));
 
                     panel.add(serviceButtons);
@@ -207,6 +208,7 @@ public class MainEntryPoint implements EntryPoint {
                     //debug.clear();
                     //debug.add(new Label(response.getText().toString()));
 
+                    panel.add(new HTML("<h3>Visualizzatore del documento TEI</h3>"));
                     //witnesses
                     HorizontalPanel witnessesPanel = new HorizontalPanel();
                     if (witnesses.split(", ").length > 1) {
@@ -218,7 +220,6 @@ public class MainEntryPoint implements EntryPoint {
                     panel.add(witnessesPanel);
 
                     final HorizontalPanel witnessViewer = new HorizontalPanel();
-                    witnessViewer.setBorderWidth(1);
                     witnessViewer.setWidth("100%");
                     panel.add(witnessViewer);
 
@@ -238,7 +239,9 @@ public class MainEntryPoint implements EntryPoint {
 
                             public void onClick(ClickEvent event) {
                                 if (checkbox.getValue()) {
-                                    witnessViewer.add(requestDocumentView(path, witness));
+                                    HorizontalSplitPanel reqpanel = requestDocumentView(path, witness);
+                                    reqpanel.setHeight("100%");
+                                    witnessViewer.add(reqpanel);
                                 } else {
                                     witnessViewer.remove(getChildWidgetIndex(witnessViewer, witness));
                                 }
@@ -507,11 +510,23 @@ public class MainEntryPoint implements EntryPoint {
         return index;
     }
 
-    private Widget requestDocumentView(String path, String witness) {
+    private HorizontalSplitPanel requestDocumentView(String path, String witness) {
 
-        final HTML retval = new HTML();
-        retval.setTitle(witness);
-        retval.setStyleName("documentView");
+
+        final HorizontalSplitPanel documentPanel = new HorizontalSplitPanel();
+
+        final HTML text = new HTML();
+        text.setHeight("100%");
+        final HTML notes = new HTML();
+        notes.setHeight("100%");
+
+        documentPanel.setTitle(witness);
+        documentPanel.setStyleName("documentView");
+        documentPanel.setSplitPosition("80%");
+        documentPanel.setHeight("100%");
+
+        documentPanel.setLeftWidget(text);
+        documentPanel.setRightWidget(notes);
 
         //DocumentViewer
         String url = "http://" + host + "/RgB/DocumentViewer";
@@ -532,7 +547,8 @@ public class MainEntryPoint implements EntryPoint {
                         //xhtml parsing
                         Document responseXml = XMLParser.parse(response.getText().toString());
                         //debug.add(new Label(response.getText().toString()));
-                        retval.setHTML(responseXml.toString());
+                        text.setHTML("fjdlfkjaldkfjasdlòj");//responseXml.toString());
+                        notes.setHTML("fdjlkfajdslfajdkls");//responseXml.toString());
                     } else {
                         Window.alert("ERRORE: la risposta del servizio DocumentList non è quella aspettata");
                     }
@@ -543,7 +559,7 @@ public class MainEntryPoint implements EntryPoint {
         }
 
 
-        return retval;
+        return documentPanel;
     }
 
     public Widget createCloseAllServicesButton(final Panel service) {
@@ -567,7 +583,7 @@ public class MainEntryPoint implements EntryPoint {
 
                 service.clear();
                 service.setVisible(true);
-                service.add(makeFrequenzeDiOccorrenzaRequest(path));
+                service.add(new ScrollPanel(makeFrequenzeDiOccorrenzaRequest(path)));
 
 
                 Button closeButton = new Button("Chiudi il servizio");
@@ -623,10 +639,85 @@ public class MainEntryPoint implements EntryPoint {
                     }
                 });
 
+                form.add(new Label("Inserisci la parola da ricercare:"));
                 form.add(wordBox);
                 form.add(serviceButton);
 
+                service.add(new Label("Visualizzatore della lista e della frequenza di tutte le colocazioni di una parola."));
+                service.add(form);
+                service.add(closeButton);
 
+            }
+        });
+        return button;
+    }
+
+    public Widget createEstrazioneDiConcordanzeButton(final Panel service, final String path) {
+        Button button = new Button("Estrazione di concordanze");
+        button.addClickHandler(new ClickHandler() {
+
+            public void onClick(ClickEvent event) {
+
+                final Button closeButton = new Button("Chiudi il servizio");
+                closeButton.addClickHandler(new ClickHandler() {
+
+                    public void onClick(ClickEvent event) {
+                        service.clear();
+                        service.setVisible(false);
+                    }
+                });
+
+                service.clear();
+                service.setVisible(true);
+
+                VerticalPanel form = new VerticalPanel();
+                final TextBox wordBox = new TextBox();
+                final TextBox numberBox = new TextBox();
+
+                Button serviceButton = new Button("Invia");
+                serviceButton.addClickHandler(new ClickHandler() {
+
+                    public void onClick(ClickEvent event) {
+                        if (wordBox.getText().equalsIgnoreCase("") || numberBox.getText().equalsIgnoreCase("") || !numberBox.getText().matches("[0-9]+")) {
+                            Window.alert("Il servizio richiede una parola da ricercare. Inseriscila nella TextBox e clicca di nuovo il pulsante.");
+                        } else {
+                            service.clear();
+                            service.setVisible(true);
+                            service.add(closeButton);
+
+                            ArrayList<HashMap> params = new ArrayList<HashMap>();
+                            HashMap pathMap = new HashMap();
+                            pathMap.put("name", "path");
+                            pathMap.put("value", path);
+                            HashMap serviceMap = new HashMap();
+                            serviceMap.put("name", "service");
+                            serviceMap.put("value", "EstrazioneDiConcordanze");
+                            HashMap wordMap = new HashMap();
+                            wordMap.put("name", "word");
+                            wordMap.put("value", wordBox.getText());
+                            HashMap numberMap = new HashMap();
+                            numberMap.put("name", "service");
+                            numberMap.put("value", numberBox.getText());
+
+                            params.add(pathMap);
+                            params.add(serviceMap);
+                            params.add(numberMap);
+                            params.add(wordMap);
+
+                            service.add(makeDispatcherRequest(path, params));
+                        }
+
+                    }
+                });
+
+                
+                form.add(new Label("Inserisci la parola da ricercare:"));
+                form.add(wordBox);
+                form.add(new Label("Numero di parole prima e di parole dopo da visualizzare:"));
+                form.add(numberBox);
+                form.add(serviceButton);
+
+                service.add(new Label("Motore di ricerca per estrazione di concordanze."));
                 service.add(form);
                 service.add(closeButton);
 
@@ -653,12 +744,13 @@ public class MainEntryPoint implements EntryPoint {
                     }
                 });
 
-                service.add(closeButton);
+                service.add(new Label("Visualizzatore dello Stemma Codicum, l'albero delle versioni (tramite testimoni) di un documento."));
                 service.add(makeStemmaCodicumRequest(path));
                 service.add(closeButton);
 
             }
         });
+
         return button;
     }
 
@@ -784,6 +876,7 @@ public class MainEntryPoint implements EntryPoint {
     public Label makeDispatcherRequest(String path, ArrayList<HashMap> params) {
 
         final Label retval = new Label();
+        String service;
 
         String url = "http://" + host + "/RgB/Dispatcher";
         for (int i = 0; i < params.size(); i++) {
@@ -809,12 +902,12 @@ public class MainEntryPoint implements EntryPoint {
                     if (200 == response.getStatusCode()) {
                         retval.setText(response.getText().toString());
                     } else {
-                        Window.alert("ERRORE: la risposta del servizio DocumentList non è quella aspettata");
+                        Window.alert("ERRORE: la risposta del servizio non è quella aspettata");
                     }
                 }
             });
         } catch (RequestException e) {
-            Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
+            Window.alert("ERRORE: fallita richiesta servizio (Couldn't connect to server)");
         }
         return retval;
     }

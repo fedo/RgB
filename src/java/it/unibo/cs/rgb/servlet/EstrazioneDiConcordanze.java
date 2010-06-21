@@ -93,15 +93,15 @@ public class EstrazioneDiConcordanze extends HttpServlet {
 
         TeiDocument tei = new TeiDocument("TeiEstrazioneDiConcordanze", xml, xsl);
 
-        String[] witnessesList = new String[999999]; //tei.getNumberOfWitnesses();
-        String[] transcriptionTypes = new String[1000]; //tei.getTranscriptionTypes();
+        String[] witnessesList = tei.getWitnessesList();
+        String[] transcriptionTypes = new String[1];
         String retval = "";
 
         for (int n = 0; n < witnessesList.length; n++) {
             for (int m = 0; m < transcriptionTypes.length; m++) {
-                String data = "fajklfajdlk"; //tei.getEstrazioneDiConcordanzeData(witnessList[n], transcriptionTypes[m]);
-                TeiConcordanze con = new TeiConcordanze(word, number, data, witnessesList[n], transcriptionTypes[m]);
-                retval += con.getConcordanze();
+                String plainText = tei.getEstrazioneDiConcordanzeDataString(witnessesList[n]);
+                //TeiConcordanze con = new TeiConcordanze(word, number, plainText, witnessesList[n], transcriptionTypes[m]);
+                retval += plainText;//con.getConcordanze();
             }
         }
 

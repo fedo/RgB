@@ -1,5 +1,6 @@
 package it.unibo.cs.rgb.test;
 
+import it.unibo.cs.rgb.gwt.RgB;
 import it.unibo.cs.rgb.tei.TeiDocument;
 import java.io.BufferedReader;
 import java.io.File;
@@ -7,9 +8,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.HashMap;
-import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,8 +25,14 @@ public class TeiTestInputStream {
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
 
-        String xmlString = "/Users/fedo/data/programming/netbeans/RgB/web/collection5/faith.xml";
-        String xslString = "/Users/fedo/data/programming/netbeans/RgB/web/stylesheets/facility.xsl";
+        String xmlString = "/Users/fedo/data/programming/netbeans/RgB/web/catalog.xml";//"/Users/fedo/data/programming/netbeans/RgB/web/collection5/faith.xml";
+        String xslString = "/Users/fedo/data/programming/netbeans/RgB/web/stylesheets/catalog_elements.xsl";
+
+        String catalogLTW1001 = "http://vitali.web.cs.unibo.it/twiki/pub/TechWeb10/GruppoLTW03/catalogo_ltw03.xml"; //"http://vitali.web.cs.unibo.it/twiki/pub/TechWeb10/GruppoLTW03/catalogo_ltw03.xml";
+        URLConnection connectionLTW1001 = new URL(catalogLTW1001).openConnection();
+       
+
+
 
         File xmlFile = new File(xmlString);
         File xslFile = new File(xslString);
@@ -35,9 +42,15 @@ public class TeiTestInputStream {
         }
 
         HashMap xslHashMap = new HashMap();
-        xslHashMap.put("/stylesheets/hover.xsl", FileUtils.readFileToString(xslFile));
+        xslHashMap.put("/stylesheets/catalog_elements.xsl", FileUtils.readFileToString(xslFile));
+
+         TeiDocument dataCatalogLTW1001 = new TeiDocument("", RgB.convertStreamToString(connectionLTW1001.getInputStream(),"UTF-8"), xslHashMap);
 
         TeiDocument tei = new TeiDocument("zuppaditei", FileUtils.readFileToString(xmlFile), xslHashMap);
+        String str = tei.xslt("/stylesheets/catalog_elements.xsl");
+        System.out.println((String) dataCatalogLTW1001.getCatalogData("Ind").get("uri"));
+        System.out.println((String) dataCatalogLTW1001.getCatalogData("Ind").get("input"));
+        System.out.println((String) dataCatalogLTW1001.getCatalogData("Ind").get("output"));
 
         //System.out.println(getContentType(new FileInputStream(xmlFile)));
         //System.out.println("nome " + tei.getTeiName());
@@ -53,13 +66,18 @@ public class TeiTestInputStream {
         //System.out.println(RgB.convertStreamToString(new FileInputStream(xmlFile), "UTF-8"));
 
         // parsing dei dati ricevuti
-        ArrayList<HashMap> data = new ArrayList<HashMap>();
+        //ArrayList<HashMap> data = new ArrayList<HashMap>();
         //String svgDataString = tei.getSvgDataString();
         //String svgDataString = "der1 1 sigil1 id1" + "----" + "der2 0 sigil2 id2"; //tring "der", boolean "missing", String "sigil", String "id"
-        String svgDataString = "null 0 a a" + "----" + "a 0 b b";
+        //String svgDataString = "null 0 a a" + "----" + "a 0 b b";
 
-        String[] lines = svgDataString.split("----");
+        /*str = str.substring(0, str.indexOf("|"));
+        System.out.println(str);
+        String[] lines = str.split("-");
+
         for (int i = 0; i < lines.length; i++) {
+
+            System.out.println(lines[i]);
             HashMap witnessMap = new HashMap();
             StringTokenizer tokens = new StringTokenizer(lines[i]);
             String der = tokens.nextToken();
@@ -70,10 +88,12 @@ public class TeiTestInputStream {
             witnessMap.put("sigil", tokens.nextToken());
             witnessMap.put("id", tokens.nextToken());
             data.add(witnessMap);
-        }
+        }*/
 
-        //TeiSvg svg = new TeiSvg(FileUtils.readFileToString(xmlFile));
+        //TeiSvg svg = new TeiSvg(data);
         //System.out.println("svg "+svg.getSvg());
+
+        //System.out.println("γδεζηθικλμνξο");
 
 
     }

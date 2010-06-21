@@ -133,7 +133,7 @@ public class StemmaCodicum extends HttpServlet {
         // output
         PrintWriter out = response.getWriter();
         //response.setContentType("teimage/svg+xml;charset=UTF-8");
-        response.setContentType("text/xml;charset=UTF-8"); //DEBUG
+        response.setContentType("text/xhtml;charset=UTF-8"); //DEBUG
         out.print(svg.getSvg());
         out.close();
     }

@@ -23,17 +23,12 @@
         <from>^/StemmaCodicum</from>
         <to>/Dispatcher?service=StemmaCodicum</to>
     </rule>
-
-    <rule>
-        <from>^/EstrazioneDiConcordanze/([0-9]+)$</from>
-        <to>/Dispatcher?service=EstrazioneDiConcordanze&word=$1&amp;number=$2</to>
-    </rule>
-
+-->
     <rule>
         <from>^/EstrazioneDiConcordanze/([a-zA-Z0-9]+)/([0-9]+)$</from>
         <to>/Dispatcher?service=EstrazioneDiConcordanze&amp;word=$1&amp;number=$2</to>
     </rule>
--->
+
 
 
 

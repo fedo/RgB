@@ -1,15 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-	Document   : catalog.xml
-    Author     : RgB
-    Description: the catalog itself
+  Document: catalog.xml
+  Author: RgB
+  Description: RgB's catalog
 -->
 
 <services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="catalog.xsd">
     <globals>
-        <base>http://ltw1001.web.cs.unibo.it/RgB/</base>
+        <base>http://ltw1001.web.cs.unibo.it:8080/RgB/</base>
         <group>LTW01</group>
         <members>
             <member>Andrea Bagnacani</member>
@@ -49,7 +48,7 @@
             <output>text/html</output>
         </outputs>
     </service>
-    
+
     <service>
         <name>Stemma Codicum</name>
         <description>Visualizzazione dello Stemma Codicum di un documento</description>
@@ -61,8 +60,8 @@
             <input>application/octet-stream</input>
         </inputs>
         <outputs>
-            <output>image/svg+xml</output>
+            <output>text/xml</output>
         </outputs>
 
     </service>
-</services>
+</services> 

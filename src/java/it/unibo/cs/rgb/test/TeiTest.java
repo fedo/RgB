@@ -32,7 +32,7 @@ public class TeiTest {
             //System.out.println(collection.getTeiDocument(i).getView("asd"));
 
         }
-        System.out.println("-----------------");
+        System.out.println("---------  \u03b8 --------");
         System.out.println("la collezione contiene n elementi: " + collection.getNumberOfDocument());
 
         String splitta = "a, b, e, e, f";
