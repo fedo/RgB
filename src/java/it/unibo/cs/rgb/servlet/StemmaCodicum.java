@@ -191,6 +191,7 @@ public class StemmaCodicum extends HttpServlet {
             PrintWriter out = null;
             try {
                 response.setContentType("application/json");
+                response.setStatus(Integer.parseInt(code));
                 out = response.getWriter();
                 /*
                 {

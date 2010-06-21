@@ -44,7 +44,7 @@ public class Dispatcher extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, DispatcherException, ParserConfigurationException, SAXException {
 
-                // lettura degli stylesheets (xsl)
+        // lettura degli stylesheets (xsl)
         String stylesheetsFolder = "/stylesheets";
         HashMap xsl = new HashMap();
         Set stylesheetsSet = getServletContext().getResourcePaths(stylesheetsFolder);
@@ -62,8 +62,8 @@ public class Dispatcher extends HttpServlet {
         URLConnection connectionLTW1003 = new URL(catalogLTW1003).openConnection();
         URLConnection connectionLTW1001 = new URL(catalogLTW1001).openConnection();
 
-        TeiDocument dataCatalogLTW1003 = new TeiDocument("", RgB.convertStreamToString(connectionLTW1003.getInputStream(),"UTF-8"), xsl);
-        TeiDocument dataCatalogLTW1001 = new TeiDocument("", RgB.convertStreamToString(connectionLTW1001.getInputStream(),"UTF-8"), xsl);
+        TeiDocument dataCatalogLTW1003 = new TeiDocument("", RgB.convertStreamToString(connectionLTW1003.getInputStream(), "UTF-8"), xsl);
+        TeiDocument dataCatalogLTW1001 = new TeiDocument("", RgB.convertStreamToString(connectionLTW1001.getInputStream(), "UTF-8"), xsl);
 
         String service = request.getParameter("service");
 
@@ -83,7 +83,7 @@ public class Dispatcher extends HttpServlet {
 
             ClientHttpRequest nreq = new ClientHttpRequest(serviceuri);
             nreq.setParameter("tei", filePath, getServletContext().getResourceAsStream(filePath), serviceinput);
-            
+
             PrintWriter out = response.getWriter();
             response.setContentType(serviceoutput);
             //out.println(serviceuri+" "+servicemethod+" "+serviceinput+" "+serviceoutput);
@@ -91,30 +91,46 @@ public class Dispatcher extends HttpServlet {
 
         } else if (service.equalsIgnoreCase("EstrazioneDiConcordanze")) {
 
-            response.setContentType("text/html");
-            PrintWriter out = response.getWriter();
+            HashMap map = dataCatalogLTW1001.getCatalogData("EstrazioneDiConcordanze");
+            String serviceuri = (String) map.get("uri");
+            String servicemethod = (String) map.get("method");
+            String serviceinput = (String) map.get("input");
+            String serviceoutput = (String) map.get("output");
+
             String filePath = request.getParameter("path");
             String word = request.getParameter("word");
             String number = request.getParameter("number");
 
-            ClientHttpRequest nreq = new ClientHttpRequest("http://localhost:8080/RgB/EstrazioneDiConcordanze?word="+word+"&number="+number);
-            nreq.setParameter("files", filePath, getServletContext().getResourceAsStream(filePath), "application/xml");
-            out.println(nreq.post());
+            ClientHttpRequest nreq = new ClientHttpRequest(serviceuri + "/" + word + "/" + number);
+            nreq.setParameter("tei", filePath, getServletContext().getResourceAsStream(filePath), serviceinput);
+
+            PrintWriter out = response.getWriter();
+            response.setContentType(serviceoutput);
+            //out.println(serviceuri+" "+servicemethod+" "+serviceinput+" "+serviceoutput);
+            out.println(RgB.convertXmlStreamToString(nreq.post()));
 
 
         } else if (service.equalsIgnoreCase("Colocazioni")) {
 
-            response.setContentType("text/html");
-            PrintWriter out = response.getWriter();
+            HashMap map = dataCatalogLTW1003.getCatalogData("Colocazioni");
+            String serviceuri = (String) map.get("uri");
+            String servicemethod = (String) map.get("method");
+            String serviceinput = (String) map.get("input");
+            String serviceoutput = (String) map.get("output");
+
             String filePath = request.getParameter("path");
             String word = request.getParameter("word");
 
-            ClientHttpRequest nreq = new ClientHttpRequest("http://ltw1002.web.cs.unibo.it:8080/Colocazioni/Servizio_Col"+"/"+word);
-            nreq.setParameter("files", filePath, getServletContext().getResourceAsStream(filePath), "application/xml");
+            ClientHttpRequest nreq = new ClientHttpRequest(serviceuri + "/" + word);
+            nreq.setParameter("tei", filePath, getServletContext().getResourceAsStream(filePath), serviceinput);
+
+            PrintWriter out = response.getWriter();
+            response.setContentType(serviceoutput);
+            //out.println(serviceuri+" "+servicemethod+" "+serviceinput+" "+serviceoutput);
             out.println(RgB.convertXmlStreamToString(nreq.post()));
 
-        }else if (service.equalsIgnoreCase("FrequenzeDiOccorrenza")) {
-            
+        } else if (service.equalsIgnoreCase("FrequenzeDiOccorrenza")) {
+
             HashMap map = dataCatalogLTW1003.getCatalogData("FrequenzeOccorrenza/Servizio_Occorrenze");
             String serviceuri = (String) map.get("uri");
             String servicemethod = (String) map.get("method");
@@ -131,12 +147,12 @@ public class Dispatcher extends HttpServlet {
             //out.println(serviceuri+" "+servicemethod+" "+serviceinput+" "+serviceoutput);
             out.println(RgB.convertXmlStreamToString(nreq.post()));
 
-        }else if (service.equalsIgnoreCase("Differenziazione")) {
+        } else if (service.equalsIgnoreCase("Differenziazione")) {
 
             response.setContentType("application/rdf+xml");
             PrintWriter out = response.getWriter();
             out.println("differenziazione");
-            
+
         }
 
     }

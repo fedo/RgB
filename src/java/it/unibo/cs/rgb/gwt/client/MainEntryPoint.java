@@ -191,13 +191,13 @@ public class MainEntryPoint implements EntryPoint {
 
                     panel.add(new HTML("<h3>Servizi disponibili:</h3>"));
                     Panel service = new VerticalPanel();
-                    
+
                     //servizi
                     HorizontalPanel serviceButtons = new HorizontalPanel();
                     serviceButtons.add(createFrequenzeDiOccorrenzaButton(service, path));
-                    serviceButtons.add(createColocazioniButton(service,path));
-                    serviceButtons.add(createStemmaCodicumButton(service,path));
-                    serviceButtons.add(createEstrazioneDiConcordanzeButton(service,path));
+                    serviceButtons.add(createColocazioniButton(service, path));
+                    serviceButtons.add(createStemmaCodicumButton(service, path));
+                    serviceButtons.add(createEstrazioneDiConcordanzeButton(service, path));
                     serviceButtons.add(createCloseAllServicesButton(service));
 
                     panel.add(serviceButtons);
@@ -239,8 +239,7 @@ public class MainEntryPoint implements EntryPoint {
 
                             public void onClick(ClickEvent event) {
                                 if (checkbox.getValue()) {
-                                    HorizontalSplitPanel reqpanel = requestDocumentView(path, witness);
-                                    reqpanel.setHeight("100%");
+                                    Widget reqpanel = requestDocumentView(path, witness);
                                     witnessViewer.add(reqpanel);
                                 } else {
                                     witnessViewer.remove(getChildWidgetIndex(witnessViewer, witness));
@@ -510,23 +509,41 @@ public class MainEntryPoint implements EntryPoint {
         return index;
     }
 
-    private HorizontalSplitPanel requestDocumentView(String path, String witness) {
+    private Widget requestDocumentView(String path, String witness) {
 
+        VerticalPanel retval = new VerticalPanel();
+        retval.setWidth("100%");
+        retval.setTitle(witness);
+        retval.setStyleName("documentView");
 
-        final HorizontalSplitPanel documentPanel = new HorizontalSplitPanel();
+        final HorizontalPanel documentPanel = new HorizontalPanel();
+        documentPanel.setWidth("100%");
 
         final HTML text = new HTML();
-        text.setHeight("100%");
+        text.setWidth("80%");
         final HTML notes = new HTML();
-        notes.setHeight("100%");
+        notes.setWidth("165px");
 
-        documentPanel.setTitle(witness);
-        documentPanel.setStyleName("documentView");
-        documentPanel.setSplitPosition("80%");
-        documentPanel.setHeight("100%");
+        final Button noteButton = new Button("Nascondi note");
+        noteButton.addClickHandler(new ClickHandler() {
 
-        documentPanel.setLeftWidget(text);
-        documentPanel.setRightWidget(notes);
+            public void onClick(ClickEvent event) {
+                if (notes.isVisible()) {
+                    notes.setVisible(false);
+                    noteButton.setText("Mostra note");
+                } else {
+                    notes.setVisible(true);
+                    noteButton.setText("Nascondi note");
+                }
+            }
+        });
+
+        retval.add(new HTML("<h3>Witness selezionato: " + witness + "</h3>"));
+        retval.add(noteButton);
+        retval.add(documentPanel);
+
+        documentPanel.add(text);
+        documentPanel.add(notes);
 
         //DocumentViewer
         String url = "http://" + host + "/RgB/DocumentViewer";
@@ -547,8 +564,8 @@ public class MainEntryPoint implements EntryPoint {
                         //xhtml parsing
                         Document responseXml = XMLParser.parse(response.getText().toString());
                         //debug.add(new Label(response.getText().toString()));
-                        text.setHTML("fjdlfkjaldkfjasdlòj");//responseXml.toString());
-                        notes.setHTML("fdjlkfajdslfajdkls");//responseXml.toString());
+                        text.setHTML(responseXml.toString());
+                        notes.setHTML("<h1>note</h1><p>ajdfk dksf jasdkfj asdkfj sdfjsk jskf jskf jaskdf jaskf jasdkf jskf jasklfj aklsjf kalsdjf alsfj l</p>");//responseXml.toString());
                     } else {
                         Window.alert("ERRORE: la risposta del servizio DocumentList non è quella aspettata");
                     }
@@ -559,7 +576,7 @@ public class MainEntryPoint implements EntryPoint {
         }
 
 
-        return documentPanel;
+        return retval;
     }
 
     public Widget createCloseAllServicesButton(final Panel service) {
@@ -710,7 +727,7 @@ public class MainEntryPoint implements EntryPoint {
                     }
                 });
 
-                
+
                 form.add(new Label("Inserisci la parola da ricercare:"));
                 form.add(wordBox);
                 form.add(new Label("Numero di parole prima e di parole dopo da visualizzare:"));
@@ -756,7 +773,7 @@ public class MainEntryPoint implements EntryPoint {
 
     public Widget makeStemmaCodicumRequest(String path) {
 
-        final Label retval = new Label();
+        final HTML retval = new HTML();
 
         String url = "http://" + host + "/RgB/Dispatcher?service=StemmaCodicum&path=" + path;
 
@@ -772,7 +789,7 @@ public class MainEntryPoint implements EntryPoint {
 
                 public void onResponseReceived(Request request, Response response) {
                     if (200 == response.getStatusCode()) {
-                        retval.setText(response.getText().toString());
+                        retval.setHTML(response.getText().toString());
                     } else {
                         Window.alert("ERRORE: la risposta del servizio DocumentList non è quella aspettata");
                     }
