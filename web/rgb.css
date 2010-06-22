@@ -46,3 +46,7 @@ body {
 .loading{
     text-align: center;
 }
+
+.gwt-Label {
+  color: red;
+}

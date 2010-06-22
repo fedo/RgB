@@ -82,7 +82,7 @@ public class DocumentsList extends HttpServlet {
             TeiDocument tei = new TeiDocument(xmlFilesList.get(i), xml, xsl);
 
             out.println("<li id=\"document\">");
-            out.println("<span id=\"id\">" + tei.getTeiName() + "</span>");
+            out.println("<span id=\"id\">" + tei.getTeiName().replace(teiFolder, "") + "</span>");
             out.println("<br /><span id=\"path\">" + tei.getAbsolutePath() + "</span>");
             out.println("<br /><span id=\"longName\">" + tei.getHover() + "</span>");
             //out.println("<br /><span id=\"debug\">" + tei.getTeiString() + "</span>"); //DEBUG
