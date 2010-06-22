@@ -56,23 +56,23 @@ public class Dispatcher extends HttpServlet {
             }
         }
 
+        // parsing dei cataloghi
         String catalogLTW1003 = "http://vitali.web.cs.unibo.it/twiki/pub/TechWeb10/GruppoLTW03/catalogo_ltw03.xml";
         String catalogLTW1001 = "http://ltw1001.web.cs.unibo.it/catalog.xml";
-
         URLConnection connectionLTW1003 = new URL(catalogLTW1003).openConnection();
         URLConnection connectionLTW1001 = new URL(catalogLTW1001).openConnection();
-
         TeiDocument dataCatalogLTW1003 = new TeiDocument("", RgB.convertStreamToString(connectionLTW1003.getInputStream(), "UTF-8"), xsl);
         TeiDocument dataCatalogLTW1001 = new TeiDocument("", RgB.convertStreamToString(connectionLTW1001.getInputStream(), "UTF-8"), xsl);
 
+        // verifica del servizio
         String service = request.getParameter("service");
-
-        //dispatching dei servizi
         if (service == null) {
+
             errors.add("servizio inesistente");
             throw new DispatcherException(response);
 
         } else if (service.equalsIgnoreCase("StemmaCodicum")) {
+
             HashMap map = dataCatalogLTW1001.getCatalogData(service);
             String serviceuri = (String) map.get("uri");
             String servicemethod = (String) map.get("method");
@@ -86,12 +86,13 @@ public class Dispatcher extends HttpServlet {
 
             PrintWriter out = response.getWriter();
             response.setContentType(serviceoutput);
-            //out.println(serviceuri+" "+servicemethod+" "+serviceinput+" "+serviceoutput);
+            //out.println(serviceuri+" "+servicemethod+" "+serviceinput+" "+serviceoutput); //DEBUG
             out.println(RgB.convertXmlStreamToString(nreq.post()));
 
         } else if (service.equalsIgnoreCase("EstrazioneDiConcordanze")) {
 
-            HashMap map = dataCatalogLTW1001.getCatalogData("EstrazioneDiConcordanze");
+
+            HashMap map = dataCatalogLTW1001.getCatalogData("Estraz");
             String serviceuri = (String) map.get("uri");
             String servicemethod = (String) map.get("method");
             String serviceinput = (String) map.get("input");
@@ -101,14 +102,15 @@ public class Dispatcher extends HttpServlet {
             String word = request.getParameter("word");
             String number = request.getParameter("number");
 
-            ClientHttpRequest nreq = new ClientHttpRequest(serviceuri + "/" + word + "/" + number);
+            ClientHttpRequest nreq = new ClientHttpRequest(serviceuri);//serviceuri + "?word=" + word + "&number=" + number);
             nreq.setParameter("tei", filePath, getServletContext().getResourceAsStream(filePath), serviceinput);
+            //nreq.setParameter("word", word);
+            //nreq.setParameter("number", number);
 
             PrintWriter out = response.getWriter();
-            response.setContentType(serviceoutput);
-            //out.println(serviceuri+" "+servicemethod+" "+serviceinput+" "+serviceoutput);
-            out.println(RgB.convertXmlStreamToString(nreq.post()));
-
+            response.setContentType("text/html");//serviceoutput);
+            out.println(serviceuri+" "+servicemethod+" "+serviceinput+" "+serviceoutput+" "+word+" "+number); //DEBUG corretto
+            //out.println(RgB.convertXmlStreamToString(nreq.post()));
 
         } else if (service.equalsIgnoreCase("Colocazioni")) {
 
@@ -126,7 +128,7 @@ public class Dispatcher extends HttpServlet {
 
             PrintWriter out = response.getWriter();
             response.setContentType(serviceoutput);
-            //out.println(serviceuri+" "+servicemethod+" "+serviceinput+" "+serviceoutput);
+            //out.println(serviceuri+" "+servicemethod+" "+serviceinput+" "+serviceoutput); //DEBUG
             out.println(RgB.convertXmlStreamToString(nreq.post()));
 
         } else if (service.equalsIgnoreCase("FrequenzeDiOccorrenza")) {
@@ -144,7 +146,7 @@ public class Dispatcher extends HttpServlet {
 
             PrintWriter out = response.getWriter();
             response.setContentType(serviceoutput);
-            //out.println(serviceuri+" "+servicemethod+" "+serviceinput+" "+serviceoutput);
+            //out.println(serviceuri+" "+servicemethod+" "+serviceinput+" "+serviceoutput); //DEBUG
             out.println(RgB.convertXmlStreamToString(nreq.post()));
 
         } else if (service.equalsIgnoreCase("Differenziazione")) {

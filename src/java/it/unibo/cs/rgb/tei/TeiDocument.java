@@ -174,7 +174,7 @@ public class TeiDocument {
 
     public String getEstrazioneDiConcordanzeDataString(String witness) {
 
-        return xslt("/stylesheets/content_base.xsl", witness);
+        return xslt("/stylesheets/content_text.xsl", witness);
     }
 
     public String getView(String witness) {
@@ -245,39 +245,41 @@ public class TeiDocument {
         }
         return ret;//.substring("<?xml version=\"1.0\" encoding=\"UTF-8\"?> ".length(), output.toString().length()-1);
     }
-    
+
     public String[] getWitnessesList() {
 
-        String str = xslt("/stylesheets/witness_transcription.xsl");
-        str = str.substring(0, str.indexOf("|"));
-        String[] tokens = str.split("-");
+        String str = xslt("/stylesheets/witList.xsl");
+        //str = str.substring(0, str.indexOf("|"));
+        String[] tokens = str.split(" ");
         
+        if (tokens[0].equalsIgnoreCase("")) {
+            tokens[0] = "default";
+        }
+
         return tokens;
-        
+
     }
 
-    public HashMap getCatalogData(String service){
+    public HashMap getCatalogData(String service) {
 
         String str = xslt("/stylesheets/catalog_elements.xsl");
         //String str = "DiffOntologico@POST@text/xml@application/rdf+xml|EstrazioneDiConcordanze@POST@text/xml@text/html|StemmaCodicum@POST@text/xml@text/xml";
         HashMap retval = new HashMap();
 
         String[] services = str.split("\\|");
-        for(int n = 0; n < services.length; n++){
+        for (int n = 0; n < services.length; n++) {
             String[] data = services[n].split("@");
 
-            if(data[0].contains(service)){
+            if (data[0].contains(service)) {
                 retval.put("uri", data[0]);
                 retval.put("method", data[1]);
                 retval.put("input", data[2]);
                 retval.put("output", data[3]);
-                for(int m = 4; m < data.length; m++){
-                    retval.put("param"+(m-3), data[m]);
+                for (int m = 4; m < data.length; m++) {
+                    retval.put("param" + (m - 3), data[m]);
                 }
             }
         }
         return retval;
     }
-
-
 }

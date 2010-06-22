@@ -6,6 +6,7 @@ package it.unibo.cs.rgb.servlet;
 
 import com.oreilly.servlet.multipart.FilePart;
 import com.oreilly.servlet.multipart.MultipartParser;
+import com.oreilly.servlet.multipart.ParamPart;
 import com.oreilly.servlet.multipart.Part;
 import it.unibo.cs.rgb.gwt.RgB;
 import it.unibo.cs.rgb.tei.TeiConcordanze;
@@ -53,23 +54,12 @@ public class EstrazioneDiConcordanze extends HttpServlet {
         }
 
         // la request dev'essere "multipart/form-data"
-        if (!request.getContentType().startsWith("multipart/form-data")) {
-            throw new EstrazioneDiConcordanzeException(response, "406", "Not acceptable", "Richiesto Content-Type 'multipart/form-data'.", "Imposta il Content-Type 'multipart/form-data'.");
-        }
+        /*if (!request.getContentType().startsWith("multipart/form-data")) {
+        throw new EstrazioneDiConcordanzeException(response, "406", "Not acceptable", "Richiesto Content-Type 'multipart/form-data'.", "Imposta il Content-Type 'multipart/form-data'.");
+        }*/
 
-        String word = request.getParameter("word");
-        String stringNumber = request.getParameter("number");
-        
-        //verifica
-        if (word == null) {
-            throw new EstrazioneDiConcordanzeException(response, "406", "Not acceptable", "Manca il parametro 'word'.", "Inserisci nella richiesta il parametro 'word'.");
-        }
-        
-        // verifica
-        if (stringNumber == null) {
-            throw new EstrazioneDiConcordanzeException(response, "406", "Not acceptable", "Manca il parametro 'number'.", "Inserisci nella richiesta il parametro 'number'.");
-        }
-        int number = Integer.parseInt(stringNumber);
+        String word = null;
+        String stringNumber = null;
 
         // parsing request
         MultipartParser mparser = new MultipartParser(request, Integer.MAX_VALUE);
@@ -82,8 +72,27 @@ public class EstrazioneDiConcordanze extends HttpServlet {
                 if (contentType.equals("text/xml") || contentType.equals("application/xml")) {
                     xml = "" + RgB.convertXmlStreamToString(((FilePart) tmpPart).getInputStream());
                 }
+            } else {
+                if (((ParamPart) tmpPart).getName().contentEquals("word")) {
+                    word = ((ParamPart) tmpPart).getStringValue();
+                } else if (((ParamPart) tmpPart).getName().contentEquals("number")) {
+                    stringNumber = ((ParamPart) tmpPart).getStringValue();
+                }
             }
             tmpPart = mparser.readNextPart();
+        }
+
+
+
+        // verifica
+        if (stringNumber == null) {
+            throw new EstrazioneDiConcordanzeException(response, "406", "Not acceptable", "Manca il parametro 'number'.", "Inserisci nella richiesta il parametro 'number'.");
+        }
+        int number = Integer.parseInt(stringNumber);
+
+        //verifica
+        if (word == null) {
+            throw new EstrazioneDiConcordanzeException(response, "406", "Not acceptable", "Manca il parametro 'word'.", "Inserisci nella richiesta il parametro 'word'.");
         }
 
         // verifica presenza documento TEI
@@ -92,18 +101,18 @@ public class EstrazioneDiConcordanze extends HttpServlet {
         }
 
         TeiDocument tei = new TeiDocument("TeiEstrazioneDiConcordanze", xml, xsl);
-
         String[] witnessesList = tei.getWitnessesList();
         String[] transcriptionTypes = new String[1];
-        String retval = "";
-
+        String retval = "<div><p><span>Parola: " + word + "</span><span> number: " + number + "</span></p>";
         for (int n = 0; n < witnessesList.length; n++) {
             for (int m = 0; m < transcriptionTypes.length; m++) {
                 String plainText = tei.getEstrazioneDiConcordanzeDataString(witnessesList[n]);
-                //TeiConcordanze con = new TeiConcordanze(word, number, plainText, witnessesList[n], transcriptionTypes[m]);
-                retval += plainText;//con.getConcordanze();
+                //retval += plainText;
+                TeiConcordanze con = new TeiConcordanze(word, number, plainText, witnessesList[n], transcriptionTypes[m]);
+                retval += con.getConcordanze();
             }
         }
+        retval += "</div>";
 
         // output
         PrintWriter out = response.getWriter();
@@ -163,6 +172,7 @@ public class EstrazioneDiConcordanze extends HttpServlet {
             PrintWriter out = null;
             try {
                 response.setContentType("application/json");
+                response.setStatus(Integer.parseInt(code));
                 out = response.getWriter();
                 /*
                 {

@@ -39,6 +39,10 @@
         <servlet-name>DocumentNoteViewer</servlet-name>
         <servlet-class>it.unibo.cs.rgb.servlet.DocumentNoteViewer</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DiffOntologico</servlet-name>
+        <servlet-class>it.unibo.cs.rgb.servlet.DiffOntologico</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DocumentMetadata</servlet-name>
         <url-pattern>/DocumentMetadata</url-pattern>
@@ -74,6 +78,10 @@
     <servlet-mapping>
         <servlet-name>DocumentNoteViewer</servlet-name>
         <url-pattern>/DocumentNoteViewer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DiffOntologico</servlet-name>
+        <url-pattern>/DiffOntologico</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

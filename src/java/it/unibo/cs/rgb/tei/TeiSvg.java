@@ -65,13 +65,13 @@ public class TeiSvg {
         int maxX=maxPos(nodes, true);
         int maxY=maxPos(nodes, false);
 
-        out += "<?xml-stylesheet type=\"text/css\" href=\""+cssUri+"\" encoding=\"UTF-8\"?>"+"\n";
-        out += "<!DOCTYPE html  PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"\n";
-        out += "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n";
+        out += "<?xml-stylesheet type=\"text/css\" href=\""+cssUri+"\" encoding=\"UTF-8\"?>"+" \n";
+        out += "<!DOCTYPE html  PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \n";
+        out += "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\"> \n";
         out += "<html xmlns=\"http://www.w3.org/1999/xhtml\"\n";
-        out += "xmlns:svg= \"http://www.w3.org/2000/svg\">\n";
-        out += "<body>"+"\n";
-        out += "<svg:svg width=\""+(maxX+footerSpace)+"\" height=\""+(maxY+footerSpace)+"\" version=\"1.1\" >"+"\n";
+        out += "xmlns:svg= \"http://www.w3.org/2000/svg\"> \n";
+        out += "<body>"+" \n";
+        out += "<svg:svg width=\""+(maxX+footerSpace)+"\" height=\""+(maxY+footerSpace)+"\" version=\"1.1\" >"+" \n";
 
         //disegna le linee
         for (int i = 0; i < nodes.size(); i++){
@@ -160,7 +160,7 @@ public class TeiSvg {
     }
 
         private void getPos2(ArrayList<TreeNode> nodes){
-        int ySpaceBetweenCircle = 60, xSpaceBetweenCircle = 200, maxDepth, maxWidth,canvasX;
+        int ySpaceBetweenCircle = 50, xSpaceBetweenCircle = 80, maxDepth, maxWidth,canvasX;
         TreeNode root;
         ArrayList<Integer> widthList = new ArrayList<Integer>();
 
@@ -183,7 +183,7 @@ public class TeiSvg {
     }
 
     private void drawNode(TreeNode node,int i[] ,ArrayList<Integer> widthList,int cavasX){
-        int ySpaceBetweenCircle = 100;
+        int ySpaceBetweenCircle = 50;
 
         int depth = node.getDepth()-1;
         int spaceXnode = cavasX/(widthList.get(depth));

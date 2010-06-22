@@ -519,9 +519,9 @@ public class MainEntryPoint implements EntryPoint {
         final HorizontalPanel documentPanel = new HorizontalPanel();
         documentPanel.setWidth("100%");
 
-        final HTML text = new HTML();
+        final HTML text = new HTML("<p>Caricamento del test in corso</p>");
         text.setWidth("80%");
-        final HTML notes = new HTML();
+        final HTML notes = new HTML("<p>Caricamento delle note in corso</p>");
         notes.setWidth("165px");
 
         final Button noteButton = new Button("Nascondi note");
@@ -600,7 +600,12 @@ public class MainEntryPoint implements EntryPoint {
 
                 service.clear();
                 service.setVisible(true);
-                service.add(new ScrollPanel(makeFrequenzeDiOccorrenzaRequest(path)));
+                service.add(new Label("Visualizzatore della lista e della frequenza di tutte le colocazioni di una parola."));
+                ScrollPanel fScrollPanel = new ScrollPanel(makeFrequenzeDiOccorrenzaRequest(path));
+                fScrollPanel.scrollToLeft();
+                fScrollPanel.setWidth("100%");
+                fScrollPanel.setHeight("300px");
+                service.add(fScrollPanel);
 
 
                 Button closeButton = new Button("Chiudi il servizio");
@@ -611,6 +616,7 @@ public class MainEntryPoint implements EntryPoint {
                         service.setVisible(false);
                     }
                 });
+
 
                 service.add(closeButton);
 
@@ -713,7 +719,7 @@ public class MainEntryPoint implements EntryPoint {
                             wordMap.put("name", "word");
                             wordMap.put("value", wordBox.getText());
                             HashMap numberMap = new HashMap();
-                            numberMap.put("name", "service");
+                            numberMap.put("name", "number");
                             numberMap.put("value", numberBox.getText());
 
                             params.add(pathMap);
@@ -762,7 +768,10 @@ public class MainEntryPoint implements EntryPoint {
                 });
 
                 service.add(new Label("Visualizzatore dello Stemma Codicum, l'albero delle versioni (tramite testimoni) di un documento."));
-                service.add(makeStemmaCodicumRequest(path));
+                Frame frame = new Frame("http://" + host + "/RgB/Dispatcher?service=StemmaCodicum&path="+path);
+                frame.setSize("100%", "375px");
+                service.add(frame);
+                /*service.add(makeStemmaCodicumRequest(path));*/
                 service.add(closeButton);
 
             }
@@ -861,7 +870,7 @@ public class MainEntryPoint implements EntryPoint {
         return retval;
     }
 
-    public Widget makeEstrazioneDiConcordanzeRequest(String path, String word, String number) {
+    /*public Widget makeEstrazioneDiConcordanzeRequest(String path, String word, String number) {
 
         final HTML retval = new HTML();
 
@@ -888,12 +897,11 @@ public class MainEntryPoint implements EntryPoint {
             Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
         }
         return retval;
-    }
+    }*/
 
     public Label makeDispatcherRequest(String path, ArrayList<HashMap> params) {
 
-        final Label retval = new Label();
-        String service;
+        final HTML retval = new HTML();
 
         String url = "http://" + host + "/RgB/Dispatcher";
         for (int i = 0; i < params.size(); i++) {
@@ -917,7 +925,7 @@ public class MainEntryPoint implements EntryPoint {
 
                 public void onResponseReceived(Request request, Response response) {
                     if (200 == response.getStatusCode()) {
-                        retval.setText(response.getText().toString());
+                        retval.setHTML(response.getText().toString());
                     } else {
                         Window.alert("ERRORE: la risposta del servizio non è quella aspettata");
                     }

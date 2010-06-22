@@ -19,15 +19,13 @@ public class TeiConcordanze {
         this.sigil = sigil;
         this.trascription = trascription;
     }
-
-    private void pippo(){
-        String type="", testo="";
-        wtw.setType(type);
-        cleanText(testo);
-    }
     //public String getConcordanze(String parola, String testo, int numero) {
-    private void cleanText(String testo) {
-        StringTokenizer st = new StringTokenizer(testo);
+    private void cleanTextAndGetType() {
+
+        String[] text = plainText.split( "\\|");
+        this.wtw = new Wtw(text[0]);
+
+        StringTokenizer st = new StringTokenizer(text[1]);
 
         while (st.hasMoreTokens()) {
             String token = st.nextToken();
@@ -65,21 +63,19 @@ public class TeiConcordanze {
             if (wtw.getWords().get(t).matches(parola)) {
                 String contesto = "";
                 for (int j = numero; j > 0; j--) {
-                    if (t - j >= 0) {
-                        if (j == 1) {
-                            contesto += wtw.getWords().get((t - j));
-                        } else {
-                            contesto += wtw.getWords().get((t - j)) + " ";
-                        }
-                    } else {
+                    if (t - j < 0)
                         j = t;
-                    }
+
+                    if (j == 1) 
+                        contesto += wtw.getWords().get((t - j));
+                    else 
+                        contesto += wtw.getWords().get((t - j)) + " ";
                 }
                 wtw.addBefore(contesto);
 
                 contesto = "";
                 for (int j = 1; j <= numero; j++) {
-                    if (t + j <= nWordsXWtw) {
+                    if (t + j < nWordsXWtw) {
                         if (j == numero || t == (nWordsXWtw - 1)) {
                             contesto += wtw.getWords().get((t + j));
                         } else {
@@ -100,19 +96,22 @@ public class TeiConcordanze {
     public String getConcordanze() {
         String ret = "";
 
-        pippo();
+        cleanTextAndGetType();
         int nConcordanze = makeConcordanze();
 
         ret +="<p>\n<div>";
-        ret +="<span id=\""+wtw.getType()+"\">type</span><br/>\n";
-        ret +="<span id=\""+sigil+"\">sigil</span><br/>\n";
-        ret +="<span id=\""+trascription+"\">sigil</span><br/>\n<ul>\n";
-
-        for (int o = 0; o < nConcordanze; o++) {
-            ret += "<li>\n<span id=\""+ wtw.getBefore().get(o) +"\">sotto il maestrale</span><br/>\n";
-            ret += "<span id=\""+ wtw.getAfter().get(o) +"\">sotto il maestrale</span><br/></li>\n";
-        }
-        ret += "</ul></div>\n";
+        ret +="<span>finded in: "+wtw.getType()+"</span><br/>\n";
+        ret +="<span>witness: "+sigil+"</span><br/>\n";
+        ret +="<span>trascription: "+trascription+"</span><br/>\n";
+        if (nConcordanze > 0) {
+            ret += "<ul>\n";
+            for (int o = 0; o < nConcordanze; o++) {
+                ret += "<li>\n<span>before: "+wtw.getBefore().get(o)+"</span></li>\n";
+                ret += "<li><span>after: "+wtw.getAfter().get(o)+"</span></li>\n";
+            }
+            ret += "</ul><br/>\n";
+        } 
+        ret += "<span>numero concordanze:"+nConcordanze+"</span><br/></div>\n</p>\n";
 
         return ret;
     }
