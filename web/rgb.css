@@ -22,6 +22,16 @@ body {
     background-repeat: no-repeat;
     background-position: left top;
     height: 125px;
+    width: 100%;
+    text-align: right;
+}
+
+.westPanel {
+
+}
+
+.centerPanel {
+    
 }
 
 .servicePanel {

@@ -33,19 +33,23 @@ import java.util.HashMap;
  */
 public class MainEntryPoint implements EntryPoint {
 
-    //elementi grafici
-    Widget header;
-    Widget footer;
-    VerticalPanel west = new VerticalPanel();
-    VerticalPanel center;
+    // dock
+    Widget headerPanel;
+    Widget footerPanel;
+    VerticalPanel westPanel = new VerticalPanel();
+    VerticalPanel centerPanel;
+    // central
     Label title;
     Widget content;
+    // pages
     TabPanel documentViewerPanel = new TabPanel();
     HTML homepage;
+    // footer
     HorizontalPanel debug = new HorizontalPanel();
-    //variabili
+    // variables
     final ArrayList<HashMap> documents = new ArrayList<HashMap>(); //{ String "id", String "path", String "shortName", String "longName", HTML "info", ArrayList<String> "files" }
     String host;
+    boolean documentsListReady = false;
 
     /**
      * Creates a new instance of MainEntryPoint
@@ -67,23 +71,25 @@ public class MainEntryPoint implements EntryPoint {
         mainPanel.setVerticalAlignment(HasAlignment.ALIGN_TOP);
         mainPanel.setHorizontalAlignment(HasAlignment.ALIGN_LEFT);
 
-        header = createHeaderWidget();
-        header.addStyleName("headerPanel");
-        header.setHeight("125px");
-        mainPanel.add(header, DockPanel.NORTH);
-        mainPanel.setCellHeight(header, "125px");
+        headerPanel = createHeaderWidget();
+        headerPanel.addStyleName("headerPanel");
+        headerPanel.setHeight("125px");
+        mainPanel.add(headerPanel, DockPanel.NORTH);
+        mainPanel.setCellHeight(headerPanel, "125px");
 
-        footer = createFooterWidget();
-        mainPanel.add(footer, DockPanel.SOUTH);
-        mainPanel.setCellHeight(footer, "25px");
+        footerPanel = createFooterWidget();
+        mainPanel.add(footerPanel, DockPanel.SOUTH);
+        mainPanel.setCellHeight(footerPanel, "25px");
 
-        west = createWestWidget();
-        west.setWidth("165px");
-        mainPanel.add(west, DockPanel.WEST);
-        mainPanel.setCellWidth(west, "165px");
+        westPanel = createWestWidget();
+        westPanel.addStyleName("westPanel");
+        westPanel.setWidth("165px");
+        mainPanel.add(westPanel, DockPanel.WEST);
+        mainPanel.setCellWidth(westPanel, "165px");
 
-        center = createCenterWidget();
-        mainPanel.add(center, DockPanel.CENTER);
+        centerPanel = createCenterWidget();
+        centerPanel.addStyleName("centerPanel");
+        mainPanel.add(centerPanel, DockPanel.CENTER);
 
         RootPanel.get().add(mainPanel);
     }
@@ -138,12 +144,31 @@ public class MainEntryPoint implements EntryPoint {
      */
     protected VerticalPanel createWestWidget() {
 
-        Label title = new Label("Lista documenti");
+        Label listTitle = new Label("Lista documenti");
 
-        west.add(title);
+        Button buttonHomepage = new Button("Homepage");
+        buttonHomepage.addClickHandler(new ClickHandler() {
+
+            public void onClick(ClickEvent event) {
+                content = homepage;
+                title.setText("Homepage");
+            }
+        });
+
+        Button buttonDifferenziazione = new Button("Servizio Diff");
+        buttonDifferenziazione.addClickHandler(new ClickHandler() {
+
+            public void onClick(ClickEvent event) {
+                generateDifferenziazione();
+            }
+        });
+
+        westPanel.add(buttonHomepage);
+        westPanel.add(buttonDifferenziazione);
+        westPanel.add(listTitle);
         createDocumentsList();
 
-        return west;
+        return westPanel;
     }
 
     /**
@@ -286,7 +311,7 @@ public class MainEntryPoint implements EntryPoint {
 
         final HTML loading = new HTML("<img src=\"images/loading.gif\" alt=\"Caricamento in corso\" />");
         loading.setStyleName("loading");
-        west.add(loading);
+        westPanel.add(loading);
 
         try {
             Request request = builder.sendRequest(null, new RequestCallback() {
@@ -411,10 +436,10 @@ public class MainEntryPoint implements EntryPoint {
 
                                 public void onClick(ClickEvent event) {
 
-                                    if (content != documentViewerPanel) {
-                                        center.remove(content);
-                                        content = documentViewerPanel;
-                                        center.add(content);
+                                    if (!title.getText().equalsIgnoreCase("Visualizzatore Documenti Tei")) {
+                                        centerPanel.clear();
+                                        centerPanel.add(title);
+                                        centerPanel.add(documentViewerPanel);
                                         title.setText("Visualizzatore Documenti Tei");
                                     }
 
@@ -445,9 +470,9 @@ public class MainEntryPoint implements EntryPoint {
                                                 documentViewerPanel.remove(tabPanel);
 
                                                 if (documentViewerPanel.getWidgetCount() == 0) { //DocumentViewer è vuoto
-                                                    center.remove(content);
+                                                    centerPanel.remove(content);
                                                     content = homepage;
-                                                    center.add(content);
+                                                    centerPanel.add(content);
                                                     title.setText("Homepage");
                                                 } else { //DocumentViewer non è vuoto, quando premi "x" selezioni comunque
                                                     if (indexToClose == indexSelectedTab) {
@@ -468,9 +493,10 @@ public class MainEntryPoint implements EntryPoint {
                                 }
                             });
 
-                            west.add(currentWidget);
+                            westPanel.add(currentWidget);
                             if (i == numberOfDocuments - 1) {
-                                west.remove(loading);
+                                westPanel.remove(loading);
+                                documentsListReady = true;
                             }
                         }
                     } else {
@@ -765,7 +791,7 @@ public class MainEntryPoint implements EntryPoint {
                 });
 
                 service.add(new Label("Visualizzatore dello Stemma Codicum, l'albero delle versioni (tramite testimoni) di un documento."));
-                Frame frame = new Frame("http://" + host + "/RgB/Dispatcher?service=StemmaCodicum&path="+path);
+                Frame frame = new Frame("http://" + host + "/RgB/Dispatcher?service=StemmaCodicum&path=" + path);
                 frame.setSize("100%", "375px");
                 service.add(frame);
                 /*service.add(makeStemmaCodicumRequest(path));*/
@@ -866,33 +892,32 @@ public class MainEntryPoint implements EntryPoint {
 
     /*public Widget makeEstrazioneDiConcordanzeRequest(String path, String word, String number) {
 
-        final HTML retval = new HTML();
+    final HTML retval = new HTML();
 
-        String url = "http://" + host + "/RgB/Dispatcher?service=EstrazioneDiConcordanze&path=" + path + "&word=" + word + "&number=" + number;
+    String url = "http://" + host + "/RgB/Dispatcher?service=EstrazioneDiConcordanze&path=" + path + "&word=" + word + "&number=" + number;
 
-        RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(url));
-        builder.setHeader("Content-type", "application/x-www-form-urlencoded");
-        try {
-            Request request = builder.sendRequest(null, new RequestCallback() {
+    RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(url));
+    builder.setHeader("Content-type", "application/x-www-form-urlencoded");
+    try {
+    Request request = builder.sendRequest(null, new RequestCallback() {
 
-                public void onError(Request request, Throwable exception) {
-                    Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
-                }
+    public void onError(Request request, Throwable exception) {
+    Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
+    }
 
-                public void onResponseReceived(Request request, Response response) {
-                    if (200 == response.getStatusCode()) {
-                        retval.setHTML(response.getText().toString());
-                    } else {
-                        Window.alert("ERRORE: la risposta del servizio DocumentList non è quella aspettata");
-                    }
-                }
-            });
-        } catch (RequestException e) {
-            Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
-        }
-        return retval;
+    public void onResponseReceived(Request request, Response response) {
+    if (200 == response.getStatusCode()) {
+    retval.setHTML(response.getText().toString());
+    } else {
+    Window.alert("ERRORE: la risposta del servizio DocumentList non è quella aspettata");
+    }
+    }
+    });
+    } catch (RequestException e) {
+    Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
+    }
+    return retval;
     }*/
-
     public Label makeDispatcherRequest(String path, ArrayList<HashMap> params) {
 
         final HTML retval = new HTML();
@@ -929,5 +954,22 @@ public class MainEntryPoint implements EntryPoint {
             Window.alert("ERRORE: fallita richiesta servizio (Couldn't connect to server)");
         }
         return retval;
+    }
+
+    public void generateDifferenziazione() {
+
+        VerticalPanel retval = new VerticalPanel();
+
+        if (documentsListReady) {
+            title.setText("Differenziazione");
+            content = new Label("Differenziazione");
+        } else {
+            title.setText("Non ancora disponibile");
+            content = new Label("Differenziazione non pronta");
+
+        }
+
+        //return retval;
+
     }
 }
