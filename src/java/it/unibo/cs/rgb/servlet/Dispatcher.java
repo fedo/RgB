@@ -24,6 +24,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.ParserConfigurationException;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xml.sax.SAXException;
 
 /**
@@ -87,7 +89,18 @@ public class Dispatcher extends HttpServlet {
             PrintWriter out = response.getWriter();
             response.setContentType(serviceoutput);
             //out.println(serviceuri+" "+servicemethod+" "+serviceinput+" "+serviceoutput); //DEBUG
-            out.println(RgB.convertXmlStreamToString(nreq.post()));
+            String nresp = RgB.convertXmlStreamToString(nreq.post());
+            if (nresp.contains("code") && nresp.contains("short")) {
+                try {
+                    JSONObject json = new JSONObject(nresp);
+                    response.setContentType("text/html");
+                    out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"><html><head><title></title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"></head><body><p>" + json.get("description") + "</p>");
+                } catch (JSONException ex) {
+                    Logger.getLogger(Dispatcher.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                out.println(nresp);
+            }
 
         } else if (service.equalsIgnoreCase("EstrazioneDiConcordanze")) {
 
@@ -104,13 +117,23 @@ public class Dispatcher extends HttpServlet {
 
             ClientHttpRequest nreq = new ClientHttpRequest(serviceuri);//serviceuri + "?word=" + word + "&number=" + number);
             nreq.setParameter("tei", filePath, getServletContext().getResourceAsStream(filePath), serviceinput);
-            //nreq.setParameter("word", word);
-            //nreq.setParameter("number", number);
+            nreq.setParameter("word", word);
+            nreq.setParameter("number", number);
 
             PrintWriter out = response.getWriter();
             response.setContentType("text/html");//serviceoutput);
-            out.println(serviceuri+" "+servicemethod+" "+serviceinput+" "+serviceoutput+" "+word+" "+number); //DEBUG corretto
-            //out.println(RgB.convertXmlStreamToString(nreq.post()));
+            String nresp = RgB.convertXmlStreamToString(nreq.post());
+            if (nresp.contains("code") && nresp.contains("short")) {
+                try {
+                    JSONObject json = new JSONObject(nresp);
+                    response.setContentType("text/html");
+                    out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"><html><head><title></title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"></head><body><p>" + json.get("description") + "</p>");
+                } catch (JSONException ex) {
+                    Logger.getLogger(Dispatcher.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                out.println(nresp);
+            }
 
         } else if (service.equalsIgnoreCase("Colocazioni")) {
 
@@ -147,7 +170,8 @@ public class Dispatcher extends HttpServlet {
             PrintWriter out = response.getWriter();
             response.setContentType(serviceoutput);
             //out.println(serviceuri+" "+servicemethod+" "+serviceinput+" "+serviceoutput); //DEBUG
-            out.println(RgB.convertXmlStreamToString(nreq.post()));
+            String nresp = RgB.convertXmlStreamToString(nreq.post());
+            out.println(nresp);
 
         } else if (service.equalsIgnoreCase("Differenziazione")) {
 

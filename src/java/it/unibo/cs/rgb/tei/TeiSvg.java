@@ -68,7 +68,7 @@ public class TeiSvg {
         out += "<?xml-stylesheet type=\"text/css\" href=\""+cssUri+"\" encoding=\"UTF-8\"?>"+" \n";
         out += "<!DOCTYPE html  PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \n";
         out += "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\"> \n";
-        out += "<html xmlns=\"http://www.w3.org/1999/xhtml\"\n";
+        out += "<html xmlns=\"http://www.w3.org/1999/xhtml\" \n";
         out += "xmlns:svg= \"http://www.w3.org/2000/svg\"> \n";
         out += "<body>"+" \n";
         out += "<svg:svg width=\""+(maxX+footerSpace)+"\" height=\""+(maxY+footerSpace)+"\" version=\"1.1\" >"+" \n";

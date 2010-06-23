@@ -4,6 +4,7 @@ import it.unibo.cs.rgb.gwt.RgB;
 import it.unibo.cs.rgb.tei.TeiDocument;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,16 +26,18 @@ public class TeiTestInputStream {
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
 
-        String xmlString = "/Users/fedo/data/programming/netbeans/RgB/web/catalog.xml";//"/Users/fedo/data/programming/netbeans/RgB/web/collection5/faith.xml";
+        String xmlString = "/Users/fedo/data/programming/netbeans/RgB/web/collection6/quaderno_PB.xml";//"/Users/fedo/data/programming/netbeans/RgB/web/collection5/faith.xml";
         String xslString = "/Users/fedo/data/programming/netbeans/RgB/web/stylesheets/catalog_elements.xsl";
 
         String catalogLTW1001 = "http://vitali.web.cs.unibo.it/twiki/pub/TechWeb10/GruppoLTW03/catalogo_ltw03.xml"; //"http://vitali.web.cs.unibo.it/twiki/pub/TechWeb10/GruppoLTW03/catalogo_ltw03.xml";
         URLConnection connectionLTW1001 = new URL(catalogLTW1001).openConnection();
-       
-
-
 
         File xmlFile = new File(xmlString);
+
+        FileInputStream fis = new FileInputStream(xmlFile);
+        String ex = RgB.getXmlStreamEncoding(fis);
+        System.out.println(ex);
+        
         File xslFile = new File(xslString);
 
         if (xmlFile.exists() && xslFile.exists()) {

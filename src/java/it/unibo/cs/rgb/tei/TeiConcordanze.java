@@ -99,20 +99,23 @@ public class TeiConcordanze {
         cleanTextAndGetType();
         int nConcordanze = makeConcordanze();
 
-        ret +="<p>\n<div>";
-        ret +="<span>finded in: "+wtw.getType()+"</span><br/>\n";
-        ret +="<span>witness: "+sigil+"</span><br/>\n";
-        ret +="<span>trascription: "+trascription+"</span><br/>\n";
+        if(nConcordanze > 0){
+
+        ret +="<p>\n";
+        //ret +="<span>finded in: "+wtw.getType()+"</span><br/>\n";
+        ret +="<span>Concordanze trovate nella versione del testimone: "+sigil+"</span><br/>\n";
+        //ret +="<span>trascription: "+trascription+"</span><br/>\n";
         if (nConcordanze > 0) {
             ret += "<ul>\n";
             for (int o = 0; o < nConcordanze; o++) {
-                ret += "<li>\n<span>before: "+wtw.getBefore().get(o)+"</span></li>\n";
-                ret += "<li><span>after: "+wtw.getAfter().get(o)+"</span></li>\n";
+                ret += "<li>\n"+(o+1)+" <b>parole prima</b>: "+wtw.getBefore().get(o)+" \n";
+                ret += "<b>parole dopo</b>: "+wtw.getAfter().get(o)+"</li>\n";
             }
             ret += "</ul><br/>\n";
         } 
-        ret += "<span>numero concordanze:"+nConcordanze+"</span><br/></div>\n</p>\n";
+        //ret += "<span>numero concordanze:"+nConcordanze+"</span><br/>\n</p>\n";
 
+        }
         return ret;
     }
 }

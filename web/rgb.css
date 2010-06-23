@@ -38,16 +38,40 @@ body {
     padding-bottom:5px;
     padding-right:5px;
     padding-left:5px;
-    border-style:solid;
-    border-width:1px;
-    border-color:#DCDCDC;
+
 }
 
 .loading{
     text-align: center;
 }
 
+.viewerText{
+        padding-top:5px;
+    padding-bottom:5px;
+    padding-right:5px;
+    padding-left:5px;
+}
+
+.viewerNote{
+        padding-top:5px;
+    padding-bottom:5px;
+    padding-right:10px;
+    padding-left:0px;
+    font-style: italic;
+}
+
+.viewerTextSpace{
+    width: 200px;
+}
+
+.viewerNoteSpace{
+    width: 125px;
+}
+
+.viewerPanel{
+    width: 100%;
+}
+
 .gwt-Label {
   color: red;
 }
-

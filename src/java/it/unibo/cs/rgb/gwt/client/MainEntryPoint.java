@@ -163,7 +163,6 @@ public class MainEntryPoint implements EntryPoint {
         String postData = URL.encode("path") + "=" + URL.encode(path);
 
         RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, URL.encode(url));
-        builder.setTimeoutMillis(1000000);
         builder.setHeader("Content-type", "application/x-www-form-urlencoded");
         try {
             Request request = builder.sendRequest(postData, new RequestCallback() {
@@ -284,7 +283,6 @@ public class MainEntryPoint implements EntryPoint {
         //DocumentList
         String url = "http://" + host + "/RgB/DocumentsList";
         RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(url));
-        builder.setTimeoutMillis(1000000);
 
         final HTML loading = new HTML("<img src=\"images/loading.gif\" alt=\"Caricamento in corso\" />");
         loading.setStyleName("loading");
@@ -550,7 +548,6 @@ public class MainEntryPoint implements EntryPoint {
         String postData = URL.encode("path") + "=" + URL.encode(path) + "&" + URL.encode("witness") + "=" + URL.encode(witness);
 
         RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, URL.encode(url));
-        builder.setTimeoutMillis(1000000);
         builder.setHeader("Content-type", "application/x-www-form-urlencoded");
         try {
             Request request = builder.sendRequest(postData, new RequestCallback() {
@@ -787,7 +784,6 @@ public class MainEntryPoint implements EntryPoint {
         String url = "http://" + host + "/RgB/Dispatcher?service=StemmaCodicum&path=" + path;
 
         RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(url));
-        builder.setTimeoutMillis(1000000);
         builder.setHeader("Content-type", "application/x-www-form-urlencoded");
         try {
             Request request = builder.sendRequest(null, new RequestCallback() {
@@ -817,7 +813,6 @@ public class MainEntryPoint implements EntryPoint {
         String url = "http://" + host + "/RgB/Dispatcher?service=FrequenzeDiOccorrenza&path=" + path;
 
         RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(url));
-        builder.setTimeoutMillis(1000000);
         builder.setHeader("Content-type", "application/x-www-form-urlencoded");
         try {
             Request request = builder.sendRequest(null, new RequestCallback() {
@@ -847,7 +842,6 @@ public class MainEntryPoint implements EntryPoint {
         String url = "http://" + host + "/RgB/Dispatcher?service=Colocazioni&path=" + path + "&word=" + word;
 
         RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, URL.encode(url));
-        builder.setTimeoutMillis(1000000);
         builder.setHeader("Content-type", "application/x-www-form-urlencoded");
         try {
             Request request = builder.sendRequest(null, new RequestCallback() {
