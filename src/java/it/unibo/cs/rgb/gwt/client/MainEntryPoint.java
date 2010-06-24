@@ -37,13 +37,15 @@ public class MainEntryPoint implements EntryPoint {
     Widget headerPanel;
     Widget footerPanel;
     VerticalPanel westPanel = new VerticalPanel();
-    VerticalPanel centerPanel;
+    VerticalPanel centerPanel = new VerticalPanel();
     // central
     Label title;
     Widget content;
     // pages
     TabPanel documentViewerPanel = new TabPanel();
     HTML homepage;
+    Label page1 = new Label("page1");
+    Label page2 = new Label("page1");
     // footer
     HorizontalPanel debug = new HorizontalPanel();
     // variables
@@ -145,26 +147,6 @@ public class MainEntryPoint implements EntryPoint {
     protected VerticalPanel createWestWidget() {
 
         Label listTitle = new Label("Lista documenti");
-
-        Button buttonHomepage = new Button("Homepage");
-        buttonHomepage.addClickHandler(new ClickHandler() {
-
-            public void onClick(ClickEvent event) {
-                content = homepage;
-                title.setText("Homepage");
-            }
-        });
-
-        Button buttonDifferenziazione = new Button("Servizio Diff");
-        buttonDifferenziazione.addClickHandler(new ClickHandler() {
-
-            public void onClick(ClickEvent event) {
-                generateDifferenziazione();
-            }
-        });
-
-        westPanel.add(buttonHomepage);
-        westPanel.add(buttonDifferenziazione);
         westPanel.add(listTitle);
         createDocumentsList();
 
@@ -222,6 +204,7 @@ public class MainEntryPoint implements EntryPoint {
                     serviceButtons.add(createColocazioniButton(service, path));
                     serviceButtons.add(createStemmaCodicumButton(service, path));
                     serviceButtons.add(createEstrazioneDiConcordanzeButton(service, path));
+                    serviceButtons.add(createDifferenziazioneButton(service, path));
                     serviceButtons.add(createCloseAllServicesButton(service));
 
                     panel.add(serviceButtons);
@@ -970,6 +953,56 @@ public class MainEntryPoint implements EntryPoint {
         }
 
         //return retval;
+
+    }
+
+    public Button createDifferenziazioneButton(final Panel service, final String path) {
+        Button retval = new Button("Differenziazione su base ontologica");
+        retval.addClickHandler(new ClickHandler() {
+
+            public void onClick(ClickEvent event) {
+
+                service.clear();
+                service.setVisible(true);
+
+                final Button closeButton = new Button("Chiudi il servizio");
+                closeButton.addClickHandler(new ClickHandler() {
+
+                    public void onClick(ClickEvent event) {
+                        service.clear();
+                        service.setVisible(false);
+                    }
+                });
+
+                if (path.contains("l_uovo") || path.contains("le_visioni") || path.contains("nascosti") || path.contains("paul_new")) {
+                    service.add(new Label("Seleziona il file del quale ti interessa vedere la differenza su base ontologica rispetto al file attuale:"));
+                    for(int i = 0; i < documents.size(); i++){
+                        String actual = (String) documents.get(i).get("path");
+                        if(actual.substring(0, 18).equalsIgnoreCase(path.substring(0, 18)) && !path.equalsIgnoreCase(actual)){
+                            service.add(new RadioButton("diff",actual));
+                        }
+                    }
+                    Button send = new Button("Visualizza differenze");
+                    send.addClickHandler(new ClickHandler() {
+
+                        public void onClick(ClickEvent event) {
+                            service.clear();
+                            service.add(new Label("ritorno della servlet"));
+                            service.add(closeButton);
+                        }
+                    });
+                    service.add(send);
+
+
+                } else {
+                    service.add(new Label("Servizio non disponibile per questo documento."));
+                }
+
+                service.add(closeButton);
+            }
+        });
+
+        return retval;
 
     }
 }
