@@ -147,6 +147,7 @@ public class MainEntryPoint implements EntryPoint {
     protected VerticalPanel createWestWidget() {
 
         Label listTitle = new Label("Lista documenti");
+        listTitle.addStyleName("buttonDocumentsListHeader");
         westPanel.add(listTitle);
         createDocumentsList();
 
@@ -570,8 +571,8 @@ public class MainEntryPoint implements EntryPoint {
                         //xhtml parsing
                         Document responseXml = XMLParser.parse(response.getText().toString());
                         //debug.add(new Label(response.getText().toString()));
-                        text.setHTML(responseXml.toString());
-                        notes.setHTML("<h1>note</h1><p>ajdfk dksf jasdkfj asdkfj sdfjsk jskf jskf jaskdf jaskf jasdkf jskf jasklfj aklsjf kalsdjf alsfj l</p>");//responseXml.toString());
+                        text.setHTML("<div class=\"viewerTextSpace\"></div>" + responseXml.toString());
+                        notes.setHTML("<div class=\"notesTextSpace\"></div>" + "<h1>note</h1><p>ajdfk dksf jasdkfj asdkfj sdfjsk jskf jskf jaskdf jaskf jasdkf jskf jasklfj aklsjf kalsdjf alsfj l</p>");//responseXml.toString());
                     } else {
                         Window.alert("ERRORE: la risposta del servizio DocumentList non è quella aspettata");
                     }
@@ -733,7 +734,7 @@ public class MainEntryPoint implements EntryPoint {
                             params.add(numberMap);
                             params.add(wordMap);
 
-                            service.add(makeDispatcherRequest(path, params));
+                            service.add(makeDispatcherRequest(params));
                         }
 
                     }
@@ -901,7 +902,7 @@ public class MainEntryPoint implements EntryPoint {
     }
     return retval;
     }*/
-    public Label makeDispatcherRequest(String path, ArrayList<HashMap> params) {
+    public Label makeDispatcherRequest(ArrayList<HashMap> params) {
 
         final HTML retval = new HTML();
 
@@ -964,6 +965,7 @@ public class MainEntryPoint implements EntryPoint {
 
                 service.clear();
                 service.setVisible(true);
+                final ArrayList<RadioButton> rblist = new ArrayList<RadioButton>();
 
                 final Button closeButton = new Button("Chiudi il servizio");
                 closeButton.addClickHandler(new ClickHandler() {
@@ -976,10 +978,12 @@ public class MainEntryPoint implements EntryPoint {
 
                 if (path.contains("l_uovo") || path.contains("le_visioni") || path.contains("nascosti") || path.contains("paul_new")) {
                     service.add(new Label("Seleziona il file del quale ti interessa vedere la differenza su base ontologica rispetto al file attuale:"));
-                    for(int i = 0; i < documents.size(); i++){
+                    for (int i = 0; i < documents.size(); i++) {
                         String actual = (String) documents.get(i).get("path");
-                        if(actual.substring(0, 18).equalsIgnoreCase(path.substring(0, 18)) && !path.equalsIgnoreCase(actual)){
-                            service.add(new RadioButton("diff",actual));
+                        if (actual.substring(0, 18).equalsIgnoreCase(path.substring(0, 18)) && !path.equalsIgnoreCase(actual)) {
+                            RadioButton rb = new RadioButton("diff", actual);
+                            rblist.add(rb);
+                            service.add(rb);
                         }
                     }
                     Button send = new Button("Visualizza differenze");
@@ -987,7 +991,31 @@ public class MainEntryPoint implements EntryPoint {
 
                         public void onClick(ClickEvent event) {
                             service.clear();
-                            service.add(new Label("ritorno della servlet"));
+                            ArrayList<HashMap> params = new ArrayList<HashMap>();
+
+                            HashMap pathMap1 = new HashMap();
+                            pathMap1.put("name", "path1");
+                            pathMap1.put("value", path);
+
+                            String path2 = "";
+                            for (int i = 0; i < rblist.size(); i++) {
+                                if (rblist.get(i).getValue()) {
+                                    path2 = rblist.get(i).getText();
+                                }
+                            }
+                            HashMap pathMap2 = new HashMap();
+                            pathMap2.put("name", "path2");
+                            pathMap2.put("value", path2); //TODO radiobuttonvalue
+
+                            HashMap serviceMap = new HashMap();
+                            serviceMap.put("name", "service");
+                            serviceMap.put("value", "Differenziazione");
+
+                            params.add(pathMap1);
+                            params.add(pathMap2);
+                            params.add(serviceMap);
+
+                            service.add(makeDispatcherRequest(params));
                             service.add(closeButton);
                         }
                     });

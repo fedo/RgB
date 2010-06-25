@@ -282,4 +282,8 @@ public class TeiDocument {
         }
         return retval;
     }
+
+    public String getDifferenziazioneData(){
+        return xslt("/stylesheets/content_text.xsl", ""); //TODO
+    }
 }

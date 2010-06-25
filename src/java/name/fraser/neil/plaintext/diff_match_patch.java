@@ -1303,7 +1303,8 @@ public class diff_match_patch {
           .replace(">", "&gt;").replace("\n", "&para;<BR>");
       switch (aDiff.operation) {
       case INSERT:
-        html.append("<INS STYLE=\"background:#E6FFE6;\" TITLE=\"i=").append(i)
+          html.append("<INS TITLE=\"i=").append(i)
+        //html.append("<INS STYLE=\"background:#E6FFE6;\" TITLE=\"i=").append(i)
             .append("\">").append(text).append("</INS>");
         break;
       case DELETE:

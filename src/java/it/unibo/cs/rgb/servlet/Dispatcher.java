@@ -175,9 +175,25 @@ public class Dispatcher extends HttpServlet {
 
         } else if (service.equalsIgnoreCase("Differenziazione")) {
 
-            response.setContentType("application/rdf+xml");
+            HashMap map = dataCatalogLTW1001.getCatalogData(service);
+            String serviceuri = (String) map.get("uri");
+            String servicemethod = (String) map.get("method");
+            String serviceinput = (String) map.get("input");
+            String serviceoutput = (String) map.get("output");
+            
+            String filePath1 = request.getParameter("path1");
+            String filePath2 = request.getParameter("path2");
+            
+            ClientHttpRequest nreq = new ClientHttpRequest(serviceuri);
+            nreq.setParameter("tei1", filePath1, getServletContext().getResourceAsStream(filePath1), serviceinput);
+            nreq.setParameter("tei2", filePath2, getServletContext().getResourceAsStream(filePath2), serviceinput);
+
             PrintWriter out = response.getWriter();
-            out.println("differenziazione");
+            response.setContentType(serviceoutput);
+            //out.println(serviceuri+" "+servicemethod+" "+serviceinput+" "+serviceoutput); //DEBUG
+            String nresp = RgB.convertStreamToString(nreq.post(), "UTF-8");
+            out.println(nresp);
+            //out.println(" 1 "+filePath1+" 2 "+filePath2);
 
         }
 
