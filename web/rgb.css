@@ -1,23 +1,41 @@
 body {
     color: black;
     font-size: 10px;
+    font-family: "Lucida Grande", verdana;
 }
 
 .buttonDocumentsListHeader {
     font-size: 14px;
-    background: #385C74;
-    color:white;
-font-size:14px;
-padding:5px;
+    background: #D0D0D0;
+    color: black;
+    padding-top:1px;
+    padding-bottom:1px;
+    padding-right:5px;
+    padding-left:5px;
+    text-align:center;
+    font-weight: bold;
+
 }
 
 .buttonDocumentsList {
-    padding: 2px;
+    padding-top:1px;
+    padding-bottom:1px;
+    padding-right:5px;
+    padding-left:5px;
     background: url("images/hdot2.gif");
+    background-color: #F8F8F8;
     background-repeat: repeat-x;
     background-position: center bottom;
     background-attachment: scroll;
     background-color: transparent;
+    border-color: #DDDDDD;
+    border-style: solid;
+    border-bottom-width: 0px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 0px;
+
+
 }
 
 .buttonDocumentsListOver {
@@ -44,16 +62,7 @@ padding:5px;
 }
 
 .centerPanel {
-    
-}
 
-.servicePanel {
-    background: #DCDCDC;
-    width: 100%;
-    padding-top:5px;
-    padding-bottom:5px;
-    padding-right:5px;
-    padding-left:5px;
 }
 
 .documentView {
@@ -77,7 +86,7 @@ padding:5px;
 }
 
 .viewerNote{
-        padding-top:5px;
+    padding-top:5px;
     padding-bottom:5px;
     padding-right:10px;
     padding-left:0px;
@@ -96,6 +105,56 @@ padding:5px;
     width: 100%;
 }
 
-.gwt-Label {
 
+.gwt-DisclosurePanel .header {
+
+    background-color:#E3E3E3;
+    color:#990000;
+    display:block;
+    font-size:18px;
+
+}
+
+.gwt-DisclosurePanel {
+    background-color: #F8F8F8;
+
+}
+
+.gwt-DisclosurePanel .content {
+    border-left: 0px;
+    margin-left: 0px;
+
+    border-width: 1px;
+    border-color: #DDDDDD;
+    padding:5px 5px 5px 5px;
+
+}
+
+h3 {
+    color: #22638C;
+    padding: 0px;
+    margin: 0px;
+}
+
+h2 {
+    color:#22638C;
+    padding: 0px;
+    margin: 0px;
+    font-size: 16px;
+    padding: 2px;
+}
+h1 {
+    color: #22638C;
+}
+
+.documentViewerWitness {
+
+    text-align: center;
+    color: black;
+    border-color: #22638C;
+    border-style: solid;
+    border-bottom-width: 3px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-top-width: 0px;
 }

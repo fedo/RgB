@@ -26,8 +26,10 @@ public class TeiTestInputStream {
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
 
-        String xmlString = "/Users/fedo/data/programming/netbeans/RgB/web/collection6/quaderno_PB.xml";//"/Users/fedo/data/programming/netbeans/RgB/web/collection5/faith.xml";
-        String xslString = "/Users/fedo/data/programming/netbeans/RgB/web/stylesheets/catalog_elements.xsl";
+        String xmlString = "/Users/fedo/data/programming/netbeans/RgB/web/collection6/autumn.xml";//"/Users/fedo/data/programming/netbeans/RgB/web/collection5/faith.xml";
+        String xslname = "/stylesheets/content.xsl";
+        String xslString = "/Users/fedo/data/programming/netbeans/RgB/web"+xslname;
+
 
         String catalogLTW1001 = "http://vitali.web.cs.unibo.it/twiki/pub/TechWeb10/GruppoLTW03/catalogo_ltw03.xml"; //"http://vitali.web.cs.unibo.it/twiki/pub/TechWeb10/GruppoLTW03/catalogo_ltw03.xml";
         URLConnection connectionLTW1001 = new URL(catalogLTW1001).openConnection();
@@ -45,15 +47,17 @@ public class TeiTestInputStream {
         }
 
         HashMap xslHashMap = new HashMap();
-        xslHashMap.put("/stylesheets/catalog_elements.xsl", FileUtils.readFileToString(xslFile));
+        xslHashMap.put(xslname, FileUtils.readFileToString(xslFile));
 
-         TeiDocument dataCatalogLTW1001 = new TeiDocument("", RgB.convertStreamToString(connectionLTW1001.getInputStream(),"UTF-8"), xslHashMap);
+         //TeiDocument dataCatalogLTW1001 = new TeiDocument("", RgB.convertStreamToString(connectionLTW1001.getInputStream(),"UTF-8"), xslHashMap);
 
         TeiDocument tei = new TeiDocument("zuppaditei", FileUtils.readFileToString(xmlFile), xslHashMap);
-        String str = tei.xslt("/stylesheets/catalog_elements.xsl");
-        System.out.println((String) dataCatalogLTW1001.getCatalogData("Ind").get("uri"));
-        System.out.println((String) dataCatalogLTW1001.getCatalogData("Ind").get("input"));
-        System.out.println((String) dataCatalogLTW1001.getCatalogData("Ind").get("output"));
+        String str = tei.xslt(xslname, "a2", "note");
+
+        System.out.println("xslt "+str);
+        //System.out.println((String) dataCatalogLTW1001.getCatalogData("Ind").get("uri"));
+        //System.out.println((String) dataCatalogLTW1001.getCatalogData("Ind").get("input"));
+        //System.out.println((String) dataCatalogLTW1001.getCatalogData("Ind").get("output"));
 
         //System.out.println(getContentType(new FileInputStream(xmlFile)));
         //System.out.println("nome " + tei.getTeiName());

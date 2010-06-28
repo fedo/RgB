@@ -54,11 +54,13 @@ public class DocumentViewer extends HttpServlet {
 
             String path = request.getParameter("path");
             String witness = request.getParameter("witness");
+            String service = request.getParameter("service");
+
             TeiDocument tei = new TeiDocument(path, RgB.convertXmlStreamToString(getServletContext().getResourceAsStream(path)), xsl);
 
             out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             out.println("<html xmlns=\"http://www.w3.org/1999/xhtml\" version=\"1.0\">");
-            out.println("<div id=\"view\">" + tei.getView(witness) + "</div>");
+            out.println("<div id=\"view\">" + tei.xslt("/stylesheets/content.xsl", witness, service) + "</div>");
             out.println("</html>");
 
         } finally {
@@ -77,7 +79,8 @@ public class DocumentViewer extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        PrintWriter out = response.getWriter();
+        out.println("pretendo post");
     }
 
     /** 

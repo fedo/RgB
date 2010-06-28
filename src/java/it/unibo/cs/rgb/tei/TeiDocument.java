@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
@@ -29,6 +30,7 @@ import net.sf.saxon.s9api.XsltExecutable;
 import net.sf.saxon.s9api.XsltTransformer;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 /**
  *
@@ -174,12 +176,17 @@ public class TeiDocument {
 
     public String getEstrazioneDiConcordanzeDataString(String witness) {
 
-        return xslt("/stylesheets/content_text.xsl", witness);
+        return xslt("/stylesheets/content.xsl", witness, "concordanze");
     }
 
     public String getView(String witness) {
 
-        return xslt("/stylesheets/content.xsl", witness);
+        return xslt("/stylesheets/content.xsl", witness, "visualizzazione");
+    }
+
+    public String getNotes(String witness) {
+
+        return xslt("/stylesheets/content.xsl", witness, "note");
     }
 
     public String xslt(String stylesheetFile) {
@@ -251,7 +258,7 @@ public class TeiDocument {
         String str = xslt("/stylesheets/witList.xsl");
         //str = str.substring(0, str.indexOf("|"));
         String[] tokens = str.split(" ");
-        
+
         if (tokens[0].equalsIgnoreCase("")) {
             tokens[0] = "default";
         }
@@ -283,7 +290,42 @@ public class TeiDocument {
         return retval;
     }
 
-    public String getDifferenziazioneData(){
+    public String getDifferenziazioneData() {
         return xslt("/stylesheets/content_text.xsl", ""); //TODO
+    }
+
+    public String xslt(String stylesheet, String witness, String service) {
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        StringReader xmlStringReader = new StringReader(teiString);
+        String xslString = (String) xsl.get(stylesheet);
+        StringReader xslStringReader = new StringReader(xslString);
+
+        try {
+            Processor proc = new Processor(false);
+            //proc.registerExtensionFunction("");
+            XsltCompiler comp = proc.newXsltCompiler();
+            comp.setSchemaAware(false);
+            XsltExecutable exp = comp.compile(new SAXSource(new InputSource(xslStringReader)));
+            XdmNode source = proc.newDocumentBuilder().build(new SAXSource(new InputSource((xmlStringReader))));
+            Serializer out = new Serializer();
+            out.setOutputStream(outputStream);
+            XsltTransformer trans = exp.load();
+            trans.setInitialContextNode(source);
+            trans.setDestination(out);
+            trans.setParameter(new QName("witNum"), new XdmAtomicValue(witness));
+            trans.setParameter(new QName("service"), new XdmAtomicValue(service));
+            trans.transform();
+        } catch (SaxonApiException ex) {
+            Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String ret = "encoding error";
+        try {
+            ret = outputStream.toString("UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(TeiDocument.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ret;
     }
 }

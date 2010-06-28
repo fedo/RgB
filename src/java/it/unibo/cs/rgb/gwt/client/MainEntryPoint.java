@@ -21,6 +21,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.http.client.*;
 import com.google.gwt.user.client.ui.PopupPanel.PositionCallback;
 import com.google.gwt.xml.client.Document;
+import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -183,10 +184,8 @@ public class MainEntryPoint implements EntryPoint {
                     String longName = (String) hashMap.get("longName");
                     String witnesses = (String) hashMap.get("witnesses");
 
-                    panel.add(new Label((String) hashMap.get("shortName")));
-
-                    //info
-                    DisclosurePanel info = new DisclosurePanel("Informazioni sul documento");
+                    // * informazione documenti
+                    DisclosurePanel info = new DisclosurePanel(new HTML("<h2>Informazioni sul documento</h2>"));
                     info.setWidth("100%");
                     info.setOpen(true);
                     final HTML loading = new HTML("<img src=\"images/loading.gif\" alt=\"Caricamento in corso\" />");
@@ -194,45 +193,59 @@ public class MainEntryPoint implements EntryPoint {
                     info.setContent(loading);
                     info.setContent(new HTML(responseXml.getElementById("info").getFirstChild().toString()));
                     panel.add(info);
+                    panel.add(new HTML("<br/>"));
 
+                    // * servizi
+                    DisclosurePanel servicesDisclosure = new DisclosurePanel(new HTML("<h2>Servizi</h2>"));
+                    servicesDisclosure.setWidth("100%");
+                    servicesDisclosure.setOpen(true);
+                    VerticalPanel servicesContent = new VerticalPanel();
+                    Panel serviceActive = new VerticalPanel();
+                    serviceActive.setVisible(false);
 
-                    panel.add(new HTML("<h3>Servizi disponibili:</h3>"));
-                    Panel service = new VerticalPanel();
-
-                    //servizi
+                    // ** servizi: bottoni
                     HorizontalPanel serviceButtons = new HorizontalPanel();
-                    serviceButtons.add(createFrequenzeDiOccorrenzaButton(service, path));
-                    serviceButtons.add(createColocazioniButton(service, path));
-                    serviceButtons.add(createStemmaCodicumButton(service, path));
-                    serviceButtons.add(createEstrazioneDiConcordanzeButton(service, path));
-                    serviceButtons.add(createDifferenziazioneButton(service, path));
-                    serviceButtons.add(createCloseAllServicesButton(service));
+                    serviceButtons.add(createFrequenzeDiOccorrenzaButton(serviceActive, path));
+                    serviceButtons.add(createColocazioniButton(serviceActive, path));
+                    serviceButtons.add(createStemmaCodicumButton(serviceActive, path));
+                    serviceButtons.add(createEstrazioneDiConcordanzeButton(serviceActive, path));
+                    serviceButtons.add(createDifferenziazioneButton(serviceActive, path));
+                    serviceButtons.add(createCloseAllServicesButton(serviceActive));
 
-                    panel.add(serviceButtons);
-                    service.setStyleName("servicePanel");
-                    panel.add(service);
-                    service.setVisible(false);
+                    // ** servizi: annidamento
+                    servicesContent.add(serviceButtons);
+                    servicesContent.add(serviceActive);
+                    servicesDisclosure.add(servicesContent);
+                    panel.add(servicesDisclosure);
+                    panel.add(new HTML("<br/>"));
 
-                    //debug.clear();
-                    //debug.add(new Label(response.getText().toString()));
 
-                    panel.add(new HTML("<h3>Visualizzatore del documento TEI</h3>"));
-                    //witnesses
-                    HorizontalPanel witnessesPanel = new HorizontalPanel();
-                    if (witnesses.split(", ").length > 1) {
-                        witnessesPanel.add(new Label("Visualizza testimoni: "));
-                    } else {
-                        witnessesPanel.add(new Label("Visualizza il documento: "));
-                    }
-                    //if(!witnesses.equals(""))
-                    panel.add(witnessesPanel);
-
+                    // * visualizzazione
+                    DisclosurePanel viewerDisclosure = new DisclosurePanel(new HTML("<h2>Visualizzatore documento</h2>"));
+                    viewerDisclosure.setWidth("100%");
+                    viewerDisclosure.setOpen(true);
+                    VerticalPanel viewerContent = new VerticalPanel();
+                    viewerContent.setWidth("100%");
+                    HorizontalPanel witnessesCheckboxList = new HorizontalPanel();
                     final HorizontalPanel witnessViewer = new HorizontalPanel();
                     witnessViewer.setWidth("100%");
-                    panel.add(witnessViewer);
 
+                    // ** annidamento
+                    viewerContent.add(witnessesCheckboxList);
+                    viewerContent.add(witnessViewer);
+                    viewerDisclosure.add(viewerContent);
+                    panel.add(viewerDisclosure);
 
-                    //NodeList witnessesList = XMLParser.parse(responseXml.getElementById("witnesses").toString()).getElementsByTagName("li");
+                    // ** lista checkbox witnesses
+                    if (witnesses.split(", ").length > 1) {
+                        witnessesCheckboxList.add(new Label("Visualizza testimoni: "));
+                        witnessesCheckboxList.setVisible(true);
+                    } else {
+                        witnessesCheckboxList.add(new Label("Visualizza il documento: "));
+                        witnessesCheckboxList.setVisible(false);
+                    }
+
+                    // *** checkbox witness
                     for (int i = 0; i < witnesses.split(", ").length; i++) {
                         final String witness = witnesses.split(", ")[i];
                         final CheckBox checkbox = new CheckBox(witness);
@@ -254,7 +267,7 @@ public class MainEntryPoint implements EntryPoint {
                                 }
                             }
                         });
-                        witnessesPanel.add(checkbox);
+                        witnessesCheckboxList.add(checkbox);
                     }
                 }
 
@@ -527,35 +540,45 @@ public class MainEntryPoint implements EntryPoint {
         final HorizontalPanel documentPanel = new HorizontalPanel();
         documentPanel.setWidth("100%");
 
-        final HTML text = new HTML("<p>Caricamento del test in corso</p>");
+        final HTML text = new HTML("<p>Caricamento testo...</p>");
         text.setWidth("80%");
-        final HTML notes = new HTML("<p>Caricamento delle note in corso</p>");
+        final HTML notes = new HTML("<p>Caricamento note...</p>");
         notes.setWidth("165px");
 
-        final Button noteButton = new Button("Nascondi note");
-        noteButton.addClickHandler(new ClickHandler() {
+        // ** visualizzazione witnesses
+        if (!witness.equalsIgnoreCase("")) {
+            HTML selectedWitness = new HTML("<h3>Testimone: " + witness);
+            selectedWitness.setStyleName("documentViewerWitness");
+            retval.add(selectedWitness);
+
+        }
+
+        // * checkbox note
+        final CheckBox noteCheckbox = new CheckBox("visualizza note");
+        noteCheckbox.setValue(true);
+        noteCheckbox.addClickHandler(new ClickHandler() {
 
             public void onClick(ClickEvent event) {
-                if (notes.isVisible()) {
-                    notes.setVisible(false);
-                    noteButton.setText("Mostra note");
-                } else {
+                if(noteCheckbox.getValue()){
                     notes.setVisible(true);
-                    noteButton.setText("Nascondi note");
+                }else{
+                    notes.setVisible(false);
                 }
             }
         });
 
-        retval.add(new HTML("<h3>Witness selezionato: " + witness + "</h3>"));
-        retval.add(noteButton);
-        retval.add(documentPanel);
-
+        // ** annidamento
         documentPanel.add(text);
         documentPanel.add(notes);
+        retval.add(noteCheckbox);
+        retval.add(documentPanel);
 
-        //DocumentViewer
+
+
+        // visualizzazione
         String url = "http://" + host + "/RgB/DocumentViewer";
-        String postData = URL.encode("path") + "=" + URL.encode(path) + "&" + URL.encode("witness") + "=" + URL.encode(witness);
+        String postData = URL.encode("path") + "=" + path + "&" + URL.encode("witness") + "=" + witness + "&" + URL.encode("service") + "=visualizzazione";
+        //text.setHTML(postData);
 
         RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, URL.encode(url));
         builder.setHeader("Content-type", "application/x-www-form-urlencoded");
@@ -568,11 +591,7 @@ public class MainEntryPoint implements EntryPoint {
 
                 public void onResponseReceived(Request request, Response response) {
                     if (200 == response.getStatusCode()) {
-                        //xhtml parsing
-                        Document responseXml = XMLParser.parse(response.getText().toString());
-                        //debug.add(new Label(response.getText().toString()));
-                        text.setHTML("<div class=\"viewerTextSpace\"></div>" + responseXml.toString());
-                        notes.setHTML("<div class=\"notesTextSpace\"></div>" + "<h1>note</h1><p>ajdfk dksf jasdkfj asdkfj sdfjsk jskf jskf jaskdf jaskf jasdkf jskf jasklfj aklsjf kalsdjf alsfj l</p>");//responseXml.toString());
+                        text.setHTML("<div class=\"viewerTextSpace\"></div>" + response.getText());
                     } else {
                         Window.alert("ERRORE: la risposta del servizio DocumentList non è quella aspettata");
                     }
@@ -582,6 +601,37 @@ public class MainEntryPoint implements EntryPoint {
             Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
         }
 
+        // note
+        String urlNote = "http://" + host + "/RgB/DocumentViewer";
+        String postDataNote = URL.encode("path") + "=" + path + "&" + URL.encode("witness") + "=" + witness + "&" + URL.encode("service") + "=note";
+
+        RequestBuilder builderNote = new RequestBuilder(RequestBuilder.POST, URL.encode(urlNote));
+        builder.setHeader("Content-type", "application/x-www-form-urlencoded");
+        try {
+            Request request = builder.sendRequest(postDataNote, new RequestCallback() {
+
+                public void onError(Request request, Throwable exception) {
+                    Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
+                }
+
+                public void onResponseReceived(Request request, Response response) {
+                    if (200 == response.getStatusCode()) {
+                        
+                        if (response.getText().contains("<body></body>")) {
+                            documentPanel.remove(notes);
+                            noteCheckbox.setVisible(false);
+                            
+                        }else{
+                            notes.setHTML("<div class=\"notesTextSpace\"></div>" + response.getText());
+                        }
+                    } else {
+                        Window.alert("ERRORE: la risposta del servizio DocumentList non è quella aspettata");
+                    }
+                }
+            });
+        } catch (RequestException e) {
+            Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
+        }
 
         return retval;
     }
@@ -818,6 +868,8 @@ public class MainEntryPoint implements EntryPoint {
 
     public Widget makeFrequenzeDiOccorrenzaRequest(String path) {
 
+        final ArrayList<String[]> rows = new ArrayList<String[]>();
+
         final HTML retval = new HTML();
 
         String url = "http://" + host + "/RgB/Dispatcher?service=FrequenzeDiOccorrenza&path=" + path;
@@ -833,6 +885,19 @@ public class MainEntryPoint implements EntryPoint {
 
                 public void onResponseReceived(Request request, Response response) {
                     if (200 == response.getStatusCode()) {
+
+                        Document responseXml = XMLParser.parse(response.getText().toString());
+                        NodeList tr = responseXml.getElementsByTagName("tr");
+                        for (int i = 0; i < tr.getLength(); i++) {
+                            String[] row = new String[2];
+                            row[1] = "" + tr.item(i).getFirstChild().getFirstChild().toString();
+                            row[2] = "" + tr.item(i).getLastChild().getFirstChild().toString();
+                            rows.add(row);
+
+                        }
+
+
+
                         retval.setHTML(response.getText().toString());
                     } else {
                         Window.alert("ERRORE: la risposta del servizio DocumentList non è quella aspettata");
@@ -841,6 +906,10 @@ public class MainEntryPoint implements EntryPoint {
             });
         } catch (RequestException e) {
             Window.alert("ERRORE: fallita richiesta servizio DocumentList (Couldn't connect to server)");
+        }
+
+        for (int i = 0; i < rows.size(); i++) {
+            //retval.setHTML(retval.getHTML()+"<p>"+rows.get(i)[1]+"</p>");
         }
         return retval;
     }

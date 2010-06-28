@@ -57,7 +57,7 @@ public class TeiVisualizzazione {
                     String[] witlist = witnessesString.split("-");
                     for (int z = 0; z < witlist.length; z++) {
                         output += "<td valign=\"top\" width=\"300\">SPACESPACESPACESPACE<br/><b>FILE</b><br/>"+xmlFiles[n].getName()+"<br/><b>WITNESS</b><br/>"+witlist[z]+"\n";
-                        output += tei.getView(witlist[z]);
+                        output += tei.xslt("/stylesheets/content.xsl",witlist[z], "visualizzazione");
                         output += "</td>";
                         System.out.println(witlist[z]);
                     }
