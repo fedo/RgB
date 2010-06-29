@@ -713,59 +713,68 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
   <xsl:template match="*:note" mode="note">
 	<xsl:param name="content_body" tunnel="yes"/>
 
-	<!--
 	<xsl:choose>
 
-	  <xsl:when test="matches($transcription, 'diplomatica') or matches($transcription, 'interpretativa') or matches($transcription, 'critica')">
-		<xsl:if test="position() = 1">
-		</xsl:if>
+	  <!-- parallel segmentation -->
+	  <xsl:when test="//*:witList">
+		<xsl:choose>
+		  <xsl:when test="node()[(ancestor::node()[contains(@wit, $witNum)]) or (not(ancestor::node()[@wit]))]">
+			<p>
+			  <xsl:if test="ancestor::node()[@n]">
+				<span class="lnum">
+				  <xsl:value-of select="ancestor::node()[@n][1]/@n"/>
+				  <xsl:copy-of select="$blank"/>
+				</span>
+			  </xsl:if>
+			  <span class="note_type">
+				<b><xsl:value-of select="@type"/></b>
+			  </span>
+
+			  <xsl:copy-of select="$newline"/>
+			  <xsl:apply-templates mode="note"/>
+			</p>
+		  </xsl:when>
+		  <xsl:otherwise/>
+		</xsl:choose>
 	  </xsl:when>
 
+	  <!-- other approach -->
 	  <xsl:otherwise>
-	  -->
-		<xsl:choose>
+		<p>
+		  <!-- find the "anchor" that match the "target" attribute -->
+		  <xsl:call-template name="anchor">
+			<xsl:with-param name="target" select="@target" tunnel="yes"/>
+		  </xsl:call-template>
+		  <!-- and print the number of the line to whom the note refers to -->
 
-		  <xsl:when test="//*:witList">
-			<xsl:choose>
-			  <xsl:when test="node()[(ancestor::node()[contains(@wit, $witNum)]) or (not(ancestor::node()[@wit]))]">
-				<xsl:if test="ancestor::node()[@n]">
-				  <span class="lnum">
-					<xsl:value-of select="ancestor::node()[@n][1]/@n"/>
-					<xsl:copy-of select="$blank"/>
-				  </span>
-				</xsl:if>
-				<span class="note_type">
-				  <b><xsl:value-of select="@type"/></b>
-				</span>
+		  <span class="note_type">
+			<b><xsl:value-of select="@type"/></b>
+		  </span>
 
-				<p>
-				  <xsl:apply-templates mode="note"/>
-				</p>
-			  </xsl:when>
-
-			  <xsl:otherwise/>
-
-			</xsl:choose>
-		  </xsl:when>
-
-		  <xsl:otherwise>
-			<xsl:value-of select="//*:anchor[ancestor::node()[@n][1]/@n]/@id"/>
-			<xsl:value-of select="@target"/>
-			<xsl:value-of select="//attribute(xml:id)"/>
-				<span class="note_type">
-				  <b><xsl:value-of select="@type"/></b>
-				</span>
-
-				<p>
-				  <xsl:apply-templates mode="note"/>
-				</p>
-		  </xsl:otherwise>
-		</xsl:choose>
-		<!--
+		  <xsl:apply-templates mode="note"/>
+		</p>
 	  </xsl:otherwise>
-
 	</xsl:choose>
-	-->
+  </xsl:template>
+
+
+
+
+  <!-- note anchors -->
+  <xsl:template name="anchor">
+	<xsl:param name="target" tunnel="yes"/>
+
+	<xsl:for-each select="//*:anchor[matches($target, @*:id)]">
+
+	  <xsl:variable name="prec_lnum" as="element()*">
+		<xsl:sequence select="preceding-sibling::*:lb"/>
+	  </xsl:variable>
+	  <span class="lnum">
+		<xsl:value-of select="$prec_lnum[position() = last()]/@n"/>
+		<xsl:copy-of select="$blank"/>
+	  </span>
+	</xsl:for-each>
+
   </xsl:template>
 
 

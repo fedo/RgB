@@ -1,15 +1,12 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE TEI SYSTEM "tei-msMarco.dtd" 
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TEI SYSTEM 'tei-msMarco.dtd'
 [
-<!ENTITY c24r SYSTEM "c24r.jpg" NDATA JPEG>
 <!NOTATION JPEG SYSTEM "image/jpeg">
-
 <!ELEMENT figure EMPTY>
 <!ATTLIST figure
 entity CDATA #REQUIRED
 >
 ]>
-
 <TEI>
     <teiHeader>
         <fileDesc>
@@ -115,7 +112,6 @@ entity CDATA #REQUIRED
         <body>
             <p>
 
-<figure entity="c24r"/> 
 <lb n="1"/>to et<reg type="SC"> </reg><choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>ifficult<choice><orig>a</orig><reg type="modernizzazione">à</reg></choice> <sic><choice><abbr type="contraction">&iSegnoSopra;</abbr><expan>in</expan></choice>tro<choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>a<choice><orig>&ctLeg;</orig><reg type="SG">ct</reg></choice>o</sic> certo ra<choice><orig>&gStondata;</orig><reg type="SG">g</reg></choice>iona<lb n="2"/>mento
                 <choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice><reg type="aggiuntaPunteggiatura">'</reg>acor<choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>o uenen<choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>o il<reg type="SC"> </reg>con<choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>olo a<reg type="SC"> </reg>collo<lb n="3"/>quio c<choice><abbr type="contraction">&oSegnoSopra;</abbr><expan>on</expan></choice><reg type="SC"> </reg>llu<choice><orig>&iAllungata;</orig><reg type="SG">i</reg></choice>, fu pre<choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>o<anchor xml:id="M1"/>
                 a<choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice><reg type="SC"> </reg>in<choice><orig>&gStondata;</orig><reg type="SG">g</reg></choice>anno et in<choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>ieme <lb n="4"/>c<choice><abbr type="contraction">&oSegnoSopra;</abbr><expan>on</expan></choice><reg type="SC"> </reg>li <choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>e<choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>ici naui ne fu<reg type="SC"> </reg><term>minato</term> a<choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice> <choice><abbr type="contraction">&aMaiuscSegnoSopra;</abbr><expan>An</expan></choice>nibale<choice><orig>,</orig><reg type="aggiuntaPunteggiatura">:</reg></choice> pare<lb n="5"/>ua la fortuna auer fauori<choice><orig>&gStondata;</orig><reg type="SG">g</reg></choice>iato <choice><orig>&gStondata;</orig><reg type="SG">g</reg></choice>ran<choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>emente <lb n="6"/>i<reg type="SC"> </reg><choice><orig>c</orig><reg type="aggiuntaMaiuscola">C</reg></choice>arta<choice><orig>&gStondata;</orig><reg type="SG">g</reg></choice>ine<choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>i in<reg type="SC"> </reg>que<choice><orig>&stLeg;</orig><reg type="SG">st</reg></choice>o <choice><abbr type="contraction">&pri;</abbr><expan>pri</expan></choice>ncipio. Ma po<reg type="aggiuntaPunteggiatura">'</reg> che <choice><orig>&dTonda;</orig><reg type="SG">d</reg></choice>i <lb n="7"/>poi <choice><abbr type="superscription">&qu;</abbr><expan>qu</expan></choice>i come uole<choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice><choice><orig>&sAllungata;</orig><reg type="SG">s</reg></choice>e far

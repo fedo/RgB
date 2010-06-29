@@ -185,7 +185,7 @@ public class MainEntryPoint implements EntryPoint {
                     String witnesses = (String) hashMap.get("witnesses");
 
                     // * informazione documenti
-                    DisclosurePanel info = new DisclosurePanel(new HTML("<h2>Informazioni sul documento</h2>"));
+                    DisclosurePanel info = new DisclosurePanel("Informazioni sul documento");
                     info.setWidth("100%");
                     info.setOpen(true);
                     final HTML loading = new HTML("<img src=\"images/loading.gif\" alt=\"Caricamento in corso\" />");
@@ -196,7 +196,7 @@ public class MainEntryPoint implements EntryPoint {
                     panel.add(new HTML("<br/>"));
 
                     // * servizi
-                    DisclosurePanel servicesDisclosure = new DisclosurePanel(new HTML("<h2>Servizi</h2>"));
+                    DisclosurePanel servicesDisclosure = new DisclosurePanel("Servizi");
                     servicesDisclosure.setWidth("100%");
                     servicesDisclosure.setOpen(true);
                     VerticalPanel servicesContent = new VerticalPanel();
@@ -221,7 +221,7 @@ public class MainEntryPoint implements EntryPoint {
 
 
                     // * visualizzazione
-                    DisclosurePanel viewerDisclosure = new DisclosurePanel(new HTML("<h2>Visualizzatore documento</h2>"));
+                    DisclosurePanel viewerDisclosure = new DisclosurePanel("Visualizzatore documento");
                     viewerDisclosure.setWidth("100%");
                     viewerDisclosure.setOpen(true);
                     VerticalPanel viewerContent = new VerticalPanel();
