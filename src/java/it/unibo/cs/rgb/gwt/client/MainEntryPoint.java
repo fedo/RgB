@@ -44,9 +44,11 @@ public class MainEntryPoint implements EntryPoint {
     Widget content;
     // pages
     TabPanel documentViewerPanel = new TabPanel();
-    HTML homepage;
-    Label page1 = new Label("page1");
-    Label page2 = new Label("page1");
+    HTML homehtml;
+    VerticalPanel homepage = new VerticalPanel();
+    VerticalPanel documentsViewer = new VerticalPanel();
+    VerticalPanel help = new VerticalPanel();
+    VerticalPanel contacts = new VerticalPanel();
     // footer
     HorizontalPanel debug = new HorizontalPanel();
     // variables
@@ -89,6 +91,8 @@ public class MainEntryPoint implements EntryPoint {
         westPanel.setWidth("165px");
         mainPanel.add(westPanel, DockPanel.WEST);
         mainPanel.setCellWidth(westPanel, "165px");
+
+        createPages();
 
         centerPanel = createCenterWidget();
         centerPanel.addStyleName("centerPanel");
@@ -137,8 +141,8 @@ public class MainEntryPoint implements EntryPoint {
     }
 
     private Widget createHomepage() {
-        homepage = new HTML("<p>Questa è l'home page, clicca su un documento per fare delle storie: " + host + "</p>");
-        return homepage;
+        homehtml = new HTML("<p>Questa è l'home page, clicca su un documento per fare delle storie: " + host + "</p>");
+        return homehtml;
     }
 
     /**
@@ -468,7 +472,7 @@ public class MainEntryPoint implements EntryPoint {
 
                                                 if (documentViewerPanel.getWidgetCount() == 0) { //DocumentViewer è vuoto
                                                     centerPanel.remove(content);
-                                                    content = homepage;
+                                                    content = homehtml;
                                                     centerPanel.add(content);
                                                     title.setText("Homepage");
                                                 } else { //DocumentViewer non è vuoto, quando premi "x" selezioni comunque
@@ -1101,5 +1105,12 @@ public class MainEntryPoint implements EntryPoint {
 
         return retval;
 
+    }
+
+    public void createPages(){
+        homepage.add(new Label("home"));
+        documentsViewer.add(new Label("documentsViewer"));
+        help.add(new Label("help"));
+        contacts.add(new Label("contacts"));
     }
 }
