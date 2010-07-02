@@ -40,6 +40,7 @@ public class Differenziazione extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, DifferenziazioneException {
 
+        response.setCharacterEncoding("UTF-8");
         String xml1 = null;
         String xml2 = null;
 

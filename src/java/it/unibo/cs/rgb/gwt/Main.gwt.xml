@@ -19,6 +19,5 @@
 
     <entry-point class="it.unibo.cs.rgb.gwt.client.MainEntryPoint"/>
 
-<inherits name="com.smartgwt.SmartGwt"/>
     <!-- Do not define servlets here, use web.xml -->
 </module>

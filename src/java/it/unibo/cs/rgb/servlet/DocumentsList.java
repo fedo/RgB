@@ -33,6 +33,7 @@ public class DocumentsList extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        response.setCharacterEncoding("UTF-8");
         String teiFolder = "/collection6";
 
         ArrayList<String> xmlFilesList = new ArrayList<String>();

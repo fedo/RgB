@@ -18,19 +18,18 @@
         <from>/test/status/</from>
         <to type="redirect">%{context-path}/rewrite-status</to>
     </rule>
-<!--
+
     <rule>
-        <from>^/StemmaCodicum</from>
-        <to>/Dispatcher?service=StemmaCodicum</to>
+        <name>EstrazioneDiConcordanze Rule</name>
+        <from>/EstrazioneDiConcordanze/([a-zA-Z0-9]+)/([0-9]+)$</from>
+        <to>/EstrazioneDiConcordanze?word=$1&amp;number=$2</to>
     </rule>
--->
+    
     <rule>
-        <from>^/EstrazioneDiConcordanze/([a-zA-Z0-9]+)/([0-9]+)$</from>
-        <to>/Dispatcher?service=EstrazioneDiConcordanze&amp;word=$1&amp;number=$2</to>
+        <name>Test Rule</name>
+        <from>/Test/([a-zA-Z0-9]+)/([0-9]+)$</from>
+        <to>/Test?word=$1&amp;number=$2</to>
     </rule>
-
-
-
 
     <outbound-rule>
         <note>

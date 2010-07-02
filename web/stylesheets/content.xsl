@@ -57,8 +57,8 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
      <xsl:text>]</xsl:text>
   </xsl:variable>
   <!-- result documents -->
-  <!-- <xsl:variable name="file_content" select="concat('./','content','.html')"/>
-  <xsl:variable name="file_note" select="concat('./','note','.html')"/> -->
+  <!--xsl:variable name="file_content" select="concat('./','content','.html')"/-->
+  <!--xsl:variable name="file_note" select="concat('./','note','.html')"/-->
 
 
 
@@ -266,8 +266,8 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
 
 	  <!-- export the content of the encoded document to the application -->
 	  <xsl:when test="matches($service, 'visualizzazione')">
-		<!-- <xsl:result-document method="xhtml" indent="yes" omit-xml-declaration="yes" href="{$file_content}" encoding="UTF-8"> -->
-                    <xsl:result-document method="xhtml" indent="yes" omit-xml-declaration="yes" encoding="UTF-8">
+		<!--xsl:result-document method="xhtml" indent="yes" omit-xml-declaration="yes" href="{$file_content}" encoding="UTF-8"-->
+		<xsl:result-document method="xhtml" indent="yes" omit-xml-declaration="yes" encoding="UTF-8">
 		  <html>
 			<head/>
 			<body>
@@ -283,11 +283,23 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
 	  </xsl:when>
 
 	  <!-- export the content of the encoded document in plain text for the service "concordanze" -->
-	  <xsl:when test="matches($service, 'concordanze')">
+	  <xsl:when test="matches($service, 'concordanze_content')">
 		<xsl:result-document method="text" indent="no" include-content-type="no" encoding="UTF-8">
+		  <xsl:text>content|</xsl:text><!-- service specific opener -->
 		  <xsl:apply-templates select="$document_content[
 			not(empty(node() intersect $content_title))
-			or not(empty(node() intersect $content_body))] [1]" mode="concordanze">
+			or not(empty(node() intersect $content_body))] [1]" mode="concordanze_content">
+			<xsl:with-param name="content_title" select="$content_title" tunnel="yes"/>
+			<xsl:with-param name="content_body" select="$content_body" tunnel="yes"/>
+		  </xsl:apply-templates>
+		</xsl:result-document>
+	  </xsl:when>
+
+	  <!-- export the notes of the encoded document in plain text for the service "concordanze" -->
+	  <xsl:when test="matches($service, 'concordanze_note')">
+		<xsl:result-document method="text" indent="no" include-content-type="no" encoding="UTF-8">
+		  <xsl:text>note|</xsl:text><!-- service specific opener -->
+		  <xsl:apply-templates select="$content_note[matches(name(), 'note')]" mode="concordanze_note">
 			<xsl:with-param name="content_title" select="$content_title" tunnel="yes"/>
 			<xsl:with-param name="content_body" select="$content_body" tunnel="yes"/>
 		  </xsl:apply-templates>
@@ -296,8 +308,8 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
 
 	  <!-- export the content of the notes from the encoded document to the application -->
 	  <xsl:when test="matches($service, 'note')">
-		<!-- <xsl:result-document method="xhtml" indent="yes" omit-xml-declaration="yes" href="{$file_note}" encoding="UTF-8"> -->
-                    <xsl:result-document method="xhtml" indent="yes" omit-xml-declaration="yes" encoding="UTF-8">
+		<!--xsl:result-document method="xhtml" indent="yes" omit-xml-declaration="yes" href="{$file_note}" encoding="UTF-8"-->
+		<xsl:result-document method="xhtml" indent="yes" omit-xml-declaration="yes" encoding="UTF-8">
 		  <html>
 			<head/>
 			<body>
@@ -324,8 +336,8 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
   <xsl:template match="*:br" mode="visualizzazione note">
 	<xsl:copy-of select="$newline"/>
   </xsl:template>
-  <!-- mode "concordanze" -->
-  <xsl:template match="*:br" mode="concordanze">
+  <!-- mode "concordanze_content" -->
+  <xsl:template match="*:br" mode="concordanze_content concordanze_note">
 	<xsl:text>&#xA;</xsl:text>
   </xsl:template>
 
@@ -339,9 +351,13 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
 	  <xsl:apply-templates mode="visualizzazione"/>
 	</h3>
   </xsl:template>
-  <!-- mode "concordanze" -->
-  <xsl:template match="*:head" mode="concordanze">
-	<xsl:apply-templates mode="concordanze"/>
+  <!-- mode "concordanze_content" -->
+  <xsl:template match="*:head" mode="concordanze_content">
+	<xsl:apply-templates mode="concordanze_content"/>
+  </xsl:template>
+  <!-- mode "concordanze_note" -->
+  <xsl:template match="*:head" mode="concordanze_note">
+	<xsl:apply-templates mode="concordanze_note"/>
   </xsl:template>
   <!-- mode "note" -->
   <xsl:template match="*:head" mode="note">
@@ -356,13 +372,17 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
   <xsl:template match="*:body" mode="visualizzazione">
 	<xsl:apply-templates mode="visualizzazione"/>
   </xsl:template>
-  <!-- mode "concordanze" -->
-  <xsl:template match="*:body" mode="concordanze">
-	<xsl:apply-templates mode="concordanze"/>
+  <!-- mode "concordanze_content" -->
+  <xsl:template match="*:body" mode="concordanze_content">
+	<xsl:apply-templates mode="concordanze_content"/>
+  </xsl:template>
+  <!-- mode "concordanze_note" -->
+  <xsl:template match="*:body" mode="concordanze_note">
+	<xsl:apply-templates mode="concordanze_note"/>
   </xsl:template>
   <!-- mode "note" -->
   <xsl:template match="*:body" mode="note">
-	<xsl:apply-templates mode="visualizzazione"/>
+	<xsl:apply-templates mode="note"/>
   </xsl:template>
 
 
@@ -387,17 +407,21 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
 	  <xsl:apply-templates mode="visualizzazione"/>
 	</xsl:if>
   </xsl:template>
-  <!-- mode "concordanze" -->
-  <xsl:template match="element()[starts-with(name(), 'div')]" mode="concordanze">
+  <!-- mode "concordanze_content" -->
+  <xsl:template match="element()[starts-with(name(), 'div')]" mode="concordanze_content">
 	<xsl:param name="content_body" tunnel="yes" required="yes"/>
 
 	<xsl:if test="not(empty(node() intersect $content_body))">
-	  <xsl:apply-templates mode="concordanze"/>
+	  <xsl:apply-templates mode="concordanze_content"/>
 	</xsl:if>
+  </xsl:template>
+  <!-- mode "concordanze_note" -->
+  <xsl:template match="element()[starts-with(name(), 'div')]" mode="concordanze_note">
+	<xsl:apply-templates mode="concordanze_note"/>
   </xsl:template>
   <!-- mode "note" -->
   <xsl:template match="element()[starts-with(name(), 'div')]" mode="note">
-	<xsl:apply-templates/>
+	<xsl:apply-templates mode="note"/>
   </xsl:template>
 
 
@@ -410,9 +434,13 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
 	  <xsl:apply-templates mode="visualizzazione"/>
 	</p>
   </xsl:template>
-  <!-- mode "concordanze" -->
-  <xsl:template match="*:opener | *:closer" mode="concordanze">
-	<xsl:apply-templates mode="concordanze"/>
+  <!-- mode "concordanze_content" -->
+  <xsl:template match="*:opener | *:closer" mode="concordanze_content">
+	<xsl:apply-templates mode="concordanze_content"/>
+  </xsl:template>
+  <!-- mode "concordanze_note" -->
+  <xsl:template match="*:opener | *:closer" mode="concordanze_note">
+	<xsl:apply-templates mode="concordanze_note"/>
   </xsl:template>
   <!-- mode "note" -->
   <xsl:template match="*:opener | *:closer" mode="note">
@@ -446,8 +474,12 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
 	  </xsl:otherwise>
 	</xsl:choose>
   </xsl:template>
-  <!-- mode "concordanze" -->
-  <xsl:template match="*:lb" mode="concordanze">
+  <!-- mode "concordanze_content" -->
+  <xsl:template match="*:lb" mode="concordanze_content">
+	<xsl:text>&#xA;</xsl:text>
+  </xsl:template>
+  <!-- mode "concordanze_note" -->
+  <xsl:template match="*:lb" mode="concordanze_note">
 	<xsl:text>&#xA;</xsl:text>
   </xsl:template>
 
@@ -461,9 +493,13 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
 	  <xsl:apply-templates mode="visualizzazione"/>
 	</p>
   </xsl:template>
-  <!-- mode "concordanze" -->
-  <xsl:template match="*:p" mode="concordanze">
-	<xsl:apply-templates mode="concordanze"/>
+  <!-- mode "concordanze_content" -->
+  <xsl:template match="*:p" mode="concordanze_content">
+	<xsl:apply-templates mode="concordanze_content"/>
+  </xsl:template>
+  <!-- mode "concordanze_note" -->
+  <xsl:template match="*:p" mode="concordanze_note">
+	<xsl:apply-templates mode="concordanze_note"/>
   </xsl:template>
   <!-- mode "note" -->
   <xsl:template match="*:p | *:lg" mode="note">
@@ -490,12 +526,21 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
 	</xsl:if>
 	<xsl:apply-templates mode="visualizzazione"/>
   </xsl:template>
-  <!-- mode "concordanze" -->
-  <xsl:template match="*:l" mode="concordanze">
+  <!-- mode "concordanze_content" -->
+  <xsl:template match="*:l" mode="concordanze_content">
 	<xsl:if test="preceding-sibling::*:l">
 	  <xsl:text>&#xA;</xsl:text>
 	</xsl:if>
-	<xsl:apply-templates mode="concordanze"/>
+
+	<xsl:apply-templates mode="concordanze_content"/>
+  </xsl:template>
+  <!-- mode "concordanze_note" -->
+  <xsl:template match="*:l" mode="concordanze_note">
+	<xsl:if test="preceding-sibling::*:l">
+	  <xsl:text>&#xA;</xsl:text>
+	</xsl:if>
+
+	<xsl:apply-templates mode="concordanze_note"/>
   </xsl:template>
   <!-- mode "note" -->
   <xsl:template match="*:l" mode="note">
@@ -525,9 +570,17 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
 	  <xsl:copy-of select="$blank"/>
 	</xsl:if>
   </xsl:template>
-  <!-- mode "concordanze" -->
-  <xsl:template match="*:app" mode="concordanze">
-	<xsl:apply-templates mode="concordanze"/>
+  <!-- mode "concordanze_content" -->
+  <xsl:template match="*:app" mode="concordanze_content">
+	<xsl:apply-templates mode="concordanze_content"/>
+
+	<xsl:if test="position() != last()">
+	  <xsl:copy-of select="$blank"/>
+	</xsl:if>
+  </xsl:template>
+  <!-- mode "concordanze_note" -->
+  <xsl:template match="*:app" mode="concordanze_note">
+	<xsl:apply-templates mode="concordanze_note"/>
 
 	<xsl:if test="position() != last()">
 	  <xsl:copy-of select="$blank"/>
@@ -555,13 +608,22 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
 	  <xsl:apply-templates mode="visualizzazione"/>
 	</xsl:if>
   </xsl:template>
-  <!-- mode "visualizzazione" -->
-  <xsl:template match="*:rdg" mode="concordanze">
+  <!-- mode "concordanze_content" -->
+  <xsl:template match="*:rdg" mode="concordanze_content">
 	<xsl:if test="contains(@wit, $witNum)">
 	  <xsl:if test="(position() &gt; 1) and (position() != last())">
 		<xsl:copy-of select="$blank"/>
 	  </xsl:if>
-	  <xsl:apply-templates mode="concordanze"/>
+	  <xsl:apply-templates mode="concordanze_content"/>
+	</xsl:if>
+  </xsl:template>
+  <!-- mode "concordanze_note" -->
+  <xsl:template match="*:rdg" mode="concordanze_note">
+	<xsl:if test="contains(@wit, $witNum)">
+	  <xsl:if test="(position() &gt; 1) and (position() != last())">
+		<xsl:copy-of select="$blank"/>
+	  </xsl:if>
+	  <xsl:apply-templates mode="concordanze_note"/>
 	</xsl:if>
   </xsl:template>
   <!-- mode "note" -->
@@ -591,9 +653,13 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
 	  </xsl:otherwise>
 	</xsl:choose>
   </xsl:template>
-  <!-- mode "concordanze" -->
-  <xsl:template match="*:hi" mode="concordanze">
-	<xsl:apply-templates mode="concordanze"/>
+  <!-- mode "concordanze_content" -->
+  <xsl:template match="*:hi" mode="concordanze_content">
+	<xsl:apply-templates mode="concordanze_content"/>
+  </xsl:template>
+  <!-- mode "concordanze_note" -->
+  <xsl:template match="*:hi" mode="concordanze_note">
+	<xsl:apply-templates mode="concordanze_note"/>
   </xsl:template>
   <!-- mode "note" -->
   <xsl:template match="*:hi" mode="note">
@@ -619,8 +685,8 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
 	  <xsl:apply-templates mode="visualizzazione"/>
 	</del>
   </xsl:template>
-  <!-- mode "concordanze" -->
-  <xsl:template match="*:del" mode="concordanze"/>
+  <!-- mode "concordanze_content" / "concordanze_note" -->
+  <xsl:template match="*:del" mode="concordanze_content concordanze_note"/>
   <!-- mode "note" -->
   <xsl:template match="*:del" mode="note">
 	<del>
@@ -638,9 +704,13 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
 	  <xsl:apply-templates mode="visualizzazione"/>
 	</em>
   </xsl:template>
-  <!-- mode "concordanze" -->
-  <xsl:template match="*:add" mode="concordanze">
-	<xsl:apply-templates mode="concordanze"/>
+  <!-- mode "concordanze_content" -->
+  <xsl:template match="*:add" mode="concordanze_content">
+	<xsl:apply-templates mode="concordanze_content"/>
+  </xsl:template>
+  <!-- mode "concordanze_note" -->
+  <xsl:template match="*:add" mode="concordanze_note">
+	<xsl:apply-templates mode="concordanze_note"/>
   </xsl:template>
   <!-- mode "note" -->
   <xsl:template match="*:add" mode="note">
@@ -663,8 +733,8 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
 	  <xsl:value-of select="."/>
 	</p>
   </xsl:template>
-  <!-- mode "concordanze" -->
-  <xsl:template match="*:argument | *:bibl" mode="concordanze">
+  <!-- mode "concordanze_content" / "concordanze_note" -->
+  <xsl:template match="*:argument | *:bibl" mode="concordanze_content concordanze_note">
 	<xsl:value-of select="."/>
   </xsl:template>
 
@@ -685,9 +755,13 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
 
 	<xsl:apply-templates mode="visualizzazione"/>
   </xsl:template>
-  <!-- mode "concordanze" -->
-  <xsl:template match="*:lem" mode="concordanze">
-	<xsl:apply-templates mode="concordanze"/>
+  <!-- mode "concordanze_content" -->
+  <xsl:template match="*:lem" mode="concordanze_content">
+	<xsl:apply-templates mode="concordanze_content"/>
+  </xsl:template>
+  <!-- mode "concordanze_note" -->
+  <xsl:template match="*:lem" mode="concordanze_note">
+	<xsl:apply-templates mode="concordanze_note"/>
   </xsl:template>
   <!-- mode "note" -->
   <xsl:template match="*:lem" mode="note">
@@ -707,8 +781,8 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
 
 
   <!-- note -->
-  <!-- mode "visualizzazione" / "concordanze" -->
-  <xsl:template match="*:note" mode="visualizzazione concordanze"/>
+  <!-- mode "visualizzazione" / "concordanze_content" -->
+  <xsl:template match="*:note" mode="visualizzazione concordanze_content"/>
   <!-- mode "note" -->
   <xsl:template match="*:note" mode="note">
 	<xsl:param name="content_body" tunnel="yes"/>
@@ -756,6 +830,29 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
 	  </xsl:otherwise>
 	</xsl:choose>
   </xsl:template>
+  <!-- mode "concordanzenote" -->
+  <xsl:template match="*:note" mode="note">
+	<xsl:param name="content_body" tunnel="yes"/>
+
+	<xsl:choose>
+
+	  <!-- parallel segmentation -->
+	  <xsl:when test="//*:witList">
+		<xsl:choose>
+		  <xsl:when test="node()[(ancestor::node()[contains(@wit, $witNum)]) or (not(ancestor::node()[@wit]))]">
+			<xsl:copy-of select="$newline"/>
+			<xsl:apply-templates mode="concordanze_note"/>
+		  </xsl:when>
+		  <xsl:otherwise/>
+		</xsl:choose>
+	  </xsl:when>
+
+	  <!-- other approach -->
+	  <xsl:otherwise>
+		<xsl:apply-templates mode="concordanze_note"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+  </xsl:template>
 
 
 
@@ -785,9 +882,13 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
   <xsl:template match="*:choice" mode="visualizzazione">
 	<xsl:apply-templates mode="visualizzazione"/>
   </xsl:template>
-  <!-- mode "concordanze" -->
-  <xsl:template match="*:choice" mode="concordanze">
-	<xsl:apply-templates mode="concordanze"/>
+  <!-- mode "concordanze_content" -->
+  <xsl:template match="*:choice" mode="concordanze_content">
+	<xsl:apply-templates mode="concordanze_content"/>
+  </xsl:template>
+  <!-- mode "concordanze_note" -->
+  <xsl:template match="*:choice" mode="concordanze_note">
+	<xsl:apply-templates mode="concordanze_note"/>
   </xsl:template>
   <!-- mode "note" -->
   <xsl:template match="*:choice" mode="note">
@@ -809,14 +910,25 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
 	  <xsl:otherwise/>
 	</xsl:choose>
   </xsl:template>
-  <!-- mode "concordanze" -->
-  <xsl:template match="*:orig" mode="concordanze">
+  <!-- mode "concordanze_content" -->
+  <xsl:template match="*:orig" mode="concordanze_content">
 	<xsl:choose>
 	  <!-- diplomatica -->
 	  <xsl:when test="matches($transcription, 'diplomatica')">
-		<xsl:apply-templates mode="concordanze"/>
+		<xsl:apply-templates mode="concordanze_content"/>
 	  </xsl:when>
 	  <!-- default -->
+	  <xsl:otherwise/>
+	</xsl:choose>
+  </xsl:template>
+  <!-- mode "concordanze_note" -->
+  <xsl:template match="*:orig" mode="concordanze_note">
+	<xsl:choose>
+	  <!-- diplomatica -->
+	  <xsl:when test="matches($transcription, 'diplomatica')">
+		<xsl:apply-templates mode="concordanze_note"/>
+	  </xsl:when>
+	  <!--  default -->
 	  <xsl:otherwise/>
 	</xsl:choose>
   </xsl:template>
@@ -854,19 +966,35 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
 	  <xsl:otherwise/>
 	</xsl:choose>
   </xsl:template>
-  <!-- mode "concordanze" -->
-  <xsl:template match="*:reg" mode="concordanze">
+  <!-- mode "concordanze_content" -->
+  <xsl:template match="*:reg" mode="concordanze_content">
 	<xsl:choose>
 	  <!-- interpretativa -->
 	  <xsl:when test="matches($transcription, 'interpretativa')">
 		<xsl:choose>
 		  <xsl:when test="(parent::*:choice) and (not(following-sibling::*:orig) and not(preceding-sibling::*:orig))"/>
 		  <xsl:otherwise>
-			<xsl:apply-templates mode="concordanze"/>
+			<xsl:apply-templates mode="concordanze_content"/>
 		  </xsl:otherwise>
 		</xsl:choose>
 	  </xsl:when>
 	  <!-- default -->
+	  <xsl:otherwise/>
+	</xsl:choose>
+  </xsl:template>
+  <!-- mode "concordanze_note" -->
+  <xsl:template match="*:reg" mode="concordanze_note">
+	<xsl:choose>
+	  <!-- interpretativa -->
+	  <xsl:when test="matches($transcription, 'interpretativa')">
+		<xsl:choose>
+		  <xsl:when test="(parent::*:choice) and (not(following-sibling::*:orig) and not(preceding-sibling::*:orig))"/>
+		  <xsl:otherwise>
+			<xsl:apply-templates mode="concordanze_note"/>
+		  </xsl:otherwise>
+		</xsl:choose>
+	  </xsl:when>
+	  <!--  default -->
 	  <xsl:otherwise/>
 	</xsl:choose>
   </xsl:template>
@@ -908,14 +1036,25 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
 	  <xsl:otherwise/>
 	</xsl:choose>
   </xsl:template>
-  <!-- mode "concordanze" -->
-  <xsl:template match="*:expan" mode="concordanze">
+  <!-- mode "concordanze_content" -->
+  <xsl:template match="*:expan" mode="concordanze_content">
 	<xsl:choose>
 	  <!-- interpretativa -->
 	  <xsl:when test="matches($transcription, 'interpretativa')">
-		<xsl:apply-templates mode="concordanze"/>
+		<xsl:apply-templates mode="concordanze_content"/>
 	  </xsl:when>
 	  <!-- default -->
+	  <xsl:otherwise/>
+	</xsl:choose>
+  </xsl:template>
+  <!-- mode "note" -->
+  <xsl:template match="*:expan" mode="concordanze_note">
+	<xsl:choose>
+	  <!-- interpretativa -->
+	  <xsl:when test="matches($transcription, 'interpretativa')">
+		<xsl:apply-templates mode="concordanze_note"/>
+	  </xsl:when>
+	  <!--  default -->
 	  <xsl:otherwise/>
 	</xsl:choose>
   </xsl:template>
@@ -950,14 +1089,25 @@ Description: XSL stylesheet for the retreival of the encoded document's content.
 	  <xsl:otherwise/>
 	</xsl:choose>
   </xsl:template>
-  <!-- mode "concordanze" -->
-  <xsl:template match="*:abbr" mode="concordanze">
+  <!-- mode "concordanze_content" -->
+  <xsl:template match="*:abbr" mode="concordanze_content">
 	<xsl:choose>
 	  <!-- diplomatica -->
 	  <xsl:when test="matches($transcription, 'diplomatica')">
-		<xsl:apply-templates mode="concordanze"/>
+		<xsl:apply-templates mode="concordanze_content"/>
 	  </xsl:when>
 	  <!-- default -->
+	  <xsl:otherwise/>
+	</xsl:choose>
+  </xsl:template>
+  <!-- mode "concordanze_note" -->
+  <xsl:template match="*:abbr" mode="concordanze_note">
+	<xsl:choose>
+	  <!-- diplomatica -->
+	  <xsl:when test="matches($transcription, 'diplomatica')">
+		<xsl:apply-templates mode="concordanze_note"/>
+	  </xsl:when>
+	  <!--  default -->
 	  <xsl:otherwise/>
 	</xsl:choose>
   </xsl:template>

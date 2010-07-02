@@ -39,6 +39,7 @@ public class EstrazioneDiConcordanze extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws RgBServletException, ServletException, IOException, EstrazioneDiConcordanzeException {
 
+        response.setCharacterEncoding("UTF-8");
         String xml = null;
 
         // lettura degli stylesheets (xsl)
@@ -54,9 +55,9 @@ public class EstrazioneDiConcordanze extends HttpServlet {
         }
 
         // la request dev'essere "multipart/form-data"
-        /*if (!request.getContentType().startsWith("multipart/form-data")) {
-        throw new EstrazioneDiConcordanzeException(response, "406", "Not acceptable", "Richiesto Content-Type 'multipart/form-data'.", "Imposta il Content-Type 'multipart/form-data'.");
-        }*/
+        if (!request.getContentType().startsWith("multipart/form-data")) {
+            throw new EstrazioneDiConcordanzeException(response, "406", "Not acceptable", "Richiesto Content-Type 'multipart/form-data'.", "Imposta il Content-Type 'multipart/form-data'.");
+        }
 
         String word = null;
         String stringNumber = null;
@@ -82,6 +83,8 @@ public class EstrazioneDiConcordanze extends HttpServlet {
             tmpPart = mparser.readNextPart();
         }
 
+        stringNumber = request.getParameter("number");
+        word = request.getParameter("word");
 
 
         // verifica
@@ -105,19 +108,37 @@ public class EstrazioneDiConcordanze extends HttpServlet {
         String[] transcriptionTypes = new String[1];
         String retval = "<div><p><span>Parola: " + word + "</span><span> number: " + number + "</span></p>";
         for (int n = 0; n < witnessesList.length; n++) {
+            String concordanze = "";
+
             for (int m = 0; m < transcriptionTypes.length; m++) {
-                String plainText = tei.getEstrazioneDiConcordanzeDataString(witnessesList[n]);
-                //retval += plainText;
-                TeiConcordanze con = new TeiConcordanze(word, number, plainText, witnessesList[n], transcriptionTypes[m]);
-                retval += con.getConcordanze();
+
+                String plainText = tei.getEstrazioneDiConcordanzeContentDataString(witnessesList[n]);
+                if (!plainText.equalsIgnoreCase("content|")) {
+                    TeiConcordanze con = new TeiConcordanze(word, number, plainText, witnessesList[n], transcriptionTypes[m]);
+                    concordanze += con.getConcordanze();
+                    //concordanze += plainText;
+                }
+
+
+                String plainText2 = tei.getEstrazioneDiConcordanzeNoteDataString(witnessesList[n]);
+                if (!plainText2.equalsIgnoreCase("note|")) {
+                    TeiConcordanze con2 = new TeiConcordanze(word, number, plainText2, witnessesList[n], transcriptionTypes[m]);
+                    concordanze += con2.getConcordanze();
+                    //concordanze += plainText2;
+                }
+            }
+            if (!concordanze.equalsIgnoreCase("")) {
+                retval += "<p>Concordanze trovate nella versione del testimone: <b>" + witnessesList[n] + "</b><br/>" + concordanze + "<br/>";
             }
         }
         retval += "</div>";
 
         // output
         PrintWriter out = response.getWriter();
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html");
+        //response.setCharacterEncoding("UTF-8");
         out.print(retval);
+        System.out.print(retval);
         out.close();
 
     }

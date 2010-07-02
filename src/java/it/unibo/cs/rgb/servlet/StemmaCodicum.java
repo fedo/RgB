@@ -40,6 +40,7 @@ public class StemmaCodicum extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, StemmaCodicumException {
 
+        response.setCharacterEncoding("UTF-8");
         String xml = null;
 
         // lettura degli stylesheets (xsl)

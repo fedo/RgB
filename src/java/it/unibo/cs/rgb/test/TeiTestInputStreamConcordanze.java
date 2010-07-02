@@ -51,7 +51,7 @@ public class TeiTestInputStreamConcordanze {
 
         for (int i=0; i<witnesses.length; i++) {
 
-            String plainText = tei.getEstrazioneDiConcordanzeDataString(witnesses[i]);
+            String plainText = tei.getEstrazioneDiConcordanzeContentDataString(witnesses[i]);
             //String a[] = plainText.split("\\|");
 
             TeiConcordanze con = new TeiConcordanze("and", 3, plainText, witnesses[i], "pirla");

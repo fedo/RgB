@@ -38,12 +38,13 @@ public class MainEntryPoint implements EntryPoint {
     Widget headerPanel;
     Widget footerPanel;
     VerticalPanel westPanel = new VerticalPanel();
-    VerticalPanel centerPanel = new VerticalPanel();
+    VerticalPanel centerPanelOld = new VerticalPanel();
     // central
     Label title;
     Widget content;
+    SimplePanel centerPanel = new SimplePanel();
     // pages
-    TabPanel documentViewerPanel = new TabPanel();
+    DecoratedTabPanel documentViewerPanel = new DecoratedTabPanel();
     HTML homehtml;
     VerticalPanel homepage = new VerticalPanel();
     VerticalPanel documentsViewer = new VerticalPanel();
@@ -88,14 +89,17 @@ public class MainEntryPoint implements EntryPoint {
 
         westPanel = createWestWidget();
         westPanel.addStyleName("westPanel");
-        westPanel.setWidth("165px");
+        westPanel.setWidth("200px");
         mainPanel.add(westPanel, DockPanel.WEST);
-        mainPanel.setCellWidth(westPanel, "165px");
+        mainPanel.setCellWidth(westPanel, "200px");
 
         createPages();
 
-        centerPanel = createCenterWidget();
-        centerPanel.addStyleName("centerPanel");
+        centerPanelOld = createCenterWidget();
+        centerPanelOld.addStyleName("centerPanel");
+
+        centerPanel.setSize("100%", "100%");
+        centerPanel.setWidget(homepage);
         mainPanel.add(centerPanel, DockPanel.CENTER);
 
         RootPanel.get().add(mainPanel);
@@ -169,6 +173,7 @@ public class MainEntryPoint implements EntryPoint {
         final HashMap hashMap = getDocumentHashMap(path);
         String id = (String) hashMap.get("id");
         final VerticalPanel panel = new VerticalPanel();
+        panel.setSize("100%", "100%");
         panel.setTitle(id);
 
         //DocumentInfo
@@ -181,7 +186,6 @@ public class MainEntryPoint implements EntryPoint {
             Request request = builder.sendRequest(postData, new RequestCallback() {
 
                 public void onResponseReceived(Request request, Response response) {
-                    //NOTE gran bei cazzi con le variabili Final e con le variabili globali... vedere come fatto (per culo) per "documents" (arraylist)
                     //NOTE gli oggetti che crei dentro alla sendrequest devono essere modificati solo dentro la request
 
                     Document responseXml = XMLParser.parse(response.getText().toString());
@@ -403,7 +407,7 @@ public class MainEntryPoint implements EntryPoint {
 
                                 public void onMouseOver(final MouseOverEvent event) {
                                     currentWidget.addStyleName("buttonDocumentsListOver");
-                                    overWidget.setPopupPosition(event.getClientX(), event.getClientY());
+                                    overWidget.setPopupPosition(event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
                                     overWidget.setPopupPositionAndShow(new PositionCallback() {
 
                                         public void setPosition(int offsetWidth, int offsetHeight) {
@@ -437,12 +441,7 @@ public class MainEntryPoint implements EntryPoint {
 
                                 public void onClick(ClickEvent event) {
 
-                                    if (!title.getText().equalsIgnoreCase("Visualizzatore Documenti Tei")) {
-                                        centerPanel.clear();
-                                        centerPanel.add(title);
-                                        centerPanel.add(documentViewerPanel);
-                                        title.setText("Visualizzatore Documenti Tei");
-                                    }
+                                    centerPanel.setWidget(documentsViewer);
 
                                     int index = getTabIndex(id);
 
@@ -471,10 +470,7 @@ public class MainEntryPoint implements EntryPoint {
                                                 documentViewerPanel.remove(tabPanel);
 
                                                 if (documentViewerPanel.getWidgetCount() == 0) { //DocumentViewer è vuoto
-                                                    centerPanel.remove(content);
-                                                    content = homehtml;
-                                                    centerPanel.add(content);
-                                                    title.setText("Homepage");
+                                                    centerPanel.setWidget(homepage);
                                                 } else { //DocumentViewer non è vuoto, quando premi "x" selezioni comunque
                                                     if (indexToClose == indexSelectedTab) {
                                                         documentViewerPanel.selectTab(Math.max(indexToClose - 1, 0));
@@ -563,9 +559,9 @@ public class MainEntryPoint implements EntryPoint {
         noteCheckbox.addClickHandler(new ClickHandler() {
 
             public void onClick(ClickEvent event) {
-                if(noteCheckbox.getValue()){
+                if (noteCheckbox.getValue()) {
                     notes.setVisible(true);
-                }else{
+                } else {
                     notes.setVisible(false);
                 }
             }
@@ -620,12 +616,12 @@ public class MainEntryPoint implements EntryPoint {
 
                 public void onResponseReceived(Request request, Response response) {
                     if (200 == response.getStatusCode()) {
-                        
+
                         if (response.getText().contains("<body></body>")) {
                             documentPanel.remove(notes);
                             noteCheckbox.setVisible(false);
-                            
-                        }else{
+
+                        } else {
                             notes.setHTML("<div class=\"notesTextSpace\"></div>" + response.getText());
                         }
                     } else {
@@ -1107,10 +1103,51 @@ public class MainEntryPoint implements EntryPoint {
 
     }
 
-    public void createPages(){
-        homepage.add(new Label("home"));
-        documentsViewer.add(new Label("documentsViewer"));
-        help.add(new Label("help"));
-        contacts.add(new Label("contacts"));
+    public void createPages() {
+        pageHomepage(homepage);
+        pageDocumentsViewer(documentsViewer);
+        pageHelp(help);
+        pageContacts(contacts);
+    }
+
+    public void pageHomepage(VerticalPanel panel) {
+        panel.setWidth("100%");
+
+        Label title = new Label("Homepage");
+        title.addStyleName("pageTitle");
+        panel.add(title);
+
+        panel.add(new Label("siamo adsfjaskfj asdfijasdfi jasifjas idjfiasjfiasjf"));
+    }
+
+    public void pageDocumentsViewer(VerticalPanel panel) {
+        panel.setWidth("100%");
+
+        Label title = new Label("Visualizzatore documenti TEI");
+        title.addStyleName("pageTitle");
+        panel.add(title);
+
+        documentViewerPanel.setSize("100%", "100%");
+        panel.add(documentViewerPanel);
+    }
+
+    public void pageHelp(VerticalPanel panel) {
+        panel.setWidth("100%");
+
+        Label title = new Label("Help");
+        title.addStyleName("pageTitle");
+        panel.add(title);
+
+        panel.add(new Label("ti spiego siamo adsfjaskfj asdfijasdfi jasifjas idjfiasjfiasjf"));
+    }
+
+    public void pageContacts(VerticalPanel panel) {
+        panel.setWidth("100%");
+
+        Label title = new Label("Contatti");
+        title.addStyleName("pageTitle");
+        panel.add(title);
+
+        panel.add(new Label("chiamaci siamo adsfjaskfj asdfijasdfi jasifjas idjfiasjfiasjf"));
     }
 }

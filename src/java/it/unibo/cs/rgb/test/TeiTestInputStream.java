@@ -52,7 +52,7 @@ public class TeiTestInputStream {
          //TeiDocument dataCatalogLTW1001 = new TeiDocument("", RgB.convertStreamToString(connectionLTW1001.getInputStream(),"UTF-8"), xslHashMap);
 
         TeiDocument tei = new TeiDocument("zuppaditei", FileUtils.readFileToString(xmlFile), xslHashMap);
-        String str = tei.xslt(xslname, "a2", "concordanze");
+        String str = tei.xslt(xslname, "a2", "visualizzazione");
 
         System.out.println("xslt "+str);
         //System.out.println((String) dataCatalogLTW1001.getCatalogData("Ind").get("uri"));

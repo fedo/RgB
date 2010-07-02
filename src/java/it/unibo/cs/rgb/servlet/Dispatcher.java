@@ -46,6 +46,8 @@ public class Dispatcher extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, DispatcherException, ParserConfigurationException, SAXException {
 
+        response.setCharacterEncoding("UTF-8");
+        response.setStatus(200);
         // lettura degli stylesheets (xsl)
         String stylesheetsFolder = "/stylesheets";
         HashMap xsl = new HashMap();
@@ -115,10 +117,11 @@ public class Dispatcher extends HttpServlet {
             String word = request.getParameter("word");
             String number = request.getParameter("number");
 
-            ClientHttpRequest nreq = new ClientHttpRequest(serviceuri);//serviceuri + "?word=" + word + "&number=" + number);
+            //ClientHttpRequest nreq = new ClientHttpRequest(serviceuri);//serviceuri + "?word=" + word + "&number=" + number);
+            ClientHttpRequest nreq = new ClientHttpRequest("http://localhost:8080/RgB/EstrazioneDiConcordanze"+"/"+word+"/"+number);//serviceuri + "?word=" + word + "&number=" + number);
             nreq.setParameter("tei", filePath, getServletContext().getResourceAsStream(filePath), serviceinput);
-            nreq.setParameter("word", word);
-            nreq.setParameter("number", number);
+            //nreq.setParameter("word", word);
+            //nreq.setParameter("number", number);
 
             PrintWriter out = response.getWriter();
             response.setContentType("text/html");//serviceoutput);
@@ -164,11 +167,11 @@ public class Dispatcher extends HttpServlet {
 
             String filePath = request.getParameter("path");
 
-            ClientHttpRequest nreq = new ClientHttpRequest(serviceuri);
+            ClientHttpRequest nreq = new ClientHttpRequest(serviceuri+"/true");
             nreq.setParameter("tei", filePath, getServletContext().getResourceAsStream(filePath), serviceinput);
 
             PrintWriter out = response.getWriter();
-            response.setContentType(serviceoutput);
+            response.setContentType("text/html");//serviceoutput);
             //out.println(serviceuri+" "+servicemethod+" "+serviceinput+" "+serviceoutput); //DEBUG
             String nresp = RgB.convertXmlStreamToString(nreq.post());
             out.println(nresp);
@@ -180,10 +183,10 @@ public class Dispatcher extends HttpServlet {
             String servicemethod = (String) map.get("method");
             String serviceinput = (String) map.get("input");
             String serviceoutput = (String) map.get("output");
-            
+
             String filePath1 = request.getParameter("path1");
             String filePath2 = request.getParameter("path2");
-            
+
             ClientHttpRequest nreq = new ClientHttpRequest(serviceuri);
             nreq.setParameter("tei1", filePath1, getServletContext().getResourceAsStream(filePath1), serviceinput);
             nreq.setParameter("tei2", filePath2, getServletContext().getResourceAsStream(filePath2), serviceinput);
@@ -204,6 +207,7 @@ public class Dispatcher extends HttpServlet {
         DispatcherException(HttpServletResponse response) {
 
             try {
+                response.setStatus(200);
                 response.setContentType("text/html;charset=UTF-8");
                 PrintWriter out = response.getWriter();
                 out.println("<html>");

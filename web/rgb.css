@@ -5,15 +5,20 @@ body {
 }
 
 .buttonDocumentsListHeader {
-    font-size: 14px;
-    background: #D0D0D0;
+    font-size: 16px;
+    background: #F6F6F6;
     color: black;
     padding-top:1px;
     padding-bottom:1px;
     padding-right:5px;
     padding-left:5px;
     text-align:center;
-    font-weight: bold;
+    border-color: #22638C;
+    border-style: solid;
+    border-bottom-width: 3px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-top-width: 0px;
 
 }
 
@@ -27,7 +32,6 @@ body {
     background-repeat: repeat-x;
     background-position: center bottom;
     background-attachment: scroll;
-    background-color: transparent;
     border-color: #DDDDDD;
     border-style: solid;
     border-bottom-width: 0px;
@@ -157,4 +161,12 @@ h1 {
     border-left-width: 0px;
     border-right-width: 0px;
     border-top-width: 0px;
+}
+
+.pageTitle {
+    color:#22638C;
+    padding: 0px;
+    margin: 0px;
+    font-size: 16px;
+    padding: 2px;
 }

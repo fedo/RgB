@@ -27,17 +27,19 @@ public class TeiConcordanze {
         String[] text = plainText.split("\\|");
         this.wtw = new Wtw(text[0]);
 
-        StringTokenizer st = new StringTokenizer(text[1]);
+        if (text.length > 1) {
+            StringTokenizer st = new StringTokenizer(text[1]);
 
-        while (st.hasMoreTokens()) {
-            String token = st.nextToken();
-            String invalidChar = getInvalidChar(token);
-            if (invalidChar == null) {
-                wtw.addWord(token);
-            } else {
-                String[] splitWord = token.split("\\" + invalidChar);
-                for (int sw = 0; sw < splitWord.length; sw++) {
-                    wtw.addWord(splitWord[sw]);
+            while (st.hasMoreTokens()) {
+                String token = st.nextToken();
+                String invalidChar = getInvalidChar(token);
+                if (invalidChar == null) {
+                    wtw.addWord(token);
+                } else {
+                    String[] splitWord = token.split("\\" + invalidChar);
+                    for (int sw = 0; sw < splitWord.length; sw++) {
+                        wtw.addWord(splitWord[sw]);
+                    }
                 }
             }
         }
@@ -105,31 +107,35 @@ public class TeiConcordanze {
 
         if (nConcordanze > 0) {
 
-            /*ret +="<p>\n";
-            //ret +="<span>finded in: "+wtw.getType()+"</span><br/>\n";
-            ret +="<span>Concordanze trovate nella versione del testimone: "+sigil+"</span><br/>\n";
+            //ret += "<p>\n";
+            ret += "<br/><span>Trovate in: " + wtw.getType() + "</span><br/>\n";
+
+            //ret += "<span>Testimone: " + sigil + "</span><br/>\n";
             //ret +="<span>trascription: "+trascription+"</span><br/>\n";
             if (nConcordanze > 0) {
-            ret += "<ul>\n";
-            for (int o = 0; o < nConcordanze; o++) {
-            ret += "<li>\n"+(o+1)+" <b>parole prima</b>: "+wtw.getBefore().get(o)+" \n";
-            ret += "<b>parole dopo</b>: "+wtw.getAfter().get(o)+"</li>\n";
+                //ret += "<br/>\n";
+                for (int o = 0; o < nConcordanze; o++) {
+                    ret += "\n<b>" + (o + 1) + "</b> " + wtw.getBefore().get(o) + " <b>"+parola +"</b> "+ wtw.getAfter().get(o)+ "<br/>\n";
+                    //ret += "<b>parole dopo</b>: " + wtw.getAfter().get(o) + "</li>\n";
+                }
+                //ret += "<br/>\n";
             }
-            ret += "</ul><br/>\n";
-            }
-            //ret += "<span>numero concordanze:"+nConcordanze+"</span><br/>\n</p>\n";
-             */
+            //ret += "<span>numero concordanze:" + nConcordanze + "</span><br/>\n</p>\n";
 
+
+            /*
             ret += "<p>\n<div>";
             ret += "<span id=\"" + wtw.getType() + "\">type</span><br/>\n";
             ret += "<span id=\"" + sigil + "\">sigil</span><br/>\n";
             ret += "<span id=\"" + trascription + "\">sigil</span><br/>\n<ul>\n";
 
             for (int o = 0; o < nConcordanze; o++) {
-                ret += "<li>\n<span id=\"" + wtw.getBefore().get(o) + "\">sotto il maestrale</span><br/>\n";
-                ret += "<span id=\"" + wtw.getAfter().get(o) + "\">sotto il maestrale</span><br/></li>\n";
+            ret += "<li>\n<span id=\"" + wtw.getBefore().get(o) + "\">sotto il maestrale</span><br/>\n";
+            ret += "<span id=\"" + wtw.getAfter().get(o) + "\">sotto il maestrale</span><br/></li>\n";
             }
             ret += "</ul></div>\n";
+
+             */
         }
 
         return ret;

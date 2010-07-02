@@ -183,9 +183,14 @@ public class TeiDocument {
         return xslt("/stylesheets/facility.xsl");
     }
 
-    public String getEstrazioneDiConcordanzeDataString(String witness) {
+    public String getEstrazioneDiConcordanzeContentDataString(String witness) {
 
-        return xslt("/stylesheets/content.xsl", witness, "concordanze");
+        return xslt("/stylesheets/content.xsl", witness, "concordanze_content");
+    }
+
+    public String getEstrazioneDiConcordanzeNoteDataString(String witness) {
+
+        return xslt("/stylesheets/content.xsl", witness, "concordanze_note");
     }
 
     public String getView(String witness) {
@@ -275,7 +280,7 @@ public class TeiDocument {
         String[] tokens = str.split(" ");
 
         if (tokens[0].equalsIgnoreCase("")) {
-            tokens[0] = "default";
+            tokens[0] = "testimone non specificato";
         }
 
         return tokens;
