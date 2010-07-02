@@ -56,6 +56,7 @@ public class MainEntryPoint implements EntryPoint {
     final ArrayList<HashMap> documents = new ArrayList<HashMap>(); //{ String "id", String "path", String "shortName", String "longName", HTML "info", ArrayList<String> "files" }
     String host;
     boolean documentsListReady = false;
+    int scrollY = 0;
 
     /**
      * Creates a new instance of MainEntryPoint
@@ -111,7 +112,46 @@ public class MainEntryPoint implements EntryPoint {
      */
     protected Widget createHeaderWidget() {
 
-        return new Label("Header [Branding]: logo + [Servizi stabili]: link help, link contatti");
+        VerticalPanel panel = new VerticalPanel();
+        panel.setVerticalAlignment(HasVerticalAlignment.ALIGN_BOTTOM);
+
+        HorizontalPanel menu = new HorizontalPanel();
+        menu.addStyleName("menuHeader");
+
+        Label tohomepage = new Label("Homepage");
+        Label tohelp = new Label("Aiuto");
+        Label tocontacts = new Label("Contatti");
+
+        tohomepage.setStyleName("menuElement");
+        tohelp.setStyleName("menuElement");
+        tocontacts.setStyleName("menuElement");
+
+        tohomepage.addClickHandler(new ClickHandler() {
+
+            public void onClick(ClickEvent event) {
+                centerPanel.setWidget(homepage);
+            }
+        });
+        tohelp.addClickHandler(new ClickHandler() {
+
+            public void onClick(ClickEvent event) {
+                centerPanel.setWidget(help);
+            }
+        });
+        tocontacts.addClickHandler(new ClickHandler() {
+
+            public void onClick(ClickEvent event) {
+                centerPanel.setWidget(contacts);
+            }
+        });
+
+        menu.add(tohomepage);
+        menu.add(tohelp);
+        menu.add(tocontacts);
+
+        panel.add(menu);
+
+        return panel;
     }
 
     /**
@@ -208,7 +248,9 @@ public class MainEntryPoint implements EntryPoint {
                     servicesDisclosure.setWidth("100%");
                     servicesDisclosure.setOpen(true);
                     VerticalPanel servicesContent = new VerticalPanel();
+                    servicesContent.setWidth("100%");
                     Panel serviceActive = new VerticalPanel();
+                    serviceActive.setWidth("100%");
                     serviceActive.setVisible(false);
 
                     // ** servizi: bottoni
@@ -407,13 +449,14 @@ public class MainEntryPoint implements EntryPoint {
 
                                 public void onMouseOver(final MouseOverEvent event) {
                                     currentWidget.addStyleName("buttonDocumentsListOver");
-                                    overWidget.setPopupPosition(event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
+
                                     overWidget.setPopupPositionAndShow(new PositionCallback() {
 
                                         public void setPosition(int offsetWidth, int offsetHeight) {
                                             //int left = event.getClientX() + 50;
-                                            int left = 165;
-                                            int top = event.getScreenY();//event.getClientY();
+                                            int left = 200;
+                                            int top = event.getClientY() + Window.getScrollTop() - 20;
+                                            debug.clear();
                                             overWidget.setPopupPosition(left, top);
                                         }
                                     });
@@ -457,6 +500,7 @@ public class MainEntryPoint implements EntryPoint {
                                         Label tabTitle = new Label(shortName);
                                         tabTitle.setWidth(shortName.length() * 8 + "px");
                                         tabText.add(tabTitle);
+                                        tabText.setStyleName("tabTitle");
 
                                         // X che chiude il tab
                                         ClickHandler closeHandler = new ClickHandler() {
@@ -573,8 +617,6 @@ public class MainEntryPoint implements EntryPoint {
         retval.add(noteCheckbox);
         retval.add(documentPanel);
 
-
-
         // visualizzazione
         String url = "http://" + host + "/RgB/DocumentViewer";
         String postData = URL.encode("path") + "=" + path + "&" + URL.encode("witness") + "=" + witness + "&" + URL.encode("service") + "=visualizzazione";
@@ -658,12 +700,11 @@ public class MainEntryPoint implements EntryPoint {
                 service.clear();
                 service.setVisible(true);
                 service.add(new Label("Visualizzatore della lista e della frequenza di tutte le colocazioni di una parola."));
-                ScrollPanel fScrollPanel = new ScrollPanel(makeFrequenzeDiOccorrenzaRequest(path));
-                fScrollPanel.scrollToLeft();
-                fScrollPanel.setWidth("100%");
-                fScrollPanel.setHeight("300px");
-                service.add(fScrollPanel);
+                //ScrollPanel fScrollPanel = new ScrollPanel(makeFrequenzeDiOccorrenzaRequest(path));
 
+                Frame frame = new Frame("http://" + host + "/RgB/Dispatcher?service=FrequenzeDiOccorrenza&path=" + path);
+                frame.setSize("100%", "375px");
+                service.add(frame);
 
                 Button closeButton = new Button("Chiudi il servizio");
                 closeButton.addClickHandler(new ClickHandler() {
@@ -712,8 +753,8 @@ public class MainEntryPoint implements EntryPoint {
                         } else {
                             service.clear();
                             service.setVisible(true);
-                            service.add(closeButton);
                             service.add(makeColocazioniRequest(path, wordBox.getText()));
+                            service.add(closeButton);
                         }
 
                     }
@@ -763,7 +804,7 @@ public class MainEntryPoint implements EntryPoint {
                         } else {
                             service.clear();
                             service.setVisible(true);
-                            service.add(closeButton);
+
 
                             ArrayList<HashMap> params = new ArrayList<HashMap>();
                             HashMap pathMap = new HashMap();
@@ -785,6 +826,7 @@ public class MainEntryPoint implements EntryPoint {
                             params.add(wordMap);
 
                             service.add(makeDispatcherRequest(params));
+                            service.add(closeButton);
                         }
 
                     }

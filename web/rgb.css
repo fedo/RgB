@@ -55,6 +55,19 @@ body {
     height: 125px;
     width: 100%;
     text-align: right;
+    vertical-align: bottom;
+}
+
+.menuHeader {
+    margin-left: 400px;
+    vertical-align: bottom;
+}
+
+.menuElement {
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .westPanel {
@@ -109,6 +122,10 @@ body {
     width: 100%;
 }
 
+.tabTitle {
+    color:#22638C;
+    font-weight: bold;
+}
 
 .gwt-DisclosurePanel .header {
 
