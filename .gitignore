@@ -1,7 +1,19 @@
-build/*
+# Maven build output
+target/
+
+# Legacy Ant build output
+build/
+dist/
+
+# macOS
 *.DS_Store
+
+# IDE
+.idea/
+*.iml
+
+# Project-specific
 src/java/it/unibo/cs/rgb/gwt/RgBConfiguration.java
-dist/*
 nbproject/ant-deploy.xml
 nbproject/build-gwt.xml
 nbproject/build-impl.xml

@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>it.unibo.cs</groupId>
+    <artifactId>rgb</artifactId>
+    <version>2.0.0</version>
+    <packaging>war</packaging>
+
+    <name>RgB - TEI Document Viewer</name>
+    <description>GWT-based TEI (Text Encoding Initiative) document viewer</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        
+        <!-- GWT 2.11.0 - latest stable release -->
+        <gwt.version>2.11.0</gwt.version>
+        <gwt.plugin.version>1.1.0</gwt.plugin.version>
+        
+        <!-- Jetty for dev server -->
+        <jetty.version>11.0.18</jetty.version>
+        
+        <!-- Saxon for XSLT -->
+        <saxon.version>12.4</saxon.version>
+        
+        <!-- Jakarta EE (replaces javax.servlet) -->
+        <jakarta.servlet.version>6.0.0</jakarta.servlet.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.gwtproject</groupId>
+                <artifactId>gwt</artifactId>
+                <version>${gwt.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- GWT -->
+        <dependency>
+            <groupId>org.gwtproject</groupId>
+            <artifactId>gwt-user</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.gwtproject</groupId>
+            <artifactId>gwt-dev</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!-- Jakarta Servlet API (replaces javax.servlet for Java 17+) -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>${jakarta.servlet.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!-- Saxon XSLT Processor -->
+        <dependency>
+            <groupId>net.sf.saxon</groupId>
+            <artifactId>Saxon-HE</artifactId>
+            <version>${saxon.version}</version>
+        </dependency>
+        
+        <!-- JSON processing -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20231013</version>
+        </dependency>
+        
+        <!-- URL Rewrite Filter -->
+        <dependency>
+            <groupId>org.tuckey</groupId>
+            <artifactId>urlrewritefilter</artifactId>
+            <version>4.0.4</version>
+        </dependency>
+        
+        <!-- Apache Commons FileUpload 2.x for Jakarta EE -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-fileupload2-jakarta-servlet6</artifactId>
+            <version>2.0.0-M2</version>
+        </dependency>
+        
+        <!-- Apache Commons IO (required by FileUpload) -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.15.1</version>
+        </dependency>
+        
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.9</version>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <!-- Output classes directly into the webapp for GWT dev mode -->
+        <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>
+        
+        <sourceDirectory>src/java</sourceDirectory>
+        
+        <resources>
+            <resource>
+                <directory>src/java</directory>
+                <includes>
+                    <include>**/*.gwt.xml</include>
+                    <include>**/*.ui.xml</include>
+                    <include>**/*.css</include>
+                </includes>
+            </resource>
+        </resources>
+
+        <plugins>
+            <!-- Maven Compiler Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+
+            <!-- GWT Maven Plugin -->
+            <plugin>
+                <groupId>net.ltgt.gwt.maven</groupId>
+                <artifactId>gwt-maven-plugin</artifactId>
+                <version>${gwt.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <moduleName>it.unibo.cs.rgb.gwt.Main</moduleName>
+                    <moduleShortName>Main</moduleShortName>
+                    <failOnError>true</failOnError>
+                    <sourceLevel>11</sourceLevel>
+                    <compilerArgs>
+                        <arg>-generateJsInteropExports</arg>
+                    </compilerArgs>
+                    <devmodeArgs>
+                        <arg>-generateJsInteropExports</arg>
+                    </devmodeArgs>
+                    <startupUrls>
+                        <startupUrl>welcomeGWT.html</startupUrl>
+                    </startupUrls>
+                    <codeServerArgs>
+                        <arg>-generateJsInteropExports</arg>
+                        <arg>-bindAddress</arg>
+                        <arg>0.0.0.0</arg>
+                    </codeServerArgs>
+                    <devmodeWorkDir>${project.build.directory}/gwt/devmode/work</devmodeWorkDir>
+                    <launcherDir>${project.build.directory}/${project.build.finalName}</launcherDir>
+                    <warDir>${project.build.directory}/${project.build.finalName}</warDir>
+                </configuration>
+            </plugin>
+
+            <!-- Maven WAR Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.4.0</version>
+                <configuration>
+                    <warSourceDirectory>web</warSourceDirectory>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <packagingExcludes>WEB-INF/classes/it/unibo/cs/rgb/gwt/client/**</packagingExcludes>
+                </configuration>
+            </plugin>
+
+            <!-- Jetty for development -->
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>${jetty.version}</version>
+                <configuration>
+                    <webApp>
+                        <contextPath>/RgB</contextPath>
+                        <resourceBases>
+                            <resourceBase>${project.build.directory}/${project.build.finalName}</resourceBase>
+                            <resourceBase>web</resourceBase>
+                        </resourceBases>
+                    </webApp>
+                    <httpConnector>
+                        <port>8080</port>
+                    </httpConnector>
+                    <stopKey>STOP</stopKey>
+                    <stopPort>9999</stopPort>
+                    <scan>0</scan>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <!-- Development profile with GWT Super Dev Mode -->
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>net.ltgt.gwt.maven</groupId>
+                        <artifactId>gwt-maven-plugin</artifactId>
+                        <configuration>
+                            <style>DETAILED</style>
+                            <logLevel>INFO</logLevel>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
+        <!-- Production profile with optimizations -->
+        <profile>
+            <id>prod</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>net.ltgt.gwt.maven</groupId>
+                        <artifactId>gwt-maven-plugin</artifactId>
+                        <configuration>
+                            <style>OBFUSCATED</style>
+                            <logLevel>ERROR</logLevel>
+                            <compilerArgs>
+                                <arg>-XdisableClassMetadata</arg>
+                                <arg>-XdisableCastChecking</arg>
+                            </compilerArgs>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

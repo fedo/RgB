@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+                             https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
+    
+    <display-name>RgB TEI Document Viewer</display-name>
+    
     <welcome-file-list>
         <welcome-file>welcomeGWT.html</welcome-file>
     </welcome-file-list>
-    <servlet>
-        <servlet-name>DocumentMetadata</servlet-name>
-        <servlet-class>it.unibo.cs.rgb.servlet.DocumentMetadata</servlet-class>
-    </servlet>
+    
+    <!-- Servlets -->
     <servlet>
         <servlet-name>DocumentViewer</servlet-name>
         <servlet-class>it.unibo.cs.rgb.servlet.DocumentViewer</servlet-class>
@@ -40,17 +45,11 @@
         <servlet-class>it.unibo.cs.rgb.servlet.DocumentNoteViewer</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>DiffOntologico</servlet-name>
-        <servlet-class>it.unibo.cs.rgb.servlet.DiffOntologico</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>Test</servlet-name>
         <servlet-class>it.unibo.cs.rgb.servlet.Test</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>DocumentMetadata</servlet-name>
-        <url-pattern>/DocumentMetadata</url-pattern>
-    </servlet-mapping>
+    
+    <!-- Servlet Mappings -->
     <servlet-mapping>
         <servlet-name>DocumentViewer</servlet-name>
         <url-pattern>/DocumentViewer</url-pattern>
@@ -84,33 +83,12 @@
         <url-pattern>/DocumentNoteViewer</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>DiffOntologico</servlet-name>
-        <url-pattern>/DiffOntologico</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>Test</servlet-name>
         <url-pattern>/Test</url-pattern>
     </servlet-mapping>
+    
+    <!-- Session Configuration -->
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>30</session-timeout>
     </session-config>
-    <filter>
-        <filter-name>UrlRewriteFilter</filter-name>
-        <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
-        <!-- set the amount of seconds the conf file will be checked for reload
-        can be a valid integer (0 denotes check every time,
-        -1 denotes no reload check, default -1) -->
-        <init-param>
-            <param-name>confReloadCheckInterval</param-name>
-            <param-value>1</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>UrlRewriteFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
-        <dispatcher>FORWARD</dispatcher>
-    </filter-mapping>
 </web-app>

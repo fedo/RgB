@@ -4,10 +4,10 @@
  */
 package it.unibo.cs.rgb.servlet;
 
-import com.oreilly.servlet.multipart.FilePart;
-import com.oreilly.servlet.multipart.MultipartParser;
-import com.oreilly.servlet.multipart.ParamPart;
-import com.oreilly.servlet.multipart.Part;
+import org.apache.commons.fileupload2.core.DiskFileItemFactory;
+import org.apache.commons.fileupload2.core.FileItem;
+import org.apache.commons.fileupload2.jakarta.servlet6.JakartaServletFileUpload;
+import java.util.List;
 import it.unibo.cs.rgb.gwt.RgB;
 import it.unibo.cs.rgb.tei.TeiConcordanze;
 import it.unibo.cs.rgb.tei.TeiDocument;
@@ -18,10 +18,10 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -55,36 +55,41 @@ public class EstrazioneDiConcordanze extends HttpServlet {
         }
 
         // la request dev'essere "multipart/form-data"
-        if (!request.getContentType().startsWith("multipart/form-data")) {
+        if (!JakartaServletFileUpload.isMultipartContent(request)) {
             throw new EstrazioneDiConcordanzeException(response, "406", "Not acceptable", "Richiesto Content-Type 'multipart/form-data'.", "Imposta il Content-Type 'multipart/form-data'.");
         }
 
         String word = null;
         String stringNumber = null;
 
-        // parsing request
-        MultipartParser mparser = new MultipartParser(request, Integer.MAX_VALUE);
-
-        // ricerca documento TEI (xml)
-        Part tmpPart = mparser.readNextPart();
-        while (tmpPart != null) {
-            if (tmpPart.isFile()) {
-                String contentType = "" + ((FilePart) tmpPart).getContentType();
-                if (contentType.equals("text/xml") || contentType.equals("application/xml")) {
-                    xml = "" + RgB.convertXmlStreamToString(((FilePart) tmpPart).getInputStream());
-                }
-            } else {
-                if (((ParamPart) tmpPart).getName().contentEquals("word")) {
-                    word = ((ParamPart) tmpPart).getStringValue();
-                } else if (((ParamPart) tmpPart).getName().contentEquals("number")) {
-                    stringNumber = ((ParamPart) tmpPart).getStringValue();
+        // parsing request using Apache Commons FileUpload 2.x
+        DiskFileItemFactory factory = DiskFileItemFactory.builder().get();
+        JakartaServletFileUpload upload = new JakartaServletFileUpload(factory);
+        
+        try {
+            java.util.List<FileItem> items = upload.parseRequest(request);
+            for (FileItem item : items) {
+                if (item.isFormField()) {
+                    String fieldName = item.getFieldName();
+                    if ("word".equals(fieldName)) {
+                        word = item.getString();
+                    } else if ("number".equals(fieldName)) {
+                        stringNumber = item.getString();
+                    }
+                } else {
+                    String contentType = item.getContentType();
+                    if (contentType != null && (contentType.equals("text/xml") || contentType.equals("application/xml"))) {
+                        xml = RgB.convertXmlStreamToString(item.getInputStream());
+                    }
                 }
             }
-            tmpPart = mparser.readNextPart();
+        } catch (Exception e) {
+            throw new EstrazioneDiConcordanzeException(response, "500", "Internal Server Error", "Errore nel parsing della richiesta.", e.getMessage());
         }
 
-        stringNumber = request.getParameter("number");
-        word = request.getParameter("word");
+        // Fallback to request parameters
+        if (stringNumber == null) stringNumber = request.getParameter("number");
+        if (word == null) word = request.getParameter("word");
 
 
         // verifica

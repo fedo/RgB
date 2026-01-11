@@ -26,9 +26,11 @@ import com.google.gwt.xml.client.XMLParser;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Main entry point.
+ * Main entry point for the RgB TEI Document Viewer.
+ * Modernized for GWT 2.11+ and Java 17+.
  *
  * @author fedo
  */
@@ -52,8 +54,8 @@ public class MainEntryPoint implements EntryPoint {
     VerticalPanel contacts = new VerticalPanel();
     // footer
     HorizontalPanel debug = new HorizontalPanel();
-    // variables
-    final ArrayList<HashMap> documents = new ArrayList<HashMap>(); //{ String "id", String "path", String "shortName", String "longName", HTML "info", ArrayList<String> "files" }
+    // variables - using proper generics
+    final ArrayList<Map<String, Object>> documents = new ArrayList<>();
     String host;
     boolean documentsListReady = false;
     int scrollY = 0;
@@ -210,7 +212,7 @@ public class MainEntryPoint implements EntryPoint {
      */
     protected Widget createDocumentViewerTab(final String path) {
 
-        final HashMap hashMap = getDocumentHashMap(path);
+        final Map<String, Object> hashMap = getDocumentHashMap(path);
         String id = (String) hashMap.get("id");
         final VerticalPanel panel = new VerticalPanel();
         panel.setSize("100%", "100%");
@@ -337,9 +339,9 @@ public class MainEntryPoint implements EntryPoint {
      * @param path
      * @return
      */
-    private HashMap getDocumentHashMap(String path) {
+    private Map<String, Object> getDocumentHashMap(String path) {
 
-        HashMap retval = new HashMap();
+        Map<String, Object> retval = new HashMap<>();
 
         for (int i = 0; i < documents.size(); i++) {
             if (((String) documents.get(i).get("path")).equalsIgnoreCase(path)) {
@@ -378,7 +380,7 @@ public class MainEntryPoint implements EntryPoint {
                         //west.add(new Label("numero documenti: "+lenght));
 
                         for (int i = 0; i < numberOfDocuments; i++) {
-                            HashMap documentInfo = new HashMap();
+                            Map<String, Object> documentInfo = new HashMap<>();
                             documents.add(documentInfo);
 
                             String current = responseXml.getElementsByTagName("li").item(i).toString();
@@ -416,8 +418,8 @@ public class MainEntryPoint implements EntryPoint {
                             documentInfo.put("longName", longName);
                         }
 
-                        ArrayList<String> idArray = new ArrayList<String>();
-                        ArrayList<HashMap> ordDoc = new ArrayList<HashMap>();
+                        ArrayList<String> idArray = new ArrayList<>();
+                        ArrayList<Map<String, Object>> ordDoc = new ArrayList<>();
                         int docLength = documents.size();
                         for (int i = 0; i < docLength; i++) {
                             idArray.add(((String) documents.get(i).get("id")));

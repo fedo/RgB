@@ -4,9 +4,9 @@
  */
 package it.unibo.cs.rgb.servlet;
 
-import com.oreilly.servlet.multipart.FilePart;
-import com.oreilly.servlet.multipart.MultipartParser;
-import com.oreilly.servlet.multipart.Part;
+import org.apache.commons.fileupload2.core.DiskFileItemFactory;
+import org.apache.commons.fileupload2.core.FileItem;
+import org.apache.commons.fileupload2.jakarta.servlet6.JakartaServletFileUpload;
 import it.unibo.cs.rgb.gwt.RgB;
 import it.unibo.cs.rgb.tei.TeiDocument;
 import java.io.IOException;
@@ -17,10 +17,10 @@ import java.util.LinkedList;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import name.fraser.neil.plaintext.diff_match_patch;
 import name.fraser.neil.plaintext.diff_match_patch.Diff;
 
@@ -57,28 +57,30 @@ public class Differenziazione extends HttpServlet {
         }
 
         // la request dev'essere "multipart/form-data"
-        if (!request.getContentType().startsWith("multipart/form-data")) {
+        if (!JakartaServletFileUpload.isMultipartContent(request)) {
             throw new DifferenziazioneException(response, "406", "Not acceptable", "Richiesto Content-Type 'multipart/form-data'.", "Imposta il Content-Type 'multipart/form-data'.");
         }
 
-        // parsing request
-        MultipartParser mparser = new MultipartParser(request, Integer.MAX_VALUE);
-
-        // ricerca documento TEI (xml)
-        Part tmpPart = mparser.readNextPart();
-        while (tmpPart != null) {
-            if (tmpPart.isFile()) {
-                String contentType = "" + ((FilePart) tmpPart).getContentType();
-                if ((contentType.equals("text/xml") || contentType.equals("application/xml"))) {
-                    if (xml1 == null) {
-                        xml1 = "" + RgB.convertXmlStreamToString(((FilePart) tmpPart).getInputStream());
-                    } else if (xml1 != null && xml2 == null) {
-                        xml2 = "" + RgB.convertXmlStreamToString(((FilePart) tmpPart).getInputStream());
+        // parsing request using Apache Commons FileUpload 2.x
+        DiskFileItemFactory factory = DiskFileItemFactory.builder().get();
+        JakartaServletFileUpload upload = new JakartaServletFileUpload(factory);
+        
+        try {
+            java.util.List<FileItem> items = upload.parseRequest(request);
+            for (FileItem item : items) {
+                if (!item.isFormField()) {
+                    String contentType = item.getContentType();
+                    if (contentType != null && (contentType.equals("text/xml") || contentType.equals("application/xml"))) {
+                        if (xml1 == null) {
+                            xml1 = RgB.convertXmlStreamToString(item.getInputStream());
+                        } else if (xml2 == null) {
+                            xml2 = RgB.convertXmlStreamToString(item.getInputStream());
+                        }
                     }
                 }
             }
-            tmpPart = mparser.readNextPart();
-
+        } catch (Exception e) {
+            throw new DifferenziazioneException(response, "500", "Internal Server Error", "Errore nel parsing della richiesta.", e.getMessage());
         }
 
         // verifica presenza documento TEI

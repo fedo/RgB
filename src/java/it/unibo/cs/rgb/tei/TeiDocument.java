@@ -27,7 +27,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import net.sf.saxon.dom.DocumentBuilderFactoryImpl;
+// Saxon 12 - use standard Java DOM factories
 import org.xml.sax.SAXException;
 import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.s9api.QName;
@@ -410,7 +410,7 @@ public class TeiDocument {
 
 
 
-        DocumentBuilderFactory domFactory = DocumentBuilderFactoryImpl.newInstance();
+        DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
         Document doc = null;
         domFactory.setNamespaceAware(true);
         try {
@@ -418,31 +418,24 @@ public class TeiDocument {
             DocumentBuilder builder = domFactory.newDocumentBuilder();
             doc = builder.parse(new InputSource(xmlStringReader));
         } catch (IOException ioe) {
+            // Handle IO exception
         } catch (ParserConfigurationException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (SAXException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        TransformerFactory tFactory = TransformerFactory.newInstance();
         DOMSource ds = new DOMSource(doc);
-
-
-
 
 
 
 
         try {
             Processor proc = new Processor(false);
-            //proc.registerExtensionFunction("");
             XsltCompiler comp = proc.newXsltCompiler();
             comp.setSchemaAware(false);
             XsltExecutable exp = comp.compile(new SAXSource(new InputSource(xslStringReader)));
             XdmNode source = proc.newDocumentBuilder().build(ds);
-            Serializer out = new Serializer();
-            out.setOutputStream(outputStream);
+            Serializer out = proc.newSerializer(outputStream);
             XsltTransformer trans = exp.load();
             trans.setInitialContextNode(source);
             trans.setDestination(out);

@@ -4,7 +4,9 @@
  */
 package it.unibo.cs.rgb.servlet;
 
-import com.oreilly.servlet.MultipartRequest;
+import org.apache.commons.fileupload2.core.DiskFileItemFactory;
+import org.apache.commons.fileupload2.core.FileItem;
+import org.apache.commons.fileupload2.jakarta.servlet6.JakartaServletFileUpload;
 import it.unibo.cs.rgb.gwt.RgB;
 import it.unibo.cs.rgb.tei.TeiDocument;
 import it.unibo.cs.rgb.util.ClientHttpRequest;
@@ -19,10 +21,10 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import javax.xml.parsers.ParserConfigurationException;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -305,19 +307,4 @@ public class Dispatcher extends HttpServlet {
         return retval;
     }
 
-    private String getFileNameByContentType(MultipartRequest mrequest, String contentType) {
-        String retval = null;
-
-        Enumeration files = mrequest.getFileNames();
-
-        while (files.hasMoreElements()) {
-            String currentFileName = (String) files.nextElement();
-            String currentContentType = (String) mrequest.getContentType(currentFileName);
-            if (currentContentType != null && currentContentType.equalsIgnoreCase(contentType)) {
-                retval = currentFileName;
-            }
-        }
-
-        return retval;
-    }
 }
